@@ -1,0 +1,72 @@
+﻿@import url('mapaMontagem.css');
+
+:root {
+    --horizontal-offset-acumulo-ch3: 0px;
+    --vertical-offset-acumulo-ch3: 0px;
+}
+#chartContainerch3 {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(40px*var(--scale-factor-width));
+    width: calc(75px*var(--scale-factor-width));
+    left: calc((-20px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset)) * var(--scale-factor-width));
+    top: calc((490px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    transition: all 0.5s ease;
+}
+
+#lineChartch3 {
+    height: 100%;
+    width: 100%;
+}
+
+#chartTextch3 {
+    position: absolute;
+    top: 1%;
+    left: 5%;
+    color: rgba(75, 192, 192, 1);
+    font-size: calc(14px*var(--scale-factor-width));
+    font-weight: bold;
+    font-family: Calibri, sans-serif !important;
+    border-radius: 5px;
+    user-select: none;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px 1px 3px rgba(0, 0, 0, 0.2), 1px -1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2), 0px 3px 3px rgba(0, 0, 0, 0.2), 0px -3px 3px rgba(0, 0, 0, 0.2), 3px 0px 3px rgba(0, 0, 0, 0.2), -3px 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+.ch3_zne6_tts4 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((150px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne6_tts5 {
+    top: calc((475px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((150px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts1 {
+    top: calc((495px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((150px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts2 {
+    top: calc((510px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((135px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts3 {
+    top: calc((515px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((115px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts4 {
+    top: calc((515px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((95px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts5 {
+    top: calc((515px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((75px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts6 {
+    top: calc((525px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((60px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.ch3_zne1_tts7 {
+    top: calc((535px + var(--vertical-offset-acumulo-ch3) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((75px + var(--horizontal-offset-acumulo-ch3) + var(--horizontal-offset))* var(--scale-factor-width));
+}

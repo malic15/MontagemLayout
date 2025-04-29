@@ -1,0 +1,111 @@
+﻿@import url('mapaMontagem.css');
+
+:root {
+    --horizontal-offset-acumulo-decking: -20px;
+    --vertical-offset-acumulo-decking: -25px;
+}
+
+#chartContainerdecking {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(40px*var(--scale-factor-width));
+    width: calc(75px*var(--scale-factor-width));
+    left: calc((10px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset)) * var(--scale-factor-width));
+    top: calc((260px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    transition: all 0.5s ease;
+}
+
+#lineChartdecking {
+    height: 100%;
+    width: 100%;
+}
+
+#chartTextdecking {
+    position: absolute;
+    top: 1%;
+    left: 5%;
+    color: rgba(75, 192, 192, 1);
+    font-size: calc(14px*var(--scale-factor-width));
+    font-weight: bold;
+    font-family: Calibri, sans-serif !important;
+    border-radius: 5px;
+    user-select: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.decking_zne4_tts1 {
+    top: calc((500px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts2 {
+    top: calc((480px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts3 {
+    top: calc((460px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts4 {
+    top: calc((440px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts5 {
+    top: calc((420px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts6 {
+    top: calc((400px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts7 {
+    top: calc((380px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts8 {
+    top: calc((360px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts9 {
+    top: calc((340px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts10 {
+    top: calc((320px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.decking_zne4_tts11 {
+    top: calc((300px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.decking_zne4_tts12 {
+    top: calc((280px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((90px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.decking_zne4_tts13 {
+    top: calc((280px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((110px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.decking_zne4_tts14 {
+    top: calc((280px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((130px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.decking_zne4_tts15 {
+    top: calc((260px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((130px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+.decking_zne4_tts16 {
+    top: calc((240px + var(--vertical-offset-acumulo-decking) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((130px + var(--horizontal-offset-acumulo-decking) + var(--horizontal-offset))* var(--scale-factor-width));
+}

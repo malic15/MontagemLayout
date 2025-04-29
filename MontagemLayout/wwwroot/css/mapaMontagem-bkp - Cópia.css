@@ -1,0 +1,302 @@
+﻿:root {
+    --scale-factor: 1;
+    --horizontal-offset: calc(180px * var(--scale-factor)); /* Escala a partir da variável */
+    --vertical-offset: 0px;
+    --btn-color: #8ce436;
+    --btn-scale-final: calc(130px * var(--scale-factor)); /* Você pode aplicar também aqui */
+    --btn-scale-door: calc(100px * var(--scale-factor));
+    --btn-scale-trim: calc(110px * var(--scale-factor));
+    --btn-scale-ch5: calc(140px * var(--scale-factor));
+    --btn-scale-ch4: calc(170px * var(--scale-factor));
+    --btn-scale-ch3: calc(120px * var(--scale-factor));
+    --btn-scale-ch2: calc(100px * var(--scale-factor));
+    --btn-scale-ch1: calc(100px * var(--scale-factor));
+    --btn-scale-dkg: calc(50px * var(--scale-factor));
+    --btn-scale-trim0: calc(30px * var(--scale-factor));
+    --btn-scale-glz: calc(80px * var(--scale-factor));
+}
+body {
+    /*background: linear-gradient(45deg,#8B263580,#B0B5CC);*/ /*#1E306B*/
+    background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #2d2d2d;
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+    font-weight: 200 !important;
+    font-family: Arial, sans-serif !important;
+}
+
+/*#messageContainer {
+    background: radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.1), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.1), transparent), #033f88;
+    padding: 20px;
+    border-radius: 10px;
+    height: 80vh;
+    position: relative;
+    box-shadow: rgba(0,0,0,0.4) -10px 10px 10px;
+}*/
+#messageContainer {
+    background: radial-gradient(circle at 30% 10%, rgba(255, 255, 255, 0.1), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.1), transparent), #033f88;
+    padding: 20px;
+    border-radius: 10px;
+    height: 80vh;
+    position: relative;
+    box-shadow: rgba(0,0,0,0.4) -10px 10px 10px;
+    transform-origin: top left; /* Define o ponto de origem para o scale */
+    transform: scale(1); /* Inicialmente 1, mas isso pode ser alterado via JS */
+    overflow: hidden;
+}
+
+
+.botton {
+    line-height: 40px;
+    height: 8%;
+    box-shadow: 0 0 5px #8ce436;
+    /*background: radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #0466c8;*/
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid #8ce436;
+    border-radius: 5px;
+    transition: all 500ms ease;
+    position: absolute;
+    overflow: hidden;
+}
+/*.botton2 {
+    line-height: 40px;
+    height: 8%;
+    box-shadow: 0 0 5px #8ce436;*/
+    /*background: radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #0466c8;*/
+    /*background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid #8ce436;
+    border-radius: 5px;
+    transition: all 500ms ease;
+    position: absolute;
+    overflow: hidden;
+    padding: 1vh var(--btn-scale-final);
+}
+.botton3 {
+    line-height: 40px;
+    height: 8%;
+    box-shadow: 0 0 5px #8ce436;*/
+    /*background: radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #0466c8;*/
+    /*background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid #8ce436;
+    border-radius: 5px;
+    transition: all 500ms ease;
+    position: absolute;
+    overflow: hidden;
+    padding: 1vh var(--btn-scale-final);
+    top: 75px;
+    left: 300px;
+}*/
+    
+    .botton:hover {
+        /*background: transparent;*/
+    }
+
+    .botton:before,
+    .botton:after {
+        position: absolute;
+        content: "";
+        height: 0%;
+        width: 1px;
+        background: #8ce436;
+        box-shadow: 0 0 5px #8ce436;
+    }
+    .botton:before {
+        right: 0;
+        top: 0;
+        transition: all 500ms ease;
+    }
+
+    .botton:after {
+        left: 0;
+        bottom: 0;
+        transition: all 500ms ease;
+    }
+
+    /*.botton:hover:before {
+        transition: all 500ms ease;
+        height: 100%;
+    }
+
+    .botton:hover:after {
+        transition: all 500ms ease;
+        height: 100%;
+    }*/
+    .botton span {
+        position: absolute;
+        padding: 10px;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 100 !important;
+        font-family: Calibri, sans-serif !important;
+        color: rgba(255,255,255,0.8);
+    }
+    .botton span:before,
+    .botton span:after {
+        position: absolute;
+        content: "";
+        background: #8ce436;
+        box-shadow: 0 0 5px #8ce436;
+    }
+
+.botton span:before {
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: 1px;
+    transition: all 500ms ease;
+}
+
+.botton span:after {
+    right: 0;
+    bottom: 0;
+    width: 0%;
+    height: 1px;
+    transition: all 500ms ease;
+}
+
+.botton span:hover:before {
+    width: calc(100%);
+}
+
+.botton span:hover:after {
+    width: calc(100%);
+}
+
+/* Estilos específicos para cada botão */
+.btn-final1 {
+    padding: 10px var(--btn-scale-final);
+    transform: rotate(-90deg);
+    bottom: calc(280px + var(--vertical-offset));
+    right: calc(-60px + var(--horizontal-offset));
+}
+
+.btn-final2 {
+    padding: 10px var(--btn-scale-final);
+    transform: rotate(-90deg);
+    bottom: calc(280px + var(--vertical-offset));
+    right: calc(-120px + var(--horizontal-offset));
+}
+.btn-door {
+    padding: 10px var(--btn-scale-door);
+    transform: rotate(-90deg);
+    bottom: calc(280px + var(--vertical-offset));
+    right: calc(50px + var(--horizontal-offset));
+}
+.btn-ch05 {
+    padding: 10px var(--btn-scale-ch5);
+    bottom: calc(80px + var(--vertical-offset));
+    right: calc(110px + var(--horizontal-offset));
+}
+
+.btn-ch04 {
+    padding: 10px var(--btn-scale-ch4);
+    bottom: calc(80px + var(--vertical-offset));
+    right: calc(480px + var(--horizontal-offset));
+}
+
+.btn-ch03 {
+    padding: 10px var(--btn-scale-ch3);
+    bottom: calc(140px + var(--vertical-offset));
+    right: calc(480px + var(--horizontal-offset));
+}
+
+.btn-ch02 {
+    padding: 10px var(--btn-scale-ch2);
+    transform: rotate(-90deg);
+    bottom: calc(370px + var(--vertical-offset));
+    right: calc(570px + var(--horizontal-offset));
+}
+
+.btn-ch01 {
+    padding: 10px var(--btn-scale-ch1);
+    bottom: calc(200px + var(--vertical-offset));
+    right: calc(520px + var(--horizontal-offset));
+}
+
+.btn-trim2 {
+    padding: 10px var(--btn-scale-trim);
+    transform: rotate(-90deg);
+    bottom: calc(370px + var(--vertical-offset));
+    right: calc(340px + var(--horizontal-offset));
+}
+
+.btn-trim1 {
+    padding: 10px var(--btn-scale-trim);
+    transform: rotate(-90deg);
+    bottom: calc(370px + var(--vertical-offset));
+    right: calc(280px + var(--horizontal-offset));
+}
+
+.btn-trim0 {
+    padding: 10px var(--btn-scale-trim0);
+    transform: rotate(-90deg);
+    bottom: calc(300px + var(--vertical-offset));
+    right: calc(700px + var(--horizontal-offset));
+}
+
+.btn-decking {
+    padding: 10px var(--btn-scale-dkg);
+    transform: rotate(-90deg);
+    bottom: calc(420px + var(--vertical-offset));
+    right: calc(680px + var(--horizontal-offset));
+}
+.btn-glazing {
+    padding: 10px var(--btn-scale-glz);
+    transform: rotate(-90deg);
+    bottom: calc(230px + var(--vertical-offset));
+    right: calc(730px + var(--horizontal-offset));
+}
+.alert {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 1050px;
+    height: 7vh;
+    width: 30vh;
+    background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #2d2d2d;
+    color: orange;
+    box-shadow: rgba(0,0,0,0.4) -5px 5px 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500 !important;
+    font-family: Calibri, sans-serif !important;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    transition: all 1s ease;
+}
+
+    .alert.show {
+        display: flex;
+        animation: fadeIn 1s forwards, fadeOut 1s 3s forwards;
+    }
+
+/* Animação para desaparecer gradualmente */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;        
+    }
+}

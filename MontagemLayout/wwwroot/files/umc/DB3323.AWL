@@ -1,0 +1,1101 @@
+DATA_BLOCK "G_DB_++ZNE02"
+TITLE =512 EVENTS WITH ACCUMULATOR
+{ S7_language := '16(1) Italiano (Italia)  25.06.2015  06:21:58' }
+VERSION : 0.1
+
+
+  STRUCT 	
+   CM_ID : STRING  [8 ] := '=UM1_1';	//COMPOSITE MACHINE
+   STATION_ID : STRING  [8 ] := '++ZNE02';	//STATION - TRATTO - ZONE
+   ELEMENT_ID : STRING  [8 ];	//ELEMENT
+   DB_ID : INT ;	//DB SIZE or TYPE
+   PART_STYLE : STRING  [12 ];	//PART STYLE ON LAST STATION
+   ACT_CYCLE_TIME : INT ;	//ACTUAL CYCLE TIME FOR THIS STYLE
+   COUNT_GOOD : INT ;	//COUNTER GOOD PIECES
+   COUNT_SCRAP : INT ;	//COUNTER SCRAP PIECES
+   ACCUMULATOR : ARRAY  [0 .. 15 ] OF //ACCUMULATOR COUNT
+   INT ;	
+   SPARE_01 : ARRAY  [0 .. 17 ] OF //SPARE INTEGER
+   INT ;	
+   CODE_EVENT : ARRAY  [0 .. 7 ] OF //CODE EVENT - EXTENDED FAULT CODE DIAGNOSTIC 
+   INT ;	
+   event : STRUCT 	
+    E0000 : BOOL ;	//++ZNE02+PTZ01-SB_01;ARRESTO EMERGENCIA PREMUTO PTZ01;2
+    E0001 : BOOL ;	//++ZNE02+PTZ01-SB_01;ARRESTO EMERGENCIA PTZ01 NÃO RIPRISTINATO;2
+    E0002 : BOOL ;	//++ZNE02+PTZ02-SB_01;ARRESTO EMERGENCIA PREMUTO PTZ02;2
+    E0003 : BOOL ;	//++ZNE02+PTZ02-SB_01;ARRESTO EMERGENCIA PTZ02 NÃO RIPRISTINATO;2
+    E0004 : BOOL ;	//++ZNE02+PTZ03-SB_01;ARRESTO EMERGENCIA PREMUTO PTZ03;2
+    E0005 : BOOL ;	//++ZNE02+PTZ03-SB_01;ARRESTO EMERGENCIA PTZ03 NÃO RIPRISTINATO;2
+    E0006 : BOOL ;	//++ZNE02+PGA01-SB_01;ARRESTO EMERGENCIA PREMUTO PGA01;2
+    E0007 : BOOL ;	//++ZNE02+PGA01-SB_01;ARRESTO EMERGENCIA PGA01 NÃO RIPRISTINATO;2
+    E0008 : BOOL ;	//++ZNE02+PGA02-SB_01;ARRESTO EMERGENCIA PREMUTO PGA02;2
+    E0009 : BOOL ;	//++ZNE02+PGA02-SB_01;ARRESTO EMERGENCIA PGA02 NÃO RIPRISTINATO;2
+    E0010 : BOOL ;	//++ZNE02+VT_01-BR_01;BARRIERA VT_01 ACIONADA;2
+    E0011 : BOOL ;	//++ZNE02+VT_01-BR_01;BARRIERA VT_01 NÃO RESTAURADA;2
+    E0012 : BOOL ;	//++ZNE02+VT_01-SQ_01;SALOON 1 VT_01 ACIONADA;2
+    E0013 : BOOL ;	//++ZNE02+VT_01-SQ_01;SALOON 1 VT_01 NÃO RESTAURADA;2
+    E0014 : BOOL ;	//++ZNE02+VT_01-SQ_02;SALOON 2 VT_01 ACIONADA;2
+    E0015 : BOOL ;	//++ZNE02+VT_01-SQ_02;SALOON 2 VT_01 NÃO RESTAURADA;2
+    E0016 : BOOL ;	//++ZNE02+XGA01-SC_01;PORTÃO 1 ABERTO;2
+    E0017 : BOOL ;	//++ZNE02+XGA01-SC_01;PORTÃO 1 NÃO RESTAURADO;2
+    E0018 : BOOL ;	//++ZNE02+XGA02-SC_01;PORTÃO 2 ABERTO;2
+    E0019 : BOOL ;	//++ZNE02+XGA02-SC_01;PORTÃO 2 NAO RESTAURADO;2
+    E0020 : BOOL ;	//++ZNE02+XGA03-SC_01;PORTÃO 3 ABERTO;2
+    E0021 : BOOL ;	//++ZNE02+XGA03-SC_01;PORTÃO 3 NÃO RESTAURADO;2
+    E0022 : BOOL ;	//++ZNE02+XGA04-SC_01;PORTÃO 4 ABERTO;2
+    E0023 : BOOL ;	//++ZNE02+XGA04-SC_01;PORTÃO 4 NÃO RESTAURADO;2
+    E0024 : BOOL ;	//++ZNE02+B__01-BR_01;BARRIERA B__01  ACIONADA;2
+    E0025 : BOOL ;	//++ZNE02+B__01-BR_01;BARRIERA B__01 NAO RESTAURADA;2
+    E0026 : BOOL ;	//++ZNE02+TQ_01-SQB01;DISPOSITIVO BHUL 1 INTERVENUTO;2
+    E0027 : BOOL ;	//++ZNE02+TQ_01-SQB02;DISPOSITIVO BHUL 2 INTERVENUTO;2
+    E0028 : BOOL ;	//++ZNE02+TQ_02-SQB02;DISPOSITIVO BHUL 1 INTERVENUTO;2
+    E0029 : BOOL ;	//++ZNE02+TQ_02-SQB03;DISPOSITIVO BHUL 2 INTERVENUTO;2
+    E0030 : BOOL ;	//++ZNE02+CTR01-SQB01;TIME OUT ABERTURA CENTRADOR;2
+    E0031 : BOOL ;	//++ZNE02+SQ03:4;OBTURADOR MANUAL NAO ESTA EM REPOUSO;1 
+    E0032 : BOOL ;	//++ZNE02+HCZ01-QF_11;24Vcc ALIMENTAÇÃO SERVIZI NOK;1
+    E0033 : BOOL ;	//++ZNE02+HCZ01-QF_12;24Vcc ALIMENTAÇÃO MODULI FDI/O NOK;1
+    E0034 : BOOL ;	//++ZNE02+HCZ01-QF_13;24Vcc ALIMENTAÇÃO INPUT NOK;1
+    E0035 : BOOL ;	//++ZNE02+HCZ01-QF_14;24Vcc ALIMENTAÇÃO OUTPUT NOK;1
+    E0036 : BOOL ;	//++ZNE02+HCZ01-QF_17;24Vcc ALIMENTAÇÃO SWITCH NOK;1
+    E0037 : BOOL ;	//++ZNE02+HCZ01-QF_18;24Vcc ALIMENTAÇÃO SCHEDA ANALOGICA NOK;1
+    E0038 : BOOL ;	//++ZNE02+HCZ01-QF_19;24Vcc ALIMENTAÇÃO ELETTROVALVOLE NOK;1
+    E0039 : BOOL ;	//++ZNE02+HCZ01-QF_21;224Vcc ALIMENTAÇÃO MOVIFIT RULLI;1
+    E0040 : BOOL ;	//++ZNE02+HCZ01-QF_23;24Vcc ALIMENTAÇÃO HKC01 NOK;1
+    E0041 : BOOL ;	//++ZNE02+HCZ01-QF_24;24Vcc ALIMENTAÇÃO HKC02-03 NOK;1
+    E0042 : BOOL ;	//++ZNE02+HCZ01-QM_01;ALIMENTAÇÃO INVERSOR U__01 TQ_01 NOK;1
+    E0043 : BOOL ;	//++ZNE02+HCZ01-QF_02;ALIMENTAÇÃO FREIO MOTOR U__01 TQ_01 NOK;1
+    E0044 : BOOL ;	//++ZNE02+HCZ01-QM_03;ALIMENTAÇÃO INVERSOR FORCOLE U__03 TQ_01 NOK;1
+    E0045 : BOOL ;	//++ZNE02+HCZ01-QF_04;ALIMENTAÇÃO FREIO MOTOR FORCOLE U__03 TQ_01 NOK;1
+    E0046 : BOOL ;	//++ZNE02+HCZ01-QM_05;ALIMENTAÇÃO MOTOR CENTRADOR CTR01 NOK;1
+    E0047 : BOOL ;	//++ZNE02+HCZ01-QM_06;ALIMENTAÇÃO 440V SCATOLA HKC01 NOK;1
+    E0048 : BOOL ;	//++ZNE02+HCZ02-QM_01;ALIMENTAÇÃO INVERSOR U_01 TQ_02 NOK;1
+    E0049 : BOOL ;	//++ZNE02+HCZ02-QF_02;ALIMENTAÇÃO FREIO MOTOR U__01 TQ_02 NOK;1
+    E0050 : BOOL ;	//++ZNE02+HCZ02-QM_03;ALIMENTAÇÃO MOTOR RULLI TQ_02 NOK;1
+    E0051 : BOOL ;	//++ZNE02+HKC01-QM_01;ALIMENTAÇÃO TRANSPORTADOR TRP01 NOK;1
+    E0052 : BOOL ;	//++ZNE02+HKC01-QM_02;ALIMENTAÇÃO CENTRADOR CTR01 NOK;1
+    E0053 : BOOL ;	//++ZNE02+HKC01-QF_02;ALIMENTAÇÃO BORDO MACCHINA NOK;1
+    E0054 : BOOL ;	//++ZNE02+HCZ01-QM_02;ALIMENTAÇÃO INVERSOR U__02 TQ_01 NOK;1
+    E0055 : BOOL ;	//++ZNE02+HCZ01-QF_03;ALIMENTAÇÃO FREIO MOTOR U__02 TQ_01 NOK;1
+    E0056 : BOOL ;	//++ZNE02+HCZ01-QM_04;ALIMENTAÇÃO INVERSOR FORCOLE U__04 TQ_01 NOK;1
+    E0057 : BOOL ;	//++ZNE02+HCZ01-QF_05;ALIMENTAÇÃO FREIO MOTOR FORCOLE U__04 TQ_01 NOK;1
+    E0058 : BOOL ;	//++ZNE02+HCZ02-QM_02;ALIMENTAÇÃO INVERSOR U__02 TQ_02 NOK;1
+    E0059 : BOOL ;	//++ZNE02+HCZ02-QF_03;ALIMENTAÇÃO FREIO MOTOR U__02 TQ_02 NOK;1
+    E0060 : BOOL ;	//++ZNE02+TQ_01-SQ_01;CONTROLE DE STAFFA DX NÃO OK;1 
+    E0061 : BOOL ;	//++ZNE02+TQ_01-SQ_01;CONTROLE DE STAFFA SX NÃO OK;1 
+    E0062 : BOOL ;	//++ZNE02+BL02;TIMEOUT TRANSITO BL01 PARA BL02;1 
+    E0063 : BOOL ;	//++ZNE02+TQ01; AVARIA DRIKA;1 
+    E0064 : BOOL ;	//++ZNE02+PCV01-SP_01;FALHA FALTA DE AR;1
+    E0065 : BOOL ;	//++ZNE02+BL_01;FALHA PASSAGEM BILANCELLA COM BLOCO ABERTO;1
+    E0066 : BOOL ;	//++ZNE02+BL_01;FALHA PASSAGEM BILANCELLA COM BLOCO FECHADO;1
+    E0067 : BOOL ;	//++ZNE02+BL_01;FALHA TIME OUT ABERTURA;1
+    E0068 : BOOL ;	//++ZNE02+BL_01;FALHA TIME OUT FECHAMENTO;1
+    E0069 : BOOL ;	//++ZNE02+BL_01;FALHA TIME OUT ZONA OCCUPATA;56
+    E0070 : BOOL ;	//++ZNE02+BL_02;FALHA PASSAGEM BILANCELLA COM BLOCO APERTO;1
+    E0071 : BOOL ;	//++ZNE02+BL_02;FALHA PASSAGEM BILANCELLA COM BLOCO FECHADO;1
+    E0072 : BOOL ;	//++ZNE02+BL_02;FALHA TIME OUT ABERTURA;1
+    E0073 : BOOL ;	//++ZNE02+BL_02;FALHA TIME OUT FECHAMENTO;1
+    E0074 : BOOL ;	//++ZNE02+BL_02;FALHA TIME OUT ZONA OCUPADA;56
+    E0075 : BOOL ;	//++ZNE02+PCV02-SP_02;FALHA FALTA DE AR;1
+    E0076 : BOOL ;	//++ZNE02+BL_03;FALHA CONTEMPORANETA' FC SU BLOCCO;1
+    E0077 : BOOL ;	//++ZNE02+BL_03;FALHA TIME OUT MOVIMENTAZIONE;1
+    E0078 : BOOL ;	//++ZNE02+BL_03;FALHA TIME OUT TRASFERIMEMNTO;1
+    E0079 : BOOL ;	//++ZNE02+BL_04;FALHA CONTEMPORANETA' FC SU BLOCCO;1
+    E0080 : BOOL ;	//++ZNE02+BL_04;FALHA TIME OUT MOVIMENTAZIONE;1
+    E0081 : BOOL ;	//++ZNE02+BL_04;FALHA TIME OUT TRASFERIMEMNTO;1
+    E0082 : BOOL ;	//++ZNE02+BL_05;FALHA CONTEMPORANETA' FC SU BLOCCO;1
+    E0083 : BOOL ;	//++ZNE02+BL_05;FALHA TIME OUT MOVIMENTAZIONE;1
+    E0084 : BOOL ;	//++ZNE02+BL_05;FALHA TIME OUT TRASFERIMENTO;1
+    E0085 : BOOL ;	//++ZNE02+CTR01;FALHA CONTEMPORANETA' FC ABERTO/FECHADO;1
+    E0086 : BOOL ;	//++ZNE02+CTR01;FALHA TERMICO;1
+    E0087 : BOOL ;	//++ZNE02+CTR01;FALHA TIME OUT ABERTO;1
+    E0088 : BOOL ;	//++ZNE02+CTR01;FALHA TIME OUT FECHADO;1
+    E0089 : BOOL ;	//++ZNE02+CTR02;FALHA CONTEMPORANETA' FC APERTO/CHIUSO;1
+    E0090 : BOOL ;	//++ZNE02+CTR02;FALHA TERMICO;1
+    E0091 : BOOL ;	//++ZNE02+CTR02;FALHA TIME OUT ABERTURA;1
+    E0092 : BOOL ;	//++ZNE02+CTR02;FALHA TIME OUT FECHAMENTO;1
+    E0093 : BOOL ;	//++ZNE02+SBL01;FALTA CONTROLE ABERTURA SBLOCO;1
+    E0094 : BOOL ;	//++ZNE02+SBL01;FALHA TIME OUT ABERTURA;1
+    E0095 : BOOL ;	//++ZNE02+SBL01;FALHA TIME OUT FECHAMENTO;1
+    E0096 : BOOL ;	//++ZNE02+TRP01;FALHA TERMICO;1
+    E0097 : BOOL ;	//++ZNE02+TRP01;FALHA TIME OUT RULLIERA;1
+    E0098 : BOOL ;	//++ZNE02+TRP01;FALHA CONTEMPORANEITA FC;1
+    E0099 : BOOL ;	//++ZNE02+TRP02;FALHA TERMICO;1
+    E0100 : BOOL ;	//++ZNE02+TRP02;FALHA TIME OUT RULLIERA;1
+    E0101 : BOOL ;	//++ZNE02+TRP02;FALHA CONTEMPORANEITA FC;1
+    E0102 : BOOL ;	//++ZNE02+BL_01;FALHA NÃO PRESENÇA DE BILANCELLA IN BL01;1
+    E0103 : BOOL ;	//++ZNE02+BL_04-B__01;FOTOCELLULA PRESENÇA MOTOR SU PALLET DISALLINEATA;1
+    E0104 : BOOL ;	//++ZNE02+BL_02-B__01;FOTOCELLULA PRESENÇA MOTOR SU BILANCELLA DISALLINEATA;1
+    E0105 : BOOL ;	//++ZNE02+TQ_02-SP_01:2;FALHA MANCANZA ARIA;1
+    E0106 : BOOL ;	//++ZNE02+TRP03;FALHA TERMICO;1
+    E0107 : BOOL ;	//++ZNE02+TRP03;FALHA TIME OUT ROTAZIONE;1
+    E0108 : BOOL ;	//++ZNE02+TRP03;FALHA INVERSOR IN FAULT;1
+    E0109 : BOOL ;	//++ZNE02+TRP02;BYPASS CENTRADOR CTR02 ZNE02 PTZ01;54
+    E0110 : BOOL ;	// 
+    E0111 : BOOL ;	// 
+    E0112 : BOOL ;	
+    E0113 : BOOL ;	
+    E0114 : BOOL ;	
+    E0115 : BOOL ;	
+    E0116 : BOOL ;	
+    E0117 : BOOL ;	
+    E0118 : BOOL ;	
+    E0119 : BOOL ;	
+    E0120 : BOOL ;	
+    E0121 : BOOL ;	
+    E0122 : BOOL ;	
+    E0123 : BOOL ;	
+    E0124 : BOOL ;	
+    E0125 : BOOL ;	
+    E0126 : BOOL ;	
+    E0127 : BOOL ;	
+    E0128 : BOOL ;	
+    E0129 : BOOL ;	
+    E0130 : BOOL ;	
+    E0131 : BOOL ;	
+    E0132 : BOOL ;	
+    E0133 : BOOL ;	
+    E0134 : BOOL ;	
+    E0135 : BOOL ;	
+    E0136 : BOOL ;	
+    E0137 : BOOL ;	
+    E0138 : BOOL ;	
+    E0139 : BOOL ;	
+    E0140 : BOOL ;	
+    E0141 : BOOL ;	
+    E0142 : BOOL ;	
+    E0143 : BOOL ;	
+    E0144 : BOOL ;	//++ZNE02+HCZ01-QF_16;24Vcc ALIMENTAZIONE DISPLAY NOK;58
+    E0145 : BOOL ;	//++ZNE02+HCZ01-QF_31;INTERRUTTORE ALIMENTAZIONE CONDIZIONATORE OK NOK;58
+    E0146 : BOOL ;	//++ZNE02+WIP02;AVARIA LETTURA SUL TAG PALLET;5
+    E0147 : BOOL ;	//++ZNE02+WIP02;AVARIA ERRATA SCRITTURA SU BILANCELLA;5
+    E0148 : BOOL ;	//++ZNE02+WIP02;AVARIA MANCA IL CONSENSO AL PRELIEVO ;10
+    E0149 : BOOL ;	//++ZNE02+WIP02;TESTINA IN ERRORE PER LA LETTURA SU PALLET;5
+    E0150 : BOOL ;	//++ZNE02+WIP02;TESTINA IN ERRORE PER SCRITURA SU BILANCELLA;5
+    E0151 : BOOL ;	//++ZNE02+WIP02;MANCATO DATI DI CONTROLLO CONGRUENZA SU BILANCELLA;1
+    E0152 : BOOL ;	//++ZNE02+PTZ01;ZONA IN MANUALE;16
+    E0153 : BOOL ;	//++ZNE02+PTZ02;ZONA IN MANUALE;16
+    E0154 : BOOL ;	//++ZNE02+PTZ03;ZONA IN MANUALE;16
+    E0155 : BOOL ;	//++ZNE02+HKC02-QF_02;ALIMENTAZIONE INPUT DI BORDO CAMPO OK;1
+    E0156 : BOOL ;	// 
+    E0157 : BOOL ;	// 
+    E0158 : BOOL ;	// 
+    E0159 : BOOL ;	// 
+    E0160 : BOOL ;	//++ZNE02+PTZ01-SB_04;COMANDARE L'AVVIO CICLO;15
+    E0161 : BOOL ;	// 
+    E0162 : BOOL ;	//++ZNE02+PTZ01-SA_02;SELETTORE ESCLUSIONE SICUREZZE AZIONATO;16
+    E0163 : BOOL ;	//++ZNE02;IN PRODUZIONE;19
+    E0164 : BOOL ;	//++ZNE02+PTZ02-SB_04;COMANDARE L'AVVIO CICLO;15
+    E0165 : BOOL ;	//++ZNE02+PTZ02;RICHIESTA ACCESSO;13
+    E0166 : BOOL ;	//++ZNE02+PTZ02-SA_02;SELETTORE ESCLUSIONE SICUREZZE AZIONATO;16
+    E0167 : BOOL ;	//++ZNE02;IN PRODUZIONE;19
+    E0168 : BOOL ;	//++ZNE02+PTZ03-SB_04;COMANDARE L'AVVIO CICLO;15
+    E0169 : BOOL ;	//++ZNE02+PTZ03;RICHIESTA ACCESSO;13
+    E0170 : BOOL ;	//++ZNE02+PTZ03-SA_02;SELETTORE ESCLUSIONE SICUREZZE AZIONATO;16
+    E0171 : BOOL ;	//++ZNE02+PTZ03;IN PRODUZIONE;19
+    E0172 : BOOL ;	//++ZNE02+PGA01;RICHIESTA ACCESSO MODALITA' AM;13
+    E0173 : BOOL ;	//++ZNE02+PGA01;RICHIESTA ACCESSO MODALITA' PM;14
+    E0174 : BOOL ;	//++ZNE02+PGA02;RICHIESTA ACCESSO MODALITA' AM;13
+    E0175 : BOOL ;	//++ZNE02+PGA02;RICHIESTA ACCESSO MODALITA' PM;14
+    E0176 : BOOL ;	//++ZNE02+HCZ01-DSW01;ERRORE NODO PROFINET 20 SCALANCE;1
+    E0177 : BOOL ;	//++ZNE02+HCZ01-DMC01;ERRORE NODO PROFINET 21 ET200S;1
+    E0178 : BOOL ;	//++ZNE02+PTZ01-DMC01;ERRORE NODO PROFINET 22 ET200S;1
+    E0179 : BOOL ;	//++ZNE02+PTZ02-DMC01;ERRORE NODO PROFINET 23 ET200S;1
+    E0180 : BOOL ;	//++ZNE02+PTZ03-DMC01;ERRORE NODO PROFINET 24 ET200S;1
+    E0181 : BOOL ;	//++ZNE02+HKC01-DMC01;ERRORE NODO PROFINET 25 ET200S;1
+    E0182 : BOOL ;	//++ZNE02+HKC02-DMC01;ERRORE NODO PROFINET 26 ET200S;1
+    E0183 : BOOL ;	//++ZNE02+HCZ01-U__01;ERRORE NODO PROFINET 27 MOVIDRIVE;1
+    E0184 : BOOL ;	//++ZNE02+HCZ01-U__03;ERRORE NODO PROFINET 28 MOVIDRIVE;1
+    E0185 : BOOL ;	//++ZNE02+TQR01-U__01;ERRORE NODO PROFINET 29 MOVIFIT;1
+    E0186 : BOOL ;	//++ZNE02+HCZ02-U__01;ERRORE NODO PROFINET 81 MOVIDRIVE;1
+    E0187 : BOOL ;	//++ZNE02+PTZ01;MANCATO SCARICO;9
+    E0188 : BOOL ;	//++ZNE02+PTZ02;MANCATO SCARICO;9 
+    E0189 : BOOL ;	//++ZNE02+HCZ01-U__02;ERRORE NODO PROFINET 44 MOVIDRIVE;1
+    E0190 : BOOL ;	//++ZNE02+HCZ01-U__04;ERRORE NODO PROFINET 45 MOVIDRIVE;1
+    E0191 : BOOL ;	//++ZNE02+HCZ02-U__02;ERRORE NODO PROFINET 48 MOVIDRIVE;1
+    E0192 : BOOL ;	//++ZNE02+BL_07;AVARIA TIME OUT TRANSF;1 
+    E0193 : BOOL ;	//++ZNE02+BL_07;AVARIA SICUREZZE NO OK;1
+    E0194 : BOOL ;	//++ZNE02+BL_04;AVARIA FALTA PRESENÇA DE PALET NA RETIRADA DE MOTOR;1
+    E0195 : BOOL ;	// 
+    E0196 : BOOL ;	// 
+    E0197 : BOOL ;	// 
+    E0198 : BOOL ;	// 
+    E0199 : BOOL ;	// 
+    E0200 : BOOL ;	//++ZNE02+PCV03-SP_03;AVARIA MANCANZA ARIA;1
+    E0201 : BOOL ;	//++ZNE02+BL_06;AVARIA DI CONTEMPORANEA;1 
+    E0202 : BOOL ;	//++ZNE02+BL_06;AVARIA TIME OUT MOV;1 
+    E0203 : BOOL ;	//++ZNE02+BL_06;AVARIA TIME OUT TRANSF;1 
+    E0204 : BOOL ;	//++ZNE02+BL_06;AVARIA SICUREZZE NO OK;1 
+    E0205 : BOOL ;	// 
+    E0206 : BOOL ;	//++ZNE02+BL_07;AVARIA DI CONTEMPORANEA;1 
+    E0207 : BOOL ;	//++ZNE02+BL_07;AVARIA TIME OUT MOV;1 
+    E0208 : BOOL ;	
+    E0209 : BOOL ;	
+    E0210 : BOOL ;	
+    E0211 : BOOL ;	
+    E0212 : BOOL ;	
+    E0213 : BOOL ;	
+    E0214 : BOOL ;	
+    E0215 : BOOL ;	
+    E0216 : BOOL ;	
+    E0217 : BOOL ;	
+    E0218 : BOOL ;	
+    E0219 : BOOL ;	
+    E0220 : BOOL ;	
+    E0221 : BOOL ;	
+    E0222 : BOOL ;	
+    E0223 : BOOL ;	
+    E0224 : BOOL ;	//++ZNE02+HCZ01-DMC01;FALHA MODULO PROFSAFE FDO01;2
+    E0225 : BOOL ;	//++ZNE02+HCZ01-DMC01;FALHA MODULO PROFSAFE FDI01;2
+    E0226 : BOOL ;	//++ZNE02+HCZ01-DMC01;FALHA MODULO PROFSAFE FDI02;2
+    E0227 : BOOL ;	//++ZNE02+HCZ01-DMC01;FALHA MODULO PROFSAFE FDI03;2
+    E0228 : BOOL ;	//++ZNE02+HCZ01-DMC01;FALHA MODULO PROFSAFE FDI04;2
+    E0229 : BOOL ;	//++ZNE02+PTZ01-DMC01;FALHA MODULO PROFSAFE FDI01;2
+    E0230 : BOOL ;	//++ZNE02+PTZ02-DMC01;FALHA MODULO PROFSAFE FDI01;2
+    E0231 : BOOL ;	//++ZNE02+PTZ03-DMC01;FALHA MODULO PROFSAFE FDI01;2
+    E0232 : BOOL ;	
+    E0233 : BOOL ;	
+    E0234 : BOOL ;	
+    E0235 : BOOL ;	
+    E0236 : BOOL ;	
+    E0237 : BOOL ;	
+    E0238 : BOOL ;	
+    E0239 : BOOL ;	
+    E0240 : BOOL ;	
+    E0241 : BOOL ;	
+    E0242 : BOOL ;	
+    E0243 : BOOL ;	
+    E0244 : BOOL ;	
+    E0245 : BOOL ;	
+    E0246 : BOOL ;	
+    E0247 : BOOL ;	
+    E0248 : BOOL ;	
+    E0249 : BOOL ;	
+    E0250 : BOOL ;	
+    E0251 : BOOL ;	
+    E0252 : BOOL ;	
+    E0253 : BOOL ;	
+    E0254 : BOOL ;	
+    E0255 : BOOL ;	
+    E0256 : BOOL ;	
+    E0257 : BOOL ;	
+    E0258 : BOOL ;	
+    E0259 : BOOL ;	
+    E0260 : BOOL ;	
+    E0261 : BOOL ;	
+    E0262 : BOOL ;	
+    E0263 : BOOL ;	
+    E0264 : BOOL ;	
+    E0265 : BOOL ;	
+    E0266 : BOOL ;	
+    E0267 : BOOL ;	
+    E0268 : BOOL ;	
+    E0269 : BOOL ;	
+    E0270 : BOOL ;	
+    E0271 : BOOL ;	
+    E0272 : BOOL ;	
+    E0273 : BOOL ;	
+    E0274 : BOOL ;	
+    E0275 : BOOL ;	
+    E0276 : BOOL ;	
+    E0277 : BOOL ;	
+    E0278 : BOOL ;	
+    E0279 : BOOL ;	
+    E0280 : BOOL ;	
+    E0281 : BOOL ;	
+    E0282 : BOOL ;	
+    E0283 : BOOL ;	
+    E0284 : BOOL ;	
+    E0285 : BOOL ;	
+    E0286 : BOOL ;	
+    E0287 : BOOL ;	
+    E0288 : BOOL ;	
+    E0289 : BOOL ;	
+    E0290 : BOOL ;	
+    E0291 : BOOL ;	
+    E0292 : BOOL ;	
+    E0293 : BOOL ;	
+    E0294 : BOOL ;	
+    E0295 : BOOL ;	
+    E0296 : BOOL ;	
+    E0297 : BOOL ;	
+    E0298 : BOOL ;	
+    E0299 : BOOL ;	
+    E0300 : BOOL ;	
+    E0301 : BOOL ;	
+    E0302 : BOOL ;	
+    E0303 : BOOL ;	
+    E0304 : BOOL ;	
+    E0305 : BOOL ;	
+    E0306 : BOOL ;	
+    E0307 : BOOL ;	
+    E0308 : BOOL ;	
+    E0309 : BOOL ;	
+    E0310 : BOOL ;	
+    E0311 : BOOL ;	
+    E0312 : BOOL ;	
+    E0313 : BOOL ;	
+    E0314 : BOOL ;	
+    E0315 : BOOL ;	
+    E0316 : BOOL ;	
+    E0317 : BOOL ;	
+    E0318 : BOOL ;	
+    E0319 : BOOL ;	
+    E0320 : BOOL ;	
+    E0321 : BOOL ;	
+    E0322 : BOOL ;	
+    E0323 : BOOL ;	
+    E0324 : BOOL ;	
+    E0325 : BOOL ;	
+    E0326 : BOOL ;	
+    E0327 : BOOL ;	
+    E0328 : BOOL ;	
+    E0329 : BOOL ;	
+    E0330 : BOOL ;	
+    E0331 : BOOL ;	
+    E0332 : BOOL ;	
+    E0333 : BOOL ;	
+    E0334 : BOOL ;	
+    E0335 : BOOL ;	
+    E0336 : BOOL ;	
+    E0337 : BOOL ;	
+    E0338 : BOOL ;	
+    E0339 : BOOL ;	
+    E0340 : BOOL ;	
+    E0341 : BOOL ;	
+    E0342 : BOOL ;	
+    E0343 : BOOL ;	
+    E0344 : BOOL ;	
+    E0345 : BOOL ;	
+    E0346 : BOOL ;	
+    E0347 : BOOL ;	
+    E0348 : BOOL ;	
+    E0349 : BOOL ;	
+    E0350 : BOOL ;	
+    E0351 : BOOL ;	
+    E0352 : BOOL ;	
+    E0353 : BOOL ;	
+    E0354 : BOOL ;	
+    E0355 : BOOL ;	
+    E0356 : BOOL ;	
+    E0357 : BOOL ;	
+    E0358 : BOOL ;	
+    E0359 : BOOL ;	
+    E0360 : BOOL ;	
+    E0361 : BOOL ;	
+    E0362 : BOOL ;	
+    E0363 : BOOL ;	
+    E0364 : BOOL ;	
+    E0365 : BOOL ;	
+    E0366 : BOOL ;	
+    E0367 : BOOL ;	
+    E0368 : BOOL ;	
+    E0369 : BOOL ;	
+    E0370 : BOOL ;	
+    E0371 : BOOL ;	
+    E0372 : BOOL ;	
+    E0373 : BOOL ;	
+    E0374 : BOOL ;	
+    E0375 : BOOL ;	
+    E0376 : BOOL ;	
+    E0377 : BOOL ;	
+    E0378 : BOOL ;	
+    E0379 : BOOL ;	
+    E0380 : BOOL ;	
+    E0381 : BOOL ;	
+    E0382 : BOOL ;	
+    E0383 : BOOL ;	
+    E0384 : BOOL ;	
+    E0385 : BOOL ;	
+    E0386 : BOOL ;	
+    E0387 : BOOL ;	
+    E0388 : BOOL ;	
+    E0389 : BOOL ;	
+    E0390 : BOOL ;	
+    E0391 : BOOL ;	
+    E0392 : BOOL ;	
+    E0393 : BOOL ;	
+    E0394 : BOOL ;	
+    E0395 : BOOL ;	
+    E0396 : BOOL ;	
+    E0397 : BOOL ;	
+    E0398 : BOOL ;	
+    E0399 : BOOL ;	
+    E0400 : BOOL ;	
+    E0401 : BOOL ;	
+    E0402 : BOOL ;	
+    E0403 : BOOL ;	
+    E0404 : BOOL ;	
+    E0405 : BOOL ;	
+    E0406 : BOOL ;	
+    E0407 : BOOL ;	
+    E0408 : BOOL ;	
+    E0409 : BOOL ;	
+    E0410 : BOOL ;	
+    E0411 : BOOL ;	
+    E0412 : BOOL ;	
+    E0413 : BOOL ;	
+    E0414 : BOOL ;	
+    E0415 : BOOL ;	
+    E0416 : BOOL ;	
+    E0417 : BOOL ;	
+    E0418 : BOOL ;	
+    E0419 : BOOL ;	
+    E0420 : BOOL ;	
+    E0421 : BOOL ;	
+    E0422 : BOOL ;	
+    E0423 : BOOL ;	
+    E0424 : BOOL ;	
+    E0425 : BOOL ;	
+    E0426 : BOOL ;	
+    E0427 : BOOL ;	
+    E0428 : BOOL ;	
+    E0429 : BOOL ;	
+    E0430 : BOOL ;	
+    E0431 : BOOL ;	
+    E0432 : BOOL ;	
+    E0433 : BOOL ;	
+    E0434 : BOOL ;	
+    E0435 : BOOL ;	
+    E0436 : BOOL ;	
+    E0437 : BOOL ;	
+    E0438 : BOOL ;	
+    E0439 : BOOL ;	
+    E0440 : BOOL ;	
+    E0441 : BOOL ;	
+    E0442 : BOOL ;	
+    E0443 : BOOL ;	
+    E0444 : BOOL ;	
+    E0445 : BOOL ;	
+    E0446 : BOOL ;	
+    E0447 : BOOL ;	
+    E0448 : BOOL ;	
+    E0449 : BOOL ;	
+    E0450 : BOOL ;	
+    E0451 : BOOL ;	
+    E0452 : BOOL ;	
+    E0453 : BOOL ;	
+    E0454 : BOOL ;	
+    E0455 : BOOL ;	
+    E0456 : BOOL ;	
+    E0457 : BOOL ;	
+    E0458 : BOOL ;	
+    E0459 : BOOL ;	
+    E0460 : BOOL ;	
+    E0461 : BOOL ;	
+    E0462 : BOOL ;	
+    E0463 : BOOL ;	
+    E0464 : BOOL ;	
+    E0465 : BOOL ;	
+    E0466 : BOOL ;	
+    E0467 : BOOL ;	
+    E0468 : BOOL ;	
+    E0469 : BOOL ;	
+    E0470 : BOOL ;	
+    E0471 : BOOL ;	
+    E0472 : BOOL ;	
+    E0473 : BOOL ;	
+    E0474 : BOOL ;	
+    E0475 : BOOL ;	
+    E0476 : BOOL ;	
+    E0477 : BOOL ;	
+    E0478 : BOOL ;	
+    E0479 : BOOL ;	
+    E0480 : BOOL ;	
+    E0481 : BOOL ;	
+    E0482 : BOOL ;	
+    E0483 : BOOL ;	
+    E0484 : BOOL ;	
+    E0485 : BOOL ;	
+    E0486 : BOOL ;	
+    E0487 : BOOL ;	
+    E0488 : BOOL ;	
+    E0489 : BOOL ;	
+    E0490 : BOOL ;	
+    E0491 : BOOL ;	
+    E0492 : BOOL ;	
+    E0493 : BOOL ;	
+    E0494 : BOOL ;	
+    E0495 : BOOL ;	
+    E0496 : BOOL ;	
+    E0497 : BOOL ;	
+    E0498 : BOOL ;	
+    E0499 : BOOL ;	
+    E0500 : BOOL ;	
+    E0501 : BOOL ;	
+    E0502 : BOOL ;	
+    E0503 : BOOL ;	
+    E0504 : BOOL ;	
+    E0505 : BOOL ;	
+    E0506 : BOOL ;	
+    E0507 : BOOL ;	
+    E0508 : BOOL ;	
+    E0509 : BOOL ;	
+    E0510 : BOOL ;	
+    E0511 : BOOL ;	
+   END_STRUCT ;	
+  END_STRUCT ;	
+BEGIN
+   CM_ID := '=UM1_1'; 
+   STATION_ID := '++ZNE02'; 
+   ELEMENT_ID := ''; 
+   DB_ID := 0; 
+   PART_STYLE := ''; 
+   ACT_CYCLE_TIME := 0; 
+   COUNT_GOOD := 0; 
+   COUNT_SCRAP := 0; 
+   ACCUMULATOR[0] := 0; 
+   ACCUMULATOR[1] := 0; 
+   ACCUMULATOR[2] := 0; 
+   ACCUMULATOR[3] := 0; 
+   ACCUMULATOR[4] := 0; 
+   ACCUMULATOR[5] := 0; 
+   ACCUMULATOR[6] := 0; 
+   ACCUMULATOR[7] := 0; 
+   ACCUMULATOR[8] := 0; 
+   ACCUMULATOR[9] := 0; 
+   ACCUMULATOR[10] := 0; 
+   ACCUMULATOR[11] := 0; 
+   ACCUMULATOR[12] := 0; 
+   ACCUMULATOR[13] := 0; 
+   ACCUMULATOR[14] := 0; 
+   ACCUMULATOR[15] := 0; 
+   SPARE_01[0] := 0; 
+   SPARE_01[1] := 0; 
+   SPARE_01[2] := 0; 
+   SPARE_01[3] := 0; 
+   SPARE_01[4] := 0; 
+   SPARE_01[5] := 0; 
+   SPARE_01[6] := 0; 
+   SPARE_01[7] := 0; 
+   SPARE_01[8] := 0; 
+   SPARE_01[9] := 0; 
+   SPARE_01[10] := 0; 
+   SPARE_01[11] := 0; 
+   SPARE_01[12] := 0; 
+   SPARE_01[13] := 0; 
+   SPARE_01[14] := 0; 
+   SPARE_01[15] := 0; 
+   SPARE_01[16] := 0; 
+   SPARE_01[17] := 0; 
+   CODE_EVENT[0] := 0; 
+   CODE_EVENT[1] := 0; 
+   CODE_EVENT[2] := 0; 
+   CODE_EVENT[3] := 0; 
+   CODE_EVENT[4] := 0; 
+   CODE_EVENT[5] := 0; 
+   CODE_EVENT[6] := 0; 
+   CODE_EVENT[7] := 0; 
+   event.E0000 := FALSE; 
+   event.E0001 := FALSE; 
+   event.E0002 := FALSE; 
+   event.E0003 := FALSE; 
+   event.E0004 := FALSE; 
+   event.E0005 := FALSE; 
+   event.E0006 := FALSE; 
+   event.E0007 := FALSE; 
+   event.E0008 := FALSE; 
+   event.E0009 := FALSE; 
+   event.E0010 := FALSE; 
+   event.E0011 := FALSE; 
+   event.E0012 := FALSE; 
+   event.E0013 := FALSE; 
+   event.E0014 := TRUE; 
+   event.E0015 := FALSE; 
+   event.E0016 := FALSE; 
+   event.E0017 := FALSE; 
+   event.E0018 := FALSE; 
+   event.E0019 := FALSE; 
+   event.E0020 := FALSE; 
+   event.E0021 := FALSE; 
+   event.E0022 := TRUE; 
+   event.E0023 := FALSE; 
+   event.E0024 := FALSE; 
+   event.E0025 := FALSE; 
+   event.E0026 := FALSE; 
+   event.E0027 := FALSE; 
+   event.E0028 := FALSE; 
+   event.E0029 := FALSE; 
+   event.E0030 := FALSE; 
+   event.E0031 := FALSE; 
+   event.E0032 := FALSE; 
+   event.E0033 := FALSE; 
+   event.E0034 := FALSE; 
+   event.E0035 := FALSE; 
+   event.E0036 := FALSE; 
+   event.E0037 := FALSE; 
+   event.E0038 := FALSE; 
+   event.E0039 := FALSE; 
+   event.E0040 := FALSE; 
+   event.E0041 := FALSE; 
+   event.E0042 := FALSE; 
+   event.E0043 := FALSE; 
+   event.E0044 := FALSE; 
+   event.E0045 := FALSE; 
+   event.E0046 := FALSE; 
+   event.E0047 := FALSE; 
+   event.E0048 := FALSE; 
+   event.E0049 := FALSE; 
+   event.E0050 := FALSE; 
+   event.E0051 := FALSE; 
+   event.E0052 := FALSE; 
+   event.E0053 := FALSE; 
+   event.E0054 := FALSE; 
+   event.E0055 := FALSE; 
+   event.E0056 := FALSE; 
+   event.E0057 := FALSE; 
+   event.E0058 := FALSE; 
+   event.E0059 := FALSE; 
+   event.E0060 := FALSE; 
+   event.E0061 := FALSE; 
+   event.E0062 := FALSE; 
+   event.E0063 := FALSE; 
+   event.E0064 := FALSE; 
+   event.E0065 := FALSE; 
+   event.E0066 := FALSE; 
+   event.E0067 := FALSE; 
+   event.E0068 := FALSE; 
+   event.E0069 := FALSE; 
+   event.E0070 := FALSE; 
+   event.E0071 := FALSE; 
+   event.E0072 := FALSE; 
+   event.E0073 := FALSE; 
+   event.E0074 := FALSE; 
+   event.E0075 := FALSE; 
+   event.E0076 := FALSE; 
+   event.E0077 := FALSE; 
+   event.E0078 := FALSE; 
+   event.E0079 := FALSE; 
+   event.E0080 := FALSE; 
+   event.E0081 := FALSE; 
+   event.E0082 := FALSE; 
+   event.E0083 := FALSE; 
+   event.E0084 := FALSE; 
+   event.E0085 := FALSE; 
+   event.E0086 := FALSE; 
+   event.E0087 := FALSE; 
+   event.E0088 := FALSE; 
+   event.E0089 := FALSE; 
+   event.E0090 := FALSE; 
+   event.E0091 := FALSE; 
+   event.E0092 := FALSE; 
+   event.E0093 := FALSE; 
+   event.E0094 := FALSE; 
+   event.E0095 := FALSE; 
+   event.E0096 := FALSE; 
+   event.E0097 := FALSE; 
+   event.E0098 := FALSE; 
+   event.E0099 := FALSE; 
+   event.E0100 := FALSE; 
+   event.E0101 := FALSE; 
+   event.E0102 := FALSE; 
+   event.E0103 := FALSE; 
+   event.E0104 := FALSE; 
+   event.E0105 := FALSE; 
+   event.E0106 := FALSE; 
+   event.E0107 := FALSE; 
+   event.E0108 := FALSE; 
+   event.E0109 := FALSE; 
+   event.E0110 := FALSE; 
+   event.E0111 := FALSE; 
+   event.E0112 := FALSE; 
+   event.E0113 := FALSE; 
+   event.E0114 := FALSE; 
+   event.E0115 := FALSE; 
+   event.E0116 := FALSE; 
+   event.E0117 := FALSE; 
+   event.E0118 := FALSE; 
+   event.E0119 := FALSE; 
+   event.E0120 := FALSE; 
+   event.E0121 := FALSE; 
+   event.E0122 := FALSE; 
+   event.E0123 := FALSE; 
+   event.E0124 := FALSE; 
+   event.E0125 := FALSE; 
+   event.E0126 := FALSE; 
+   event.E0127 := FALSE; 
+   event.E0128 := FALSE; 
+   event.E0129 := FALSE; 
+   event.E0130 := FALSE; 
+   event.E0131 := FALSE; 
+   event.E0132 := FALSE; 
+   event.E0133 := FALSE; 
+   event.E0134 := FALSE; 
+   event.E0135 := FALSE; 
+   event.E0136 := FALSE; 
+   event.E0137 := FALSE; 
+   event.E0138 := FALSE; 
+   event.E0139 := FALSE; 
+   event.E0140 := FALSE; 
+   event.E0141 := FALSE; 
+   event.E0142 := FALSE; 
+   event.E0143 := FALSE; 
+   event.E0144 := FALSE; 
+   event.E0145 := FALSE; 
+   event.E0146 := FALSE; 
+   event.E0147 := FALSE; 
+   event.E0148 := FALSE; 
+   event.E0149 := FALSE; 
+   event.E0150 := FALSE; 
+   event.E0151 := FALSE; 
+   event.E0152 := TRUE; 
+   event.E0153 := FALSE; 
+   event.E0154 := FALSE; 
+   event.E0155 := FALSE; 
+   event.E0156 := FALSE; 
+   event.E0157 := FALSE; 
+   event.E0158 := FALSE; 
+   event.E0159 := FALSE; 
+   event.E0160 := FALSE; 
+   event.E0161 := FALSE; 
+   event.E0162 := FALSE; 
+   event.E0163 := FALSE; 
+   event.E0164 := FALSE; 
+   event.E0165 := FALSE; 
+   event.E0166 := FALSE; 
+   event.E0167 := FALSE; 
+   event.E0168 := FALSE; 
+   event.E0169 := TRUE; 
+   event.E0170 := FALSE; 
+   event.E0171 := FALSE; 
+   event.E0172 := FALSE; 
+   event.E0173 := FALSE; 
+   event.E0174 := FALSE; 
+   event.E0175 := FALSE; 
+   event.E0176 := FALSE; 
+   event.E0177 := FALSE; 
+   event.E0178 := FALSE; 
+   event.E0179 := FALSE; 
+   event.E0180 := FALSE; 
+   event.E0181 := FALSE; 
+   event.E0182 := FALSE; 
+   event.E0183 := FALSE; 
+   event.E0184 := FALSE; 
+   event.E0185 := FALSE; 
+   event.E0186 := FALSE; 
+   event.E0187 := FALSE; 
+   event.E0188 := FALSE; 
+   event.E0189 := FALSE; 
+   event.E0190 := FALSE; 
+   event.E0191 := FALSE; 
+   event.E0192 := TRUE; 
+   event.E0193 := FALSE; 
+   event.E0194 := FALSE; 
+   event.E0195 := FALSE; 
+   event.E0196 := FALSE; 
+   event.E0197 := FALSE; 
+   event.E0198 := FALSE; 
+   event.E0199 := FALSE; 
+   event.E0200 := FALSE; 
+   event.E0201 := FALSE; 
+   event.E0202 := FALSE; 
+   event.E0203 := FALSE; 
+   event.E0204 := FALSE; 
+   event.E0205 := FALSE; 
+   event.E0206 := FALSE; 
+   event.E0207 := FALSE; 
+   event.E0208 := FALSE; 
+   event.E0209 := FALSE; 
+   event.E0210 := FALSE; 
+   event.E0211 := FALSE; 
+   event.E0212 := FALSE; 
+   event.E0213 := FALSE; 
+   event.E0214 := FALSE; 
+   event.E0215 := FALSE; 
+   event.E0216 := FALSE; 
+   event.E0217 := FALSE; 
+   event.E0218 := FALSE; 
+   event.E0219 := FALSE; 
+   event.E0220 := FALSE; 
+   event.E0221 := FALSE; 
+   event.E0222 := FALSE; 
+   event.E0223 := FALSE; 
+   event.E0224 := FALSE; 
+   event.E0225 := FALSE; 
+   event.E0226 := FALSE; 
+   event.E0227 := FALSE; 
+   event.E0228 := FALSE; 
+   event.E0229 := FALSE; 
+   event.E0230 := FALSE; 
+   event.E0231 := FALSE; 
+   event.E0232 := FALSE; 
+   event.E0233 := FALSE; 
+   event.E0234 := FALSE; 
+   event.E0235 := FALSE; 
+   event.E0236 := FALSE; 
+   event.E0237 := FALSE; 
+   event.E0238 := FALSE; 
+   event.E0239 := FALSE; 
+   event.E0240 := FALSE; 
+   event.E0241 := FALSE; 
+   event.E0242 := FALSE; 
+   event.E0243 := FALSE; 
+   event.E0244 := FALSE; 
+   event.E0245 := FALSE; 
+   event.E0246 := FALSE; 
+   event.E0247 := FALSE; 
+   event.E0248 := FALSE; 
+   event.E0249 := FALSE; 
+   event.E0250 := FALSE; 
+   event.E0251 := FALSE; 
+   event.E0252 := FALSE; 
+   event.E0253 := FALSE; 
+   event.E0254 := FALSE; 
+   event.E0255 := FALSE; 
+   event.E0256 := FALSE; 
+   event.E0257 := FALSE; 
+   event.E0258 := FALSE; 
+   event.E0259 := FALSE; 
+   event.E0260 := FALSE; 
+   event.E0261 := FALSE; 
+   event.E0262 := FALSE; 
+   event.E0263 := FALSE; 
+   event.E0264 := FALSE; 
+   event.E0265 := FALSE; 
+   event.E0266 := FALSE; 
+   event.E0267 := FALSE; 
+   event.E0268 := FALSE; 
+   event.E0269 := FALSE; 
+   event.E0270 := FALSE; 
+   event.E0271 := FALSE; 
+   event.E0272 := FALSE; 
+   event.E0273 := FALSE; 
+   event.E0274 := FALSE; 
+   event.E0275 := FALSE; 
+   event.E0276 := FALSE; 
+   event.E0277 := FALSE; 
+   event.E0278 := FALSE; 
+   event.E0279 := FALSE; 
+   event.E0280 := FALSE; 
+   event.E0281 := FALSE; 
+   event.E0282 := FALSE; 
+   event.E0283 := FALSE; 
+   event.E0284 := FALSE; 
+   event.E0285 := FALSE; 
+   event.E0286 := FALSE; 
+   event.E0287 := FALSE; 
+   event.E0288 := FALSE; 
+   event.E0289 := FALSE; 
+   event.E0290 := FALSE; 
+   event.E0291 := FALSE; 
+   event.E0292 := FALSE; 
+   event.E0293 := FALSE; 
+   event.E0294 := FALSE; 
+   event.E0295 := FALSE; 
+   event.E0296 := FALSE; 
+   event.E0297 := FALSE; 
+   event.E0298 := FALSE; 
+   event.E0299 := FALSE; 
+   event.E0300 := FALSE; 
+   event.E0301 := FALSE; 
+   event.E0302 := FALSE; 
+   event.E0303 := FALSE; 
+   event.E0304 := FALSE; 
+   event.E0305 := FALSE; 
+   event.E0306 := FALSE; 
+   event.E0307 := FALSE; 
+   event.E0308 := FALSE; 
+   event.E0309 := FALSE; 
+   event.E0310 := FALSE; 
+   event.E0311 := FALSE; 
+   event.E0312 := FALSE; 
+   event.E0313 := FALSE; 
+   event.E0314 := FALSE; 
+   event.E0315 := FALSE; 
+   event.E0316 := FALSE; 
+   event.E0317 := FALSE; 
+   event.E0318 := FALSE; 
+   event.E0319 := FALSE; 
+   event.E0320 := FALSE; 
+   event.E0321 := FALSE; 
+   event.E0322 := FALSE; 
+   event.E0323 := FALSE; 
+   event.E0324 := FALSE; 
+   event.E0325 := FALSE; 
+   event.E0326 := FALSE; 
+   event.E0327 := FALSE; 
+   event.E0328 := FALSE; 
+   event.E0329 := FALSE; 
+   event.E0330 := FALSE; 
+   event.E0331 := FALSE; 
+   event.E0332 := FALSE; 
+   event.E0333 := FALSE; 
+   event.E0334 := FALSE; 
+   event.E0335 := FALSE; 
+   event.E0336 := FALSE; 
+   event.E0337 := FALSE; 
+   event.E0338 := FALSE; 
+   event.E0339 := FALSE; 
+   event.E0340 := FALSE; 
+   event.E0341 := FALSE; 
+   event.E0342 := FALSE; 
+   event.E0343 := FALSE; 
+   event.E0344 := FALSE; 
+   event.E0345 := FALSE; 
+   event.E0346 := FALSE; 
+   event.E0347 := FALSE; 
+   event.E0348 := FALSE; 
+   event.E0349 := FALSE; 
+   event.E0350 := FALSE; 
+   event.E0351 := FALSE; 
+   event.E0352 := FALSE; 
+   event.E0353 := FALSE; 
+   event.E0354 := FALSE; 
+   event.E0355 := FALSE; 
+   event.E0356 := FALSE; 
+   event.E0357 := FALSE; 
+   event.E0358 := FALSE; 
+   event.E0359 := FALSE; 
+   event.E0360 := FALSE; 
+   event.E0361 := FALSE; 
+   event.E0362 := FALSE; 
+   event.E0363 := FALSE; 
+   event.E0364 := FALSE; 
+   event.E0365 := FALSE; 
+   event.E0366 := FALSE; 
+   event.E0367 := FALSE; 
+   event.E0368 := FALSE; 
+   event.E0369 := FALSE; 
+   event.E0370 := FALSE; 
+   event.E0371 := FALSE; 
+   event.E0372 := FALSE; 
+   event.E0373 := FALSE; 
+   event.E0374 := FALSE; 
+   event.E0375 := FALSE; 
+   event.E0376 := FALSE; 
+   event.E0377 := FALSE; 
+   event.E0378 := FALSE; 
+   event.E0379 := FALSE; 
+   event.E0380 := FALSE; 
+   event.E0381 := FALSE; 
+   event.E0382 := FALSE; 
+   event.E0383 := FALSE; 
+   event.E0384 := FALSE; 
+   event.E0385 := FALSE; 
+   event.E0386 := FALSE; 
+   event.E0387 := FALSE; 
+   event.E0388 := FALSE; 
+   event.E0389 := FALSE; 
+   event.E0390 := FALSE; 
+   event.E0391 := FALSE; 
+   event.E0392 := FALSE; 
+   event.E0393 := FALSE; 
+   event.E0394 := FALSE; 
+   event.E0395 := FALSE; 
+   event.E0396 := FALSE; 
+   event.E0397 := FALSE; 
+   event.E0398 := FALSE; 
+   event.E0399 := FALSE; 
+   event.E0400 := FALSE; 
+   event.E0401 := FALSE; 
+   event.E0402 := FALSE; 
+   event.E0403 := FALSE; 
+   event.E0404 := FALSE; 
+   event.E0405 := FALSE; 
+   event.E0406 := FALSE; 
+   event.E0407 := FALSE; 
+   event.E0408 := FALSE; 
+   event.E0409 := FALSE; 
+   event.E0410 := FALSE; 
+   event.E0411 := FALSE; 
+   event.E0412 := FALSE; 
+   event.E0413 := FALSE; 
+   event.E0414 := FALSE; 
+   event.E0415 := FALSE; 
+   event.E0416 := FALSE; 
+   event.E0417 := FALSE; 
+   event.E0418 := FALSE; 
+   event.E0419 := FALSE; 
+   event.E0420 := FALSE; 
+   event.E0421 := FALSE; 
+   event.E0422 := FALSE; 
+   event.E0423 := FALSE; 
+   event.E0424 := FALSE; 
+   event.E0425 := FALSE; 
+   event.E0426 := FALSE; 
+   event.E0427 := FALSE; 
+   event.E0428 := FALSE; 
+   event.E0429 := FALSE; 
+   event.E0430 := FALSE; 
+   event.E0431 := FALSE; 
+   event.E0432 := FALSE; 
+   event.E0433 := FALSE; 
+   event.E0434 := FALSE; 
+   event.E0435 := FALSE; 
+   event.E0436 := FALSE; 
+   event.E0437 := FALSE; 
+   event.E0438 := FALSE; 
+   event.E0439 := FALSE; 
+   event.E0440 := FALSE; 
+   event.E0441 := FALSE; 
+   event.E0442 := FALSE; 
+   event.E0443 := FALSE; 
+   event.E0444 := FALSE; 
+   event.E0445 := FALSE; 
+   event.E0446 := FALSE; 
+   event.E0447 := FALSE; 
+   event.E0448 := FALSE; 
+   event.E0449 := FALSE; 
+   event.E0450 := FALSE; 
+   event.E0451 := FALSE; 
+   event.E0452 := FALSE; 
+   event.E0453 := FALSE; 
+   event.E0454 := FALSE; 
+   event.E0455 := FALSE; 
+   event.E0456 := FALSE; 
+   event.E0457 := FALSE; 
+   event.E0458 := FALSE; 
+   event.E0459 := FALSE; 
+   event.E0460 := FALSE; 
+   event.E0461 := FALSE; 
+   event.E0462 := FALSE; 
+   event.E0463 := FALSE; 
+   event.E0464 := FALSE; 
+   event.E0465 := FALSE; 
+   event.E0466 := FALSE; 
+   event.E0467 := FALSE; 
+   event.E0468 := FALSE; 
+   event.E0469 := FALSE; 
+   event.E0470 := FALSE; 
+   event.E0471 := FALSE; 
+   event.E0472 := FALSE; 
+   event.E0473 := FALSE; 
+   event.E0474 := FALSE; 
+   event.E0475 := FALSE; 
+   event.E0476 := FALSE; 
+   event.E0477 := FALSE; 
+   event.E0478 := FALSE; 
+   event.E0479 := FALSE; 
+   event.E0480 := FALSE; 
+   event.E0481 := FALSE; 
+   event.E0482 := FALSE; 
+   event.E0483 := FALSE; 
+   event.E0484 := FALSE; 
+   event.E0485 := FALSE; 
+   event.E0486 := FALSE; 
+   event.E0487 := FALSE; 
+   event.E0488 := FALSE; 
+   event.E0489 := FALSE; 
+   event.E0490 := FALSE; 
+   event.E0491 := FALSE; 
+   event.E0492 := FALSE; 
+   event.E0493 := FALSE; 
+   event.E0494 := FALSE; 
+   event.E0495 := FALSE; 
+   event.E0496 := FALSE; 
+   event.E0497 := FALSE; 
+   event.E0498 := FALSE; 
+   event.E0499 := FALSE; 
+   event.E0500 := FALSE; 
+   event.E0501 := FALSE; 
+   event.E0502 := FALSE; 
+   event.E0503 := FALSE; 
+   event.E0504 := FALSE; 
+   event.E0505 := FALSE; 
+   event.E0506 := FALSE; 
+   event.E0507 := FALSE; 
+   event.E0508 := FALSE; 
+   event.E0509 := FALSE; 
+   event.E0510 := FALSE; 
+   event.E0511 := FALSE; 
+END_DATA_BLOCK
+

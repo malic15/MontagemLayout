@@ -1,0 +1,1830 @@
+﻿@page
+@model MontagemLayout.Pages.LayoutMontagemModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Layout Montagem</title>
+    
+
+    <link rel="stylesheet" href="~/css/mapaMontagem.css" />
+    <link rel="stylesheet" href="~/css/chassis5Buffer.css" />
+    <link rel="stylesheet" href="~/css/chassis1Buffer.css" />
+    <link rel="stylesheet" href="~/css/deckingBuffer.css" />
+    <link rel="stylesheet" href="~/css/chassis2Buffer.css" />
+    <link rel="stylesheet" href="~/css/chassis3Buffer.css" />
+    <link rel="stylesheet" href="~/css/glazingBuffer.css" />
+    <link rel="stylesheet" href="~/css/chassis4Buffer.css" />
+    <link rel="stylesheet" href="~/css/pbsBuffer.css" />
+    <link rel="stylesheet" href="~/css/DataTableStyle.css" />
+    <link rel="stylesheet" href="~/css/datatables.css" />
+    <link rel="stylesheet" href="~/css/ScrollBar.css" />
+    <link rel="stylesheet" href="~/css/progressBar.css" />
+    <script src="~/js/chart.js"></script>
+    <script src="~/js/luxon@3.js"></script>
+    <script src="~/js/chartjs-adapter-luxon@1.js"></script>
+    <script src="~/js/chartjs-plugin-streaming@2.0.js"></script>
+    <script src="~/js/chartjs-plugin-datalabels.min.js"></script>
+
+    <script>
+        window.__INITIAL_STATE__ = @Html.Raw(Model.InitialJson ?? "{}")
+    </script>
+
+</head>
+<body>
+    <div id="layoutContainer">
+        <svg id="lineCanvas" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 0;"></svg>
+        <h1 style="font-size: 13px; font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Layout Montagem</h1>
+        <p id="currentDateTime" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Data e Hora: @DateTime.Now</p>
+        <h2 id="targetProd" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Meta de Produção: --</h2>
+        <h3 id="theoreticalProd" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Produção Teórica: --</h3>
+        <p id="text-Pintura" class="floating-text">Pintura</p>
+        <div id="alert" class="alert"></div>
+        <button id="buttonUp" class="arrow-button up" onclick="toUp()"></button>
+        <button id="buttonDown" class="arrow-button down" onclick="toDown()"></button>
+        <button id="hide-button-buffer" class="hide-button disabled" onclick="hideBuffer()">Esconder Acúmulo</button>
+
+        <button id="final1" class="botton btn-final1">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Final 1</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip">PDT 118</div></div>
+                <div class="space"><div class="tooltip">PDT 119</div></div>
+                <div class="space"><div class="tooltip">PDT 120</div></div>
+                <div class="space"><div class="tooltip">PDT 121</div></div>
+                <div class="space"><div class="tooltip">PDT 122</div></div>
+                <div class="space"><div class="tooltip">PDT 123</div></div>
+                <div class="space"><div class="tooltip">PDT 124</div></div>
+                <div class="space"><div class="tooltip">PDT 125</div></div>
+                <div class="space"><div class="tooltip">PDT 126</div></div>
+                <div class="space"><div class="tooltip">PDT 127</div></div>
+                <div class="space"><div class="tooltip">PDT 128</div></div>
+                <div class="space"><div class="tooltip">PDT 129</div></div>
+                <div class="space"><div class="tooltip">PDT 130</div></div>
+                <div class="space"><div class="tooltip">PDT 131</div></div>
+                <div class="space"><div class="tooltip">PDT 132</div></div>
+                <div class="space"><div class="tooltip">PDT 133</div></div>
+                <div class="space"><div class="tooltip">PDT 134</div></div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="final2" class="botton btn-final2">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Final 2</div>
+                <div class="fault_text"></div>
+                
+                <div class="horizontal-space">
+                    <div class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="horizontal-space">
+                    <div class="showOPE"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="space"><div class="tooltip">PDT 135</div></div>
+                <div class="space"><div class="tooltip">PDT 136</div></div>
+                <div class="space"><div class="tooltip">PDT 137</div></div>
+                <div class="space"><div class="tooltip">PDT 138</div></div>
+                <div class="space"><div class="tooltip">PDT 139</div></div>
+                <div class="space"><div class="tooltip">PDT 140</div></div>
+                <div class="space"><div class="tooltip">PDT 141</div></div>
+                <div class="space"><div class="tooltip">PDT 142</div></div>
+                <div class="space"><div class="tooltip">PDT 143</div></div>
+                <div class="space"><div class="tooltip">PDT 144</div></div>
+                <div class="space"><div class="tooltip">PDT 145</div></div>
+                <div class="space"><div class="tooltip">PDT 146</div></div>
+                <div class="space"><div class="tooltip">PDT 147</div></div>
+                <div class="space"><div class="tooltip">PDT 148</div></div>
+                <div class="space"><div class="tooltip">PDT BV</div></div>
+                <div class="space"><div class="tooltip">PDT Q1</div></div>
+            </div>
+            <div class="vertical-space">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="chassis5" class="botton btn-ch05 horinzontal">
+            <div class="progress-bar bar-h">
+                <div class="progress-actual atual-h"></div>
+                <div class="progress-target target-h"></div>
+                <div class="progress-info info-h">
+                    <div class="progress-text text-h"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-h"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="btn-text-horizontal">Chassis 5</div>
+            </div>
+            <div class="horizontal-space">
+                <div class="fault_text"></div>
+                <div class="vertical-space">
+                    <div id="TableBtn" class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space"><div class="tooltip">PDT 109</div></div>
+                <div class="space"><div class="tooltip">PDT 110</div></div>
+                <div class="space"><div class="tooltip">PDT Q1</div></div>
+                <div class="space"><div class="tooltip">PDT Q2</div></div>
+                <div class="space"><div class="tooltip">PDT Q3</div></div>
+                <div class="space"><div class="tooltip">PDT 111</div></div>
+                <div class="space"><div class="tooltip">PDT 112</div></div>
+                <div class="space"><div class="tooltip">PDT 113</div></div>
+                <div class="space"><div class="tooltip">PDT 114</div></div>
+                <div class="space"><div class="tooltip">PDT 115</div></div>
+                <div class="space"><div class="tooltip">PDT 116</div></div>
+                <div class="space"><div class="tooltip">PDT 117</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+            </div>
+        </button>
+        <button id="chassis4" class="botton btn-ch04 horinzontal">
+            <div class="progress-bar bar-h">
+                <div class="progress-actual atual-h"></div>
+                <div class="progress-target target-h"></div>
+                <div class="progress-info info-h">
+                    <div class="progress-text text-h"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-h"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="btn-text-horizontal">Chassis 4</div>
+            </div>
+            <div class="horizontal-space">
+                <div class="fault_text"></div>
+                <div class="vertical-space">
+                    <div id="TableBtn" class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space"><div class="tooltip">PDT 87</div></div>
+                <div class="space"><div class="tooltip">PDT 88</div></div>
+                <div class="space"><div class="tooltip">PDT 89</div></div>
+                <div class="space"><div class="tooltip">PDT 90</div></div>
+                <div class="space"><div class="tooltip">PDT 91</div></div>
+                <div class="space"><div class="tooltip">PDT 92</div></div>
+                <div class="space"><div class="tooltip">PDT 93</div></div>
+                <div class="space"><div class="tooltip">PDT 94</div></div>
+                <div class="space"><div class="tooltip">PDT 95</div></div>
+                <div class="space"><div class="tooltip">PDT 96</div></div>
+                <div class="space"><div class="tooltip">PDT 97</div></div>
+                <div class="space"><div class="tooltip">PDT 98</div></div>
+                <div class="space"><div class="tooltip">PDT 99</div></div>
+                <div class="space"><div class="tooltip">PDT 100</div></div>
+                <div class="space"><div class="tooltip">PDT 101</div></div>
+                <div class="space"><div class="tooltip">PDT 102</div></div>
+                <div class="space"><div class="tooltip">PDT 103</div></div>
+                <div class="space"><div class="tooltip">PDT 104</div></div>
+                <div class="space"><div class="tooltip">PDT 105</div></div>
+                <div class="space"><div class="tooltip">PDT 106</div></div>
+                <div class="space"><div class="tooltip">PDT 107</div></div>
+                <div class="space"><div class="tooltip">PDT 108</div></div>
+                <div class="space"><div class="tooltip">PDT Q1</div></div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+            </div>
+        </button>
+        
+        <button id="chassis3" class="botton btn-ch03 horinzontal">
+            <div class="progress-bar bar-h">
+                <div class="progress-actual atual-h"></div>
+                <div class="progress-target target-h"></div>
+                <div class="progress-info info-h">
+                    <div class="progress-text text-h"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-h"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+            <div class="btn-text-horizontal">Chassis 3</div>
+            </div>
+            <div class="horizontal-space">
+            <div class="fault_text"></div>
+                <div class="vertical-space">
+                    <div id="TableBtn" class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="horizontal-space">
+            <div class="space"><div class="tooltip">PDT 75</div></div>
+            <div class="space"><div class="tooltip">PDT 76</div></div>
+            <div class="space"><div class="tooltip">PDT 77</div></div>
+            <div class="space"><div class="tooltip"></div></div>
+            <div class="space"><div class="tooltip">PDT 78</div></div>
+            <div class="space"><div class="tooltip">PDT 79</div></div>
+            <div class="space"><div class="tooltip">PDT 80</div></div>
+            <div class="space"><div class="tooltip">PDT BV</div></div>
+            <div class="space"><div class="tooltip"></div></div>
+            <div class="space"><div class="tooltip">PDT Q1</div></div>
+            <div class="space"><div class="tooltip">PDT 81</div></div>
+            <div class="space"><div class="tooltip">PDT 81</div></div>
+            <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+            </div>
+        </button>
+        <button id="chassis2" class="botton btn-ch02">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+            <div class="btn-text-vertical">Chassis 2</div>
+            <div class="fault_text"></div>
+            <div class="horizontal-space">
+                <div class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+            </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+                <div class="vertical-space">
+                <div class="space"><div class="tooltip">PDT 57</div></div>
+                <div class="space"><div class="tooltip">PDT 58</div></div>
+                <div class="space"><div class="tooltip">PDT 59</div></div>
+                <div class="space"><div class="tooltip">PDT 60</div></div>
+                <div class="space"><div class="tooltip">PDT 61</div></div>
+                <div class="space"><div class="tooltip">PDT 62</div></div>
+                <div class="space"><div class="tooltip">PDT 63</div></div>
+                <div class="space"><div class="tooltip">PDT 64</div></div>
+                <div class="space"><div class="tooltip">PDT 65</div></div>
+                <div class="space"><div class="tooltip">PDT 66</div></div>
+                <div class="space"><div class="tooltip">PDT 67</div></div>
+                <div class="space"><div class="tooltip">PDT 68</div></div>
+                <div class="space"><div class="tooltip">PDT 69</div></div>
+                <div class="space"><div class="tooltip">PDT 70</div></div>
+                <div class="space"><div class="tooltip">PDT 71</div></div>
+                <div class="space"><div class="tooltip">PDT 72</div></div>
+                <div class="space"><div class="tooltip">PDT 73</div></div>
+                <div class="space"><div class="tooltip">PDT 74</div></div>
+                <div class="space"></div>
+                <div class="space"></div>
+                <div class="space"></div>
+                <div class="space"></div>
+            </div>
+            <div class="vertical-space">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="chassis1" class="botton btn-ch01 horinzontal">
+            <div class="progress-bar bar-h">
+                <div class="progress-actual atual-h"></div>
+                <div class="progress-target target-h"></div>
+                <div class="progress-info info-h">
+                    <div class="progress-text text-h"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-h"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+            <div class="btn-text-horizontal">Chassis 1</div>
+            </div>
+            <div class="horizontal-space">
+                <div class="fault_text"></div>
+                <div class="vertical-space">
+                    <div id="TableBtn" class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="horizontal-space">
+            <div class="invert-spaces">
+                <div class="space"><div class="tooltip">PDT 45</div></div>
+                <div class="space"><div class="tooltip">PDT 46</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip">PDT 47</div></div>
+                <div class="space"><div class="tooltip">PDT 48</div></div>
+                <div class="space"><div class="tooltip">PDT 49</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip">PDT 50</div></div>
+                <div class="space"><div class="tooltip">PDT 51</div></div>
+                <div class="space"><div class="tooltip">PDT 52</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="invert-spaces">
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+            </div>
+            </div>
+        </button>
+        <button id="trim1" class="botton btn-trim1">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Trim 1</div>
+            <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+                <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip">PDT 1</div></div>
+                <div class="space"><div class="tooltip">PDT 2</div></div>
+                <div class="space"><div class="tooltip">PDT 3</div></div>
+                <div class="space"><div class="tooltip">PDT 4</div></div>
+                <div class="space"><div class="tooltip">PDT 5</div></div>
+                <div class="space"><div class="tooltip">PDT 6</div></div>
+                <div class="space"><div class="tooltip">PDT 7</div></div>
+                <div class="space"><div class="tooltip">PDT 8</div></div>
+                <div class="space"><div class="tooltip">PDT 9</div></div>
+                <div class="space"><div class="tooltip">PDT 10</div></div>
+                <div class="space"><div class="tooltip">PDT 11</div></div>
+                <div class="space"><div class="tooltip">PDT 12</div></div>
+                <div class="space"><div class="tooltip">PDT 13</div></div>
+                <div class="space"><div class="tooltip">PDT 14</div></div>
+                <div class="space"><div class="tooltip">PDT 15</div></div>
+                <div class="space"><div class="tooltip">PDT 16</div></div>
+                <div class="space"><div class="tooltip">PDT 17</div></div>
+                <div class="space"><div class="tooltip">PDT 18</div></div>
+                <div class="space"><div class="tooltip">PDT 19</div></div>
+                <div class="space"><div class="tooltip">PDT 20</div></div>
+                <div class="space"><div class="tooltip">PDT 21</div></div>
+                <div class="space"><div class="tooltip">PDT 22</div></div>
+                <div class="space"><div class="tooltip">PDT 23</div></div>
+                <div class="space"><div class="tooltip">PDT 24</div></div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="trim2" class="botton btn-trim2">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+            <div class="btn-text-vertical">Trim 2</div>
+            <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="space"><div class="tooltip">PDT 25</div></div>
+                <div class="space"><div class="tooltip">PDT 26</div></div>
+                <div class="space"><div class="tooltip">PDT 27</div></div>
+                <div class="space"><div class="tooltip">PDT 28</div></div>
+                <div class="space"><div class="tooltip">PDT 29</div></div>
+                <div class="space"><div class="tooltip">PDT 30</div></div>
+                <div class="space"><div class="tooltip">PDT 31</div></div>
+                <div class="space"><div class="tooltip">PDT 32</div></div>
+                <div class="space"><div class="tooltip">PDT 33</div></div>
+                <div class="space"><div class="tooltip">PDT 34</div></div>
+                <div class="space"><div class="tooltip">PDT 35</div></div>
+                <div class="space"><div class="tooltip">PDT 36</div></div>
+                <div class="space"><div class="tooltip">PDT 37</div></div>
+                <div class="space"><div class="tooltip">PDT 38</div></div>
+                <div class="space"><div class="tooltip">PDT 39</div></div>
+                <div class="space"><div class="tooltip">PDT 40</div></div>
+                <div class="space"><div class="tooltip">PDT 41</div></div>
+                <div class="space"><div class="tooltip">PDT 42</div></div>
+                <div class="space"><div class="tooltip">PDT 43</div></div>
+                <div class="space"><div class="tooltip">PDT 44</div></div>
+                <div class="space"><div class="tooltip">PDT BV1</div></div>
+                <div class="space"><div class="tooltip">PDT Q2</div></div>
+                <div class="space"><div class="tooltip">PDT Q3</div></div>
+            </div>
+            <div class="vertical-space">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="trim0" class="botton btn-trim0">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+            <div class="btn-text-vertical">Trim 0</div>
+            <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip">PDT 03</div></div>
+                <div class="space"><div class="tooltip">PDT 04</div></div>
+                <div class="space"><div class="tooltip">PDT 05</div></div>
+                <div class="space"><div class="tooltip">PDT 06</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="deckingup" class="botton btn-deckingup">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+            <div class="btn-text-vertical">Decking Up</div>
+            <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip">OPE 140</div></div>
+                <div class="space"><div class="tooltip">OPE 150</div></div>
+                <div class="space"><div class="tooltip">OPE 160</div></div>
+                <div class="space"><div class="tooltip">OPE 170</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="deckingdown" class="botton btn-deckingdown">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+            <div class="btn-text-vertical">Decking D.</div>
+            <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="space"><div class="tooltip">PDT 30</div></div>
+                <div class="space"><div class="tooltip">PDT 40</div></div>
+                <div class="space"><div class="tooltip">PDT 50</div></div>
+                <div class="space"><div class="tooltip">PDT 60</div></div>
+                <div class="space"><div class="tooltip">PDT 70</div></div>
+                <div class="space"><div class="tooltip">PDT 80</div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="vertical-space">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="glazing" class="botton btn-glazing">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Glazing</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip">PDT 83</div></div>
+                <div class="space"><div class="tooltip">PDT 84</div></div>
+                <div class="space"><div class="tooltip">PDT 85</div></div>
+                <div class="space"><div class="tooltip">PDT 86</div></div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        <button id="portas" class="botton btn-door">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Portas</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip">PDT 01</div></div>
+                <div class="space"><div class="tooltip">PDT 02</div></div>
+                <div class="space"><div class="tooltip">PDT 03</div></div>
+                <div class="space"><div class="tooltip">PDT 04</div></div>
+                <div class="space"><div class="tooltip">PDT 05</div></div>
+                <div class="space"><div class="tooltip">PDT 06</div></div>
+                <div class="space"><div class="tooltip">PDT 07</div></div>
+                <div class="space"><div class="tooltip">PDT 08</div></div>
+                <div class="space"><div class="tooltip">PDT 09</div></div>
+                <div class="space"><div class="tooltip">PDT 10</div></div>
+                <div class="space"><div class="tooltip">PDT 11</div></div>
+                <div class="space"><div class="tooltip">PDT 12</div></div>
+                <div class="space"><div class="tooltip">PDT 13</div></div>
+                <div class="space"><div class="tooltip">PDT 14</div></div>
+                <div class="space"><div class="tooltip">PDT 15</div></div>
+                <div class="space"><div class="tooltip">PDT 16</div></div>
+                <div class="space"><div class="tooltip">PDT 17</div></div>
+                <div class="space"><div class="tooltip">PDT 18</div></div>
+                <div class="space"><div class="tooltip">PDT 19</div></div>
+                <div class="space"><div class="tooltip">PDT 20</div></div>
+                <div class="space"><div class="tooltip">PDT 21</div></div>
+                <div class="space"><div class="tooltip">PDT Q1</div></div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+        
+        <div id="chartContainerfinal">
+            <canvas id="lineChartfinal"></canvas>
+            <div id="chartTextfinal"></div>
+            <span class="tooltip">CH5 para Final</span>
+        </div>
+
+        <div class="ball final_zne3_tts1"><span class="tooltip">TTS01 ZNE03</span></div>
+        <div class="ball final_zne3_tts2"><span class="tooltip">TTS02 ZNE03</span></div>
+        <div class="ball final_zne3_tts3"><span class="tooltip">TTS03 ZNE03</span></div>
+        <div class="ball final_zne3_tts4"><span class="tooltip">TTS04 ZNE03</span></div>
+        <div class="ball final_zne3_tts5"><span class="tooltip">TTS05 ZNE03</span></div>
+        <div class="ball final_zne3_tts6"><span class="tooltip">TTS06 ZNE03</span></div>
+        <div class="ball final_zne3_tts7"><span class="tooltip">TTS07 ZNE03</span></div>
+        <div class="ball final_zne3_tts8"><span class="tooltip">TTS08 ZNE03</span></div>
+        <div class="ball final_zne3_tts9"><span class="tooltip">TTS09 ZNE03</span></div>
+        <div class="ball final_zne3_tts10"><span class="tooltip">TTS10 ZNE03</span></div>
+        <div class="ball final_zne3_tts11"><span class="tooltip">TTS11 ZNE03</span></div>
+        <div class="ball final_zne3_tts12"><span class="tooltip">TTS12 ZNE03</span></div>
+        <div class="ball final_zne3_tts13"><span class="tooltip">TTS13 ZNE03</span></div>
+        <div class="ball final_zne3_tts14"><span class="tooltip">TTS14 ZNE03</span></div>
+        <div class="ball final_zne3_tts15"><span class="tooltip">TTS15 ZNE03</span></div>
+        <div class="ball final_zne3_tts16"><span class="tooltip">TTS16 ZNE03</span></div>
+
+        <div id="chartContainertrim">
+            <canvas id="lineCharttrim"></canvas>
+            <div id="chartTexttrim"></div>
+            <span class="tooltip">Gancho Vazio</span>
+        </div>
+
+        <div class="ball trim_zne4_tts2"><span class="tooltip">TTS02 ZNE04</span></div>
+        <div class="ball trim_zne4_tts3"><span class="tooltip">TTS03 ZNE04</span></div>
+        <div class="ball trim_zne4_tts4"><span class="tooltip">TTS04 ZNE04</span></div>
+        <div class="ball trim_zne4_tts5"><span class="tooltip">TTS05 ZNE04</span></div>
+        <div class="ball trim_zne4_tts6"><span class="tooltip">TTS06 ZNE04</span></div>
+        <div class="ball trim_zne4_tts8"><span class="tooltip">TTS08 ZNE04</span></div>
+        <div class="ball trim_zne4_tts10"><span class="tooltip">TTS10 ZNE04</span></div>
+        <div class="ball trim_zne4_tts11"><span class="tooltip">TTS11 ZNE04</span></div>
+        <div class="ball trim_zne4_tts12"><span class="tooltip">TTS12 ZNE04</span></div>
+        <div class="ball trim_zne4_tts13"><span class="tooltip">TTS13 ZNE04</span></div>
+        <div class="ball trim_zne4_tts14"><span class="tooltip">TTS14 ZNE04</span></div>
+        <div class="ball trim_zne4_tts15"><span class="tooltip">TTS15 ZNE04</span></div>
+        <div class="ball trim_zne4_tts16"><span class="tooltip">TTS16 ZNE04</span></div>
+        <div class="ball trim_zne4_tts17"><span class="tooltip">TTS17 ZNE04</span></div>
+        <div class="ball trim_zne4_tts18"><span class="tooltip">TTS18 ZNE04</span></div>
+        <div class="ball trim_zne4_tts19"><span class="tooltip">TTS19 ZNE04</span></div>
+        <div class="ball trim_zne4_tts20"><span class="tooltip">TTS20 ZNE04</span></div>
+        <div class="ball trim_zne4_tts21"><span class="tooltip">TTS21 ZNE04</span></div>
+        <div class="ball trim_zne4_tts22"><span class="tooltip">TTS22 ZNE04</span></div>
+        <div class="ball trim_zne5_tts1"><span class="tooltip">TTS01 ZNE05</span></div>
+        <div class="ball trim_zne5_tts2"><span class="tooltip">TTS02 ZNE05</span></div>
+        <div class="ball trim_zne5_tts3"><span class="tooltip">TTS03 ZNE05</span></div>
+        <div class="ball trim_zne5_tts4"><span class="tooltip">TTS04 ZNE05</span></div>
+        <div class="ball trim_zne5_tts5"><span class="tooltip">TTS05 ZNE05</span></div>
+        <div class="ball trim_zne5_tts6"><span class="tooltip">TTS06 ZNE05</span></div>
+        <div class="ball trim_zne5_tts7"><span class="tooltip">TTS07 ZNE05</span></div>
+        <div class="ball trim_zne5_tts8"><span class="tooltip">TTS08 ZNE05</span></div>
+        <div class="ball trim_zne5_tts9"><span class="tooltip">TTS09 ZNE05</span></div>
+        <div class="ball trim_zne5_tts10"><span class="tooltip">TTS10 ZNE05</span></div>
+        <div class="ball trim_zne5_tts11"><span class="tooltip">TTS11 ZNE05</span></div>
+        <div class="ball trim_zne5_tts12"><span class="tooltip">TTS12 ZNE05</span></div>
+        <div class="ball trim_zne5_tts13"><span class="tooltip">TTS13 ZNE05</span></div>
+
+        <div id="chartContainerch1">
+            <canvas id="lineChartch1"></canvas>
+            <div id="chartTextch1"></div>
+            <span class="tooltip">Trim para CH1</span>
+        </div>
+
+        <div class="ball ch1_zne1_tts1"><span class="tooltip">TTS1 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts2"><span class="tooltip">TTS2 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts3"><span class="tooltip">TTS3 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts4"><span class="tooltip">TTS4 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts5"><span class="tooltip">TTS5 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts6"><span class="tooltip">TTS6 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts7"><span class="tooltip">TTS7 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts8"><span class="tooltip">TTS8 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts9"><span class="tooltip">TTS9 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts10"><span class="tooltip">TTS10 ZNE01</span></div>
+        <div class="ball ch1_zne1_tts11"><span class="tooltip">TTS11 ZNE01</span></div>
+        <div class="ball ch1_zne2_tts1"><span class="tooltip">TTS1 ZNE02</span></div>
+        <div class="ball ch1_zne2_tts2"><span class="tooltip">TTS2 ZNE02</span></div>
+        <div class="ball ch1_zne2_tts3"><span class="tooltip">TTS3 ZNE02</span></div>
+        <div class="ball ch1_zne2_tts4"><span class="tooltip">TTS4 ZNE02</span></div>
+        <div class="ball ch1_zne2_tts5"><span class="tooltip">TTS5 ZNE02</span></div>
+        <div class="ball ch1_zne2_tts6"><span class="tooltip">TTS6 ZNE02</span></div>
+
+        <div id="chartContainerdecking">
+            <canvas id="lineChartdecking"></canvas>
+            <div id="chartTextdecking"></div>
+            <span class="tooltip">CH1 para Decking</span>
+        </div>
+
+        <div class="ball decking_zne4_tts1"><span class="tooltip">TTS1 ZNE04</span></div>
+        <div class="ball decking_zne4_tts2"><span class="tooltip">TTS2 ZNE04</span></div>
+        <div class="ball decking_zne4_tts3"><span class="tooltip">TTS3 ZNE04</span></div>
+        <div class="ball decking_zne4_tts4"><span class="tooltip">TTS4 ZNE04</span></div>
+        <div class="ball decking_zne4_tts5"><span class="tooltip">TTS5 ZNE04</span></div>
+        <div class="ball decking_zne4_tts6"><span class="tooltip">TTS6 ZNE04</span></div>
+        <div class="ball decking_zne4_tts7"><span class="tooltip">TTS7 ZNE04</span></div>
+        <div class="ball decking_zne4_tts8"><span class="tooltip">TTS8 ZNE04</span></div>
+        <div class="ball decking_zne4_tts9"><span class="tooltip">TTS9 ZNE04</span></div>
+        <div class="ball decking_zne4_tts10"><span class="tooltip">TTS10 ZNE04</span></div>
+        <div class="ball decking_zne4_tts11"><span class="tooltip">TTS11 ZNE04</span></div>
+        <div class="ball decking_zne4_tts12"><span class="tooltip">TTS12 ZNE04</span></div>
+        <div class="ball decking_zne4_tts13"><span class="tooltip">TTS13 ZNE04</span></div>
+        <div class="ball decking_zne4_tts14"><span class="tooltip">TTS14 ZNE04</span></div>
+        <div class="ball decking_zne4_tts15"><span class="tooltip">TTS15 ZNE04</span></div>
+        <div class="ball decking_zne4_tts16"><span class="tooltip">TTS16 ZNE04</span></div>
+
+        <div id="chartContainerch2">
+            <canvas id="lineChartch2"></canvas>
+            <div id="chartTextch2"></div>
+            <span class="tooltip">Decking para CH2</span>
+        </div>
+
+        <div class="ball ch2_zne5_tts1"><span class="tooltip">TTS1 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts2"><span class="tooltip">TTS2 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts3"><span class="tooltip">TTS3 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts4"><span class="tooltip">TTS4 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts5"><span class="tooltip">TTS5 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts6"><span class="tooltip">TTS6 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts7"><span class="tooltip">TTS7 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts8"><span class="tooltip">TTS8 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts9"><span class="tooltip">TTS9 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts10"><span class="tooltip">TTS10 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts11"><span class="tooltip">TTS11 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts12"><span class="tooltip">TTS12 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts13"><span class="tooltip">TTS13 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts14"><span class="tooltip">TTS14 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts15"><span class="tooltip">TTS15 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts16"><span class="tooltip">TTS16 ZNE05</span></div>
+        <div class="ball ch2_zne5_tts17"><span class="tooltip">TTS17 ZNE05</span></div>
+
+        <div id="chartContainerch3">
+            <canvas id="lineChartch3"></canvas>
+            <div id="chartTextch3"></div>
+            <span class="tooltip">CH2 para CH3</span>
+        </div>
+
+        <div class="ball ch3_zne6_tts4"><span class="tooltip">TTS4 ZNE06</span></div>
+        <div class="ball ch3_zne6_tts5"><span class="tooltip">TTS5 ZNE06</span></div>
+        <div class="ball ch3_zne1_tts1"><span class="tooltip">TTS1 ZNE01</span></div>
+        <div class="ball ch3_zne1_tts2"><span class="tooltip">TTS2 ZNE01</span></div>
+        <div class="ball ch3_zne1_tts3"><span class="tooltip">TTS3 ZNE01</span></div>
+        <div class="ball ch3_zne1_tts4"><span class="tooltip">TTS4 ZNE01</span></div>
+        <div class="ball ch3_zne1_tts5"><span class="tooltip">TTS5 ZNE01</span></div>
+        <div class="ball ch3_zne1_tts6"><span class="tooltip">TTS6 ZNE01</span></div>
+        <div class="ball ch3_zne1_tts7"><span class="tooltip">TTS7 ZNE01</span></div>
+
+        <div id="chartContainerglazing">
+            <canvas id="lineChartglazing"></canvas>
+            <div id="chartTextglazing"></div>
+            <span class="tooltip">CH3 para Glazing</span>
+        </div>
+
+        <div class="ball glazing_zne3_tts1"><span class="tooltip">TTS1 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts2"><span class="tooltip">TTS2 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts3"><span class="tooltip">TTS3 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts4"><span class="tooltip">TTS4 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts5"><span class="tooltip">TTS5 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts6"><span class="tooltip">TTS6 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts7"><span class="tooltip">TTS7 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts8"><span class="tooltip">TTS8 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts9"><span class="tooltip">TTS9 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts10"><span class="tooltip">TTS10 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts11"><span class="tooltip">TTS11 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts12"><span class="tooltip">TTS12 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts13"><span class="tooltip">TTS13 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts14"><span class="tooltip">TTS14 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts15"><span class="tooltip">TTS15 ZNE03</span></div>
+        <div class="ball glazing_zne3_tts16"><span class="tooltip">TTS16 ZNE03</span></div>
+        <div class="ball glazing_zne4_tts1"><span class="tooltip">TTS1 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts2"><span class="tooltip">TTS2 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts3"><span class="tooltip">TTS3 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts4"><span class="tooltip">TTS4 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts5"><span class="tooltip">TTS5 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts6"><span class="tooltip">TTS6 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts7"><span class="tooltip">TTS7 ZNE04</span></div>
+        <div class="ball glazing_zne4_tts8"><span class="tooltip">TTS8 ZNE04</span></div>
+
+        <div id="chartContainerch4">
+            <canvas id="lineChartch4"></canvas>
+            <div id="chartTextch4"></div>
+            <span class="tooltip">Glazing para CH4</span>
+        </div>
+
+        <div class="ball ch4_zne1_tts1"><span class="tooltip">TTS1 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts2"><span class="tooltip">TTS2 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts3"><span class="tooltip">TTS3 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts4"><span class="tooltip">TTS4 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts5"><span class="tooltip">TTS5 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts6"><span class="tooltip">TTS6 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts7"><span class="tooltip">TTS7 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts8"><span class="tooltip">TTS8 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts9"><span class="tooltip">TTS9 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts10"><span class="tooltip">TTS10 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts11"><span class="tooltip">TTS11 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts12"><span class="tooltip">TTS12 ZNE01</span></div>
+        <div class="ball ch4_zne1_tts13"><span class="tooltip">TTS13 ZNE01</span></div>
+        <div class="ball ch4_zne2_tts1"><span class="tooltip">TTS1 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts2"><span class="tooltip">TTS2 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts3"><span class="tooltip">TTS3 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts4"><span class="tooltip">TTS4 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts5"><span class="tooltip">TTS5 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts6"><span class="tooltip">TTS6 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts7"><span class="tooltip">TTS7 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts8"><span class="tooltip">TTS8 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts9"><span class="tooltip">TTS9 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts10"><span class="tooltip">TTS10 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts11"><span class="tooltip">TTS11 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts12"><span class="tooltip">TTS12 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts13"><span class="tooltip">TTS13 ZNE02</span></div>
+        <div class="ball ch4_zne2_tts14"><span class="tooltip">TTS14 ZNE02</span></div>
+
+        <button id="trp" class="botton btn-trp">
+            <div class="vertical-space">
+            <div class="btn-text-vertical">Trp</div>
+            <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+        </button>
+
+        <button id="gomp" class="botton btn-gomp ">
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Gomp</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip">PDT 10</div></div>
+                <div class="space"><div class="tooltip">PDT 20</div></div>
+                <div class="space"><div class="tooltip">PDT 30</div></div>
+                <div class="space"><div class="tooltip">PDT 40</div></div>
+                <div class="space"><div class="tooltip">PDT 50</div></div>
+                <div class="space"><div class="tooltip">PDT 60</div></div>
+                <div class="space"><div class="tooltip">PDT 70</div></div>
+            </div>
+        </button>
+
+        <button id="umc" class="botton btn-umc">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Umc</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip">PDT 200</div></div>
+                <div class="space"><div class="tooltip">PDT 190</div></div>
+                <div class="space"><div class="tooltip">PDT 180</div></div>
+                <div class="space"><div class="tooltip">PDT 170</div></div>
+                <div class="space"><div class="tooltip">PDT 160</div></div>
+                <div class="space"><div class="tooltip">PDT 150</div></div>
+                <div class="space"><div class="tooltip">PDT 140</div></div>
+                <div class="space"><div class="tooltip">PDT 130</div></div>
+                <div class="space"><div class="tooltip">PDT 120</div></div>
+                <div class="space"><div class="tooltip">PDT 110</div></div>
+                <div class="space"><div class="tooltip">PDT 100</div></div>
+                <div class="space"><div class="tooltip">PDT 90</div></div>
+                @*                 <div class="space"><div class="tooltip">PDT 85</div></div>
+                <div class="space"><div class="tooltip">PDT 80</div></div>
+                <div class="space"><div class="tooltip">PDT 70</div></div>
+                <div class="space"><div class="tooltip">PDT 60</div></div>
+                <div class="space"><div class="tooltip">PDT 50</div></div>
+                <div class="space"><div class="tooltip">PDT 40</div></div>
+                <div class="space"><div class="tooltip">PDT 30</div></div>
+                <div class="space"><div class="tooltip">PDT 20</div></div>
+                <div class="space"><div class="tooltip">PDT 10</div></div> *@
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
+        </button>
+
+        <button id="tra" class="botton btn-tra">
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Tra</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space"><div class="tooltip">PDT 10</div></div>
+                <div class="space"><div class="tooltip">PDT 30</div></div>
+                <div class="space"><div class="tooltip">PDT 50</div></div>
+                <div class="space"><div class="tooltip">PDT 60</div></div>
+            </div>
+        </button>
+
+        <button id="goma" class="botton btn-goma">
+            <div class="vertical-space">
+                <div class="btn-text-vertical">Goma</div>
+                <div class="fault_text"></div>
+                <div class="horizontal-space">
+                    <div class="showTableBtn">
+                        <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
+                    </div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+            </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+               @*  <div class="space"><div class="tooltip">PDT 220</div></div>
+                <div class="space"><div class="tooltip">PDT 210</div></div>
+                <div class="space"><div class="tooltip">PDT 200</div></div>
+                <div class="space"><div class="tooltip">PDT 190</div></div>
+                <div class="space"><div class="tooltip">PDT 180</div></div>
+                <div class="space"><div class="tooltip">PDT 170</div></div>
+                <div class="space"><div class="tooltip">PDT 160</div></div>
+                <div class="space"><div class="tooltip">PDT 150</div></div>
+                <div class="space"><div class="tooltip">PDT 140</div></div>
+                <div class="space"><div class="tooltip">PDT 130</div></div>
+                <div class="space"><div class="tooltip">PDT 120</div></div>
+                <div class="space"><div class="tooltip">PDT 110</div></div>
+                <div class="space"><div class="tooltip">PDT 100</div></div>
+                <div class="space"><div class="tooltip">PDT 90</div></div>
+                <div class="space"><div class="tooltip">PDT 80</div></div>
+                <div class="space"><div class="tooltip">PDT 70</div></div> *@
+                <div class="space"><div class="tooltip">PDT 60</div></div>
+                <div class="space"><div class="tooltip">PDT 50</div></div>
+                <div class="space"><div class="tooltip">PDT 40</div></div>
+                <div class="space"><div class="tooltip">PDT 30</div></div>
+                <div class="space"><div class="tooltip">PDT 20</div></div>
+                <div class="space"><div class="tooltip">PDT 10</div></div>
+                <div id="gomaope170" class="botton btn-gomaope170">
+                    <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 170</div></div>
+                </div>
+                <div id="gomaope180" class="botton btn-gomaope180">
+                    <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 180</div></div>
+                </div>
+                <div id="gomaTo" class="botton btn-gomao180to190"></div>
+                <div id="gomaope190" class="botton btn-gomaope190">
+                    <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 190</div></div>
+                </div>
+                <div id="gomaope200" class="botton btn-gomaope200">
+                    <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 200</div></div>
+                </div>
+            </div>
+        </button>
+        
+
+        <button id="pb1" class="botton btn-pb1">
+            <div class="btn-text-horizontal">Pb1</div>    
+        </button>
+
+        <button id="pb2" class="botton btn-pb2">
+            <div class="btn-text-horizontal">Pb2</div>
+        </button>
+
+         <div id="chartContainerPbsToDif">
+            <canvas id="lineChartPbsToDif"></canvas>
+            <div id="chartTextPbsToDif"></div>
+        </div>
+
+        <div id="chartContainerPbsToTrim0">
+            <canvas id="lineChartPbsToTrim0"></canvas>
+            <div id="chartTextPbsToTrim0"></div>
+        </div>
+
+        <div id="chartContainerPbsToTrim1">
+            <canvas id="lineChartPbsToTrim1"></canvas>
+            <div id="chartTextPbsToTrim1"></div>
+        </div>
+        
+        <div id="chartContainerPbsToPint">
+            <canvas id="lineChartPbsToPint"></canvas>
+            <div id="chartTextPbsToPint"></div>
+        </div> 
+
+        
+
+        @*To Dif*@
+        <div class="upper PbsToDif_zne1_tr01"><span class="tooltip">TR01 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr02"><span class="tooltip">TR02 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr03"><span class="tooltip">TR03 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr04"><span class="tooltip">TR04 Z01 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne1_tg01"><span class="tooltip">TG01 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr05"><span class="tooltip">TR05 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr06"><span class="tooltip">TR06 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr07"><span class="tooltip">TR07 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr08"><span class="tooltip">TR08 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr09"><span class="tooltip">TR09 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr10"><span class="tooltip">TR10 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr11"><span class="tooltip">TR11 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_esa04"><span class="tooltip">ESA04 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr12"><span class="tooltip">TR12 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr13"><span class="tooltip">TR13 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr14"><span class="tooltip">TR14 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr15"><span class="tooltip">TR15 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr16"><span class="tooltip">TR16 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr01"><span class="tooltip">TR01 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tg01"><span class="tooltip">TG01 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tg02"><span class="tooltip">TG02 Z02</span></div>
+        <div class="upper PbsToDif_zne2_shl01"><span class="tooltip">SHL01 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr16"><span class="tooltip">TR16 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_shl02"><span class="tooltip">SHL02 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr43"><span class="tooltip">TR43 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_shl03"><span class="tooltip">SHL03 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr56"><span class="tooltip">TR56 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr57"><span class="tooltip">TR57 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr58"><span class="tooltip">TR58 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr31"><span class="tooltip">TR31 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr02"><span class="tooltip">TR02 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr03"><span class="tooltip">TR03 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr04"><span class="tooltip">TR04 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr05"><span class="tooltip">TR05 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr06"><span class="tooltip">TR06 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr07"><span class="tooltip">TR07 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr08"><span class="tooltip">TR08 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr01"><span class="tooltip">TR01 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_shl01"><span class="tooltip">SHL01 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr02"><span class="tooltip">TR02 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_shl02"><span class="tooltip">SHL02 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr15"><span class="tooltip">TR15 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr14"><span class="tooltip">TR14 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr13"><span class="tooltip">TR13 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr12"><span class="tooltip">TR12 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr11"><span class="tooltip">TR11 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr10"><span class="tooltip">TR10 Z02 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne2_tr09"><span class="tooltip">TR09 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr55"><span class="tooltip">TR55 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr17"><span class="tooltip">TR17 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr18"><span class="tooltip">TR18 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr19"><span class="tooltip">TR19 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr20"><span class="tooltip">TR20 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr21"><span class="tooltip">TR21 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr06"><span class="tooltip">TR06 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr22"><span class="tooltip">TR22 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr23"><span class="tooltip">TR23 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr24"><span class="tooltip">TR24 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr25"><span class="tooltip">TR25 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr26"><span class="tooltip">TR26 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr07"><span class="tooltip">TR07 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr27"><span class="tooltip">TR27 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr28"><span class="tooltip">TR28 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr29"><span class="tooltip">TR29 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr30"><span class="tooltip">TR30 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr31"><span class="tooltip">TR31 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr08"><span class="tooltip">TR08 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr32"><span class="tooltip">TR32 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr33"><span class="tooltip">TR33 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr34"><span class="tooltip">TR34 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr35"><span class="tooltip">TR35 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr36"><span class="tooltip">TR36 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr09"><span class="tooltip">TR09 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr37"><span class="tooltip">TR37 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr38"><span class="tooltip">TR38 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr39"><span class="tooltip">TR39 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr40"><span class="tooltip">TR40 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr41"><span class="tooltip">TR41 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr10"><span class="tooltip">TR10 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr16"><span class="tooltip">TR16 Z04 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne4_tr17"><span class="tooltip">TR17 Z04 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne4_tr18"><span class="tooltip">TR18 Z04 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne4_tr19"><span class="tooltip">TR19 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr20"><span class="tooltip">TR20 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr21"><span class="tooltip">TR21 Z04 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne4_tg01" style="transform: rotate(-90deg)"><span class="tooltip">TG01 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr22"><span class="tooltip">TR22 Z04 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne4_tr23" style="transform: rotate(-90deg)"><span class="tooltip">TR23 Z04 Pb1</span></div>
+        <div class="upperlong PbsToDif_zne4_tr24" style="transform: rotate(-90deg)"><span class="tooltip">TR24 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr42"><span class="tooltip">TR42 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr44"><span class="tooltip">TR44 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr45"><span class="tooltip">TR45 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr46"><span class="tooltip">TR46 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr27"><span class="tooltip">TR27 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr47"><span class="tooltip">TR47 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr48"><span class="tooltip">TR48 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr49"><span class="tooltip">TR49 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr28"><span class="tooltip">TR28 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr50"><span class="tooltip">TR50 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr51"><span class="tooltip">TR51 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr52"><span class="tooltip">TR52 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr29"><span class="tooltip">TR29 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr53"><span class="tooltip">TR53 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr54"><span class="tooltip">TR54 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne2_tr55"><span class="tooltip">TR55 Z02 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr30"><span class="tooltip">TR30 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr03"><span class="tooltip">TR03 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr04"><span class="tooltip">TR04 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr05"><span class="tooltip">TR05 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr06"><span class="tooltip">TR06 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr07"><span class="tooltip">TR07 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr01"><span class="tooltip">TR01 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr08"><span class="tooltip">TR08 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr09"><span class="tooltip">TR09 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr10"><span class="tooltip">TR10 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr11"><span class="tooltip">TR11 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr12"><span class="tooltip">TR12 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr02"><span class="tooltip">TR02 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr13"><span class="tooltip">TR13 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr14"><span class="tooltip">TR14 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr15"><span class="tooltip">TR15 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr16"><span class="tooltip">TR16 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr17"><span class="tooltip">TR17 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr03"><span class="tooltip">TR03 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr18"><span class="tooltip">TR18 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr19"><span class="tooltip">TR19 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr20"><span class="tooltip">TR20 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr21"><span class="tooltip">TR21 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr22"><span class="tooltip">TR22 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr04"><span class="tooltip">TR04 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr23"><span class="tooltip">TR23 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr24"><span class="tooltip">TR24 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr25"><span class="tooltip">TR25 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr26"><span class="tooltip">TR26 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr27"><span class="tooltip">TR27 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr05"><span class="tooltip">TR05 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr56"><span class="tooltip">TR56 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr57"><span class="tooltip">TR57 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr58"><span class="tooltip">TR58 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr59"><span class="tooltip">TR59 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr60"><span class="tooltip">TR60 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr61"><span class="tooltip">TR61 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr62"><span class="tooltip">TR62 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr63"><span class="tooltip">TR63 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr64"><span class="tooltip">TR64 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr65"><span class="tooltip">TR65 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr66"><span class="tooltip">TR66 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr67"><span class="tooltip">TR67 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr68"><span class="tooltip">TR68 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr69"><span class="tooltip">TR69 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr70"><span class="tooltip">TR70 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr71"><span class="tooltip">TR71 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr72"><span class="tooltip">TR72 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr73"><span class="tooltip">TR73 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr74"><span class="tooltip">TR74 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr75"><span class="tooltip">TR75 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr76"><span class="tooltip">TR76 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr26"><span class="tooltip">TR26 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_shl01a"><span class="tooltip">SHL01A Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr11"><span class="tooltip">TR11 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_shl02"><span class="tooltip">SHL02 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr12"><span class="tooltip">TR12 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr13"><span class="tooltip">TR13 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr14"><span class="tooltip">TR14 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr15"><span class="tooltip">TR15 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_tr25"><span class="tooltip">TR25 Z04 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_esa01"><span class="tooltip">ESA01 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_shl03"><span class="tooltip">SHL03 Z03 Pb1</span></div>
+
+        @* ToTrim1 *@
+        <div class="upper PbsToTrim1_zne1_tr01"><span class="tooltip">TR01 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr02"><span class="tooltip">TR02 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr03"><span class="tooltip">TR03 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr04"><span class="tooltip">TR04 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr05"><span class="tooltip">TR05 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tg01"><span class="tooltip">TG01 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr06"><span class="tooltip">TR06 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tg02"><span class="tooltip">TG02 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr07"><span class="tooltip">TR07 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr08"><span class="tooltip">TR08 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr09"><span class="tooltip">TR09 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr10"><span class="tooltip">TR10 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr11"><span class="tooltip">TR11 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tg03"><span class="tooltip">TG03 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr12"><span class="tooltip">TR12 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr13"><span class="tooltip">TR13 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr14"><span class="tooltip">TR14 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr15"><span class="tooltip">TR15 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tg04"><span class="tooltip">TG04 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tr16"><span class="tooltip">TR16 Z01 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne1_tq01"><span class="tooltip">TQ01 Z01 Pb2</span></div>
+
+        <div class="upperlong PbsToTrim1_zne3_tg03"><span class="tooltip">TG03 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr31"><span class="tooltip">TR31 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr31a"><span class="tooltip">TR31A Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr32"><span class="tooltip">TR32 Z03 Pb1</span></div>
+        <div class="upperlong PbsToTrim1_zne3_esa01"><span class="tooltip">ESA01 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr33"><span class="tooltip">TR33 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr34"><span class="tooltip">TR34 Z03 Pb1</span></div>
+        <div class="upperlong PbsToTrim1_zne3_tg01"><span class="tooltip">TG01 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr35"><span class="tooltip">TR35 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr36"><span class="tooltip">TR36 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr36a"><span class="tooltip">TR36A Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr37"><span class="tooltip">TR37 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr38"><span class="tooltip">TR38 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr39"><span class="tooltip">TR39 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_esa03"><span class="tooltip">ESA03 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr40"><span class="tooltip">TR40 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim1_zne3_tr40a"><span class="tooltip">TR40A Z03 Pb1</span></div>
+
+        <div class="upper PbsToTrim1_zne4_tr58"><span class="tooltip">TR58 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr18"><span class="tooltip">TR18 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr19"><span class="tooltip">TR19 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr20"><span class="tooltip">TR20 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr21"><span class="tooltip">TR21 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr22"><span class="tooltip">TR22 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl05"><span class="tooltip">SLH05 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr23"><span class="tooltip">TR23 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr24"><span class="tooltip">TR24 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr25"><span class="tooltip">TR25 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr26"><span class="tooltip">TR26 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr27"><span class="tooltip">TR27 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl06"><span class="tooltip">SLH06 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr28"><span class="tooltip">TR28 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr29"><span class="tooltip">TR29 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr30"><span class="tooltip">TR30 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr31"><span class="tooltip">TR31 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr32"><span class="tooltip">TR32 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl07"><span class="tooltip">SHL07 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr33"><span class="tooltip">TR33 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr34"><span class="tooltip">TR34 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr35"><span class="tooltip">TR35 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr36"><span class="tooltip">TR36 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr37"><span class="tooltip">TR37 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl08"><span class="tooltip">SHL08 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr38"><span class="tooltip">TR38 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr39"><span class="tooltip">TR39 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr40"><span class="tooltip">TR40 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr41"><span class="tooltip">TR41 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr42"><span class="tooltip">TR42 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl09"><span class="tooltip">SHL09 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr43"><span class="tooltip">TR43 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr44"><span class="tooltip">TR44 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr45"><span class="tooltip">TR45 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr46"><span class="tooltip">TR46 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr47"><span class="tooltip">TR47 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl10"><span class="tooltip">SHL10 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr48"><span class="tooltip">TR48 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr49"><span class="tooltip">TR49 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr50"><span class="tooltip">TR50 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr51"><span class="tooltip">TR51 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr52"><span class="tooltip">TR52 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_shl11"><span class="tooltip">SHL11 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr53"><span class="tooltip">TR53 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr54"><span class="tooltip">TR54 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr55"><span class="tooltip">TR55 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr56"><span class="tooltip">TR56 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne4_tr57"><span class="tooltip">TR57 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_shl01"><span class="tooltip">SHL01 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr01"><span class="tooltip">TR01 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr02"><span class="tooltip">TR02 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr03"><span class="tooltip">TR03 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr04"><span class="tooltip">TR04 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_shl02"><span class="tooltip">SHL02 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr05"><span class="tooltip">TR05 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr06"><span class="tooltip">TR06 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr07"><span class="tooltip">TR07 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr08"><span class="tooltip">TR08 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_shl03"><span class="tooltip">SHL03 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr09"><span class="tooltip">TR09 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr10"><span class="tooltip">TR10 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr11"><span class="tooltip">TR11 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr12"><span class="tooltip">TR12 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr13"><span class="tooltip">TR13 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr14"><span class="tooltip">TR14 Z05 Pb2</span></div>
+        <div class="upperlong PbsToTrim1_zne5_tg01"><span class="tooltip">TG01 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr15"><span class="tooltip">TR15 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr16"><span class="tooltip">TR16 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr17"><span class="tooltip">TR17 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr18"><span class="tooltip">TR18 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr19"><span class="tooltip">TR19 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr20"><span class="tooltip">TR20 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr21"><span class="tooltip">TR21 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr22"><span class="tooltip">TR22 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr23"><span class="tooltip">TR23 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr24"><span class="tooltip">TR24 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr25"><span class="tooltip">TR25 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_shl04"><span class="tooltip">SHL04 Z05 Pb2</span></div>
+        <div class="upperlong PbsToTrim1_zne5_tg02"><span class="tooltip">TG02 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr26"><span class="tooltip">TR26 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr27"><span class="tooltip">TR27 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr28"><span class="tooltip">TR28 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr29"><span class="tooltip">TR29 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr30"><span class="tooltip">TR30 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr31"><span class="tooltip">TR31 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr32"><span class="tooltip">TR32 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr33"><span class="tooltip">TR33 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr34"><span class="tooltip">TR34 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr35"><span class="tooltip">TR35 Z05 Pb2</span></div>
+        <div class="upper PbsToTrim1_zne5_tr36"><span class="tooltip">TR36 Z05 Pb2</span></div>
+
+        
+
+        @* ToTrim0 *@
+        <div class="upper PbsToTrim0_zne4_tr01"><span class="tooltip">TR01 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tg01"><span class="tooltip">TG01 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_shl01"><span class="tooltip">SLH01 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr02"><span class="tooltip">TR02 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr03"><span class="tooltip">TR03 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr04"><span class="tooltip">TR04 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr05"><span class="tooltip">TR05 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr06"><span class="tooltip">TR06 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr07"><span class="tooltip">TR07 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_shl02"><span class="tooltip">SLH02 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr08"><span class="tooltip">TR08 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr09"><span class="tooltip">TR09 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr10"><span class="tooltip">TR10 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr11"><span class="tooltip">TR11 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr12"><span class="tooltip">TR12 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_shl03"><span class="tooltip">SLH03 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr13"><span class="tooltip">TR13 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr14"><span class="tooltip">TR14 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr15"><span class="tooltip">TR15 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr16"><span class="tooltip">TR16 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr17"><span class="tooltip">TR17 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr59"><span class="tooltip">TR59 Z04 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne4_tr60"><span class="tooltip">TR60 Z04 Pb2</span></div>
+
+        <div class="upper PbsToTrim0_zne3_tr41"><span class="tooltip">TR41 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_esa04"><span class="tooltip">ESA04 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr42"><span class="tooltip">TR42 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr43"><span class="tooltip">TR43 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr44"><span class="tooltip">TR44 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr45"><span class="tooltip">TR45 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr46"><span class="tooltip">TR46 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr47"><span class="tooltip">TR47 Z03 Pb1</span></div>
+        <div class="upperlong PbsToTrim0_zne3_tg02_pb1"><span class="tooltip">TG02 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr48"><span class="tooltip">TR48 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr49"><span class="tooltip">TR49 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr49a"><span class="tooltip">TR49A Z03 Pb1</span></div>
+        <div class="upperlong PbsToTrim0_zne3_esa02"><span class="tooltip">ESA02 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr50"><span class="tooltip">TR50 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr51"><span class="tooltip">TR51 Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr51a"><span class="tooltip">TR51A Z03 Pb1</span></div>
+        <div class="upper PbsToTrim0_zne3_tr52"><span class="tooltip">TR52 Z03 Pb1</span></div>
+        <div class="upperlong PbsToTrim0_zne3_tg04_pb1"><span class="tooltip">TG04 Z03 Pb1</span></div>
+
+        <div class="upper PbsToTrim0_zne2_tr07"><span class="tooltip">TR07 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne2_tr06"><span class="tooltip">TR06 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne2_tr05"><span class="tooltip">TR05 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne2_tr04"><span class="tooltip">TR04 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne2_tr03"><span class="tooltip">TR03 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne2_tr02"><span class="tooltip">TR02 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne2_tr01"><span class="tooltip">TR01 Z02 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tq01"><span class="tooltip">TQ01 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr01"><span class="tooltip">TR01 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tg01"><span class="tooltip">TG01 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr02"><span class="tooltip">TR02 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr03"><span class="tooltip">TR03 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr04"><span class="tooltip">TR04 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tg02"><span class="tooltip">TG02 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr05"><span class="tooltip">TR05 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr06"><span class="tooltip">TR06 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr07"><span class="tooltip">TR07 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr08"><span class="tooltip">TR08 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr09"><span class="tooltip">TR09 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr10"><span class="tooltip">TR10 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr11"><span class="tooltip">TR11 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tg03"><span class="tooltip">TG03 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr12"><span class="tooltip">TR12 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tg04"><span class="tooltip">TG04 Z03 Pb2</span></div>
+        <div class="upper PbsToTrim0_zne3_tr13"><span class="tooltip">TR13 Z03 Pb2</span></div>
+
+        
+        
+        
+        
+        @* <div class="upper PbsToDif_zne1_tr17"><span class="tooltip">TR17 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr18"><span class="tooltip">TR18 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr19"><span class="tooltip">TR19 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tr20"><span class="tooltip">TR20 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr28"><span class="tooltip">TR27 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr29"><span class="tooltip">TR27 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr30"><span class="tooltip">TR27 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr53"><span class="tooltip">TR52 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne3_tr54"><span class="tooltip">TR52 Z03 Pb1</span></div>
+        <div class="upper PbsToDif_zne5_tr05"><span class="tooltip">TR05 Z05 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_esa02"><span class="tooltip">ESA01 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_esa03"><span class="tooltip">ESA01 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne1_tq01"><span class="tooltip">TQ01 Z01 Pb1</span></div>
+        <div class="upper PbsToDif_zne4_shl01"><span class="tooltip">SHL01 Z04 Pb1</span></div> *@
+
+        @*  To Pint *@
+        <div class="upper PbsToPint_zne6_ept01"><span class="tooltip">EPT01 Z06 Pb2</span></div>
+        <div class="upperlong PbsToPint_zne6_shl01"><span class="tooltip">SHL01 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr01"><span class="tooltip">TR01 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr02"><span class="tooltip">TR02 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr03"><span class="tooltip">TR03 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr04"><span class="tooltip">TR04 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr05"><span class="tooltip">TR05 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr06"><span class="tooltip">TR06 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr07"><span class="tooltip">TR07 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_ept02"><span class="tooltip">EPT02 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr08"><span class="tooltip">TR08 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_idt01"><span class="tooltip">IDT01 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr09"><span class="tooltip">TR09 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr10"><span class="tooltip">TR10 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr11"><span class="tooltip">TR11 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr12"><span class="tooltip">TR12 Z06 Pb2</span></div>
+        <div class="upperlong PbsToPint_zne6_tg01"><span class="tooltip">TG01 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne6_tr13"><span class="tooltip">TR13 Z06 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr01"><span class="tooltip">TR01 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr02"><span class="tooltip">TR02 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr03"><span class="tooltip">TR03 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr04"><span class="tooltip">TR04 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr05"><span class="tooltip">TR05 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr06"><span class="tooltip">TR06 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr07"><span class="tooltip">TR07 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr08"><span class="tooltip">TR08 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr09"><span class="tooltip">TR09 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr10"><span class="tooltip">TR10 Z07 Pb2</span></div>
+        <div class="upperlong PbsToPint_zne7_tg01"><span class="tooltip">TG01 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr11"><span class="tooltip">TR11 Z07 Pb2</span></div>
+        <div class="upperlong PbsToPint_zne7_tg02" style="transform: rotate(-90deg)"><span class="tooltip">TG02 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr12"><span class="tooltip">TR12 Z07 Pb2</span></div>
+        <div class="upperlong PbsToPint_zne7_idt01" style="transform: rotate(-90deg)"><span class="tooltip">IDT01 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr13"><span class="tooltip">TR13 Z07 Pb2</span></div>
+        <div class="upperlong PbsToPint_zne7_ept01" style="transform: rotate(-90deg)"><span class="tooltip">EPT01 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr14"><span class="tooltip">TR14 Z07 Pb2</span></div>
+        <div class="upper PbsToPint_zne7_tr15"><span class="tooltip">TR15 Z07 Pb2</span></div>
+
+        <div class="upper PbsToPint_zne5_tr01"><span class="tooltip">TR01 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr02"><span class="tooltip">TR02 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr03"><span class="tooltip">TR03 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr04"><span class="tooltip">TR04 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_shl01"><span class="tooltip">SHL01 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr06"><span class="tooltip">TR06 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr07"><span class="tooltip">TR07 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr08"><span class="tooltip">TR08 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr09"><span class="tooltip">TR09 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr10"><span class="tooltip">TR10 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr11"><span class="tooltip">TR11 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr12"><span class="tooltip">TR12 Z05 Pb1</span></div>
+        <div class="upperlong PbsToPint_zne5_tg01"><span class="tooltip">TG01 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr13"><span class="tooltip">TR13 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr14"><span class="tooltip">TR14 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr15"><span class="tooltip">TR15 Z05 Pb1</span></div>
+        <div class="upper PbsToPint_zne5_tr16"><span class="tooltip">TR16 Z05 Pb1</span></div>
+        @* <div class="upper pb2_zne4_shl04"><span class="tooltip">SLH04 Z04 Pb2</span></div>
+        <div class="upper pb2_zne5_ept01"><span class="tooltip">EPT01 Z05 Pb2</span></div>
+        <div class="upper pb2_zne2_tr08"><span class="tooltip">TR08 Z02 Pb2</span></div> *@
+
+
+        <div id="productsTableWrapper">
+            <button id="closeTableBtn" class="close-btn">×</button>
+            <div id="filters">
+                <label for="filterDateInit">Data Inicial:</label>
+                <input type="date" id="filterDateInit">
+
+                <label for="filterDateFinal">Data Final:</label>
+                <input type="date" id="filterDateFinal">
+
+                <label for="filterTimeInit">Hora Inicial:</label>
+                <input type="time" id="filterTimeInit">
+
+                <label for="filterTimeFinal">Hora Final:</label>
+                <input type="time" id="filterTimeFinal">
+
+                <button id="applyFilterBtn">Aplicar Filtro</button>
+                <button id="clearFilterBtn"><img src="~/icons/refresh_icon.svg" alt="Refresh Icon" class="btn-table-icon"></button>
+            </div>
+            <div id="loaderContainer"></div>
+            <table id="productsTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Events</th>
+                        <th>State</th>
+                        <th>Zone</th>
+                        <th>Element</th>
+                        <th>Duration</th>
+                        <th>Data</th>
+                        <th>Shift</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+        <div id="top10ChartContainer">
+            <button id="closeTop10Btn" class="closeTop10Btn">×</button>
+            <div id="filters">
+                <label for="filterDateInit">Data Inicial:</label>
+                <input type="date" id="filterDateInitTop10">
+
+                <label for="filterDateFinal">Data Final:</label>
+                <input type="date" id="filterDateFinalTop10">
+
+                <label for="filterTimeInit">Hora Inicial:</label>
+                <input type="time" id="filterTimeInitTop10">
+
+                <label for="filterTimeFinal">Hora Final:</label>
+                <input type="time" id="filterTimeFinalTop10">
+
+                <button id="applyFilterBtnTop10">Aplicar Filtro</button>
+                <button id="clearFilterBtnTop10"><img src="~/icons/refresh_icon.svg" alt="Refresh Icon" class="btn-table-icon"></button>
+                <button onclick="toggleJPH()">Minutos / JPH</button>
+            </div>
+            <div id="loaderContainerTop10"></div>
+            <canvas id="topEventsChart" width="400" height="150";></canvas>
+        </div>
+    </div>
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/datatables.js"></script>
+    <script src="~/js/signalr.min.js"></script>
+    <script type="module" src="~/js/mqttWebSocket.js"></script>
+    <script src="~/js/bottonsAnimation.js"></script>
+    <script src="~/js/AudioSocket.js"></script> 
+    <script type="module" src="~/js/customCharts.js"></script>
+    <script type="module" src="~/js/customChart_Top10.js"></script>
+    <script type="module" src="~/js/customChart_statusDuration.js"></script>
+
+    
+
+</body>
+</html>

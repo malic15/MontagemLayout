@@ -1,0 +1,28 @@
+﻿@import url('mapaMontagem.css');
+
+/* Estilizando o scrollbar */
+::-webkit-scrollbar {
+    width: calc(7px* var(--scale-factor-width)); /* Largura do scrollbar */
+    height: calc(7px* var(--scale-factor-height)); /* Altura do scrollbar horizontal */
+}
+
+/* Fundo do scrollbar */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Cor de fundo do track */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+/* "Polegar" do scrollbar */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3); /* Cor do polegar */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+    /* "Polegar" ao passar o mouse */
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5); /* Cor ao passar o mouse */
+    }
+
+/* Opcional: remover o scrollbar padrão em navegadores que suportam */
+scrollbar-width: thin; /* Largura fina (Firefox) */
+scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1); /* Thumb e track (Firefox) */

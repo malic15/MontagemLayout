@@ -1,0 +1,179 @@
+﻿@import url('mapaMontagem.css');
+
+/* Wrapper da tabela - Inicialmente oculto */
+#productsTableWrapper {
+    position: absolute;
+    display: none; /* Oculta o wrapper da tabela inicialmente */
+    margin: 20px auto;
+    padding: 10px 10px 10px 10px;
+    color: rgba(255,255,255,0.8);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f91A;
+    backdrop-filter: blur(12px);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 97%;
+    /*    max-width: 1600px;*/
+    max-height: 550px; /* Define a altura máxima */
+    overflow-y: auto;
+    z-index: 100000;
+}
+#closeTableBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: rgba(255,255,255,0.8);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 100001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    #closeTableBtn:hover {
+        background-color: #c0392b;
+    }
+
+/* Estilo da tabela */
+#productsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background-color: #616161;
+}
+
+    /* Cabeçalho da tabela */
+    #productsTable thead {
+        background-color: #3c3c3c;
+        color: rgba(255,255,255,0.8);
+        font-weight: bold;
+        text-align: left;
+    }
+
+        #productsTable thead th {
+            padding: 10px;
+            text-align: left;
+/*            border-bottom: 2px solid #ddd;*/
+            color: rgba(255,255,255,0.8);
+        }
+
+    /* Corpo da tabela */
+    #productsTable tbody tr:nth-child(even) {
+        background-color: #494949; /* Linhas alternadas */
+    }
+
+    #productsTable tbody tr:hover {
+        background-color: rgba(255,255,255,0.05); /* Destaque ao passar o mouse */
+    }
+
+    #productsTable tbody td {
+        padding: 8px;
+/*        border-bottom: 1px solid #ddd;*/
+        text-align: left;
+/*        color: rgba(255,255,255,0.8);*/
+    }
+
+    /* Rodapé da tabela */
+    #productsTable tfoot {
+        background-color: #1E6091; /* Azul escuro */
+        color: rgba(255,255,255,0.8);
+    }
+
+        #productsTable tfoot th {
+            padding: 10px;
+        }
+
+/* Botões de filtro, paginação e outros do DataTables */
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_length {
+    float: left;
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.8);
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    margin-top: 10px;
+    color: rgba(255,255,255,0.8);
+}
+
+.dataTables_wrapper .dataTables_info {
+    float: left;
+    margin-top: 10px;
+    color: rgba(255,255,255,0.8);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 12px;
+    margin: 2px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #3c3c3c;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #1ABC9C;
+        color: rgba(255,255,255,0.8);
+    }
+
+#filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+    #filters label {
+        font-weight: bold;
+        font-size: 11px;
+        color: rgba(255,255,255,0.8);
+    }
+
+    #filters input,
+    #filters button {
+        padding: 5px 10px;
+        background-color: transparent;
+        color: rgba(255,255,255,0.8);
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 11px;
+    }
+
+    #filters button {
+        font-weight: bold;
+        background-color: #3c3c3c;
+        color: rgba(255,255,255,0.8);
+        cursor: pointer;
+    }
+
+        #filters button:hover {
+            background-color: #144f73;
+        }
+.btn-table-icon {
+    width: calc(20px * var(--scale-factor-width));
+    height: calc(20px * var(--scale-factor-height));
+}
+#loaderContainer {
+    text-align: center;
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 10px;
+    display: none;
+    pointer-events: none;
+}

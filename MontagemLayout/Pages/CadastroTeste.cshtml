@@ -1,0 +1,23 @@
+﻿@page
+@model MontagemLayout.Pages.CadastroTesteModel
+@{
+}
+
+<h2>Yor Name</h2>
+
+@if (Model.hasData)
+{
+    <p>Hello @Model.firstName @Model.lastName</p>
+}
+
+<div class = "container">
+    <form method="POST">
+        <label for="fname">Fisrt Name</label><br>
+        <input type="text" id="fname" name="firstname"><br>
+
+        <label for="lname">Last Name</label><br>
+        <input type="text" id="lname" name="lastname"><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>

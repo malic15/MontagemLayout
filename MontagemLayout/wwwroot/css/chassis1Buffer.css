@@ -1,0 +1,123 @@
+﻿@import url('mapaMontagem.css');
+
+:root {
+    --horizontal-offset-acumulo-ch1: 0px;
+    --vertical-offset-acumulo-ch1: 0px;
+}
+
+#chartContainerch1 {
+    position: absolute;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    height: calc(40px*var(--scale-factor-width));
+    width: calc(75px*var(--scale-factor-width));
+    left: calc((280px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset)) * var(--scale-factor-width));
+    top: calc((400px + var(--horizontal-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    transition: all 0.5s ease;
+}
+
+#lineChartch1 {
+    height: 100%;
+    width: 100%;
+}
+
+#chartTextch1 {
+   
+    position: absolute;
+    top: 1%;
+    left: 5%;
+    color: rgba(75, 192, 192, 1);
+    font-size: calc(14px*var(--scale-factor-width));
+    font-weight: bold;
+    font-family: Calibri, sans-serif !important;
+    /*padding: 5px;*/
+    border-radius: 5px;
+    user-select: none;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), -1px 1px 3px rgba(0, 0, 0, 0.2), 1px -1px 3px rgba(0, 0, 0, 0.2), -1px -1px 3px rgba(0, 0, 0, 0.2), 0px 3px 3px rgba(0, 0, 0, 0.2), 0px -3px 3px rgba(0, 0, 0, 0.2), 3px 0px 3px rgba(0, 0, 0, 0.2), -3px 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+.ch1_zne1_tts1 {
+    top: calc((435px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((370px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts2 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((370px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts3 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((350px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts4 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((330px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts5 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((310px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts6 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((290px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts7 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((270px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts8 {
+    top: calc((455px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((250px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts9 {
+    top: calc((470px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((235px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts10 {
+    top: calc((490px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((235px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne1_tts11 {
+    top: calc((505px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((250px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne2_tts1 {
+    top: calc((505px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((270px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne2_tts2 {
+    top: calc((505px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((290px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne2_tts3 {
+    top: calc((505px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((310px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne2_tts4 {
+    top: calc((505px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((330px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne2_tts5 {
+    top: calc((492.5px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((345px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}
+
+.ch1_zne2_tts6 {
+    top: calc((480px + var(--vertical-offset-acumulo-ch1) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((330px + var(--horizontal-offset-acumulo-ch1) + var(--horizontal-offset))* var(--scale-factor-width));
+}

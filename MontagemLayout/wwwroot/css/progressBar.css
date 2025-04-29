@@ -1,0 +1,132 @@
+@import url('mapaMontagem.css');
+
+.progress-bar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    border-radius: calc(60px*var(--scale-factor-width));
+    overflow: visible;
+    background: #676767;
+    animation: all 0.5s ease;
+}
+.progress-actual {
+    position: relative;
+    display: flex;
+    border-radius: calc(60px*var(--scale-factor-width));
+    border: calc(1px*var(--scale-factor-width)) solid #2d2d2d80;
+    animation: all 0.5s ease;
+    background: #2E8B57;
+    color: #fff;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    overflow: visible;
+    backdrop-filter: blur(20px) !important;
+}
+.progress-target {
+    position: absolute;
+    animation: all 0.5s ease;
+    background: #2d2d2d;
+    border-radius: calc(2px*var(--scale-factor-width));
+    color: #fff;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    overflow: visible;
+}
+.progress-info {
+    display: flex;
+    animation: all 0.5s ease;
+    position: absolute;
+    background-color: transparent;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    z-index: 2;
+}
+.progress-text {
+    animation: all 0.5s ease;
+    font-weight: bold;
+    font-size: calc(10px*var(--scale-factor-width));
+    border-radius: calc(3px*var(--scale-factor-width));
+    border: calc(1px*var(--scale-factor-width)) solid #2d2d2d80;
+    color: rgba(255,255,255,0.7);
+    background-color: transparent;
+    backdrop-filter: blur(20px) !important;
+}
+.bar-h {
+    top: 0;
+    width: 100%;
+    min-height: calc(4px*var(--scale-factor-height));
+    height: calc(4px*var(--scale-factor-height));
+    flex-flow: row;
+    justify-content: flex-start;
+}
+.bar-v {
+    left: 0;
+    height: 100%;
+    min-width: calc(4px*var(--scale-factor-width));
+    width: calc(4px*var(--scale-factor-width));
+    flex-flow: column;
+    justify-content: flex-end;
+}
+.atual-h {
+    height: 100%;
+    min-height: 100%;
+    width: 0%;
+    justify-content: flex-start;
+}
+.atual-v {
+    width: 100%;
+    min-width: 100%;
+    height: 0%;
+    justify-content: flex-end;
+}
+.target-h {
+    height: 100%;
+    min-height: 120%;
+    width: calc(5px*var(--scale-factor-width));
+    left: 0%;
+}
+.target-v {
+    width: 100%;
+    min-width: 120%;
+    height: calc(5px*var(--scale-factor-height));
+    bottom: 0%;
+}
+.info-h {
+    right: 0;
+    top: calc(4px*var(--scale-factor-height));
+    flex-flow: row;
+    width:100%;
+/*    justify-content: space-between;*/
+}
+.info-v {
+    top: 0;
+    left: calc(4px*var(--scale-factor-width));
+    flex-flow: column-reverse;
+    height: 100%;
+}
+.text-h {
+    padding: 0 calc(3px*var(--scale-factor-width)) 0 calc(3px*var(--scale-factor-width));
+    height: auto;
+    bottom: calc(5px*var(--scale-factor-height));
+    left: 100%;
+}
+.text-v {
+    padding: calc(3px*var(--scale-factor-height)) 0 calc(3px*var(--scale-factor-height)) 0;
+    width: auto;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    right: calc(5px*var(--scale-factor-width));
+    bottom: 100%;
+}
+.text-percent {
+    display: flex;
+    border: transparent;
+    border-radius: calc(5px*var(--scale-factor-width));
+    padding: 1%;
+    position: absolute;
+    background-color: #3a3a3a;
+    text-align: center;
+}
