@@ -506,6 +506,7 @@ body {
     opacity: 0;
     user-select: none;
     pointer-events: none;
+    visibility: hidden;
 }
     .space_timev.animate {
         animation: slowTransition 0.25s ease-in forwards;
@@ -531,6 +532,7 @@ body {
     opacity: 0;
     user-select: none;
     pointer-events: none;
+    visibility: hidden;
 }
     .space_timeh.animate {
         animation: slowTransition 0.25s ease-in forwards;
@@ -582,6 +584,7 @@ body {
     user-select: none;
     pointer-events: none;
     z-index: 1;
+    visibility: hidden;
 }
     .fault_text.animate {
         animation: slowTransition 0.25s ease-in forwards;
@@ -624,6 +627,7 @@ body {
     user-select: none;
     pointer-events: none;
     z-index: 1;
+    visibility: hidden;
 }
     .showTableBtn:hover {
         background-color: rgba(255,255,255,0.5);
@@ -657,6 +661,7 @@ body {
     user-select: none;
     pointer-events: none;
     z-index: 1;
+    visibility: hidden;
 }
 
     .showTop10Btn:hover {
@@ -675,24 +680,25 @@ body {
     align-items: center;
     text-align: center;
     height: calc(25px* var(--scale-factor-height));
-/*    width: calc(25px* var(--scale-factor-width));*/
+    /*    width: calc(25px* var(--scale-factor-width));*/
     width: 100%;
-/*    border-radius: calc(3px* var(--scale-factor-width));*/
+    /*    border-radius: calc(3px* var(--scale-factor-width));*/
     background-color: transparent;
     border-top: calc(1px* var(--scale-factor-width)) solid #2d2d2d80;
     color: rgba(255,255,255,0.7);
     font-size: calc(12px* var(--scale-factor-width));
     font-weight: 550 !important;
     opacity: 0;
-/*    text-overflow: ellipsis;
+    /*    text-overflow: ellipsis;
     overflow: hidden;
     overflow-y: auto;*/
     margin: 5%;
-/*    margin-right: auto;*/
+    /*    margin-right: auto;*/
     transition: background-color 0.25s ease;
     user-select: none;
     pointer-events: none;
     z-index: 1;
+    visibility: hidden;
 }
 
 /*    .showOPE:hover {
@@ -783,7 +789,7 @@ body {
     z-index: 100000;
 }
 .stateChart {
-        margin-top: auto;
+    margin-top: auto;
     /*    margin-left: auto;*/
     /*    border: none !important;*/
     outline: none !important;
@@ -795,6 +801,7 @@ body {
     transition: opacity 0.3s;
     width: 100%;
     height: 100%;
+    visibility: hidden;
     /*    border: calc(1px* var(--scale-factor-width)) solid #4E8C57;*/
 }
 .stateChartContainer {

@@ -333,8 +333,7 @@ const ANIMATED_WHEN_EXPANDED = [
     '.showOPE',
     '.stateChartContainer',
     '.space_timev',
-    '.space_timeh',
-    '.space'
+    '.space_timeh'
 ];
 const ANIMATED_WHEN_UNEXPANDED = [
     '.progress-text',
@@ -357,7 +356,7 @@ function getAnimatedElements(elem) {
         Array.from(elem.querySelectorAll(selector))
     );
 }
-function getUnimatedElements(elem) {
+function getHiddenAndShowElements(elem) {
     return ANIMATED_WHEN_UNEXPANDED.flatMap(selector =>
         Array.from(elem.querySelectorAll(selector))
     );
