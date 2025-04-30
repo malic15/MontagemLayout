@@ -362,12 +362,12 @@ function getHiddenAndShowElements(elem) {
     );
 }
 
-function prepareExpandElements(elem) {
-    const animatedElems = getAnimatedElements(elem);
-    animatedElems.forEach(e => {
-        e.style.position = 'relative';
-    });
-}
+//function prepareExpandElements(elem) {
+//    const animatedElems = getAnimatedElements(elem);
+//    animatedElems.forEach(e => {
+//        e.style.position = 'relative';
+//    });
+//}
 function toggleExpandElements(elem) {
     const animatedElems = getAnimatedElements(elem);
 
