@@ -801,7 +801,7 @@ body {
     transition: opacity 0.3s;
     width: 100%;
     height: 100%;
-    visibility: hidden;
+/*    visibility: hidden;*/
     /*    border: calc(1px* var(--scale-factor-width)) solid #4E8C57;*/
 }
 .stateChartContainer {
@@ -818,7 +818,7 @@ body {
     outline: none !important;
     box-shadow: none !important;
     overflow: visible;
-    /*    visibility: hidden;*/
+    visibility: hidden;
     position: absolute;
     opacity: 0;
     /*    margin: 0 0 0 10%;*/

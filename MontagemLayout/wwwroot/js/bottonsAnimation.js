@@ -333,7 +333,7 @@ const ANIMATED_WHEN_EXPANDED = [
     '.showOPE',
     '.stateChartContainer',
     '.space_timev',
-    '.space_timeh'
+    '.space_timeh',
 ];
 const ANIMATED_WHEN_UNEXPANDED = [
     '.progress-text',
