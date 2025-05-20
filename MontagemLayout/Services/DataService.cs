@@ -29,12 +29,13 @@ namespace MontagemLayout.Services
                 await _hubContext.Clients.All.SendAsync("ReceiveApplicationStatePDT", pdtData);
             };
             _bufferService.OnBufferDataChanged += async (data) =>
-            {
+            {  
                 ConcurrentDictionary<string, ConcurrentDictionary<int, BufferInfo>> bufferData = _bufferService.GetBufferData();
                 await _hubContext.Clients.All.SendAsync("ReceiveApplicationStateBuffer", bufferData);
             };
             _statusService.OnStatusLineDataChanged += async (data) =>
             {
+                Console.WriteLine("OKDOKS");
                 ConcurrentDictionary<string, LineInfo> statusData = _statusService.GetStatusData();
                 await _hubContext.Clients.All.SendAsync("ReceiveApplicationStateStatus", statusData);
             };

@@ -1,0 +1,31 @@
+﻿@import url('mapaMontagem.css');
+
+.fault-list-container {
+    position: fixed;
+    top: 10%;
+    right: 0;
+    width: calc(280px * var(--scale-factor-width));
+    max-height: 80%;
+    overflow-y: auto;
+    background: #2d2d2d;
+    border-left: 2px solid #8ce436;
+    padding: 10px;
+    color: white;
+    font-family: Calibri, sans-serif;
+    font-size: calc(12px * var(--scale-factor-width));
+    z-index: 9999;
+    box-shadow: -4px 0 6px rgba(0,0,0,0.4);
+}
+
+    .fault-list-container h3 {
+        margin-top: 0;
+        font-size: calc(14px * var(--scale-factor-width));
+        color: #8ce436;
+    }
+
+#faultList li {
+    margin-bottom: 6px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 4px;
+    line-height: 1.2em;
+}

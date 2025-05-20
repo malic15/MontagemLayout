@@ -919,7 +919,8 @@ connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
 
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
     //const startTime = performance.now();
-    let count = 0;
+    const faultList = document.getElementById('faultList');
+    faultList.innerHTML = "";
     
     Object.keys(statusState).forEach(line => {
         
@@ -966,10 +967,20 @@ connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
                 containerFault.textContent = description;
                 
                 if (lastFault != "" && (minPriority == 1 || minPriority == 2)) {
+                    console.log("OkWq")
                     const formattedLastFault = `${formattedZone}: ${formattedDescription}`;
                     containerFault.innerHTML = `Falha:<br><span style="font-size: 0.8em;">${formattedLastFault}</span>`;
                 }
             }
+
+            if (minPriority == 1 || minPriority == 2) {
+                
+                const li = document.createElement('li');
+                li.textContent = `${line.toUpperCase()} - ${formattedFull}`;
+                li.style.color = color;
+                faultList.appendChild(li);
+            }
+
         }
     });
     //const endTime = performance.now();

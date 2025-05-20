@@ -200,7 +200,8 @@ internal class Program
                     var lineConnection = json.RootElement.GetProperty("line").ToString();
                     int connection = connectionElement.GetString() == "1" ? 19 : 0;
                     //string faultMessage = connection == 19 ? "" : "";
-                    statusLineService.UpdateStatusDbsActive(lineConnection.ToString(), "0", connection, "", DateTime.Now);
+                    
+                    //statusLineService.UpdateStatusDbsActive(lineConnection.ToString(), "0", connection, "", DateTime.Now);
                     ResetConnectionTimer(lineConnection, statusLineService);
                     return;
                 }
@@ -756,13 +757,13 @@ internal class Program
 
         var allLines = statusLineService.GetStatusData(); // Método fictício que retorna todas as linhas registradas
 
-        foreach (var storedLine in allLines.Keys)
-        {
-            if (!_connectionTimers.ContainsKey(storedLine))
-            {
-                //Console.WriteLine($"Linha {storedLine} não tem mensagens recentes. Definindo connection = 0.");
-                statusLineService.UpdateStatusDbsActive(storedLine, "0", 0, "", DateTime.Now);
-            }
-        }
+        //foreach (var storedLine in allLines.Keys)
+        //{
+        //    if (!_connectionTimers.ContainsKey(storedLine))
+        //    {
+        //        //Console.WriteLine($"Linha {storedLine} não tem mensagens recentes. Definindo connection = 0.");
+        //        statusLineService.UpdateStatusDbsActive(storedLine, "0", 0, "", DateTime.Now);
+        //    }
+        //}
     }
 }
