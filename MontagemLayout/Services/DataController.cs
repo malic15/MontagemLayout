@@ -23,10 +23,11 @@ namespace MontagemLayout.Services
         private readonly ProdService _prodService;
         private readonly MySqlService _mysqlService;
         private readonly DataService _dataService;
-        public DataController(DataService dataService, BufferService bufferService)
+        public DataController(DataService dataService, BufferService bufferService, MySqlService mysqlService)
         {
             _dataService = dataService;
             _bufferService = bufferService;
+            _mysqlService = mysqlService;
         }
         [HttpPost("update-state")]
         public async Task<IActionResult> UpdateState()
@@ -59,6 +60,13 @@ namespace MontagemLayout.Services
             }
             return Ok(lineBitCounts);
         }
+        [HttpGet("buffer-replay")]
+        public async Task<IActionResult> GetBufferReplay([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            var snapshots = await _mysqlService.GetBufferSnapshotsAsync(start, end);
+            return Ok(snapshots);
+        }
+
         //public IActionResult Index()
         //{
         //    var initialData = new

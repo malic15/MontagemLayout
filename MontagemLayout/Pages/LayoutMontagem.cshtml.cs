@@ -31,6 +31,7 @@ namespace MontagemLayout.Pages
 
         public async Task OnGetAsync()
         {
+            Console.WriteLine("dasd");
             var initialData = new
             {
                 PdtData = _pdtService.GetPdtData(),

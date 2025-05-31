@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="~/css/datatables.css" />
     <link rel="stylesheet" href="~/css/ScrollBar.css" />
     <link rel="stylesheet" href="~/css/progressBar.css" />
+    <link rel="stylesheet" href="~/css/ListFault.css" />
+    <link rel="stylesheet" href="~/css/replayPainel.css" />
     <script src="~/js/chart.js"></script>
     <script src="~/js/luxon@3.js"></script>
     <script src="~/js/chartjs-adapter-luxon@1.js"></script>
@@ -1811,12 +1813,23 @@
                 <button onclick="toggleJPH()">Minutos / JPH</button>
             </div>
             <div id="loaderContainerTop10"></div>
-            <canvas id="topEventsChart" width="400" height="150";></canvas>
+            <canvas id="topEventsChart" width="auto" height="120";></canvas>
         </div>
 
-        <div id="faultListContainer" class="fault-list-container">
-            <h3>Falhas Ativas</h3>
-            <ul id="faultList"></ul>
+        <h1 class="fault-list-header">Lista de Anomalias Ativas</h1>
+        <div id="faultList" class="fault-list"></div>
+
+        <div id="replayMode" class="replay-mode"></div>
+
+        <div class="replay-panel">
+            <button id="replayPlayPauseBtn">▶️</button>
+            <span id="replayCurrentTime">--:--:--</span>
+            <input type="range" id="replaySlider" min="0" max="100" value="0" step="1">
+            <select id="replaySpeed">
+                <option value="1000">1x</option>
+                <option value="500">2x</option>
+                <option value="200">5x</option>
+            </select>
         </div>
 
     </div>
@@ -1829,8 +1842,9 @@
     <script type="module" src="~/js/customCharts.js"></script>
     <script type="module" src="~/js/customChart_Top10.js"></script>
     <script type="module" src="~/js/customChart_statusDuration.js"></script>
+    <script type="module" src="~/js/replay.js"></script>
 
-    
+
 
 </body>
 </html>

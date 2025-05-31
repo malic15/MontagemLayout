@@ -77,6 +77,8 @@ var transpColor = '1a'
 let color = '#8ce436';
 var btnTransition = false;
 let dataTable;
+const activeFaults = {};
+
 export var buttonId = "";
 export function setButtonId(newId) {
     buttonId = newId;
@@ -137,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded and parsed");
     //createLines();
     adjustScale();
+    initializeState();
     buttonUp.disabled = true;
     //document.querySelectorAll('.botton').forEach(elem => {
     //    const containerFault = elem.querySelector(".fault_text");
@@ -618,7 +621,7 @@ window.toUp = function() {
     buttonpb1.style.setProperty('left', 'calc((510px + var(--horizontal-offset)) * var(--scale-factor-width))');
     buttonpb2.style.setProperty('left', 'calc((95px + var(--horizontal-offset)) * var(--scale-factor-width))');
 }
-function showAlert(message) {
+async function showAlert(message) {
     const alerta = document.getElementById('alert');
     alerta.textContent = message;
     alerta.classList.add('show');
@@ -626,7 +629,7 @@ function showAlert(message) {
         alerta.classList.remove('show');
     }, 15000);
 }
-function adjustScale() {
+async function adjustScale() {
     removeAllLines()
     const container = document.getElementById('layoutContainer');
     const width = container.getBoundingClientRect().width;
@@ -695,6 +698,9 @@ connectionData.on("ReceiveCurrentDateTime", (dateTime) => {
 });
 
 connectionData.on("ReceiveApplicationStatePDT", (pdtState) => {
+    updatePdt(pdtState);
+});
+async function updatePdt(pdtState) {
     //const startTime = performance.now();
     const updates = [];
 
@@ -775,8 +781,7 @@ connectionData.on("ReceiveApplicationStatePDT", (pdtState) => {
     requestAnimationFrame(() => {
         updates.forEach(update => update());
     });
-});
-
+}
 //connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
 //    for (const line in bufferState) {
 //        const bufferItems = document.querySelectorAll(`[class*="${line}_zne"]`);
@@ -842,8 +847,9 @@ connectionData.on("ReceiveApplicationStatePDT", (pdtState) => {
 //});
 connectionData.off("ReceiveApplicationStateBuffer");
 connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
-    
-
+    updateBuffer(bufferState);
+});
+export async function updateBuffer(bufferState) {
     const updates = [];
 
     for (const line in bufferState) {
@@ -887,11 +893,11 @@ connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
                     'PbsToTrim0': '#6ba82c',
                     'default': '#6ba82c'
                 };
-                
+
                 let appliedColor = colorMap['default'];
                 for (const key in colorMap) {
                     if (tts.className.includes(key)) {
-                        
+
                         appliedColor = colorMap[key];
                         break;
                     }
@@ -915,17 +921,20 @@ connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
     });
     //const endTime = performance.now();
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
-});
-
+}
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
+    updateStatus(statusState);
+});
+async function updateStatus(statusState) {
     //const startTime = performance.now();
-    const faultList = document.getElementById('faultList');
-    faultList.innerHTML = "";
-    
     Object.keys(statusState).forEach(line => {
         
+        const data = statusState[line];
+        const lastFaultTime = data.lastFaultTime ? new Date(data.lastFaultTime) : null;
+
+
         const btnLine = document.getElementById(line);
-        
+
         const minPriority = statusState[line].lowestStatusActive
         const lastFault = statusState[line].lastMessage;
         const [zonePart, ...descriptionParts] = lastFault.split(':');
@@ -935,7 +944,15 @@ connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
         const descriptionText = descriptionParts.join(':').trim();
         const formattedDescription = descriptionText.charAt(0).toUpperCase() + descriptionText.slice(1).toLowerCase();
 
-        
+        if ((data.lowestStatusActive === 1 || data.lowestStatusActive === 2) && lastFaultTime) {
+            activeFaults[line] = {
+                message: data.lastMessage,
+                startTime: lastFaultTime // vindo do back-end
+            };
+        } else {
+            delete activeFaults[line];
+        }
+
         if (btnLine) {
             const containerFault = btnLine.querySelector(".fault_text");
             const color = prioritiesColors[minPriority] || prioritiesColors[19];
@@ -965,31 +982,75 @@ connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
             if (containerFault) {
                 const description = prioritiesDescription[minPriority] || prioritiesDescription[19];
                 containerFault.textContent = description;
-                
+
                 if (lastFault != "" && (minPriority == 1 || minPriority == 2)) {
-                    console.log("OkWq")
+
                     const formattedLastFault = `${formattedZone}: ${formattedDescription}`;
                     containerFault.innerHTML = `Falha:<br><span style="font-size: 0.8em;">${formattedLastFault}</span>`;
                 }
             }
-
-            if (minPriority == 1 || minPriority == 2) {
-                
-                const li = document.createElement('li');
-                li.textContent = `${line.toUpperCase()} - ${formattedFull}`;
-                li.style.color = color;
-                faultList.appendChild(li);
-            }
-
         }
     });
+    updateFaultListUI();
     //const endTime = performance.now();
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
-});
+}
+
+function updateFaultListUI() {
+    const faultListContainer = document.getElementById("faultList");
+    const currentKeys = new Set(Object.keys(activeFaults));
+
+    // 1. Marcar para remoção os que não estão mais ativos
+    const existingEntries = faultListContainer.querySelectorAll(".fault-entry");
+    existingEntries.forEach(entry => {
+        const line = entry.dataset.line;
+        if (!currentKeys.has(line)) {
+            entry.classList.remove("show");
+            entry.classList.add("hide");
+
+            // Remover após a animação (0.5s = 500ms)
+            setTimeout(() => {
+                entry.remove();
+            }, 500);
+        }
+    });
+
+    // 2. Adicionar ou atualizar os ativos
+    Object.entries(activeFaults).forEach(([line, fault]) => {
+        // Se já existe, atualiza tempo
+        let entry = faultListContainer.querySelector(`.fault-entry[data-line="${line}"]`);
+        const duration = calculateTimeDifference(fault.startTime);
+        const [zone, ...descParts] = fault.message.split(":");
+        const description = descParts.join(":").trim();
+
+        if (!entry) {
+            // Novo: criar elemento
+            entry = document.createElement("div");
+            entry.className = "fault-entry";
+            entry.dataset.line = line;
+            faultListContainer.appendChild(entry);
+            setTimeout(() => {
+                entry.classList.add("show");
+            }, 500);
+        }
+
+        // Atualizar conteúdo sempre
+        entry.innerHTML = `
+            <strong>${line.toUpperCase()}</strong> - ${zone.trim()}<br>
+            ${description}<br>
+            <span class="fault-time">Ativo há ${duration}</span>
+        `;
+    });
+}
+
+
 connectionData.on("ReceiveApplicationBufferAc", (buffHist) => {
     updateChartsWithHistory(buffHist);
 });
 connectionData.on("ReceiveApplicationProdData", (prodData) => {
+    updateProd(prodData);
+});
+async function updateProd(prodData) {
     //const startTime = performance.now();
     const facHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scale-factor-height').trim());
     const facWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scale-factor-width').trim());
@@ -1020,19 +1081,19 @@ connectionData.on("ReceiveApplicationProdData", (prodData) => {
             }
 
             if (progressTexts.length >= 2) {
-                
+
                 //progressTexts[0].textContent = `${percentProd}%`;            // Percentual
                 progressTexts[0].textContent = `D. ${gapProd}`;    // Produção atual
                 progressTexts[1].textContent = `P. ${actualProd}`;       // Diferença de produção
 
                 progressTexts[0].style.backgroundColor = gapProd < 0 ? "#C0392B80" : "#2E8B5780";
             }
-            
+
             const progressActualH = button.querySelector('.progress-actual.atual-h');
             const progressActualV = button.querySelector('.progress-actual.atual-v');
             const progressTargetH = button.querySelector('.progress-target.target-h');
             const progressTargetV = button.querySelector('.progress-target.target-v');
-            
+
             requestAnimationFrame(() => {
                 if (progressActualH && progressTargetH) {
                     if (!progressActualH.dataset.width || progressActualH.dataset.width !== percentProd) {
@@ -1091,21 +1152,20 @@ connectionData.on("ReceiveApplicationProdData", (prodData) => {
     }
     //const endTime = performance.now();
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
-});
-
-window.addEventListener("beforeunload", () => {
-    if (connection) {
-        connection.stop();
-    }
-    if (connectionData) {
-        connectionData.stop();
-    }
-    cleanUpDOM();
-});
+}
+//window.addEventListener("beforeunload", () => {
+//    if (connection) {
+//        connection.stop();
+//    }
+//    if (connectionData) {
+//        connectionData.stop();
+//    }
+//    cleanUpDOM();
+//});
 
 connectionData.start()
     .then(() => {
-        initializeState();
+        //initializeState();
         //updateApplicationState();
         console.log("SignalR connection Data established");
     })        
@@ -1140,6 +1200,8 @@ function initializeState() {
     const cachedData = JSON.parse(localStorage.getItem(CACHE_KEY));
     const initialData = window.__INITIAL_STATE__;
 
+    if (!initialData) return;
+
     if (cachedData && (Date.now() - cachedData.timestamp < CACHE_DURATION)) {
         // Usa cache válido
         applyInitialState(cachedData.data);
@@ -1158,37 +1220,36 @@ function initializeState() {
 }
 function applyInitialState(data) {
     updateChartsWithHistory(data.BufferAc);
-    console.log("" + data.BufferAc)
     // outras funções de update:
-    // updatePdt(data.PdtData);
-    // updateBuffer(data.BufferData);
-    // updateStatus(data.StatusData);
-    // updateProd(data.ProdData);
+    updatePdt(data.PdtData);
+    updateBuffer(data.BufferData);
+    updateStatus(data.StatusData);
+    updateProd(data.ProdData);
 }
-document.addEventListener("DOMContentLoaded", () => {
-    const data = window.__INITIAL_STATE__;
-    if (!data) return;
+//document.addEventListener("DOMContentLoaded", () => {
+//    const data = window.__INITIAL_STATE__;
+//    if (!data) return;
 
-    try {
-        //if (data.bufferData) {
-        //    updateBuffer(data.bufferData);
-        //}
-        //if (data.pdtData) {
-        //    updatePdt(data.pdtData);
-        //}
-        //if (data.statusData) {
-        //    updateStatus(data.statusData);
-        //}
-        //if (data.prodData) {
-        //    updateProd(data.prodData);
-        //}
-        if (data.bufferAc) {
-            updateChartsWithHistory(data.bufferAc);
-        }
-    } catch (e) {
-        console.warn("Erro ao interpretar dados iniciais:", e);
-    }
-});
+//    try {
+//        if (data.BufferData) {
+//            updateBuffer(data.BufferData);
+//        }
+//        //if (data.pdtData) {
+//        //    updatePdt(data.pdtData);
+//        //}
+//        if (data.StatusData) {
+//            updateStatus(data.StatusData);
+//        }
+//        //if (data.prodData) {
+//        //    updateProd(data.prodData);
+//        //}
+//        if (data.BufferAc) {
+//            updateChartsWithHistory(data.BufferAc);
+//        }
+//    } catch (e) {
+//        console.warn("Erro ao interpretar dados iniciais:", e);
+//    }
+//});
 
 
 async function updateApplicationState() {

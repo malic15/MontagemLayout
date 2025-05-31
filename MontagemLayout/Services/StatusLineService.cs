@@ -8,9 +8,9 @@ namespace MontagemLayout.Services
     {
         public class LineInfo
         {
-            public int LowestStatusActive { get; set; }
-            public string LastMessage { get; set; } = "";
-            public DateTime? LastFaultTime { get; set; }
+            public int lowestStatusActive { get; set; }
+            public string lastMessage { get; set; } = "";
+            public DateTime? lastFaultTime { get; set; }
         }
         private ConcurrentDictionary<string, LineInfo> _statusData = new ConcurrentDictionary<string, LineInfo>();
         private ConcurrentDictionary<string, ConcurrentDictionary<string,int>> _statusDbsData = new ConcurrentDictionary<string, ConcurrentDictionary<string, int>>();
@@ -40,11 +40,10 @@ namespace MontagemLayout.Services
         public void UpdateStatusDbsActive(string line, string db, int status, string message, DateTime time)
         {
             _statusUpdateQueue.Enqueue((line, db, status, message, time));
-            OnStatusLineDataChanged?.Invoke(_statusData);
+            
         }
         private async Task ProcessQueue()
         {
-            
             while (true)
             {
                 await Task.Delay(200);
@@ -62,10 +61,18 @@ namespace MontagemLayout.Services
                     if (!string.IsNullOrEmpty(update.Item4))
                     {
                         _statusData.AddOrUpdate(update.Item1,
-                            _ => new LineInfo { LastMessage = update.Item4 },
+                            _ => new LineInfo
+                            {
+                                lastMessage = update.Item4,
+                                lastFaultTime = update.Item5 // time enviado junto
+                            },
                             (_, existingLineInfo) =>
                             {
-                                existingLineInfo.LastMessage = update.Item4;
+                                if (existingLineInfo.lastMessage != update.Item4)
+                                {
+                                    existingLineInfo.lastMessage = update.Item4;
+                                    existingLineInfo.lastFaultTime = update.Item5;
+                                }
                                 return existingLineInfo;
                             });
                     }
@@ -76,10 +83,10 @@ namespace MontagemLayout.Services
         public void UpdateStatusActive(string line ,int status)
         {
             _statusData.AddOrUpdate(line,
-                        _ => new LineInfo { LowestStatusActive = status },
+                        _ => new LineInfo { lowestStatusActive = status },
                         (_, existingLineInfo) =>
                         {
-                            if (existingLineInfo.LowestStatusActive != status)
+                            if (existingLineInfo.lowestStatusActive != status)
                             {
                                 if (OnStatusChanged != null)
                                 {
@@ -89,9 +96,10 @@ namespace MontagemLayout.Services
                                         Status = status
                                     });
                                     Task.Run(async () => await OnStatusChanged.Invoke(lineStatus));
+                                    OnStatusLineDataChanged?.Invoke(_statusData);
                                 }
                             }
-                            existingLineInfo.LowestStatusActive = status;
+                            existingLineInfo.lowestStatusActive = status;
                             return existingLineInfo;
                         });
 
@@ -110,7 +118,7 @@ namespace MontagemLayout.Services
             foreach (var line in _statusData)
             {
                 var lineName = line.Key;
-                var lastMessage = line.Value.LastMessage;
+                var lastMessage = line.Value.lastMessage;
                 Console.WriteLine($"Linha: {lineName}, Última Mensagem: {lastMessage}");
             }
         }

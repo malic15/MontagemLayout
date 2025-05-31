@@ -1,31 +1,81 @@
 ﻿@import url('mapaMontagem.css');
 
-.fault-list-container {
+.fault-list-header {
     position: fixed;
-    top: 10%;
-    right: 0;
-    width: calc(280px * var(--scale-factor-width));
-    max-height: 80%;
-    overflow-y: auto;
-    background: #2d2d2d;
-    border-left: 2px solid #8ce436;
-    padding: 10px;
-    color: white;
-    font-family: Calibri, sans-serif;
-    font-size: calc(12px * var(--scale-factor-width));
-    z-index: 9999;
-    box-shadow: -4px 0 6px rgba(0,0,0,0.4);
+    top: calc((110px + var(--vertical-offset))* var(--scale-factor-height));
+    right: calc(5px*var(--scale-factor-width));
+    font-family: 'Segoe UI', Calibri, sans-serif;
+    font-size: calc(14.5px*var(--scale-factor-width));
+    color: rgba(255,255,255,0.5);
+    user-select: none;
+    pointer-events: none;
 }
 
-    .fault-list-container h3 {
-        margin-top: 0;
-        font-size: calc(14px * var(--scale-factor-width));
-        color: #8ce436;
+.fault-list {
+    position: fixed;
+    backdrop-filter: blur(10px) !important;
+    top: calc((140px + var(--vertical-offset))* var(--scale-factor-height));
+    right: calc(5px*var(--scale-factor-width));
+    width: calc(170px*var(--scale-factor-width));
+    min-height: 10vh;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: calc(16px*var(--scale-factor-height));
+    background: rgba(0,0,0,0.1);
+    color: rgba(255,255,255,0.8);
+    font-family: 'Segoe UI', Calibri, sans-serif;
+    font-size: calc(10px*var(--scale-factor-height));
+    border-radius: calc(10px*var(--scale-factor-height));
+    /*    box-shadow: 0 0 12px rgba(255, 0, 0, 0.3), 0 0 5px rgba(0, 0, 0, 0.6);*/
+    z-index: -1;
+    /*    border: calc(1px*var(--scale-factor-height)) solid rgba(0, 0, 0, 0.2);*/
+    user-select: none;
+/*    pointer-events: none;*/
+}
+
+.fault-entry {
+    opacity: 0;
+    transform: translateX(20px);
+    margin-bottom: calc(14px*var(--scale-factor-width));
+    padding: calc(10px*var(--scale-factor-height)) calc(12px*var(--scale-factor-width));
+    background: rgba(255, 0, 0, 0.1);
+    border-left: calc(4px*var(--scale-factor-width)) solid #ff4c4c81;
+    border-radius: calc(6px*var(--scale-factor-width));
+    transition: background 0.3s ease, border-color 0.3s ease, opacity 0.5s ease, transform 0.5s ease;
+}
+
+    /* Quando visível */
+    .fault-entry.show {
+        opacity: 1;
+        transform: translateX(0);
     }
 
-#faultList li {
-    margin-bottom: 6px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 4px;
-    line-height: 1.2em;
-}
+    /* Quando escondendo (opcional se quiser delay reverso) */
+    .fault-entry.hide {
+        opacity: 0;
+        transform: translateX(calc(20px*var(--scale-factor-width)));
+    }
+
+
+    .fault-entry:hover {
+        background: rgba(255, 0, 0, 0.25);
+        border-left-color: #ff6666;
+    }
+
+    .fault-entry strong {
+        display: block;
+        font-weight: bold;
+        font-size: calc(10px*var(--scale-factor-width));
+        color: #ff9999;
+        margin-bottom: calc(2px*var(--scale-factor-height));
+    }
+
+    .fault-entry span.fault-time {
+        display: block;
+        font-weight: bold;
+        font-size: calc(8px*var(--scale-factor-width));
+        color: #d0d0d0;
+        margin-top: calc(6px*var(--scale-factor-height));
+        font-style: italic;
+    }

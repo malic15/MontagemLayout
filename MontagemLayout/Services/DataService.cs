@@ -26,6 +26,7 @@ namespace MontagemLayout.Services
             _pdtService.OnPdtDataChanged += async (data) =>
             {
                 ConcurrentDictionary<string, ConcurrentDictionary<int, PdtInfo>> pdtData = _pdtService.GetPdtData();
+                Console.WriteLine("Diahsdiuahsbdkajnsdkand");
                 await _hubContext.Clients.All.SendAsync("ReceiveApplicationStatePDT", pdtData);
             };
             _bufferService.OnBufferDataChanged += async (data) =>
@@ -35,7 +36,6 @@ namespace MontagemLayout.Services
             };
             _statusService.OnStatusLineDataChanged += async (data) =>
             {
-                Console.WriteLine("OKDOKS");
                 ConcurrentDictionary<string, LineInfo> statusData = _statusService.GetStatusData();
                 await _hubContext.Clients.All.SendAsync("ReceiveApplicationStateStatus", statusData);
             };

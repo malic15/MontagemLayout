@@ -201,7 +201,7 @@ internal class Program
                     int connection = connectionElement.GetString() == "1" ? 19 : 0;
                     //string faultMessage = connection == 19 ? "" : "";
                     
-                    //statusLineService.UpdateStatusDbsActive(lineConnection.ToString(), "0", connection, "", DateTime.Now);
+                    statusLineService.UpdateStatusDbsActive(lineConnection.ToString(), "0", connection, "", DateTime.Now);
                     ResetConnectionTimer(lineConnection, statusLineService);
                     return;
                 }
@@ -377,6 +377,7 @@ internal class Program
             Console.WriteLine($"Erro ao processar mensagem MQTT: {ex.Message}");
             }
         };
+
         statusLineService.OnStatusChanged += async (lineStatus) =>
         {
             var json = JsonDocument.Parse(lineStatus);
@@ -755,7 +756,7 @@ internal class Program
             }, null, 4000, Timeout.Infinite);
         }
 
-        var allLines = statusLineService.GetStatusData(); // Método fictício que retorna todas as linhas registradas
+        //var allLines = statusLineService.GetStatusData();
 
         //foreach (var storedLine in allLines.Keys)
         //{

@@ -14,7 +14,7 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     width: 97%;
     /*    max-width: 1600px;*/
-    max-height: 550px; /* Define a altura máxima */
+    max-height: 85%; /* Define a altura máxima */
     overflow-y: auto;
     z-index: 100000;
 }

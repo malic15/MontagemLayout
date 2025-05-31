@@ -342,7 +342,7 @@ namespace MontagemLayout.Services
             }
             catch (MySqlException ex)
             {
-                Console.WriteLine($"Erro ao acessar o banco de dados: {ex.Message}");
+                Console.WriteLine($"Erro ao acessar o banco de dados do MySQL: {ex.Message}");
                 throw;
             }
             catch (Exception ex)
@@ -352,6 +352,38 @@ namespace MontagemLayout.Services
             }
             return result;
         }
+        public async Task<List<BufferSnapshot>> GetBufferSnapshotsAsync(DateTime start, DateTime end)
+        {
+            
+            var snapshots = new List<BufferSnapshot>();
+            Console.WriteLine($"DEBUG Start: {start:yyyy-MM-dd HH:mm:ss}, End: {end:yyyy-MM-dd HH:mm:ss}");
+
+            using var connection = new MySqlConnection(connectionString);
+            await connection.OpenAsync();
+
+            string query = @"SELECT line, position, is_active, is_fault, timestamp 
+                     FROM buffer_snapshots
+                     WHERE timestamp BETWEEN @start AND @end
+                     ORDER BY timestamp ASC";
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@start", start);
+            command.Parameters.AddWithValue("@end", end);
+            
+            using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                snapshots.Add(new BufferSnapshot
+                {
+                    Line = reader.GetString("line"),
+                    Position = reader.GetInt32("position"),
+                    IsActive = reader.GetBoolean("is_active"),
+                    IsFault = reader.GetBoolean("is_fault"),
+                    Timestamp = reader.GetDateTime("timestamp")
+                });
+            }
+            return snapshots;
+        }
+
         public async Task<IEnumerable<object>> GetStateDurationsAsync(string line)
         {
             try
