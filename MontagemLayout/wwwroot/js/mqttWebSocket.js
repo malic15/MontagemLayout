@@ -925,76 +925,76 @@ export async function updateBuffer(bufferState) {
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
     updateStatus(statusState);
 });
-async function updateStatus(statusState) {
-    //const startTime = performance.now();
-    Object.keys(statusState).forEach(line => {
+    async function updateStatus(statusState) {
+        //const startTime = performance.now();
+        Object.keys(statusState).forEach(line => {
         
-        const data = statusState[line];
-        const lastFaultTime = data.lastFaultTime ? new Date(data.lastFaultTime) : null;
+            const data = statusState[line];
+            const lastFaultTime = data.lastFaultTime ? new Date(data.lastFaultTime) : null;
 
 
-        const btnLine = document.getElementById(line);
+            const btnLine = document.getElementById(line);
 
-        const minPriority = statusState[line].lowestStatusActive
-        const lastFault = statusState[line].lastMessage;
-        const [zonePart, ...descriptionParts] = lastFault.split(':');
+            const minPriority = statusState[line].lowestStatusActive
+            const lastFault = statusState[line].lastMessage;
+            const [zonePart, ...descriptionParts] = lastFault.split(':');
 
-        const formattedZone = zonePart.trim().charAt(0).toUpperCase() + zonePart.trim().slice(1).toLowerCase();
+            const formattedZone = zonePart.trim().charAt(0).toUpperCase() + zonePart.trim().slice(1).toLowerCase();
 
-        const descriptionText = descriptionParts.join(':').trim();
-        const formattedDescription = descriptionText.charAt(0).toUpperCase() + descriptionText.slice(1).toLowerCase();
+            const descriptionText = descriptionParts.join(':').trim();
+            const formattedDescription = descriptionText.charAt(0).toUpperCase() + descriptionText.slice(1).toLowerCase();
 
-        if ((data.lowestStatusActive === 1 || data.lowestStatusActive === 2) && lastFaultTime) {
-            activeFaults[line] = {
-                message: data.lastMessage,
-                startTime: lastFaultTime // vindo do back-end
-            };
-        } else {
-            delete activeFaults[line];
-        }
-
-        if (btnLine) {
-            const containerFault = btnLine.querySelector(".fault_text");
-            const color = prioritiesColors[minPriority] || prioritiesColors[19];
-            btnLine.style.setProperty('--alert-color', color + transpColor);
-            if (line.includes('goma')) {
-                const childElements = btnLine.querySelectorAll("[id^='goma']");
-                childElements.forEach(child => {
-                    child.style.borderColor = color;
-                });
+            if ((data.lowestStatusActive === 1 || data.lowestStatusActive === 2) && lastFaultTime) {
+                activeFaults[line] = {
+                    message: data.lastMessage,
+                    startTime: lastFaultTime // vindo do back-end
+                };
+            } else {
+                delete activeFaults[line];
             }
-            btnLine.style.backgroundColor = color + transpColor;
-            btnLine.style.borderColor = color;
-            //btnLine.style.borderColor = '#606060';
 
-            //const isFault = minPriority === 1 || minPriority === 2;
+            if (btnLine) {
+                const containerFault = btnLine.querySelector(".fault_text");
+                const color = prioritiesColors[minPriority] || prioritiesColors[19];
+                btnLine.style.setProperty('--alert-color', color + transpColor);
+                if (line.includes('goma')) {
+                    const childElements = btnLine.querySelectorAll("[id^='goma']");
+                    childElements.forEach(child => {
+                        child.style.borderColor = color;
+                    });
+                }
+                btnLine.style.backgroundColor = color + transpColor;
+                btnLine.style.borderColor = color;
+                //btnLine.style.borderColor = '#606060';
 
-            //btnLine.style.setProperty('--alert-color', color + transpColor);
+                //const isFault = minPriority === 1 || minPriority === 2;
 
-            //if (isFault && !btnLine.classList.contains("blink-dynamic")) {
-            //    void btnLine.offsetWidth;
-            //    btnLine.classList.add("blink-dynamic");
-            //} else {
-            //    btnLine.classList.remove("blink-dynamic");
-            //    btnLine.style.backgroundColor = color + transpColor;
-            //}
+                //btnLine.style.setProperty('--alert-color', color + transpColor);
 
-            if (containerFault) {
-                const description = prioritiesDescription[minPriority] || prioritiesDescription[19];
-                containerFault.textContent = description;
+                //if (isFault && !btnLine.classList.contains("blink-dynamic")) {
+                //    void btnLine.offsetWidth;
+                //    btnLine.classList.add("blink-dynamic");
+                //} else {
+                //    btnLine.classList.remove("blink-dynamic");
+                //    btnLine.style.backgroundColor = color + transpColor;
+                //}
 
-                if (lastFault != "" && (minPriority == 1 || minPriority == 2)) {
+                if (containerFault) {
+                    const description = prioritiesDescription[minPriority] || prioritiesDescription[19];
+                    containerFault.textContent = description;
 
-                    const formattedLastFault = `${formattedZone}: ${formattedDescription}`;
-                    containerFault.innerHTML = `Falha:<br><span style="font-size: 0.8em;">${formattedLastFault}</span>`;
+                    if (lastFault != "" && (minPriority == 1 || minPriority == 2)) {
+
+                        const formattedLastFault = `${formattedZone}: ${formattedDescription}`;
+                        containerFault.innerHTML = `Falha:<br><span style="font-size: 0.8em;">${formattedLastFault}</span>`;
+                    }
                 }
             }
-        }
-    });
-    updateFaultListUI();
-    //const endTime = performance.now();
-    //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
-}
+        });
+        updateFaultListUI();
+        //const endTime = performance.now();
+        //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
+    }
 
 function updateFaultListUI() {
     const faultListContainer = document.getElementById("faultList");

@@ -4,6 +4,12 @@ using System.Text.Json;
 
 namespace MontagemLayout.Services
 {
+    public class StatusUpdate
+    {
+        public string line { get; set; } = "";
+        public int state { get; set; }
+        public DateTime? timestamp { get; set; }
+    }
     public class StatusLineService
     {
         public class LineInfo
@@ -12,6 +18,7 @@ namespace MontagemLayout.Services
             public string lastMessage { get; set; } = "";
             public DateTime? lastFaultTime { get; set; }
         }
+        
         private ConcurrentDictionary<string, LineInfo> _statusData = new ConcurrentDictionary<string, LineInfo>();
         private ConcurrentDictionary<string, ConcurrentDictionary<string,int>> _statusDbsData = new ConcurrentDictionary<string, ConcurrentDictionary<string, int>>();
 

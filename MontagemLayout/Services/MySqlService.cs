@@ -352,7 +352,7 @@ namespace MontagemLayout.Services
             }
             return result;
         }
-        public async Task<List<BufferSnapshot>> GetBufferSnapshotsAsync(DateTime start, DateTime end)
+        public async Task<List<BufferSnapshot>> GetBufferSnapshotsReplayAsync(DateTime start, DateTime end)
         {
             
             var snapshots = new List<BufferSnapshot>();
@@ -382,6 +382,32 @@ namespace MontagemLayout.Services
                 });
             }
             return snapshots;
+        }
+        public async Task<List<StatusUpdate>> GetStatusReplayAsync(DateTime start, DateTime end)
+        {
+            var updates = new List<StatusUpdate>();
+            using var connection = new MySqlConnection(connectionString);
+            await connection.OpenAsync();
+
+            string query = @"SELECT line, state, data
+                     FROM lisinc.status_updates
+                     WHERE data BETWEEN @start AND @end
+                     ORDER BY data ASC";
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@start", start);
+            command.Parameters.AddWithValue("@end", end);
+
+            using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                updates.Add(new StatusUpdate
+                {
+                    line = reader.GetString("line"),
+                    state = reader.GetInt32("state"),
+                    timestamp = reader.GetDateTime("data")
+                });
+            }
+            return updates;
         }
 
         public async Task<IEnumerable<object>> GetStateDurationsAsync(string line)

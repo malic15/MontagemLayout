@@ -63,10 +63,22 @@ namespace MontagemLayout.Services
         [HttpGet("buffer-replay")]
         public async Task<IActionResult> GetBufferReplay([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            var snapshots = await _mysqlService.GetBufferSnapshotsAsync(start, end);
+            var snapshots = await _mysqlService.GetBufferSnapshotsReplayAsync(start, end);
             return Ok(snapshots);
         }
+        [HttpGet("replay")]
+        public async Task<IActionResult> GetReplay([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            var bufferSnapshots = await _mysqlService.GetBufferSnapshotsReplayAsync(start, end);
+            var statusUpdates = await _mysqlService.GetStatusReplayAsync(start, end);
 
+            // Você pode adicionar outros dados aqui se quiser
+            return Ok(new
+            {
+                buffer = bufferSnapshots,
+                status = statusUpdates
+            });
+        }
         //public IActionResult Index()
         //{
         //    var initialData = new

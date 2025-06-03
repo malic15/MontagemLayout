@@ -1,5 +1,9 @@
 ﻿import { updateBuffer } from '/js/mqttWebSocket.js';
 
+let replayData = null; // { buffer: [...], status: [...] }
+let currentFrameTime = null;
+
+
 let replayData = [];
 let replayFrames = [];
 let replayTimestamps = [];
@@ -9,23 +13,26 @@ let isPlaying = false;
 let replayMode = false;
 
 // Função para buscar e preparar os dados
+//async function loadReplayData(start, end) {
+//    const res = await fetch(`/data/buffer-replay?start=${start.toISOString()}&end=${end.toISOString()}`);
+//    replayData = await res.json();
+//    replayFrames = [];
+//    replayTimestamps = [];
+//    // Agrupar por timestamp
+//    const map = {};
+//    replayData.forEach(snap => {
+//        const t = new Date(snap.timestamp).getTime();
+//        if (!map[t]) map[t] = [];
+//        map[t].push(snap);
+//    });
+//    replayTimestamps = Object.keys(map).sort((a, b) => a - b).map(Number);
+//    replayFrames = replayTimestamps.map(t => map[t]);
+//    document.getElementById("replaySlider").max = replayFrames.length - 1;
+//}
 async function loadReplayData(start, end) {
-    const res = await fetch(`/data/buffer-replay?start=${start.toISOString()}&end=${end.toISOString()}`);
-    replayData = await res.json();
-    replayFrames = [];
-    replayTimestamps = [];
-    // Agrupar por timestamp
-    const map = {};
-    replayData.forEach(snap => {
-        const t = new Date(snap.timestamp).getTime();
-        if (!map[t]) map[t] = [];
-        map[t].push(snap);
-    });
-    replayTimestamps = Object.keys(map).sort((a, b) => a - b).map(Number);
-    replayFrames = replayTimestamps.map(t => map[t]);
-    document.getElementById("replaySlider").max = replayFrames.length - 1;
+    const resp = await fetch(`/api/replay?start=${start}&end=${end}`);
+    replayData = await resp.json();
 }
-
 // Função para aplicar frame
 //function applyReplayFrame(frame) {
     
@@ -45,20 +52,38 @@ async function loadReplayData(start, end) {
 //    });
 //}
 // Função auxiliar
-function frameToBufferState(frame) {
-    const bufferState = {};
-    frame.forEach(snap => {
-        if (!bufferState[snap.line]) bufferState[snap.line] = [];
-        bufferState[snap.line][snap.position] = snap;
-    });
-    return bufferState;
-}
+//function frameToBufferState(frame) {
+//    const bufferState = {};
+//    frame.forEach(snap => {
+//        if (!bufferState[snap.line]) bufferState[snap.line] = [];
+//        bufferState[snap.line][snap.position] = snap;
+//    });
+//    return bufferState;
+//}
 
 // No replay.js
 function applyReplayFrame(frame) {
-    if (!frame || !Array.isArray(frame)) return;
-    const bufferState = frameToBufferState(frame);
-    updateBuffer(bufferState); // Reaproveita toda a lógica
+    currentFrameTime = frameTime;
+    // Filtra e aplica o buffer
+    const bufferFrame = {};
+    replayData.buffer
+        .filter(b => new Date(b.timestamp) <= frameTime)
+        .forEach(b => {
+            if (!bufferFrame[b.line]) bufferFrame[b.line] = [];
+            bufferFrame[b.line][b.position] = b;
+        });
+    updateBuffer(bufferFrame);
+
+    // Filtra e aplica o status
+    const statusFrame = {};
+    replayData.status
+        .filter(s => new Date(s.timestamp) <= frameTime)
+        .forEach(s => {
+            // Só pega o status mais recente de cada linha até esse frame
+            statusFrame[s.line] = s;
+        });
+    updateStatus(statusFrame);
+
 }
 
 // Função para exibir timestamp humano
