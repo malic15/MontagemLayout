@@ -1,6 +1,6 @@
 ﻿import { updateBuffer } from '/js/mqttWebSocket.js';
 
-let replayData = null; // { buffer: [...], status: [...] }
+//let replayData = null; // { buffer: [...], status: [...] }
 let currentFrameTime = null;
 
 
@@ -30,7 +30,7 @@ let replayMode = false;
 //    document.getElementById("replaySlider").max = replayFrames.length - 1;
 //}
 async function loadReplayData(start, end) {
-    const resp = await fetch(`/api/replay?start=${start}&end=${end}`);
+    const resp = await fetch(`/data/replay?start=${start.toISOString()}&end=${end.toISOString()}`);
     replayData = await resp.json();
 }
 // Função para aplicar frame
@@ -62,7 +62,7 @@ async function loadReplayData(start, end) {
 //}
 
 // No replay.js
-function applyReplayFrame(frame) {
+function applyReplayFrame(frameTime) {
     currentFrameTime = frameTime;
     // Filtra e aplica o buffer
     const bufferFrame = {};
