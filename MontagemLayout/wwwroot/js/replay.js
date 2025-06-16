@@ -1,4 +1,4 @@
-﻿import { updateBuffer } from '/js/mqttWebSocket.js';
+﻿import { updateBuffer, updateStatus, setReplayMode } from '/js/mqttWebSocket.js';
 
 //let replayData = null; // { buffer: [...], status: [...] }
 let currentFrameTime = null;
@@ -10,7 +10,7 @@ let replayTimestamps = [];
 let replayInterval = null;
 let replayIndex = 0;
 let isPlaying = false;
-let replayMode = false;
+//let replayMode = false;
 
 // Função para buscar e preparar os dados
 //async function loadReplayData(start, end) {
@@ -32,7 +32,16 @@ let replayMode = false;
 async function loadReplayData(start, end) {
     const resp = await fetch(`/data/replay?start=${start.toISOString()}&end=${end.toISOString()}`);
     replayData = await resp.json();
+    replayTimestamps = buildReplayTimestamps(replayData);
 }
+function buildReplayTimestamps(replayData) {
+    const bufferTimes = replayData.buffer.map(b => new Date(b.timestamp).getTime());
+    const statusTimes = replayData.status.map(s => new Date(s.timestamp).getTime());
+    const allTimes = Array.from(new Set([...bufferTimes, ...statusTimes]));
+    allTimes.sort((a, b) => a - b);
+    return allTimes;
+}
+
 // Função para aplicar frame
 //function applyReplayFrame(frame) {
     
@@ -97,7 +106,7 @@ function updateReplayUI() {
     document.getElementById("replaySlider").value = replayIndex;
     document.getElementById("replayCurrentTime").textContent =
         replayTimestamps.length
-            ? formatTimestamp(replayTimestamps[replayIndex])
+            ? formatTimestamp(new Date(replayTimestamps[replayIndex]))
             : "--:--:--";
 }
 
@@ -125,7 +134,7 @@ function playReplay() {
             stopReplay();
             return;
         }
-        applyReplayFrame(replayFrames[replayIndex]);
+        applyReplayFrame(new Date(replayTimestamps[replayIndex]));
         
         updateReplayUI();
         replayIndex++;
@@ -140,14 +149,11 @@ function stopReplay() {
 // Slider handler
 document.getElementById("replaySlider").addEventListener("input", e => {
     replayIndex = +e.target.value;
-    applyReplayFrame(replayFrames[replayIndex]);
+    applyReplayFrame(new Date(replayTimestamps[replayIndex]));
     updateReplayUI();
     stopReplay();
 });
-function setReplayMode() {
-    console.log("replayMode: " + replayMode);
-    replayMode = replayMode ? false : true;
-}
+
 document.getElementById("replayMode").addEventListener("click", setReplayMode);
 // Play/Pause button
 document.getElementById("replayPlayPauseBtn").addEventListener("click", toggleReplayPlayPause);
@@ -166,7 +172,7 @@ async function startReplayInterval() {
     
     await loadReplayData(start, end);
     replayIndex = 0;
-    applyReplayFrame(replayFrames[replayIndex]);
+    applyReplayFrame(new Date(replayTimestamps[replayIndex]));
     updateReplayUI();
 }
 startReplayInterval();

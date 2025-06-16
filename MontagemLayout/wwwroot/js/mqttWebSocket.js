@@ -76,9 +76,14 @@ var bufferHide = false;
 var transpColor = '1a'
 let color = '#8ce436';
 var btnTransition = false;
+let replayMode = false;
 let dataTable;
 const activeFaults = {};
 
+export function setReplayMode() {
+    console.log("replayMode: " + replayMode);
+    replayMode = replayMode ? false : true;
+}
 export var buttonId = "";
 export function setButtonId(newId) {
     buttonId = newId;
@@ -847,7 +852,9 @@ async function updatePdt(pdtState) {
 //});
 connectionData.off("ReceiveApplicationStateBuffer");
 connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
-    updateBuffer(bufferState);
+    if (!replayMode) {
+        updateBuffer(bufferState);
+    }
 });
 export async function updateBuffer(bufferState) {
     const updates = [];
@@ -923,12 +930,15 @@ export async function updateBuffer(bufferState) {
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
 }
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
-    updateStatus(statusState);
+    if (!replayMode) {
+        updateStatus(statusState);
+    }
 });
-    async function updateStatus(statusState) {
-        //const startTime = performance.now();
-        Object.keys(statusState).forEach(line => {
-        
+
+export async function updateStatus(statusState) {
+    //const startTime = performance.now();
+    Object.keys(statusState).forEach(line => {
+        try {
             const data = statusState[line];
             const lastFaultTime = data.lastFaultTime ? new Date(data.lastFaultTime) : null;
 
@@ -937,6 +947,9 @@ connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
 
             const minPriority = statusState[line].lowestStatusActive
             const lastFault = statusState[line].lastMessage;
+            if (lastFault == undefined) {
+                return;
+            }
             const [zonePart, ...descriptionParts] = lastFault.split(':');
 
             const formattedZone = zonePart.trim().charAt(0).toUpperCase() + zonePart.trim().slice(1).toLowerCase();
@@ -990,11 +1003,15 @@ connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
                     }
                 }
             }
-        });
-        updateFaultListUI();
-        //const endTime = performance.now();
-        //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
-    }
+        } catch (err){
+            console.error("Erro em UpdateStatus:", err);
+        }
+        
+    });
+    updateFaultListUI();
+    //const endTime = performance.now();
+    //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
+}
 
 function updateFaultListUI() {
     const faultListContainer = document.getElementById("faultList");
@@ -1193,7 +1210,7 @@ connection.onclose(async () => {
         console.error("Error reconnecting SignalR:", err);
     }
 });
-function initializeState() {
+async function initializeState() {
     const CACHE_KEY = 'initial_app_state';
     const CACHE_DURATION = 120000; // 1 min
 
