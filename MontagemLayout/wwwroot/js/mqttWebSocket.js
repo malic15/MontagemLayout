@@ -81,8 +81,8 @@ let dataTable;
 const activeFaults = {};
 
 export function setReplayMode() {
-    console.log("replayMode: " + replayMode);
     replayMode = replayMode ? false : true;
+    console.log("replayMode: " + replayMode);
 }
 export var buttonId = "";
 export function setButtonId(newId) {

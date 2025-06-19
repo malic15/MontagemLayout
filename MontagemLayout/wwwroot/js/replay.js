@@ -121,8 +121,8 @@ function toggleReplayPlayPause() {
 }
 
 function playReplay() {
-    console.log(replayFrames.length);
-    if (replayFrames.length === 0) return;
+    console.log(replayTimestamps.length);
+    if (!replayTimestamps || replayTimestamps.length === 0) return;
     isPlaying = true;
     
     document.getElementById("replayPlayPauseBtn").textContent = "⏸️";
@@ -130,12 +130,11 @@ function playReplay() {
     
     replayInterval = setInterval(() => {
         
-        if (replayIndex >= replayFrames.length) {
+        if (replayIndex >= replayTimestamps.length) {
             stopReplay();
             return;
         }
         applyReplayFrame(new Date(replayTimestamps[replayIndex]));
-        
         updateReplayUI();
         replayIndex++;
     }, speed);
