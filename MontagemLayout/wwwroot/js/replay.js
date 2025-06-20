@@ -73,27 +73,34 @@ function buildReplayTimestamps(replayData) {
 // No replay.js
 function applyReplayFrame(frameTime) {
     currentFrameTime = frameTime;
-    // Filtra e aplica o buffer
+
+    // Buffer: último estado de cada posição de cada linha até esse frame
     const bufferFrame = {};
     replayData.buffer
         .filter(b => new Date(b.timestamp) <= frameTime)
         .forEach(b => {
-            if (!bufferFrame[b.line]) bufferFrame[b.line] = [];
+            if (!bufferFrame[b.line]) bufferFrame[b.line] = {};
             bufferFrame[b.line][b.position] = b;
         });
+    // Converte para array para manter compatibilidade com updateBuffer()
+    Object.keys(bufferFrame).forEach(line => {
+        const positions = bufferFrame[line];
+        bufferFrame[line] = Object.keys(positions)
+            .sort((a, b) => +a - +b)
+            .map(pos => positions[pos]);
+    });
     updateBuffer(bufferFrame);
 
-    // Filtra e aplica o status
+    // Status: último status de cada linha até esse frame
     const statusFrame = {};
     replayData.status
         .filter(s => new Date(s.timestamp) <= frameTime)
         .forEach(s => {
-            // Só pega o status mais recente de cada linha até esse frame
             statusFrame[s.line] = s;
         });
     updateStatus(statusFrame);
-
 }
+
 
 // Função para exibir timestamp humano
 function formatTimestamp(ts) {
