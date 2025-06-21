@@ -853,6 +853,7 @@ async function updatePdt(pdtState) {
 connectionData.off("ReceiveApplicationStateBuffer");
 connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
     if (!replayMode) {
+        //console.log("BufferFrame (frameTime = ):", bufferState);
         updateBuffer(bufferState);
     }
 });
@@ -931,11 +932,13 @@ export async function updateBuffer(bufferState) {
 }
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
     if (!replayMode) {
+        
         updateStatus(statusState);
     }
 });
 
 export async function updateStatus(statusState) {
+    console.log("statusState (frameTime = ):", statusState);
     //const startTime = performance.now();
     Object.keys(statusState).forEach(line => {
         try {

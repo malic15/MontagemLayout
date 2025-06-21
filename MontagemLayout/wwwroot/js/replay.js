@@ -31,7 +31,16 @@ let isPlaying = false;
 //}
 async function loadReplayData(start, end) {
     const resp = await fetch(`/data/replay?start=${start.toISOString()}&end=${end.toISOString()}`);
+    if (!resp.ok) {
+        const errorText = await resp.text();
+        console.error("Erro no fetch:", errorText);
+        return;
+    }
+    
+
     replayData = await resp.json();
+    //console.table(replayData.buffer); // visual para arrays de objetos
+    //console.table(replayData.status);
     replayTimestamps = buildReplayTimestamps(replayData);
 }
 function buildReplayTimestamps(replayData) {
@@ -89,16 +98,46 @@ function applyReplayFrame(frameTime) {
             .sort((a, b) => +a - +b)
             .map(pos => positions[pos]);
     });
+    //console.log("BufferFrame (frameTime = " + frameTime.toISOString() + "):", bufferFrame);
+
     updateBuffer(bufferFrame);
 
-    // Status: último status de cada linha até esse frame
-    const statusFrame = {};
+    const statusLatestByLine = {};
+    // Para cada status já ocorrido até agora, pega o último para cada linha
     replayData.status
         .filter(s => new Date(s.timestamp) <= frameTime)
         .forEach(s => {
-            statusFrame[s.line] = s;
+            // Só pega o mais recente por linha
+            statusLatestByLine[s.line] = s;
         });
+
+    // Agora, para todas as linhas conhecidas do seu sistema, crie o objeto esperado:
+    const statusFrame = {};
+    // Use as linhas de replayData.status, ou de um array conhecido de linhas
+    const allLines = Object.keys(prioritiesColors); // ou lista fixa, ou Object.keys(statusLatestByLine)
+    allLines.forEach(line => {
+        if (statusLatestByLine[line]) {
+            const st = statusLatestByLine[line];
+            statusFrame[line] = {
+                lowestStatusActive: st.state,
+                lastMessage: st.lastMessage || '', // preencha se existir no replay
+                lastFaultTime: st.timestamp || null
+            };
+        } else {
+            // Sem registro até agora, coloca o default (sem falha, por exemplo)
+            statusFrame[line] = {
+                lowestStatusActive: 19,
+                lastMessage: '',
+                lastFaultTime: null
+            };
+        }
+    });
+
+    // Log pra depurar:
+    console.log("StatusFrame (frameTime):", statusFrame);
+
     updateStatus(statusFrame);
+
 }
 
 
