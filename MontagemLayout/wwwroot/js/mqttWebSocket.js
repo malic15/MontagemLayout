@@ -80,6 +80,8 @@ let replayMode = false;
 let dataTable;
 const activeFaults = {};
 
+export var allLines = [];
+
 export function setReplayMode() {
     replayMode = replayMode ? false : true;
     console.log("replayMode: " + replayMode);
@@ -140,11 +142,19 @@ function hexToRgb(hex) {
     };
 }
 
+function getAllLineNames() {
+    // Se todos têm class "botton", selecione por isso:
+    return Array.from(document.querySelectorAll('button.botton'))
+        .map(btn => btn.id)
+        .filter(id => id); // filtra se tiver botão sem id
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded and parsed");
     //createLines();
     adjustScale();
     initializeState();
+    allLines = getAllLineNames();
     buttonUp.disabled = true;
     //document.querySelectorAll('.botton').forEach(elem => {
     //    const containerFault = elem.querySelector(".fault_text");
@@ -853,13 +863,12 @@ async function updatePdt(pdtState) {
 connectionData.off("ReceiveApplicationStateBuffer");
 connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
     if (!replayMode) {
-        //console.log("BufferFrame (frameTime = ):", bufferState);
         updateBuffer(bufferState);
     }
 });
 export async function updateBuffer(bufferState) {
     const updates = [];
-
+    console.log("BufferFrame (frameTime = ):", bufferState);
     for (const line in bufferState) {
         const bufferItems = document.querySelectorAll(`[class*="${line}_zne"]`);
         let count = 0;
@@ -938,7 +947,6 @@ connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
 });
 
 export async function updateStatus(statusState) {
-    console.log("statusState (frameTime = ):", statusState);
     //const startTime = performance.now();
     Object.keys(statusState).forEach(line => {
         try {

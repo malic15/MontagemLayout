@@ -1,4 +1,4 @@
-﻿import { updateBuffer, updateStatus, setReplayMode } from '/js/mqttWebSocket.js';
+﻿import { updateBuffer, updateStatus, setReplayMode, allLines} from '/js/mqttWebSocket.js';
 
 //let replayData = null; // { buffer: [...], status: [...] }
 let currentFrameTime = null;
@@ -39,7 +39,7 @@ async function loadReplayData(start, end) {
     
 
     replayData = await resp.json();
-    //console.table(replayData.buffer); // visual para arrays de objetos
+    console.table(replayData.buffer); // visual para arrays de objetos
     //console.table(replayData.status);
     replayTimestamps = buildReplayTimestamps(replayData);
 }
@@ -83,14 +83,23 @@ function buildReplayTimestamps(replayData) {
 function applyReplayFrame(frameTime) {
     currentFrameTime = frameTime;
 
+    if (replayData.buffer && replayData.buffer.length > 0) {
+        replayData.buffer.forEach(b => {
+            console.log("timestamp:", b.timestamp, "frameTime:", frameTime, "b.line:", b.line);
+        });
+    }
+
+
     // Buffer: último estado de cada posição de cada linha até esse frame
     const bufferFrame = {};
     replayData.buffer
-        .filter(b => new Date(b.timestamp) <= frameTime)
+        .filter(b => new Date(b.timestamp).getTime() <= frameTime.getTime())
         .forEach(b => {
+            console.log("b.line");
             if (!bufferFrame[b.line]) bufferFrame[b.line] = {};
             bufferFrame[b.line][b.position] = b;
         });
+    console.log(bufferFrame);
     // Converte para array para manter compatibilidade com updateBuffer()
     Object.keys(bufferFrame).forEach(line => {
         const positions = bufferFrame[line];
@@ -114,7 +123,7 @@ function applyReplayFrame(frameTime) {
     // Agora, para todas as linhas conhecidas do seu sistema, crie o objeto esperado:
     const statusFrame = {};
     // Use as linhas de replayData.status, ou de um array conhecido de linhas
-    const allLines = Object.keys(prioritiesColors); // ou lista fixa, ou Object.keys(statusLatestByLine)
+    //const allLines = Object.keys(prioritiesColors); // ou lista fixa, ou Object.keys(statusLatestByLine)
     allLines.forEach(line => {
         if (statusLatestByLine[line]) {
             const st = statusLatestByLine[line];
@@ -134,7 +143,7 @@ function applyReplayFrame(frameTime) {
     });
 
     // Log pra depurar:
-    console.log("StatusFrame (frameTime):", statusFrame);
+    //console.log("StatusFrame (frameTime):", statusFrame);
 
     updateStatus(statusFrame);
 
@@ -212,8 +221,8 @@ document.getElementById("replaySpeed").addEventListener("change", () => {
 
 // Exemplo de uso (ao clicar num botão ou assim que carregar)
 async function startReplayInterval() {
-    const start = new Date("2025-05-29T12:00:00"); // defina o início
-    const end = new Date("2025-05-29T12:30:00");   // defina o fim
+    const start = new Date("2025-05-29T12:30:00"); // defina o início
+    const end = new Date("2025-05-29T13:30:00");   // defina o fim
     
     await loadReplayData(start, end);
     replayIndex = 0;
