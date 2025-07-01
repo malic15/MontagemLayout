@@ -36,7 +36,6 @@ async function loadReplayData(start, end) {
         console.error("Erro no fetch:", errorText);
         return;
     }
-    
 
     replayData = await resp.json();
     console.table(replayData.buffer); // visual para arrays de objetos
@@ -83,15 +82,16 @@ function buildReplayTimestamps(replayData) {
 function applyReplayFrame(frameTime) {
     currentFrameTime = frameTime;
 
-    if (replayData.buffer && replayData.buffer.length > 0) {
-        replayData.buffer.forEach(b => {
-            console.log("timestamp:", b.timestamp, "frameTime:", frameTime, "b.line:", b.line);
-        });
-    }
+    //if (replayData.status && replayData.buffer.length > 0) {
+    //    replayData.status.forEach(b => {
+    //        console.log("timestamp:", b.timestamp, "frameTime:", frameTime, "b.line:", b.line);
+    //    });
+    //}
 
 
     // Buffer: último estado de cada posição de cada linha até esse frame
     const bufferFrame = {};
+    console.log(replayData.buffer);
     replayData.buffer
         .filter(b => new Date(b.timestamp).getTime() <= frameTime.getTime())
         .forEach(b => {
@@ -221,8 +221,8 @@ document.getElementById("replaySpeed").addEventListener("change", () => {
 
 // Exemplo de uso (ao clicar num botão ou assim que carregar)
 async function startReplayInterval() {
-    const start = new Date("2025-05-29T12:30:00"); // defina o início
-    const end = new Date("2025-05-29T13:30:00");   // defina o fim
+    const start = new Date("2025-07-01T11:30:00"); // defina o início
+    const end = new Date("2025-07-01T12:00:00");   // defina o fim
     
     await loadReplayData(start, end);
     replayIndex = 0;
