@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="~/css/progressBar.css" />
     <link rel="stylesheet" href="~/css/ListFault.css" />
     <link rel="stylesheet" href="~/css/replayPainel.css" />
+    <link rel="stylesheet" href="~/css/SideMenu.css" />
     <script src="~/js/chart.js"></script>
     <script src="~/js/luxon@3.js"></script>
     <script src="~/js/chartjs-adapter-luxon@1.js"></script>
@@ -1824,13 +1825,33 @@
         <div class="replay-panel">
             <button id="replayPlayPauseBtn">▶️</button>
             <span id="replayCurrentTime">--:--:--</span>
-            <input type="range" id="replaySlider" min="0" max="100" value="0" step="1">
+            <input type="range" id="replaySlider" min="0" value="0" step="1">
             <select id="replaySpeed">
                 <option value="1000">1x</option>
                 <option value="500">2x</option>
                 <option value="200">5x</option>
             </select>
         </div>
+
+        <!-- Side Menu -->
+        <aside id="sideMenu">
+            <div class="side-menu-header">
+                <span>Menu</span>
+                <button id="sideMenuCloseBtn" title="Fechar">×</button>
+            </div>
+            <nav class="side-menu-items">
+                <a href="#" class="side-menu-item active"><i class="menu-icon">&#128711;</i> Dashboard</a>
+                <a href="#" class="side-menu-item"><i class="menu-icon">&#128202;</i> Relatórios</a>4
+                <a href="#" class="side-menu-item"><i class="menu-icon">&#9881;</i> Configurações</a>
+                <a href="#" class="side-menu-item"><i class="menu-icon">&#10067;</i> Ajuda</a>
+            </nav>
+            <div class="side-menu-footer">
+                <span>Status: <span class="status-indicator online"></span> Online</span>
+            </div>
+        </aside>
+
+        <button id="sideMenuOpenBtn" title="Abrir Menu">☰</button>
+
 
     </div>
     <script src="~/js/jquery-3.6.0.min.js"></script>
@@ -1843,6 +1864,7 @@
     <script type="module" src="~/js/customChart_Top10.js"></script>
     <script type="module" src="~/js/customChart_statusDuration.js"></script>
     <script type="module" src="~/js/replay.js"></script>
+    <script src="~/js/sideMenu.js"></script>
 
 
 

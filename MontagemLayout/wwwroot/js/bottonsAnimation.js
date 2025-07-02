@@ -1,4 +1,4 @@
-﻿
+﻿    
 function waitForTransition(element) {
     return new Promise((resolve) => {
         const handleTransitionEnd = () => {
@@ -504,6 +504,7 @@ async function expandButtonHorizontal(elem) {
 }
 
 function resetButtonVertical(elem) {
+    
     const textVert = elem.querySelector('.btn-text-vertical');
     const sTime = elem.querySelectorAll('.space_timev, .space_timeh');
 
@@ -574,18 +575,35 @@ document.querySelectorAll('.botton').forEach(elem => {
     elem.addEventListener('click', async (e) => {
         e.stopPropagation();
 
-        if (elem.classList.contains('transition-in-progress')) return;
-
+        const tableBtn = elem.querySelector('.showTableBtn');
+        const top10Btn = elem.querySelector('.showTop10Btn');
         const textVert = elem.querySelector('.btn-text-vertical');
         const textHorin = elem.querySelector('.btn-text-horizontal');
+        const sTime = elem.querySelectorAll('.space_timev, .space_timeh');
 
-        if (textVert) {
+
+        if (tableBtn) {
+            if (tableBtn && (e.target === tableBtn || tableBtn.contains(e.target))) {
+                return;
+            }
+        }
+        if (top10Btn) {
+            if (top10Btn && (e.target === top10Btn || top10Btn.contains(e.target))) {
+                return;
+            }
+        }
+
+        if (elem.classList.contains('transition-in-progress')) return;
+
+        
+
+        if (textVert && sTime.length > 0) {
             if (!elem.classList.contains('animating')) {
                 await expandButtonVertical(elem);
             } else {
                 await resetButtonVertical(elem);
             }
-        } else if (textHorin) {
+        } else if (textHorin && sTime.length > 0) {
             if (!elem.classList.contains('animating')) {
                 await expandButtonHorizontal(elem);
             } else {

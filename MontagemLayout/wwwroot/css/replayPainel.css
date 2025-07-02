@@ -32,8 +32,8 @@
     border-radius: 10px;
     box-shadow: 0 2px 8px #0009;
     position: fixed;
-    bottom: 30px;
-    left: 30px;
+    top: 30px;
+    right: 325px;
     z-index: 200000;
     color: #fff;
     font-family: Calibri, 'Segoe UI', sans-serif;
@@ -64,7 +64,7 @@
     }
 
 #replaySlider {
-    width: 220px;
+    width: 150px;
     accent-color: #61dafb;
 }
 

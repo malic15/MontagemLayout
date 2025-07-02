@@ -47,6 +47,8 @@ function buildReplayTimestamps(replayData) {
     const statusTimes = replayData.status.map(s => new Date(s.timestamp).getTime());
     const allTimes = Array.from(new Set([...bufferTimes, ...statusTimes]));
     allTimes.sort((a, b) => a - b);
+    console.log("allTimes: " + allTimes)
+    console.log("allTimes.length" + allTimes.length)
     return allTimes;
 }
 
@@ -88,10 +90,19 @@ function applyReplayFrame(frameTime) {
     //    });
     //}
 
+    //replayData.buffer.forEach(b => {
+    //    const bTime = new Date(b.timestamp).getTime();
+    //    if (bTime <= frameTime.getTime()) {
+    //        console.log(`INCLUDED: ${b.line}, ${bTime} <= ${frameTime.getTime()}`);
+    //    } else {
+    //        console.log(`EXCLUDED: ${b.line}, ${bTime} > ${frameTime.getTime()}`);
+    //    }
+    //});
 
+    //console.log(frameTime);
     // Buffer: último estado de cada posição de cada linha até esse frame
     const bufferFrame = {};
-    console.log(replayData.buffer);
+    //console.log(replayData.buffer);
     replayData.buffer
         .filter(b => new Date(b.timestamp).getTime() <= frameTime.getTime())
         .forEach(b => {
@@ -99,7 +110,7 @@ function applyReplayFrame(frameTime) {
             if (!bufferFrame[b.line]) bufferFrame[b.line] = {};
             bufferFrame[b.line][b.position] = b;
         });
-    console.log(bufferFrame);
+    //console.log(bufferFrame);
     // Converte para array para manter compatibilidade com updateBuffer()
     Object.keys(bufferFrame).forEach(line => {
         const positions = bufferFrame[line];
@@ -158,6 +169,7 @@ function formatTimestamp(ts) {
 
 // Atualizar UI do frame atual
 function updateReplayUI() {
+    console.log("replayIndex: " + replayIndex);
     document.getElementById("replaySlider").value = replayIndex;
     document.getElementById("replayCurrentTime").textContent =
         replayTimestamps.length
@@ -176,7 +188,7 @@ function toggleReplayPlayPause() {
 }
 
 function playReplay() {
-    console.log(replayTimestamps.length);
+    
     if (!replayTimestamps || replayTimestamps.length === 0) return;
     isPlaying = true;
     
@@ -184,8 +196,9 @@ function playReplay() {
     const speed = +document.getElementById("replaySpeed").value;
     
     replayInterval = setInterval(() => {
-        
+        console.log(replayIndex + " >= " + replayTimestamps.length);
         if (replayIndex >= replayTimestamps.length) {
+            
             stopReplay();
             return;
         }
@@ -221,10 +234,11 @@ document.getElementById("replaySpeed").addEventListener("change", () => {
 
 // Exemplo de uso (ao clicar num botão ou assim que carregar)
 async function startReplayInterval() {
-    const start = new Date("2025-07-01T11:30:00"); // defina o início
-    const end = new Date("2025-07-01T12:00:00");   // defina o fim
+    const start = new Date("2025-07-02T06:30:00"); // defina o início
+    const end = new Date("2025-07-02T07:30:00");   // defina o fim
     
     await loadReplayData(start, end);
+    document.getElementById("replaySlider").max = replayTimestamps.length - 1;
     replayIndex = 0;
     applyReplayFrame(new Date(replayTimestamps[replayIndex]));
     updateReplayUI();

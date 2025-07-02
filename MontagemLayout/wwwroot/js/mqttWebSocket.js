@@ -661,7 +661,7 @@ async function adjustScale() {
 }
 window.addEventListener('resize', adjustScale);
 connection.on("ReceiveMessage", (message) => {
-    showAlert(message);
+    //showAlert(message);
 });
 function updateChartText(newText) {
     const chartTextElement = document.getElementById('chartText');
