@@ -1,0 +1,30 @@
+﻿.corner-info {
+    position: fixed;
+    bottom: 12px; /* ou 0 para grudar no canto */
+    left: 18px; /* ou 0 */
+    z-index: 10; /* acima do svg */
+    background: rgba(30,30,30, 0.0); /* opcional, visual legal */
+    border-radius: 8px;
+    padding: 10px 18px;
+    pointer-events: none;
+/*    box-shadow: 0 2px 10px 0 #0004;*/
+    min-width: 180px;
+}
+
+    .corner-info h1,
+    .corner-info h2,
+    .corner-info h3,
+    .corner-info p {
+        margin: 2px 0;
+        font-weight: 200;
+        color: rgba(255,255,255,0.7);
+        text-align: left;
+        font-size: 13px;
+        /* O que for necessário de estilos individuais */
+    }
+
+    .corner-info h2,
+    .corner-info h3,
+    .corner-info p {
+        font-size: 10px;
+    }

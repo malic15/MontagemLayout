@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="~/css/ListFault.css" />
     <link rel="stylesheet" href="~/css/replayPainel.css" />
     <link rel="stylesheet" href="~/css/SideMenu.css" />
+    <link rel="stylesheet" href="~/css/connerInfo.css" />
     <script src="~/js/chart.js"></script>
     <script src="~/js/luxon@3.js"></script>
     <script src="~/js/chartjs-adapter-luxon@1.js"></script>
@@ -41,15 +42,20 @@
 <body>
     <div id="layoutContainer">
         <svg id="lineCanvas" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 0;"></svg>
-        <h1 style="font-size: 13px; font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Layout Montagem</h1>
-        <p id="currentDateTime" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Data e Hora: @DateTime.Now</p>
-        <h2 id="targetProd" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Meta de Produção: --</h2>
-        <h3 id="theoreticalProd" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Produção Teórica: --</h3>
+        @* <h1 style="font-size: 13px; font-weight: 200;color: rgba(255,255,255,0.5);text-align: left;pointer-events: none;">Layout Montagem</h1> *@
+        @* <p id="currentDateTime" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Data e Hora: @DateTime.Now</p> *@
+        @* <h2 id="targetProd" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Meta de Produção: --</h2> *@
+        @* <h3 id="theoreticalProd" style="font-size: 10px;font-weight: 200;color: rgba(255,255,255,0.5);text-align: right;pointer-events: none;">Produção Teórica: --</h3> *@
+        <div class="corner-info">
+            <h1>Layout Montagem</h1>
+            <p id="currentDateTime">Data e Hora: @DateTime.Now</p>
+            <h2 id="targetProd">Meta de Produção: --</h2>
+            <h3 id="theoreticalProd">Produção Teórica: --</h3>
+        </div>
         <p id="text-Pintura" class="floating-text">Pintura</p>
         <div id="alert" class="alert"></div>
         <button id="buttonUp" class="arrow-button up" onclick="toUp()"></button>
         <button id="buttonDown" class="arrow-button down" onclick="toDown()"></button>
-        <button id="hide-button-buffer" class="hide-button disabled" onclick="hideBuffer()">Esconder Acúmulo</button>
 
         <button id="final1" class="botton btn-final1">
             <div class="progress-bar bar-v">
@@ -1820,30 +1826,43 @@
         <h1 class="fault-list-header">Lista de Anomalias Ativas</h1>
         <div id="faultList" class="fault-list"></div>
 
-        <div id="replayMode" class="replay-mode"></div>
+        <!-- Replay Panel -->
+        <div id="replayPainel" class="replay-panel">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <label id="startTime" for="replayStartTime">Início:</label>
+                <input type="datetime-local" id="replayStartTime" placeholder="Escolha o início">
+                <button id="startReplayBtn">
+                    <span class="btn-icon">&#11123;</span>
+                    <span class="loading-spinner" style="display:none"></span>
+                </button>
 
-        <div class="replay-panel">
-            <button id="replayPlayPauseBtn">▶️</button>
-            <span id="replayCurrentTime">--:--:--</span>
-            <input type="range" id="replaySlider" min="0" value="0" step="1">
-            <select id="replaySpeed">
-                <option value="1000">1x</option>
-                <option value="500">2x</option>
-                <option value="200">5x</option>
-            </select>
+
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <button id="replayPlayPauseBtn">▶️</button>
+                <span id="replayCurrentTime">--:--:--</span>
+                <input type="range" id="replaySlider" min="0" value="0" step="1">
+                <select id="replaySpeed">
+                    <option value="1000">1x</option>
+                    <option value="500">2x</option>
+                    <option value="200">5x</option>
+                </select>
+            </div>
+            
+            
         </div>
 
         <!-- Side Menu -->
         <aside id="sideMenu">
             <div class="side-menu-header">
                 <span>Menu</span>
-                <button id="sideMenuCloseBtn" title="Fechar"></button>
+                <button id="sideMenuCloseBtn" title="Fechar">☰</button>
             </div>
             <nav class="side-menu-items">
                 <a href="#" class="side-menu-item active"><i class="menu-icon">&#9638;</i> Layout</a>
                 <a href="#" class="side-menu-item"><i class="menu-icon">&#8635;</i> Replay</a>
                 <a href="#" class="side-menu-item"><i class="menu-icon">&#9881;</i> Configurações</a>
-                <a href="#" class="side-menu-item"><i class="menu-icon">&#10067;</i> Ajuda</a>
+                <a href="#" class="side-menu-item"><i class="menu-icon">&#128065;</i> Esconder Acúmulo</a>
             </nav>
             <div class="side-menu-footer">
                 <span>Status: <span class="status-indicator online"></span> Online</span>

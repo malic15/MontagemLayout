@@ -220,8 +220,6 @@ document.getElementById("replaySlider").addEventListener("input", e => {
     updateReplayUI();
     stopReplay();
 });
-
-document.getElementById("replayMode").addEventListener("click", setReplayMode);
 // Play/Pause button
 document.getElementById("replayPlayPauseBtn").addEventListener("click", toggleReplayPlayPause);
 // Speed selector
@@ -233,14 +231,50 @@ document.getElementById("replaySpeed").addEventListener("change", () => {
 });
 
 // Exemplo de uso (ao clicar num botão ou assim que carregar)
-async function startReplayInterval() {
-    const start = new Date("2025-07-02T06:30:00"); // defina o início
-    const end = new Date("2025-07-02T07:30:00");   // defina o fim
-    
+async function startReplayInterval(start) {
+    //const start = new Date("2025-07-02T06:30:00");
+    //const end = new Date("2025-07-02T07:30:00");
+
+    // Soma 1 hora (em milissegundos)
+    const end = new Date(start.getTime() + 1 * 60 * 60 * 1000);
+
+
     await loadReplayData(start, end);
     document.getElementById("replaySlider").max = replayTimestamps.length - 1;
     replayIndex = 0;
     applyReplayFrame(new Date(replayTimestamps[replayIndex]));
     updateReplayUI();
 }
-startReplayInterval();
+
+document.getElementById("startReplayBtn").addEventListener("click", async function () {
+    const inputValue = document.getElementById("replayStartTime").value;
+    if (!inputValue) {
+        alert("Selecione a data e hora de início!");
+        return;
+    }
+    const start = new Date(inputValue);
+
+    // Soma 1 hora (em milissegundos)
+    const end = new Date(start.getTime() + 1 * 60 * 60 * 1000);
+
+    const btn = this;
+    const spinner = btn.querySelector('.loading-spinner');
+    const icon = btn.querySelector('.btn-icon');
+    icon.style.opacity = 0;
+    spinner.style.display = 'inline-block';
+    icon.style.display = 'none';
+    btn.disabled = true;
+
+    // Coloque aqui sua lógica de carregar os dados:
+    await startReplayInterval(start);
+
+    // Simulando carregamento:
+    //await new Promise(res => setTimeout(res, 2000));
+
+    // Volta ao ícone normal
+    spinner.style.display = 'none';
+    icon.style.display = 'inline-block';
+    icon.style.opacity = 1;
+    btn.disabled = false;
+});
+

@@ -473,40 +473,7 @@ function removeAllLines() {
 //    }
 //}
 
-window.hideBuffer = function () {
-    var buffer = document.querySelectorAll('.ball');
-    const button = document.getElementById('hide-button-buffer');
-    const bufferCharts = document.querySelectorAll('[id*="chartContainer"]:not([id*="chartContainerPbs"])');
-    if (bufferHide) {
-        button.classList.add('disabled');
-        buffer.forEach((tts, index) => {
-            tts.style.setProperty('opacity', '1');
-            tts.style.setProperty('pointer-events', 'auto');
-        });
-        if (bufferCharts.length > 0) {
-            bufferCharts.forEach((tts, index) => {
-                tts.style.setProperty('opacity', '1');
-                tts.style.setProperty('pointer-events', 'auto');
-            });
-        }
-        //createLines();
-        bufferHide = false;
-    } else {
-        button.classList.remove('disabled');
-        removeAllLines();
-        buffer.forEach((tts, index) => {
-            tts.style.setProperty('opacity', '0');
-            tts.style.setProperty('pointer-events', 'none');
-        });
-        if (bufferCharts.length > 0) {
-            bufferCharts.forEach((tts, index) => {
-                tts.style.setProperty('opacity', '0');
-                tts.style.setProperty('pointer-events', 'none');
-            });
-        }
-        bufferHide = true;
-    }
-}
+
 window.toDown = function() {
     const buttonUp = document.getElementById('buttonUp');
     const buttonDown = document.getElementById('buttonDown');
