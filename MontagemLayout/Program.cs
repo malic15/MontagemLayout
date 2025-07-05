@@ -115,6 +115,16 @@ internal class Program
 
         app.UseStaticFiles();
 
+        // No Program.cs antes de UseRouting()
+        app.Use(async (context, next) =>
+        {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            Console.WriteLine($"[Middleware] Início request: {context.Request.Path}");
+            await next();
+            Console.WriteLine($"[Middleware] Fim request: {context.Request.Path} - {sw.ElapsedMilliseconds} ms");
+        });
+
+
         app.UseRouting();
 
         app.UseAuthorization();

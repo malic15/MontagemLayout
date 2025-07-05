@@ -180,10 +180,10 @@ export async function updateChartsWithHistory(historicalData) {
         const dangerBorderColor = 'rgba(220, 53, 69, 1)';        // vermelho elegante
         const dangerBackgroundColor = 'rgba(220, 53, 69, 0.2)';
 
-        console.log("chartCanvasId:" + chartCanvasId)
-        console.log("thresholdCritical:" + thresholdCritical)
-        console.log("lastY:" + lastY)
-        console.log("yMin:" + lineData)
+        //console.log("chartCanvasId:" + chartCanvasId)
+        //console.log("thresholdCritical:" + thresholdCritical)
+        //console.log("lastY:" + lastY)
+        //console.log("yMin:" + lineData)
         // Estado Crítico
         if (isCritical) {
             //chartTextEl?.classList.remove('chartText-blink');

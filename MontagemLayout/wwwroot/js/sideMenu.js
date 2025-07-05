@@ -1,4 +1,4 @@
-﻿import { setReplayMode } from '/js/mqttWebSocket.js';
+﻿import { setReplayMode, initializeState } from '/js/mqttWebSocket.js';
 
 var bufferHide = false;
 
@@ -30,6 +30,9 @@ document.querySelectorAll('.side-menu-item').forEach(item => {
             }
             if (el.textContent.trim().includes('Esconder Acúmulo')) {
                 hideBuffer(el, this)
+            }
+            if (el.textContent.trim().includes('Layout')) {
+                layoutMode(el, this)
             }
             el.classList.remove('active')
         });
@@ -83,5 +86,15 @@ function hideBuffer(itemAcumulo, itemActive) {
             });
         }
         bufferHide = true;
+    }
+}
+function layoutMode(itemLayout, itemActive) {
+    var isLayoutActive = itemLayout.classList.contains('active');
+    var isLayoutItem = itemActive.textContent.trim().includes('Layout');
+
+    if (isLayoutActive && isLayoutItem) {
+        return;
+    } else if (!isLayoutActive && isLayoutItem) {
+        initializeState();
     }
 }

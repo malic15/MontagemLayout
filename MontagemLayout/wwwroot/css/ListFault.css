@@ -9,6 +9,7 @@
     color: rgba(255,255,255,0.5);
     user-select: none;
     pointer-events: none;
+    transition: all 0.5s ease;
 }
 
 .fault-list {
@@ -31,7 +32,8 @@
     z-index: -1;
     /*    border: calc(1px*var(--scale-factor-height)) solid rgba(0, 0, 0, 0.2);*/
     user-select: none;
-/*    pointer-events: none;*/
+    /*    pointer-events: none;*/
+    transition: all 0.5s ease;
 }
 
 .fault-entry {

@@ -17,6 +17,7 @@ namespace MontagemLayout.Services
         [HttpGet("events")]
         public async Task<IActionResult> GetProducts([FromQuery] string line = null, [FromQuery] string filterDateTimeInit = null, [FromQuery] string filterDateTimeFinal = null)
         {
+            Console.WriteLine("GetProducts");
             var products = await _repositoryMySql.GetAllFaults(line, filterDateTimeInit, filterDateTimeFinal);
             return Ok(products);
         }
@@ -38,6 +39,7 @@ namespace MontagemLayout.Services
         [HttpGet("status-durations")]
         public async Task<IActionResult> GetStateDurations([FromQuery] string line)
         {
+            Console.WriteLine("status-durations");
             if (string.IsNullOrEmpty(line))
                 return BadRequest("A linha deve ser informada.");
 

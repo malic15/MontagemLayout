@@ -132,7 +132,7 @@ document.querySelectorAll('.botton').forEach(botton => {
 //if (window.prodDataInterval) clearInterval(window.prodDataInterval);
 window.prodDataInterval = setInterval(() => {
     updateAllCharts();
-}, 1000);
+}, 60000);
 
 //setInterval(updateAllCharts, 1000);
 

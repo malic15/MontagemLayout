@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -121,33 +122,61 @@ namespace MontagemLayout.Services
         {
             try
             {
-                var query = "SELECT Line, Events, State, Zone, Element, Duration, Data, Shift FROM lisinc.events WHERE 1=1";
-                using var connection = new MySqlConnection(connectionString);
-                await connection.OpenAsync();
+                Console.WriteLine("Carregando...!");
+                var query = new StringBuilder("SELECT Line, Events, State, Zone, Element, Duration, Data, Shift FROM lisinc.events WHERE 1=1");
+                var commandParameters = new List<MySqlParameter>();
+
+                //using var connection = new MySqlConnection(connectionString);
+                //await connection.OpenAsync();
                 //Console.WriteLine($"Filtro de data: {dataFilter}");
                 
 
                 if (!string.IsNullOrEmpty(line))
                 {
-                    query += $" AND Line = '{line}'";
-                }
+                    query.Append(" AND Line = @line");
+                    commandParameters.Add(new MySqlParameter("@line", line));
 
+                }
                 if (!string.IsNullOrEmpty(dataFilterInit))
                 {
                     if (!string.IsNullOrEmpty(dataFilterFinal))
                     {
-                        query += $" AND Data >= '{dataFilterInit}' AND Data <= '{dataFilterFinal}' ORDER BY Data DESC";
+                        query.Append(" AND Data >= @dataFilterInit");
+                        commandParameters.Add(new MySqlParameter("@dataFilterInit", dataFilterInit));
+                        query.Append(" AND Data <= @dataFilterFinal");
+                        commandParameters.Add(new MySqlParameter("@dataFilterFinal", dataFilterFinal));
                     }
                     else
                     {
-                        query += $" AND Data >= '{dataFilterInit}' ORDER BY Data DESC";
+                        query.Append(" AND Data >= @dataFilterInit");
+                        commandParameters.Add(new MySqlParameter("@dataFilterInit", dataFilterInit));
                     }
-                    
+                    query.Append(" ORDER BY Data DESC");
+
                 }
                 else
                 {
-                    query += " ORDER BY Data DESC LIMIT 100";
+                    query.Append(" ORDER BY Data DESC LIMIT 100");
                 }
+                
+
+
+                //if (!string.IsNullOrEmpty(dataFilterInit))
+                //{
+                //    if (!string.IsNullOrEmpty(dataFilterFinal))
+                //    {
+                //        query += $" AND Data >= '{dataFilterInit}' AND Data <= '{dataFilterFinal}' ORDER BY Data DESC";
+                //    }
+                //    else
+                //    {
+                //        query += $" AND Data >= '{dataFilterInit}' ORDER BY Data DESC";
+                //    }
+
+                //}
+                //else
+                //{
+                //    query += " ORDER BY Data DESC LIMIT 100";
+                //}
 
                 //if (!string.IsNullOrEmpty(line) && !string.IsNullOrEmpty(dataFilter))
                 //{
@@ -157,12 +186,17 @@ namespace MontagemLayout.Services
                 //{
                 //    query = "SELECT Line, Events, State, Zone, Element, Duration, Data, Shift FROM lisinc.events ORDER BY Data DESC LIMIT 100;";
                 //}
+                using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
 
-                using var command = new MySqlCommand(query, connection);
+                using var command = new MySqlCommand(query.ToString(), connection);
+                foreach (var param in commandParameters)
+                    command.Parameters.Add(param);
 
+                Console.WriteLine("Carregou!!!");
                 using var reader = await command.ExecuteReaderAsync();
                 var results = new List<object>();
-
+                
                 while (await reader.ReadAsync())
                 {
                     results.Add(new
@@ -177,6 +211,7 @@ namespace MontagemLayout.Services
                         Shift = reader["shift"]
                     });
                 }
+                Console.WriteLine("Carregou!");
                 return results;
             }
             catch (Exception ex)

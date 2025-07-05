@@ -835,7 +835,7 @@ connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
 });
 export async function updateBuffer(bufferState) {
     const updates = [];
-    console.log("BufferFrame (frameTime = ):", bufferState);
+    //console.log("BufferFrame (frameTime = ):", bufferState);
     for (const line in bufferState) {
         const bufferItems = document.querySelectorAll(`[class*="${line}_zne"]`);
         let count = 0;
@@ -1188,7 +1188,7 @@ connection.onclose(async () => {
         console.error("Error reconnecting SignalR:", err);
     }
 });
-async function initializeState() {
+export async function initializeState() {
     const CACHE_KEY = 'initial_app_state';
     const CACHE_DURATION = 120000; // 1 min
 
@@ -1284,10 +1284,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.querySelectorAll('.showTableBtn').forEach(elem => {
     elem.addEventListener('click', async (event) => {
         event.stopPropagation();
+        console.log("Cliquei!");
         const tableWrapper = document.getElementById('productsTableWrapper');
         const parentButton = event.target.closest('button');
         const loaderContainer = document.getElementById('loaderContainer');
-        console.log("ID do botão:");
+        
         if (getComputedStyle(tableWrapper).display !== 'none') {
             return;
         }
@@ -1302,14 +1303,14 @@ document.querySelectorAll('.showTableBtn').forEach(elem => {
             tableWrapper.style.display = 'block';
             loaderContainer.textContent = 'Carregando...';
             loaderContainer.style.display = 'block';
-
+            console.log("Inicio do fetch!");
             const response = await fetch(`/api/events/events?line=${encodeURIComponent(buttonId)}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-
+            console.log("Fim do fetch!")
             if (!response.ok) {
                 loaderContainer.textContent = `Erro ao buscar os dados: ${response.statusText}`;
                 throw new Error(`Erro ao buscar os dados: ${response.statusText}`);
@@ -1339,7 +1340,10 @@ document.getElementById('applyFilterBtn').addEventListener('click', async () => 
         alert("Selecione ao menos uma data inicial para filtrar!");
         return;
     }
-
+    if (filterTimeFinal && !filterDateFinal) {
+        alert("Selecione  uma data final para filtrar!");
+        return;
+    }
     const filterDateTimeInit = filterDateInit && filterTimeInit ? `${filterDateInit} ${filterTimeInit}` : filterDateInit || filterTimeInit;
     const filterDateTimeFinal = filterDateFinal && filterTimeFinal ? `${filterDateFinal} ${filterTimeFinal}` : filterDateFinal || filterTimeFinal;
 
