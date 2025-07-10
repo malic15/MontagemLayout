@@ -453,7 +453,6 @@ namespace MontagemLayout.Services
                 try
                 {
                     await connection.OpenAsync();
-                    //Console.WriteLine("Conexão com o MySQL aberta com sucesso!");
                 }
                 catch (Exception ex)
                 {
@@ -461,65 +460,73 @@ namespace MontagemLayout.Services
                     return new List<object>(); // Retorna lista vazia se a conexão falhar
                 }
 
-                string query = @"SELECT 
-                    state,
-                    SUM(duration) AS total_duration
-                FROM (
-                    SELECT 
-                        state,
-                        TIMESTAMPDIFF(SECOND, data, LEAD(data) OVER (PARTITION BY line ORDER BY data)) AS duration
-                    FROM lisinc.status_updates
-                    WHERE line = @line
-                ";
+                // --- Montando os filtros dinamicamente ---
+                var filters = new List<string>();
+                if (!string.IsNullOrEmpty(line))
+                    filters.Add("line = @line");
 
-            var (dataFilterInit, dataFilterFinal) = ShiftConsult();
+                var (dataFilterInit, dataFilterFinal) = ShiftConsult();
+                if (!string.IsNullOrEmpty(dataFilterInit))
+                    filters.Add("data >= @dataFilterInit");
+                if (!string.IsNullOrEmpty(dataFilterFinal))
+                    filters.Add("data <= @dataFilterFinal");
 
-            if (!string.IsNullOrEmpty(dataFilterInit))
-            {
-                query += " AND data >= @dataFilterInit";
-            }
+                // WHERE dinâmico
+                string whereClause = filters.Count > 0 ? "WHERE " + string.Join(" AND ", filters) : "";
+                // --- Query principal ---
+                string query = $@"
+        SELECT 
+            state,
+            SUM(duration) AS total_duration
+        FROM (
+            SELECT 
+                state,
+                TIMESTAMPDIFF(SECOND, data, LEAD(data) OVER (PARTITION BY line ORDER BY data)) AS duration
+            FROM lisinc.status_updates
+            {whereClause}
+        ) AS subquery
+        WHERE duration IS NOT NULL
+        GROUP BY state
+        ORDER BY state;
+        ";
 
-            query += " ) AS subquery WHERE duration IS NOT NULL GROUP BY state ORDER BY state;";
+                // --- Query para o último status ---
+                string lastStatusWhere = "";
+                if (!string.IsNullOrEmpty(line))
+                    lastStatusWhere = "WHERE line = @line";
+                
+                string lastStatusQuery = $@"
+                    SELECT state, data 
+                    FROM lisinc.status_updates 
+                    {lastStatusWhere}
+                    ORDER BY data DESC 
+                    LIMIT 1;
+                    ";
 
-            string lastStatusQuery = @"
-                SELECT state, data 
-                FROM lisinc.status_updates 
-                WHERE line = @line 
-                ORDER BY data DESC 
-                LIMIT 1;
-            ";
-
-                //Console.WriteLine($"Buscando estados para a linha: {line}");
 
                 using var command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@line", line);
-
+                if (!string.IsNullOrEmpty(line))
+                    command.Parameters.AddWithValue("@line", line);
                 if (!string.IsNullOrEmpty(dataFilterInit))
-                {
                     command.Parameters.AddWithValue("@dataFilterInit", dataFilterInit);
-                }
+                if (!string.IsNullOrEmpty(dataFilterFinal))
+                    command.Parameters.AddWithValue("@dataFilterFinal", dataFilterFinal);
 
+                // --- Execução principal ---
                 using var reader = await command.ExecuteReaderAsync();
                 var results = new List<object>();
-
                 while (await reader.ReadAsync())
                 {
-                    //Console.WriteLine("Lendo dados!");
                     int state = reader.GetInt32(0);
-                    int duration = reader.IsDBNull(1) ? 0 : reader.GetInt32(1); // Evita erro com NULL
-
-                    //Console.WriteLine($"Estado: {state}, Duração: {duration} segundos");
-
-                    results.Add(new
-                    {
-                        State = state,
-                        Duration = duration
-                    });
+                    int duration = reader.IsDBNull(1) ? 0 : reader.GetInt32(1);
+                    results.Add(new { State = state, Duration = duration });
                 }
+                await reader.CloseAsync();
 
-                await reader.CloseAsync(); // Fecha o primeiro leitor antes de iniciar outro
+                // --- Último status ---
                 using var lastStatusCommand = new MySqlCommand(lastStatusQuery, connection);
-                lastStatusCommand.Parameters.AddWithValue("@line", line);
+                if (!string.IsNullOrEmpty(line))
+                    lastStatusCommand.Parameters.AddWithValue("@line", line);
 
                 using var lastStatusReader = await lastStatusCommand.ExecuteReaderAsync();
                 DateTime? lastStatusDate = null;
@@ -529,15 +536,12 @@ namespace MontagemLayout.Services
                 {
                     lastState = lastStatusReader.GetInt32(0);
                     lastStatusDate = lastStatusReader.GetDateTime(1);
-
-                    //Console.WriteLine($"Último Estado: {lastState}, Última Atualização: {lastStatusDate}");
                 }
 
                 if (results.Count == 0)
                 {
                     Console.WriteLine("Nenhum dado encontrado!");
                 }
-
                 return new List<object> {
                     new {
                         StatusDurations = results,
@@ -552,6 +556,5 @@ namespace MontagemLayout.Services
                 throw;
             }
         }
-
     }
 }
