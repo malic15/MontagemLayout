@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="~/css/replayPainel.css" />
     <link rel="stylesheet" href="~/css/SideMenu.css" />
     <link rel="stylesheet" href="~/css/connerInfo.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet" />
     <script src="~/js/chart.js"></script>
     <script src="~/js/luxon@3.js"></script>
     <script src="~/js/chartjs-adapter-luxon@1.js"></script>
@@ -1871,6 +1873,61 @@
 
         <button id="sideMenuOpenBtn" title="Abrir Menu">☰</button>
 
+         <!-- Side Menu2 -->
+
+        <aside class="sidebar" id="sidebar">
+            <!-- logo -->
+            <div class="logo">
+                <i class="bx bx-cube-alt"></i>
+            </div>
+            <!-- menu links -->
+            <nav class="menu">
+                <h1 class="menu-header">Menu</h1>
+                <div class="menu-item nav-active" data-tooltip="Home">
+                    <i class="bx bx-home-smile"></i>
+                    <span>Home</span>
+                </div>
+                <div class="menu-item" data-tooltip="Stats">
+                    <i class="bx bx-bar-chart-alt-2"></i>
+                    <span>Stats</span>
+                </div>
+                <div class="menu-item" data-tooltip="Chat">
+                    <i class="bx bx-message-square-dots"></i>
+                    <span>Chat</span>
+                </div>
+                <div class="menu-item" data-tooltip="Bookmarks">
+                    <i class="bx bx-bookmarks"></i>
+                    <span>Bookmarks</span>
+                </div>
+                <div class="menu-item" data-tooltip="Notification">
+                    <i class="bx bx-bell"></i>
+                    <span>Notification</span>
+                </div>
+                <div class="menu-item" data-tooltip="Setting">
+                    <i class="bx bx-cog"></i>
+                    <span>Setting</span>
+                </div>
+                <h1 class="menu-header shortcuts">Shortcuts</h1>
+                <div class="menu-item" data-tooltip="Add">
+                    <i class="bx bx-add-to-queue"></i>
+                    <span>Add</span>
+                </div>
+                <div class="menu-item" data-tooltip="Remove">
+                    <i class="bx bx-message-square-minus"></i>
+                    <span>Remove</span>
+                </div>
+            </nav>
+            <!-- logout -->
+            <div class="logout" data-tooltip="Logout">
+                <i class="bx bx-log-out"></i>
+                <span>Logout</span>
+            </div>
+            <!-- toggle menu -->
+            <div class="toggle-menu" id="toggle-button">
+                <i class="bx bxs-right-arrow"></i>
+                <i class="bx bxs-left-arrow"></i>
+            </div>
+        </aside>
 
     </div>
     <script src="~/js/jquery-3.6.0.min.js"></script>

@@ -150,8 +150,8 @@ canvas {
     border-radius: 5px;
 }
 body {
-/*    background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #e6e9ed;*/
-    background: radial-gradient(circle at 90% -5%, rgba(201, 162, 39, 0.08) 5%, rgba(201, 162, 39, 0.05) 10%, rgba(201, 162, 39, 0.03) 15%, transparent 90%),#3a3a3a;
+    /*    background: radial-gradient(circle at 70% 10%, rgba(255, 255, 255, 0.05), transparent), radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.3), transparent), #e6e9ed;*/
+    background: radial-gradient(circle at 90% -5%, rgba(201, 162, 39, 0.08) 5%, rgba(201, 162, 39, 0.05) 10%, rgba(201, 162, 39, 0.03) 15%, transparent 90%),#2f323ae6;
     position: relative;
     height: 100vh;
     margin: 0;
