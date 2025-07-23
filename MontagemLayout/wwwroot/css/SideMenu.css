@@ -1,4 +1,4 @@
-﻿#sideMenu {
+﻿/*#sideMenu {
     position: fixed;
     top: 0;
     right: 0;
@@ -128,7 +128,7 @@
         color: #6df97b;
         transform: scale(1.08);
     }
-
+*/
 
 @import url("https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap");
 
@@ -152,19 +152,19 @@
   --border-color: rgb(218, 147, 147);
 }
 .sidebar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: var(--sidebar-width);
-  color: var(--text-color);
-  padding: 0 20px;
-  background-color: var(--sidebar-bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.5s ease;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    color: var(--text-color);
+    padding: 0 20px;
+    background-color: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.5s ease;
 }
 
 .logo,
@@ -215,7 +215,7 @@
   padding: 10px 20px;
   border-radius: 3px;
   color: var(--menu-item-color);
-  transition: all 0.5 ease;
+  transition: all 0.5s ease;
 }
 
 .menu-item:hover,
@@ -266,7 +266,7 @@
 .toggle-menu {
   position: absolute;
   top: 10px;
-  right: -20px;
+  left: -20px;
   background-color: var(--sidebar-bg);
   border: 1px solid var(--menu-item-hover-bg);
   color: var(--text-color);
@@ -295,7 +295,7 @@
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 [data-tooltip]:after {
@@ -308,7 +308,7 @@
   border-style: solid;
   border-color: transparent var(--tooltip-bg) transparent transparent;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: all 0.5s ease;
 }
 .sidebar:not(.active) [data-tooltip]:hover::before,
 .sidebar:not(.active) [data-tooltip]:hover::after {
