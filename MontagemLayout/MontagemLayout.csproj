@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\NovaPasta\**" />
-    <Content Remove="wwwroot\NovaPasta\**" />
-    <EmbeddedResource Remove="wwwroot\NovaPasta\**" />
-    <None Remove="wwwroot\NovaPasta\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Services\LineStatus.cs" />
   </ItemGroup>
 
@@ -41,6 +34,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\cache\audio\" />
+    <Folder Include="wwwroot\logo\" />
+    <Folder Include="wwwroot\static\fonts\" />
+    <Folder Include="wwwroot\static\boxicons\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,6 +63,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\js\wbsocket.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\css\boxicons\boxicons.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\fonts\Agdasima-Bold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\fonts\Agdasima-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\fonts\boxicons.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\fonts\boxicons.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\static\fonts\boxicons.woff2">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

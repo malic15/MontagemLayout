@@ -2,7 +2,7 @@
     --scale-factor: 1;
     --scale-factor-height: 1.315789493252782;
     --scale-factor-width: 1.462962962962963;
-    --horizontal-offset: 250px;
+    --horizontal-offset: 290px;
     --vertical-offset: 80px;
     --btn-color: #8ce436;
     --btn-height: 40px;
@@ -37,7 +37,10 @@
 .chartText-blink {
     animation: blinkTextDanger 2s infinite;
 }
-
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 /*@keyframes blinkColor {
     0%, 100% {
         background-color: var(--alert-color);*/
@@ -57,7 +60,7 @@
 
 .floating-text {
     font-family: 'Arial', sans-serif;
-    font-size: calc(2.5rem * var(--scale-factor-width));
+    font-size: calc(2.2rem * var(--scale-factor-width));
     font-weight: 500;
     color: rgba(255,255,255,0.5);
     background-color: transparent;
@@ -68,8 +71,8 @@
     /*animation: fadeIn 3s ease-in-out infinite alternate;*/
     transition: all 0.5s ease;
     position: absolute;
-    top: calc((1000px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((840px + var(--horizontal-offset))* var(--scale-factor-width));
+    top: calc((1015px + var(--vertical-offset))* var(--scale-factor-height));
+    left: calc((825px + var(--horizontal-offset))* var(--scale-factor-width));
     z-index: 3;
     user-select: none;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);

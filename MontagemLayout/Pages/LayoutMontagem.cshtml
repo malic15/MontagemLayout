@@ -28,8 +28,11 @@
     <link rel="stylesheet" href="~/css/replayPainel.css" />
     <link rel="stylesheet" href="~/css/SideMenu.css" />
     <link rel="stylesheet" href="~/css/connerInfo.css" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-          rel="stylesheet" />
+    @* <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" *@
+    @*       rel="stylesheet" /> *@
+    <link rel="stylesheet" href="~/static/css/boxicons/boxicons.min.css" />
+
+
     <script src="~/js/chart.js"></script>
     <script src="~/js/luxon@3.js"></script>
     <script src="~/js/chartjs-adapter-luxon@1.js"></script>
@@ -1878,26 +1881,26 @@
         <aside class="sidebar" id="sidebar">
             <!-- logo -->
             <div class="logo">
-                <i class="bx bx-cube-alt"></i>
+                <img src="/logo/Stellantis-Emblem.png" alt="Logo" class="logo-img">
             </div>
             <!-- menu links -->
             <nav class="menu">
                 <h1 class="menu-header">Menu</h1>
                 <div class="menu-item nav-active" data-tooltip="Home">
-                    <i class="bx bx-home-smile"></i>
+                    <i class="bx bx-home-alt-2"></i>
                     <span>Home</span>
                 </div>
-                <div class="menu-item" data-tooltip="Stats">
-                    <i class="bx bx-bar-chart-alt-2"></i>
-                    <span>Stats</span>
+                <div class="menu-item" data-tooltip="Layout">
+                    <i class="bx bx-layout-search"></i>
+                    <span>Layout</span>
                 </div>
-                <div class="menu-item" data-tooltip="Chat">
-                    <i class="bx bx-message-square-dots"></i>
-                    <span>Chat</span>
+                <div class="menu-item" data-tooltip="Replay">
+                    <i class="bx bx-rotate-square-ccw"></i>
+                    <span>Replay</span>
                 </div>
-                <div class="menu-item" data-tooltip="Bookmarks">
-                    <i class="bx bx-bookmarks"></i>
-                    <span>Bookmarks</span>
+                <div class="menu-item" data-tooltip="Esconder Acúmulo">
+                    <i class="bx bxs-eye-slash"></i>
+                    <span>Esconder Acúmulo</span>
                 </div>
                 <div class="menu-item" data-tooltip="Notification">
                     <i class="bx bx-bell"></i>
@@ -1909,23 +1912,23 @@
                 </div>
                 <h1 class="menu-header shortcuts">Shortcuts</h1>
                 <div class="menu-item" data-tooltip="Add">
-                    <i class="bx bx-add-to-queue"></i>
+                    <i class="bx bx-layers-plus-alt"></i>
                     <span>Add</span>
                 </div>
                 <div class="menu-item" data-tooltip="Remove">
-                    <i class="bx bx-message-square-minus"></i>
+                    <i class="bx bx-layers-minus-alt"></i>
                     <span>Remove</span>
                 </div>
             </nav>
             <!-- logout -->
             <div class="logout" data-tooltip="Logout">
-                <i class="bx bx-log-out"></i>
+                <i class="bx bxs-door"></i>
                 <span>Logout</span>
             </div>
             <!-- toggle menu -->
             <div class="toggle-menu" id="toggle-button">
-                <i class="bx bxs-right-arrow"></i>
-                <i class="bx bxs-left-arrow"></i>
+                <i class="bx bx-caret-right"></i>
+                <i class="bx bx-caret-left"></i>
             </div>
         </aside>
 

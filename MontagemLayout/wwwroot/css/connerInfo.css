@@ -19,12 +19,12 @@
         font-weight: 200;
         color: rgba(255,255,255,0.7);
         text-align: left;
-        font-size: 13px;
+        font-size: 20px;
         /* O que for necessário de estilos individuais */
     }
 
     .corner-info h2,
     .corner-info h3,
     .corner-info p {
-        font-size: 10px;
+        font-size: 16px;
     }
