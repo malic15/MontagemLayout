@@ -143,6 +143,10 @@
                 <div class="horizontal-space">
                     <div class="showOPE"></div>
                 </div>
+                <div class="prod-loss-summary">
+                    <span>Anomalia: <b class="loss-anomalia"></b></span>
+                    <span>Produção: <b class="loss-producao"></b></span>
+                </div>
                 <div class="stateChartContainer">
                     <canvas class="stateChart"></canvas>
                 </div>
@@ -1770,7 +1774,9 @@
 
 
         <div id="productsTableWrapper">
-            <button id="closeTableBtn" class="close-btn">×</button>
+            <button id="closeTableBtn" class="close-btn">
+                <i class="bx bx-x bx-sm"></i>
+            </button>
             <div id="filters">
                 <label for="filterDateInit">Data Inicial:</label>
                 <input type="date" id="filterDateInit">
@@ -1806,7 +1812,9 @@
         </div>
         
         <div id="top10ChartContainer">
-            <button id="closeTop10Btn" class="closeTop10Btn">×</button>
+            <button id="closeTop10Btn" class="closeTop10Btn">
+                <i class="bx bx-x bx-sm"></i>
+            </button>
             <div id="filters">
                 <label for="filterDateInit">Data Inicial:</label>
                 <input type="date" id="filterDateInitTop10">
@@ -1823,6 +1831,8 @@
                 <button id="applyFilterBtnTop10">Aplicar Filtro</button>
                 <button id="clearFilterBtnTop10"><img src="~/icons/refresh_icon.svg" alt="Refresh Icon" class="btn-table-icon"></button>
                 <button onclick="toggleJPH()">Minutos / JPH</button>
+                <button onclick="toggleBreak()">Parada Anomalia</button>
+                <button onclick="toggleProd()">Parada Produção</button>
             </div>
             <div id="loaderContainerTop10"></div>
             <canvas id="topEventsChart" width="auto" height="120";></canvas>

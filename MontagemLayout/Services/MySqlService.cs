@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Concurrent;
 using System.Data;
@@ -220,7 +221,7 @@ namespace MontagemLayout.Services
                 throw;
             }
         }
-        public async Task<IEnumerable<object>> GetTopEvents(string line, string dataFilterInit, string dataFilterFinal)
+        public async Task<IEnumerable<object>> GetTopEvents(string line, string dataFilterInit, string dataFilterFinal, bool filterBreak, bool filterProd)
         {
             try
             {
@@ -239,8 +240,19 @@ namespace MontagemLayout.Services
                     MIN(TIME_TO_SEC(Duration)) AS TotalSeconds
                 FROM lisinc.events
                 GROUP BY Line, Data, Element, Zone, Events, State, Shift
-            ) AS subquery
-            WHERE State < 19";
+            ) AS subquery";
+
+                if(!filterBreak && !filterProd)
+                {
+                    query += $" WHERE State < 19";
+                }else if(filterBreak && !filterProd)
+                {
+                    query += $" WHERE State < 3";
+                }
+                else if (filterProd && !filterBreak)
+                {
+                    query += $" WHERE State IN (5, 7, 8, 10, 11, 12, 17)";
+                }
 
                 using var connection = new MySqlConnection(connectionString);
                 await connection.OpenAsync();

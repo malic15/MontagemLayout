@@ -1052,7 +1052,7 @@ async function updateProd(prodData) {
 
     document.getElementById("targetProd").innerText = `Meta de Produção: ${prodData.targetProd}`;
     document.getElementById("theoreticalProd").innerText = `Produção Teórica: ${prodData.theoreticalProd}`;
-
+    console.log("prodData.prodData" + prodData)
     for (const line in prodData.prodData) {
         const targetProd = prodData.targetProd || 1;
         const theoreticalProd = prodData.theoreticalProd || 1;
@@ -1067,10 +1067,50 @@ async function updateProd(prodData) {
 
         const button = document.getElementById(line);
 
+        const chart = window.chartInstances[line]; // se quiser acessar o chart diretamente
+        //const updatedStateData = window.updatedStateDataByLine ? window.updatedStateDataByLine[line] : null;
+
+
         if (button) {
             const progressTexts = button.querySelectorAll('.progress-text');
             const actualProdInter = button.querySelector('.showOPE')
+            // Calculo das perdas ////////////////////////////////////////////////////////////////////////////////
+            if (chart && gapProd > 0) {
+                // Monta o objeto { prioridade: minutos }
+                const priorities = chart.data.datasets[0]._meta
+                    ? chart.data.datasets[0]._meta[Object.keys(chart.data.datasets[0]._meta)[0]].data
+                    : chart.data.datasets[0].data; // ajuste caso precise
 
+                // Alternativa: usa updatedStateData (já processado no renderStateChart)
+                // supondo que você salva updatedStateData por linha:
+                const updatedStateData = window.updatedStateDataByLine ? window.updatedStateDataByLine[line] : null;
+
+                // Prioridades
+                const anomaliaPrio = [1, 2];
+                const producaoPrio = [5, 7, 10, 17];
+
+                let sumAnomalia = 0, sumProducao = 0, sumTotal = 0;
+                
+                if (updatedStateData) {
+                    updatedStateData.forEach(item => {
+                        //sumTotal += Number(item.duration);
+                        if (anomaliaPrio.includes(item.state)) sumAnomalia += Number(item.duration);
+                        if (producaoPrio.includes(item.state)) sumProducao += Number(item.duration);
+                    });
+                }
+                sumTotal = sumAnomalia + sumProducao;
+                console.log("sumAnomalia: " + sumAnomalia + " sumTotal: " + sumTotal + " gapProd: " + gapProd);
+                // Calcula as perdas proporcionais
+                const lossAnomalia = Math.round((sumAnomalia / sumTotal) * gapProd);
+                const lossProducao = Math.round((sumProducao / sumTotal) * gapProd);
+                console.log("lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao)
+                // Atualiza na interface
+                const elAnomalia = button.querySelector('.loss-anomalia');
+                const elProducao = button.querySelector('.loss-producao');
+                if (elAnomalia) elAnomalia.innerText = lossAnomalia;
+                if (elProducao) elProducao.innerText = lossProducao;
+            }
+            // Fim dos calculos das perdas ///////////////////////////////////////////////////////////////////////
             if (actualProdInter) {
                 actualProdInter.textContent = `Produção Atual: ${actualProd}`;
             }

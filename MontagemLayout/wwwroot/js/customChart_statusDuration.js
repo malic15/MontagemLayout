@@ -1,7 +1,9 @@
 import { prioritiesColors, prioritiesDescription } from './mqttWebSocket.js';
 
-let chartInstances = {};
+//let chartInstances = {};
 let firstUp = false;
+window.chartInstances = window.chartInstances || {};
+let chartInstances = window.chartInstances;
 
 async function renderStateChart(line, canvas) {
     let lineName = '';
@@ -40,6 +42,8 @@ async function renderStateChart(line, canvas) {
     }));
     //console.log(`updatedStateData: ${updatedStateData}`);
     //  Mapeia os dados para o gráfico
+    window.updatedStateDataByLine = window.updatedStateDataByLine || {};
+    window.updatedStateDataByLine[line] = updatedStateData;
     const labels = updatedStateData.map(item =>
         prioritiesDescription[item.state] ? prioritiesDescription[item.state] : 'Sem Descrição'
     );

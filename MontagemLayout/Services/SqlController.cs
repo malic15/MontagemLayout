@@ -23,11 +23,11 @@ namespace MontagemLayout.Services
         }
 
         [HttpGet("top-events")]
-        public async Task<IActionResult> GetTopEvents([FromQuery] string line = null, [FromQuery] string dataFilterInit = null, [FromQuery] string dataFilterFinal = null)
+        public async Task<IActionResult> GetTopEvents([FromQuery] string line = null, [FromQuery] string dataFilterInit = null, [FromQuery] string dataFilterFinal = null, [FromQuery] bool filterBreak = false, [FromQuery] bool filterProd = false)
         {
             try
             {
-                var topEvents = await _repositoryMySql.GetTopEvents(line, dataFilterInit, dataFilterFinal);
+                var topEvents = await _repositoryMySql.GetTopEvents(line, dataFilterInit, dataFilterFinal, filterBreak, filterProd);
                 return Ok(topEvents);
             }
             catch (Exception ex)

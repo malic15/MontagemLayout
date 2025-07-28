@@ -1,10 +1,18 @@
 import { buttonId, setButtonId, prioritiesColors } from './mqttWebSocket.js';
 
 let chartInstance = null;
+let showJPH = false;
+let showBreak = false;
+let showProd = false;
 
-async function fetchTopEvents(dataFilterInit, dataFilterFinal) {
+var filterDateInit = '';
+var filterDateFinal = ''; 
+var filterTimeInit = '';
+var filterTimeFinal = '';
+
+async function fetchTopEvents(dataFilterInit, dataFilterFinal, filterBreak, filterProd) {
     try {
-        const response = await fetch(`/api/events/top-events?line=${encodeURIComponent(buttonId)}&dataFilterInit=${encodeURIComponent(dataFilterInit)}&dataFilterFinal=${encodeURIComponent(dataFilterFinal)}`);
+        const response = await fetch(`/api/events/top-events?line=${encodeURIComponent(buttonId)}&dataFilterInit=${encodeURIComponent(dataFilterInit)}&dataFilterFinal=${encodeURIComponent(dataFilterFinal)}&filterBreak=${encodeURIComponent(filterBreak)}&filterProd=${encodeURIComponent(filterProd)}`);
         if (!response.ok) {
             throw new Error(`Erro ao buscar os top eventos: ${response.statusText}`);
         }
@@ -15,7 +23,7 @@ async function fetchTopEvents(dataFilterInit, dataFilterFinal) {
         console.error(error);
     }
 }
-let showJPH = false; // Variável de controle para alternar entre Minutos e JPH
+
 
 const updateChartLabels = () => {
     if (!chartInstance) return;
@@ -48,8 +56,22 @@ window.toggleJPH = function() {
     updateChartLabels(); // Atualiza apenas os rótulos
 };
 
-async function renderChart(dataFilterInit, dataFilterFinal, shift) {
+window.toggleBreak = function () {
+    showBreak = !showBreak;
+    showProd = false;
+    renderChart(filterDateInit, filterDateFinal, '(Parada Anomalia)')
+}
 
+window.toggleProd = function () {
+    showProd = !showProd;
+    showBreak = false;
+    renderChart(filterDateInit, filterDateFinal, '(Parada Produção)')
+}
+
+async function renderChart(dataFilterInit, dataFilterFinal, shift) {
+    const loaderContainer = document.getElementById('loaderContainerTop10');
+    loaderContainer.textContent = 'Carregando...';
+    loaderContainer.style.display = 'block';
     if (chartInstance) {
         chartInstance.destroy();
     }
@@ -69,7 +91,7 @@ async function renderChart(dataFilterInit, dataFilterFinal, shift) {
         lineName = number ? `${word} ${number}` : word;
     }
 
-    const topEvents = await fetchTopEvents(dataFilterInit, dataFilterFinal);
+    const topEvents = await fetchTopEvents(dataFilterInit, dataFilterFinal, showBreak, showProd);
 
     const labels = topEvents.map(event => event.event);
     const data = topEvents.map(event => (event.totalDuration / 60));
@@ -268,13 +290,14 @@ async function renderChart(dataFilterInit, dataFilterFinal, shift) {
         },
         plugins: [ChartDataLabels]
     });
+    loaderContainer.style.display = 'none';
 }
 
 document.getElementById('applyFilterBtnTop10').addEventListener('click', async () => {
-    const filterDateInit = document.getElementById('filterDateInitTop10').value;
-    const filterDateFinal = document.getElementById('filterDateFinalTop10').value;
-    const filterTimeInit = document.getElementById('filterTimeInitTop10').value;
-    const filterTimeFinal = document.getElementById('filterTimeFinalTop10').value;
+    filterDateInit = document.getElementById('filterDateInitTop10').value;
+    filterDateFinal = document.getElementById('filterDateFinalTop10').value;
+    filterTimeInit = document.getElementById('filterTimeInitTop10').value;
+    filterTimeFinal = document.getElementById('filterTimeFinalTop10').value;
 
     if (!filterDateInit) {
         alert("Selecione ao menos uma data inicial para filtrar!");
@@ -310,16 +333,16 @@ document.querySelectorAll('.showTop10Btn').forEach(elem => {
         }
         console.log(chartContainer)
         chartContainer.style.display = 'block';
-        const loaderContainer = document.getElementById('loaderContainerTop10');
-        loaderContainer.textContent = 'Carregando...';
-        loaderContainer.style.display = 'block';
+        //const loaderContainer = document.getElementById('loaderContainerTop10');
+        //loaderContainer.textContent = 'Carregando...';
+        //loaderContainer.style.display = 'block';
         try {
             await renderChart(filterDateInit, filterDateFinal,'(Turno)')
         } catch (error) {
             console.error("Erro ao aplicar os filtros:", error);
-        } finally {
-            loaderContainer.style.display = 'none';
-        }
+        } //finally {
+        //    loaderContainer.style.display = 'none';
+        //}
     });
 });
 
@@ -328,17 +351,23 @@ document.getElementById('clearFilterBtnTop10').addEventListener('click', async (
     document.getElementById('filterDateFinalTop10').value = '';
     document.getElementById('filterTimeInitTop10').value = '';
     document.getElementById('filterTimeFinalTop10').value = '';
+    filterDateInit = '';
+    filterDateFinal = '';
+    filterTimeInit = '';
+    filterTimeFinal = '';
+    showBreak = false;
+    showProd = false;
 
-    const loaderContainer = document.getElementById('loaderContainerTop10');
-    loaderContainer.textContent = 'Carregando...';
-    loaderContainer.style.display = 'block';
-    const filterDateInit = "";
-    const filterDateFinal = "";
+    //const loaderContainer = document.getElementById('loaderContainerTop10');
+    //loaderContainer.textContent = 'Carregando...';
+    //loaderContainer.style.display = 'block';
+    //const filterDateInit = "";
+    //const filterDateFinal = "";
     try {
         await renderChart(filterDateInit, filterDateFinal, '(Turno)')
     } catch (error) {
         console.error("Erro ao aplicar os filtros:", error);
-    } finally {
-        loaderContainer.style.display = 'none';
-    }
+    }// finally {
+    //    loaderContainer.style.display = 'none';
+    //}
 });
