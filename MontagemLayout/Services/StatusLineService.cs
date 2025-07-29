@@ -12,6 +12,13 @@ namespace MontagemLayout.Services
     }
     public class StatusLineService
     {
+        private readonly ProdService _prodService;
+
+        public StatusLineService(ProdService prodService)
+        {
+            Task.Run(ProcessQueue);
+            _prodService = prodService;
+        }
         public class LineInfo
         {
             public int lowestStatusActive { get; set; }
@@ -23,6 +30,10 @@ namespace MontagemLayout.Services
         private ConcurrentDictionary<string, ConcurrentDictionary<string,int>> _statusDbsData = new ConcurrentDictionary<string, ConcurrentDictionary<string, int>>();
 
         private readonly ConcurrentQueue<(string, string, int, string, DateTime)> _statusUpdateQueue = new ConcurrentQueue<(string, string, int, string, DateTime)>();
+
+        private readonly int[] anomaliaPrio = { 1, 2, 15, 16 };
+        private readonly int[] producaoPrio = { 5, 7, 8, 10, 11, 12, 17 };
+        private readonly int[] outrosPrio = { 6, 9 };
 
         public event Func<string, Task> OnStatusChanged;
 
@@ -36,10 +47,10 @@ namespace MontagemLayout.Services
         {
             return _statusDbsData;
         }
-        public StatusLineService()
-        {
-            Task.Run(ProcessQueue);
-        }
+        //public StatusLineService()
+        //{
+        //    Task.Run(ProcessQueue);
+        //}
         public void ResetStatusData()
         {
             _statusData.Clear();
@@ -83,6 +94,23 @@ namespace MontagemLayout.Services
                                 return existingLineInfo;
                             });
                     }
+
+                    var loss = _prodService.GetLossAccum().GetOrAdd(update.Item1, _ => new ProdService.LossAccum());
+
+                    if (loss.LastTimestamp.HasValue)
+                    {
+                        var duration = (int)(update.Item5 - loss.LastTimestamp.Value).TotalSeconds;
+                        if (duration > 0)
+                        {
+                            if (anomaliaPrio.Contains(loss.LastState)) loss.SumAnomalia += duration;
+                            else if (producaoPrio.Contains(loss.LastState)) loss.SumProducao += duration;
+                            else if (outrosPrio.Contains(loss.LastState)) loss.SumOutros += duration;
+                            // Sempre soma ao total
+                            loss.SumTotal += duration;
+                        }
+                    }
+                    loss.LastTimestamp = update.Item5;
+                    loss.LastState = update.Item3;
                 }
                 GetLowestStatus();
             }

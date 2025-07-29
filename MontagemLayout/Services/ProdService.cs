@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using static MontagemLayout.Services.ProdService;
 using static MontagemLayout.Services.StatusLineService;
 
 namespace MontagemLayout.Services
@@ -11,8 +12,26 @@ namespace MontagemLayout.Services
             public int GapProd { get; set; }
             public int InitValue { get; set; }
             public int ActualShift = 0;
+            public int LossAnomalia { get; set; }
+            public int LossProducao { get; set; }
+            public int LossOutros { get; set; }
         }
+        public class LossAccum
+        {
+            public int SumAnomalia = 0;
+            public int SumProducao = 0;
+            public int SumOutros = 0;
+            public int SumTotal = 0;
+            public DateTime? LastTimestamp = null;
+            public int LastState = 0;
+        }
+        private ConcurrentDictionary<string, LossAccum> _lossByLine = new();
+
         private ConcurrentDictionary<string, ProdInfo> _prodData = new ConcurrentDictionary<string, ProdInfo>();
+
+        private readonly int[] anomaliaPrio = { 1, 2, 15, 16 };
+        private readonly int[] producaoPrio = { 5, 7, 8, 10, 11, 12, 17 };
+        private readonly int[] outrosPrio = { 6, 9 };
 
         public event Action<ConcurrentDictionary<string, ProdInfo>> OnProdDataChanged;
 
@@ -30,6 +49,10 @@ namespace MontagemLayout.Services
         public ConcurrentDictionary<string, ProdInfo> GetProdData()
         {
             return _prodData;
+        }
+        public ConcurrentDictionary<string, LossAccum> GetLossAccum()
+        {
+            return _lossByLine;
         }
         public object GetAllProdData()
         {
@@ -55,6 +78,7 @@ namespace MontagemLayout.Services
         }
         public async Task UpdateProd(string line, int actualProd)
         {
+            
             int prod = 0;
             //if (!_prodData.ContainsKey(line))
             //{
@@ -85,7 +109,17 @@ namespace MontagemLayout.Services
                     }
                     return existingLineProdInfo;
                 });
+
+            var prodInfo = _prodData[line];
+
             OnProdDataChanged?.Invoke(_prodData);
+            int gapProd = prodInfo.GapProd;
+
+            var (lossAnomalia, lossProducao, lossOutros) = GetLossForLine(line, gapProd);
+            prodInfo.LossAnomalia = lossAnomalia;
+            prodInfo.LossProducao = lossProducao;
+            prodInfo.LossOutros = lossOutros;
+            
             //Console.WriteLine("Produção: " + _prodData[line].InitValue);
         }
         public async Task TheoreticalProdUpdateAsync()
@@ -122,6 +156,57 @@ namespace MontagemLayout.Services
             }
             OnProdDataChanged?.Invoke(_prodData);
         }
+        public void UpdateLosses(string line, int gapProd, List<(int state, int duration)> durations)
+        {
+            // Defina as prioridades
+            var anomaliaPrio = new[] { 1, 2, 15, 16 };
+            var producaoPrio = new[] { 5, 7, 8, 10, 11, 12, 17 };
+            var outrosPrio = new[] { 6, 9 };
+
+            double sumAnomalia = 0, sumProducao = 0, sumOutros = 0, sumTotal = 0;
+            foreach (var (state, duration) in durations)
+            {
+                if (anomaliaPrio.Contains(state)) sumAnomalia += duration;
+                if (producaoPrio.Contains(state)) sumProducao += duration;
+                if (outrosPrio.Contains(state)) sumOutros += duration;
+            }
+            sumTotal = sumAnomalia + sumProducao + sumOutros;
+            var ngapProd = -gapProd; // negativo indica carros perdidos
+
+            // Proporcional (igual ao JS), usando double para precisão
+            double realLossAnomalia = sumTotal == 0 ? 0 : (sumAnomalia / sumTotal) * ngapProd;
+            double realLossProducao = sumTotal == 0 ? 0 : (sumProducao / sumTotal) * ngapProd;
+            double realLossOutros = sumTotal == 0 ? 0 : (sumOutros / sumTotal) * ngapProd;
+
+            int lossAnomalia = Math.Max(0, (int)Math.Floor(realLossAnomalia));
+            int lossProducao = Math.Max(0, (int)Math.Floor(realLossProducao));
+            int lossOutros = Math.Max(0, (int)Math.Floor(realLossOutros));
+            int somaLoss = lossAnomalia + lossProducao + lossOutros;
+            int diff = ngapProd - somaLoss;
+
+            // Distribua o resto de maneira proporcional (maior decimal ganha)
+            var decimais = new List<(string key, double value)> {
+        ("anomalia", realLossAnomalia - Math.Floor(realLossAnomalia)),
+        ("producao", realLossProducao - Math.Floor(realLossProducao)),
+        ("outros",   realLossOutros   - Math.Floor(realLossOutros))
+    };
+            decimais = decimais.OrderByDescending(d => d.value).ToList();
+
+            for (int i = 0; i < diff; i++)
+            {
+                if (decimais[i % 3].key == "anomalia") lossAnomalia++;
+                else if (decimais[i % 3].key == "producao") lossProducao++;
+                else if (decimais[i % 3].key == "outros") lossOutros++;
+            }
+
+            if (_prodData.TryGetValue(line, out var prodInfo))
+            {
+                prodInfo.LossAnomalia = lossAnomalia;
+                prodInfo.LossProducao = lossProducao;
+                prodInfo.LossOutros = lossOutros;
+            }
+        }
+
 
         public void PrintProdData()
         {
@@ -148,6 +233,42 @@ namespace MontagemLayout.Services
                 Console.WriteLine($"   → InitValue: {prodInfo.InitValue}");
                 Console.WriteLine("---------------------------------------");
             }
+        }
+        public (int lossAnomalia, int lossProducao, int lossOutros) GetLossForLine(string line, int gapProd)
+        {
+            Console.WriteLine("dasdasdjbasidabsidfubaisudgagdiausgdiuagsdiuagsduiagsdiuagsidugsaiudgasuig");
+            if (!_lossByLine.TryGetValue(line, out var loss) || loss.SumTotal == 0)
+                return (0, 0, 0);
+
+            int ngapProd = Math.Abs(gapProd); // garantir positivo
+
+            double realLossAnomalia = (loss.SumAnomalia / (double)loss.SumTotal) * ngapProd;
+            double realLossProducao = (loss.SumProducao / (double)loss.SumTotal) * ngapProd;
+            double realLossOutros = (loss.SumOutros / (double)loss.SumTotal) * ngapProd;
+
+            int lossAnomalia = Math.Max(0, (int)Math.Floor(realLossAnomalia));
+            int lossProducao = Math.Max(0, (int)Math.Floor(realLossProducao));
+            int lossOutros = Math.Max(0, (int)Math.Floor(realLossOutros));
+
+            int somaLoss = lossAnomalia + lossProducao + lossOutros;
+            int diff = ngapProd - somaLoss;
+
+            // Distribua o resto de maneira proporcional (maior decimal ganha)
+            var decimais = new List<(string key, double value)> {
+        ("anomalia", realLossAnomalia - Math.Floor(realLossAnomalia)),
+        ("producao", realLossProducao - Math.Floor(realLossProducao)),
+        ("outros",   realLossOutros   - Math.Floor(realLossOutros))
+    };
+            decimais = decimais.OrderByDescending(d => d.value).ToList();
+
+            for (int i = 0; i < diff; i++)
+            {
+                if (decimais[i % 3].key == "anomalia") lossAnomalia++;
+                else if (decimais[i % 3].key == "producao") lossProducao++;
+                else if (decimais[i % 3].key == "outros") lossOutros++;
+            }
+            Console.WriteLine(line+ " lossAnomalia: "+ lossAnomalia+ " lossProducao: "+ " lossOutros: "+ lossOutros);
+            return (lossAnomalia, lossProducao, lossOutros);
         }
 
     }

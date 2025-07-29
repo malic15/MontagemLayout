@@ -907,14 +907,15 @@ export async function updateBuffer(bufferState) {
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
 }
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
+    console.log("Chegodoasdjoajdoasjdoas")
     if (!replayMode) {
-        
         updateStatus(statusState);
     }
 });
 
 export async function updateStatus(statusState) {
     //const startTime = performance.now();
+    //console.log("prodData.prodData:\n" + JSON.stringify(statusState, null, 2));
     Object.keys(statusState).forEach(line => {
         try {
             const data = statusState[line];
@@ -1052,13 +1053,15 @@ async function updateProd(prodData) {
 
     document.getElementById("targetProd").innerText = `Meta de Produção: ${prodData.targetProd}`;
     document.getElementById("theoreticalProd").innerText = `Produção Teórica: ${prodData.theoreticalProd}`;
-    console.log("prodData.prodData" + prodData)
+    console.log("prodData.prodData:\n" + JSON.stringify(prodData.prodData, null, 2));
     for (const line in prodData.prodData) {
         const targetProd = prodData.targetProd || 1;
         const theoreticalProd = prodData.theoreticalProd || 1;
         const actualProd = prodData.prodData[line].actualProd || 0;
         const gapProd = prodData.prodData[line].gapProd || 0;
-
+        const lossAnomalia = prodData.prodData[line].lossAnomalia || 0;
+        const lossProducao = prodData.prodData[line].lossProducao || 0;
+        const lossOutros = prodData.prodData[line].lossOutros || 0;
         const percentProd = ((actualProd / targetProd) * 100).toFixed(1);
         const percentTarget = ((theoreticalProd / targetProd) * 100).toFixed(1);
 
@@ -1067,49 +1070,76 @@ async function updateProd(prodData) {
 
         const button = document.getElementById(line);
 
-        const chart = window.chartInstances[line]; // se quiser acessar o chart diretamente
-        //const updatedStateData = window.updatedStateDataByLine ? window.updatedStateDataByLine[line] : null;
+        const chart = window.chartInstances[line];
 
 
         if (button) {
             const progressTexts = button.querySelectorAll('.progress-text');
             const actualProdInter = button.querySelector('.showOPE')
             // Calculo das perdas ////////////////////////////////////////////////////////////////////////////////
-            if (chart && gapProd > 0) {
-                // Monta o objeto { prioridade: minutos }
-                const priorities = chart.data.datasets[0]._meta
-                    ? chart.data.datasets[0]._meta[Object.keys(chart.data.datasets[0]._meta)[0]].data
-                    : chart.data.datasets[0].data; // ajuste caso precise
+            document.querySelector('.loss-anomalia').innerText = lossAnomalia;
+            document.querySelector('.loss-producao').innerText = lossProducao;
+            document.querySelector('.loss-outros').innerText = lossOutros;
+            console.log(line + " lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao + " lossOutros: " + lossOutros)
+            //if (chart && gapProd != null) {
+            //    // Monta o objeto { prioridade: minutos }
+            //    const priorities = chart.data.datasets[0]._meta
+            //        ? chart.data.datasets[0]._meta[Object.keys(chart.data.datasets[0]._meta)[0]].data
+            //        : chart.data.datasets[0].data; // ajuste caso precise
 
-                // Alternativa: usa updatedStateData (já processado no renderStateChart)
-                // supondo que você salva updatedStateData por linha:
-                const updatedStateData = window.updatedStateDataByLine ? window.updatedStateDataByLine[line] : null;
+            //    // Alternativa: usa updatedStateData (já processado no renderStateChart)
+            //    const updatedStateData = window.updatedStateDataByLine ? window.updatedStateDataByLine[line] : null;
 
-                // Prioridades
-                const anomaliaPrio = [1, 2];
-                const producaoPrio = [5, 7, 10, 17];
+            //    // Prioridades
+            //    const anomaliaPrio = [1, 2, 15, 16];
+            //    const producaoPrio = [5, 7, 8, 10, 11, 12, 17];
+            //    const outrosPrio = [6, 9];
 
-                let sumAnomalia = 0, sumProducao = 0, sumTotal = 0;
+            //    let sumAnomalia = 0, sumProducao = 0, sumOutros = 0, sumTotal = 0;
                 
-                if (updatedStateData) {
-                    updatedStateData.forEach(item => {
-                        //sumTotal += Number(item.duration);
-                        if (anomaliaPrio.includes(item.state)) sumAnomalia += Number(item.duration);
-                        if (producaoPrio.includes(item.state)) sumProducao += Number(item.duration);
-                    });
-                }
-                sumTotal = sumAnomalia + sumProducao;
-                console.log("sumAnomalia: " + sumAnomalia + " sumTotal: " + sumTotal + " gapProd: " + gapProd);
-                // Calcula as perdas proporcionais
-                const lossAnomalia = Math.round((sumAnomalia / sumTotal) * gapProd);
-                const lossProducao = Math.round((sumProducao / sumTotal) * gapProd);
-                console.log("lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao)
-                // Atualiza na interface
-                const elAnomalia = button.querySelector('.loss-anomalia');
-                const elProducao = button.querySelector('.loss-producao');
-                if (elAnomalia) elAnomalia.innerText = lossAnomalia;
-                if (elProducao) elProducao.innerText = lossProducao;
-            }
+            //    if (updatedStateData) {
+            //        updatedStateData.forEach(item => {
+            //            //sumTotal += Number(item.duration);
+            //            if (anomaliaPrio.includes(item.state)) sumAnomalia += Number(item.duration);
+            //            if (producaoPrio.includes(item.state)) sumProducao += Number(item.duration);
+            //            if (outrosPrio.includes(item.state)) sumOutros += Number(item.duration);
+            //        });
+            //    }
+            //    sumTotal = sumAnomalia + sumProducao + sumOutros;
+            //    var ngapProd = gapProd * (-1);
+            //    console.log("sumAnomalia: " + sumAnomalia + " sumTotal: " + sumTotal + " sumOutros: " + sumOutros + " gapProd: " + ngapProd);
+            //    const realLossAnomalia = (sumAnomalia / sumTotal) * ngapProd;
+            //    const realLossProducao = (sumProducao / sumTotal) * ngapProd;
+            //    const realLossOutros = (sumOutros / sumTotal) * ngapProd;
+
+            //    // Calcula as perdas proporcionais
+            //    const lossAnomalia = safeLoss(sumAnomalia, sumTotal, ngapProd);
+            //    const lossProducao = safeLoss(sumProducao, sumTotal, ngapProd);
+            //    const lossOutros = safeLoss(sumOutros, sumTotal, ngapProd);
+            //    let somaLoss = lossAnomalia + lossProducao + lossOutros;
+            //    let diff = ngapProd - somaLoss;
+            //    const decimais = [
+            //        { key: 'anomalia', value: realLossAnomalia - lossAnomalia },
+            //        { key: 'producao', value: realLossProducao - lossProducao },
+            //        { key: 'outros', value: realLossOutros - lossOutros }
+            //    ];
+            //    decimais.sort((a, b) => b.value - a.value);
+
+            //    for (let i = 0; i < diff; i++) {
+            //        if (decimais[i % 3].key === 'anomalia') lossAnomalia++;
+            //        else if (decimais[i % 3].key === 'producao') lossProducao++;
+            //        else if (decimais[i % 3].key === 'outros') lossOutros++;
+            //    }
+
+            //    console.log(line +" lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao)
+            //    // Atualiza na interface
+            //    const elAnomalia = button.querySelector('.loss-anomalia');
+            //    const elProducao = button.querySelector('.loss-producao');
+            //    const elOutros = button.querySelector('.loss-outros');
+            //    if (elAnomalia) elAnomalia.innerText = lossAnomalia;
+            //    if (elProducao) elProducao.innerText = lossProducao;
+            //    if (elOutros) elOutros.innerText = lossOutros;
+            //}
             // Fim dos calculos das perdas ///////////////////////////////////////////////////////////////////////
             if (actualProdInter) {
                 actualProdInter.textContent = `Produção Atual: ${actualProd}`;
@@ -1188,6 +1218,10 @@ async function updateProd(prodData) {
     //const endTime = performance.now();
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
 }
+function safeLoss(sum, sumTotal, gapProd) {
+    if (!sumTotal || !gapProd || !sum) return 0;
+    return Math.max(0, Math.floor((sum / sumTotal) * gapProd));
+} 
 //window.addEventListener("beforeunload", () => {
 //    if (connection) {
 //        connection.stop();
