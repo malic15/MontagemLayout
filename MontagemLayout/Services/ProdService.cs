@@ -236,11 +236,12 @@ namespace MontagemLayout.Services
         }
         public (int lossAnomalia, int lossProducao, int lossOutros) GetLossForLine(string line, int gapProd)
         {
-            Console.WriteLine("dasdasdjbasidabsidfubaisudgagdiausgdiuagsdiuagsduiagsdiuagsidugsaiudgasuig");
             if (!_lossByLine.TryGetValue(line, out var loss) || loss.SumTotal == 0)
                 return (0, 0, 0);
+             
+            int ngapProd = (gapProd*(-1)); // garantir positivo
 
-            int ngapProd = Math.Abs(gapProd); // garantir positivo
+            if (ngapProd < 0) return (0, 0, 0);
 
             double realLossAnomalia = (loss.SumAnomalia / (double)loss.SumTotal) * ngapProd;
             double realLossProducao = (loss.SumProducao / (double)loss.SumTotal) * ngapProd;
@@ -267,7 +268,7 @@ namespace MontagemLayout.Services
                 else if (decimais[i % 3].key == "producao") lossProducao++;
                 else if (decimais[i % 3].key == "outros") lossOutros++;
             }
-            Console.WriteLine(line+ " lossAnomalia: "+ lossAnomalia+ " lossProducao: "+ " lossOutros: "+ lossOutros);
+            Console.WriteLine(line+ " lossAnomalia: "+ lossAnomalia+ " lossProducao: "+ lossProducao+ " lossOutros: " + lossOutros);
             return (lossAnomalia, lossProducao, lossOutros);
         }
 
