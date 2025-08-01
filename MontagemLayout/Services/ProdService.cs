@@ -29,10 +29,6 @@ namespace MontagemLayout.Services
 
         private ConcurrentDictionary<string, ProdInfo> _prodData = new ConcurrentDictionary<string, ProdInfo>();
 
-        private readonly int[] anomaliaPrio = { 1, 2, 15, 16 };
-        private readonly int[] producaoPrio = { 5, 7, 8, 10, 11, 12, 17 };
-        private readonly int[] outrosPrio = { 6, 9 };
-
         public event Action<ConcurrentDictionary<string, ProdInfo>> OnProdDataChanged;
 
         public int TargetProd { get; set; }
@@ -238,10 +234,10 @@ namespace MontagemLayout.Services
         {
             if (!_lossByLine.TryGetValue(line, out var loss) || loss.SumTotal == 0)
                 return (0, 0, 0);
-             
+            if (gapProd > 0) return (0, 0, 0);
             int ngapProd = (gapProd*(-1)); // garantir positivo
 
-            if (ngapProd < 0) return (0, 0, 0);
+            
 
             double realLossAnomalia = (loss.SumAnomalia / (double)loss.SumTotal) * ngapProd;
             double realLossProducao = (loss.SumProducao / (double)loss.SumTotal) * ngapProd;
@@ -250,10 +246,10 @@ namespace MontagemLayout.Services
             int lossAnomalia = Math.Max(0, (int)Math.Floor(realLossAnomalia));
             int lossProducao = Math.Max(0, (int)Math.Floor(realLossProducao));
             int lossOutros = Math.Max(0, (int)Math.Floor(realLossOutros));
-
+            Console.WriteLine(line + " loss.SumAnomalia: " + loss.SumAnomalia + " loss.SumProducao: " + loss.SumProducao + " loss.SumOutros: " + loss.SumOutros + " loss.SumTotal: " + loss.SumTotal);
             int somaLoss = lossAnomalia + lossProducao + lossOutros;
             int diff = ngapProd - somaLoss;
-
+            Console.WriteLine(line + " diff: " + diff + " ngapProd: " + ngapProd + " somaLoss: " + somaLoss);
             // Distribua o resto de maneira proporcional (maior decimal ganha)
             var decimais = new List<(string key, double value)> {
         ("anomalia", realLossAnomalia - Math.Floor(realLossAnomalia)),
