@@ -106,7 +106,7 @@ namespace MontagemLayout.Services
                             else if (producaoPrio.Contains(loss.LastState)) loss.SumProducao += duration;
                             else if (outrosPrio.Contains(loss.LastState)) loss.SumOutros += duration;
                             // Sempre soma ao total
-                            loss.SumTotal += duration;
+                            loss.SumTotal = loss.SumAnomalia + loss.SumProducao + loss.SumOutros;
                         }
                     }
                     loss.LastTimestamp = update.Item5;
