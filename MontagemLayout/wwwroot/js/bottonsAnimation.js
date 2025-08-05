@@ -325,7 +325,7 @@ function convertToRGBA(color, alpha) {
 //    });
 //});
 const minHeightToExpand = 400;
-const minWidthToExpand = 400;
+const minWidthToExpand = 420;
 const ANIMATED_WHEN_EXPANDED = [
     '.fault_text',
     '.showTableBtn',

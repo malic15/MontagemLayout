@@ -672,16 +672,6 @@ connection.on("PDTMonitoring", (pdtVariable) => {
     //updateApplicationState();
 });
 
-connectionData.on("ReceiveCurrentDateTime", (dateTime) => {
-    const currentDateTimeElement = document.getElementById("currentDateTime");
-    if (currentDateTimeElement) {
-        currentDateTimeElement.textContent = "Data e Hora: " + dateTime;
-    }
-});
-
-connectionData.on("ReceiveApplicationStatePDT", (pdtState) => {
-    updatePdt(pdtState);
-});
 async function updatePdt(pdtState) {
     //const startTime = performance.now();
     const updates = [];
@@ -827,12 +817,7 @@ async function updatePdt(pdtState) {
 //        }
 //    }
 //});
-connectionData.off("ReceiveApplicationStateBuffer");
-connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
-    if (!replayMode) {
-        updateBuffer(bufferState);
-    }
-});
+
 export async function updateBuffer(bufferState) {
     const updates = [];
     //console.log("BufferFrame (frameTime = ):", bufferState);
@@ -906,12 +891,6 @@ export async function updateBuffer(bufferState) {
     //const endTime = performance.now();
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
 }
-connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
-    console.log("Chegodoasdjoajdoasjdoas")
-    if (!replayMode) {
-        updateStatus(statusState);
-    }
-});
 
 export async function updateStatus(statusState) {
     //const startTime = performance.now();
@@ -1039,13 +1018,6 @@ function updateFaultListUI() {
     });
 }
 
-
-connectionData.on("ReceiveApplicationBufferAc", (buffHist) => {
-    updateChartsWithHistory(buffHist);
-});
-connectionData.on("ReceiveApplicationProdData", (prodData) => {
-    updateProd(prodData);
-});
 async function updateProd(prodData) {
     //const startTime = performance.now();
     const facHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scale-factor-height').trim());
@@ -1075,12 +1047,17 @@ async function updateProd(prodData) {
 
         if (button) {
             const progressTexts = button.querySelectorAll('.progress-text');
-            const actualProdInter = button.querySelector('.showOPE')
-            // Calculo das perdas ////////////////////////////////////////////////////////////////////////////////
-            document.querySelector('.loss-anomalia').innerText = lossAnomalia;
-            document.querySelector('.loss-producao').innerText = lossProducao;
-            document.querySelector('.loss-outros').innerText = lossOutros;
+            const actualProdInter = button.querySelector('.total-OPE');
+            const objAnomalia = button.querySelector('.loss-anomalia .value');
+            const objProd = button.querySelector('.loss-producao .value');
+            const objOutros = button.querySelector('.loss-outros .value');
             console.log(line + " lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao + " lossOutros: " + lossOutros)
+
+            if (actualProdInter) actualProdInter.textContent = actualProd;
+            if (objAnomalia) objAnomalia.textContent = lossAnomalia;
+            if (objProd) objProd.textContent = lossProducao;
+            if (objOutros) objOutros.textContent = lossOutros;
+
             //if (chart && gapProd != null) {
             //    // Monta o objeto { prioridade: minutos }
             //    const priorities = chart.data.datasets[0]._meta
@@ -1141,9 +1118,7 @@ async function updateProd(prodData) {
             //    if (elOutros) elOutros.innerText = lossOutros;
             //}
             // Fim dos calculos das perdas ///////////////////////////////////////////////////////////////////////
-            if (actualProdInter) {
-                actualProdInter.textContent = `Produção Atual: ${actualProd}`;
-            }
+            
 
             if (progressTexts.length >= 2) {
 
@@ -1231,7 +1206,34 @@ function safeLoss(sum, sumTotal, gapProd) {
 //    }
 //    cleanUpDOM();
 //});
+connectionData.on("ReceiveCurrentDateTime", (dateTime) => {
+    const currentDateTimeElement = document.getElementById("currentDateTime");
+    if (currentDateTimeElement) {
+        currentDateTimeElement.textContent = "Data e Hora: " + dateTime;
+    }
+});
 
+connectionData.on("ReceiveApplicationStatePDT", (pdtState) => {
+    updatePdt(pdtState);
+});
+connectionData.off("ReceiveApplicationStateBuffer");
+connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
+    if (!replayMode) {
+        updateBuffer(bufferState);
+    }
+});
+connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
+    console.log("Chegodoasdjoajdoasjdoas")
+    if (!replayMode) {
+        updateStatus(statusState);
+    }
+});
+connectionData.on("ReceiveApplicationBufferAc", (buffHist) => {
+    updateChartsWithHistory(buffHist);
+});
+connectionData.on("ReceiveApplicationProdData", (prodData) => {
+    updateProd(prodData);
+});
 connectionData.start()
     .then(() => {
         //initializeState();
