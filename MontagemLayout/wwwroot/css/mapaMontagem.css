@@ -456,10 +456,11 @@ body {
     .vertical-space .showOPE:first-of-type {
         margin-top: 5%;
     }
-    .vertical-space .showOPE.horizontal:first-of-type {
-        bottom: 0;
-        left: 0; /* ajuste se quiser */
-        margin-left: 0;
+    .vertical-space .showOPE.horizontal {
+        top: 20%;
+/*        width: 200px;*/
+/*        margin-left: 5%;*/
+        margin-right: 5%;
     }
 .horizontal-space {
     position: relative;
