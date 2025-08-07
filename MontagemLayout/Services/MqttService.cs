@@ -70,6 +70,9 @@ namespace MontagemLayout.Services
                     new MqttTopicFilterBuilder().WithTopic("gomaope180/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
                     new MqttTopicFilterBuilder().WithTopic("gomaope190/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
                     new MqttTopicFilterBuilder().WithTopic("gomaope200/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
+                    new MqttTopicFilterBuilder().WithTopic("gomp/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
+                    new MqttTopicFilterBuilder().WithTopic("trp/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
+                    new MqttTopicFilterBuilder().WithTopic("tra/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
                     new MqttTopicFilterBuilder().WithTopic("falhamarriage/topic").WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build(),
                 };
                 await _mqttClient.SubscribeAsync(topics.ToArray());

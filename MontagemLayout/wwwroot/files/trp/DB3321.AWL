@@ -1,0 +1,1099 @@
+DATA_BLOCK DB 3321
+TITLE =			 		
+{ S7_language := '16(1) Italiano (Italia)  21.05.2018  17:32:37' }
+VERSION : 0.1
+
+
+  STRUCT 	
+   CM_ID : STRING  [8 ] := '=RCA_1';	//Nome Linea	
+   STATION_ID : STRING  [8 ] := '++ST001';	//Nome Stazione	
+   ELEMENT_ID : STRING  [8 ];	//Nome Macchinario		
+   DB_ID : INT  := 2;	//Dimensione DB 1=256 2=512 3=1024	
+   PART_STYLE : STRING  [12 ];	//IDENTIFICATIVO PEZZO IN LAVORAZIONE		
+   ACT_CYCLE_TIME : INT ;	//Tempo ciclo attuale		
+   COUNT_GOOD : INT ;	//Pezzi OK		
+   COUNT_SCRAP : INT ;	//Pezzi KO		
+   SPARE_00 : ARRAY  [0 .. 15 ] OF //Accumulo		
+   INT  := 0;	
+   SPARE_01 : ARRAY  [0 .. 17 ] OF //Riserve Array		
+   INT ;	
+   CODE_EVENT : ARRAY  [0 .. 7 ] OF //Codice diagnostica		
+   INT ;	
+   E0001 : BOOL ;	//=RCA_1++ST001;Guasto  / Faulted;1	 	
+   E0002 : BOOL ;	//=RCA_1++ST001;Emergenza / Emergenzy;2	 	
+   E0003 : BOOL ;	//=RCA_1++ST001;Cambio Elettrodi / Tip Change;3	 	
+   E0004 : BOOL ;	//=RCA_1++ST001;Attrezzamento / Tool Change;4 	
+   E0005 : BOOL ;	//=RCA_1++ST001;Congruenza e Controllo / Check And Consistency;5	 	
+   E0006 : BOOL ;	//=RCA_1++ST001;Mancato Scarico / Starved;9	 	
+   E0007 : BOOL ;	//=RCA_1++ST001;Mancato Carico LAT.AUTO / No Material;7	 	
+   E0008 : BOOL ;	//=RCA_1++ST001;Mancato Carico LAT.MANO / OverCycle;8	 	
+   E0009 : BOOL ;	//=RCA_1++ST001;Mancato Carico / Blocked;6	 	
+   E0010 : BOOL ;	//=RCA_1++ST001;Mancanza Consensi Esterni / End Of Travel;10	 	
+   E0011 : BOOL ;	//=RCA_1++ST001;Anomalia di Qualita' / Quality Alert;11 	
+   E0012 : BOOL ;	//=RCA_1++ST001;Controllo Di Qualita' Pianificato / Quality Check;12	 	
+   E0013 : BOOL ;	//=RCA_1++ST001;Manutenzione Pianificata / PM Event;13 	
+   E0014 : BOOL ;	//=RCA_1++ST001;Manutenzione Non Programmata / AM Event;14	 	
+   E0015 : BOOL ;	//=RCA_1++ST001;No Ciclo Avviato / No Cycle Started;15 	
+   E0016 : BOOL ;	//=RCA_1++ST001;Manuale / Out Of Auto;16 	
+   E0017 : BOOL ;	//=RCA_1++ST001;Arresto Lato Linea / Production Stop;17	 	
+   E0018 : BOOL ;	//=RCA_1++ST001;Vuoto Tecnico / Tecnical Gaps;18 	
+   E0019 : BOOL ;	//=RCA_1++ST001;Produzione / Production;19 	
+   E0020 : BOOL ;	
+   E0021 : BOOL ;	
+   E0022 : BOOL ;	
+   E0023 : BOOL ;	
+   E0024 : BOOL ;	
+   E0025 : BOOL ;	
+   E0026 : BOOL ;	
+   E0027 : BOOL ;	
+   E0028 : BOOL ;	
+   E0029 : BOOL ;	
+   E0030 : BOOL ;	
+   E0031 : BOOL ;	
+   E0032 : BOOL ;	
+   E0033 : BOOL ;	
+   E0034 : BOOL ;	
+   E0035 : BOOL ;	
+   E0036 : BOOL ;	
+   E0037 : BOOL ;	
+   E0038 : BOOL ;	
+   E0039 : BOOL ;	
+   E0040 : BOOL ;	
+   E0041 : BOOL ;	
+   E0042 : BOOL ;	
+   E0043 : BOOL ;	
+   E0044 : BOOL ;	
+   E0045 : BOOL ;	
+   E0046 : BOOL ;	
+   E0047 : BOOL ;	
+   E0048 : BOOL ;	
+   E0049 : BOOL ;	
+   E0050 : BOOL ;	
+   E0051 : BOOL ;	//=RCA_1++ST001;Attesa Manutenzione / Maintenance Assistance;51	 	
+   E0052 : BOOL ;	//=RCA_1++ST001;Materiale Sotto Soglia / Low Material;52 	
+   E0053 : BOOL ;	//=RCA_1++ST001;Chiamata Team Leader / team leader Alert;53	 	
+   E0054 : BOOL ;	//=RCA_1++ST001;ByPass / ByPass;54 	
+   E0055 : BOOL ;	//=RCA_1++ST001;Degradato / Degraded;55	 	
+   E0056 : BOOL ;	//=RCA_1++ST001;Time-Out / Time-Out;56	 	
+   E0057 : BOOL ;	//=RCA_1++ST001;Line PC Scollegato / System Down;57	 	
+   E0058 : BOOL ;	//=RCA_1++ST001;messaggio Guida / Alarm;58 	
+   E0059 : BOOL ;	
+   E0060 : BOOL ;	
+   E0061 : BOOL ;	
+   E0062 : BOOL ;	
+   E0063 : BOOL ;	
+   E0064 : BOOL ;	
+   E0065 : BOOL ;	
+   E0066 : BOOL ;	
+   E0067 : BOOL ;	
+   E0068 : BOOL ;	
+   E0069 : BOOL ;	
+   E0070 : BOOL ;	
+   E0071 : BOOL ;	
+   E0072 : BOOL ;	
+   E0073 : BOOL ;	
+   E0074 : BOOL ;	
+   E0075 : BOOL ;	
+   E0076 : BOOL ;	
+   E0077 : BOOL ;	
+   E0078 : BOOL ;	
+   E0079 : BOOL ;	
+   E0080 : BOOL ;	
+   E0081 : BOOL ;	
+   E0082 : BOOL ;	
+   E0083 : BOOL ;	
+   E0084 : BOOL ;	
+   E0085 : BOOL ;	
+   E0086 : BOOL ;	
+   E0087 : BOOL ;	
+   E0088 : BOOL ;	
+   E0089 : BOOL ;	
+   E0090 : BOOL ;	
+   E0091 : BOOL ;	
+   E0092 : BOOL ;	
+   E0093 : BOOL ;	
+   E0094 : BOOL ;	
+   E0095 : BOOL ;	
+   E0096 : BOOL ;	
+   E0097 : BOOL ;	
+   E0098 : BOOL ;	
+   E0099 : BOOL ;	
+   E0100 : BOOL ;	
+   E0101 : BOOL ;	
+   E0102 : BOOL ;	
+   E0103 : BOOL ;	
+   E0104 : BOOL ;	
+   E0105 : BOOL ;	
+   E0106 : BOOL ;	
+   E0107 : BOOL ;	
+   E0108 : BOOL ;	
+   E0109 : BOOL ;	
+   E0110 : BOOL ;	
+   E0111 : BOOL ;	
+   E0112 : BOOL ;	
+   E0113 : BOOL ;	//=RCA_1++ST001;SV_1 FALTA PRESENÇA NA FTC ROTAÇÃO 90ºMM\CV OK;1
+   E0114 : BOOL ;	
+   E0115 : BOOL ;	
+   E0116 : BOOL ;	
+   E0117 : BOOL ;	
+   E0118 : BOOL ;	
+   E0119 : BOOL ;	
+   E0120 : BOOL ;	
+   E0121 : BOOL ;	
+   E0122 : BOOL ;	
+   E0123 : BOOL ;	
+   E0124 : BOOL ;	
+   E0125 : BOOL ;	
+   E0126 : BOOL ;	
+   E0127 : BOOL ;	
+   E0128 : BOOL ;	
+   E0129 : BOOL ;	
+   E0130 : BOOL ;	
+   E0131 : BOOL ;	
+   E0132 : BOOL ;	
+   E0133 : BOOL ;	
+   E0134 : BOOL ;	
+   E0135 : BOOL ;	
+   E0136 : BOOL ;	
+   E0137 : BOOL ;	
+   E0138 : BOOL ;	
+   E0139 : BOOL ;	
+   E0140 : BOOL ;	
+   E0141 : BOOL ;	
+   E0142 : BOOL ;	
+   E0143 : BOOL ;	
+   E0144 : BOOL ;	
+   E0145 : BOOL ;	
+   E0146 : BOOL ;	
+   E0147 : BOOL ;	
+   E0148 : BOOL ;	
+   E0149 : BOOL ;	
+   E0150 : BOOL ;	
+   E0151 : BOOL ;	
+   E0152 : BOOL ;	
+   E0153 : BOOL ;	
+   E0154 : BOOL ;	
+   E0155 : BOOL ;	
+   E0156 : BOOL ;	
+   E0157 : BOOL ;	
+   E0158 : BOOL ;	
+   E0159 : BOOL ;	
+   E0160 : BOOL ;	
+   E0161 : BOOL ;	//=RCA_1++ST001;BATTERY BAD;1
+   E0162 : BOOL ;	//=RCA_1++ST001;ON_BATTERY;1
+   E0163 : BOOL ;	//=RCA_1++ST001;BATTERY_LOW;1
+   E0164 : BOOL ;	//=RCA_1++ST001;BATTERY_DEPLETED;1
+   E0165 : BOOL ;	//=RCA_1++ST001;OVER_TEMPERATURE;1
+   E0166 : BOOL ;	//=RCA_1++ST001;INPUT_BAD;1
+   E0167 : BOOL ;	//=RCA_1++ST001;OUTPUT_BAD;1
+   E0168 : BOOL ;	//=RCA_1++ST001;OUTPUT_OVERLOAD;1
+   E0169 : BOOL ;	//=RCA_1++ST001;ON_BYPASS;1
+   E0170 : BOOL ;	//=RCA_1++ST001;BYPASS_BAD;1
+   E0171 : BOOL ;	//=RCA_1++ST001;OUTPUT_OFF_AS_REQUESTED;1
+   E0172 : BOOL ;	//=RCA_1++ST001;UPS_OFF_AS_REQUESTED;1
+   E0173 : BOOL ;	//=RCA_1++ST001;CHARGER_FAILED;1
+   E0174 : BOOL ;	//=RCA_1++ST001;UPS_OUTPUT_OFF;1
+   E0175 : BOOL ;	//=RCA_1++ST001;UPS_SYSTEM_OFF;1
+   E0176 : BOOL ;	//=RCA_1++ST001;FAN_FAILURE;1
+   E0177 : BOOL ;	//=RCA_1++ST001;FUSE_FAILURE;1
+   E0178 : BOOL ;	//=RCA_1++ST001;GENERAL_FAULT;1
+   E0179 : BOOL ;	//=RCA_1++ST001;DIAGNOSE_TEST_FAILED;1
+   E0180 : BOOL ;	//=RCA_1++ST001;COMMUNICATION_LOST;1
+   E0181 : BOOL ;	//=RCA_1++ST001;AWAITING_POWER;1
+   E0182 : BOOL ;	//=RCA_1++ST001;SHUTDOWN_PENDING;1
+   E0183 : BOOL ;	//=RCA_1++ST001;TEST_IN_PROGRESS;1
+   E0184 : BOOL ;	//=RCA_1++ST001;LIFE WORD APPLICATIVO LETTURA DATI UPS;1
+   E0185 : BOOL ;	
+   E0186 : BOOL ;	
+   E0187 : BOOL ;	
+   E0188 : BOOL ;	
+   E0189 : BOOL ;	
+   E0190 : BOOL ;	
+   E0191 : BOOL ;	
+   E0192 : BOOL ;	
+   E0193 : BOOL ;	//=RCA_1++ST001+PCV01-SV_01;SQ_07 Pallet non arrivato su Svincolo 1;1
+   E0194 : BOOL ;	//=RCA_1++ST001+PCV01-SV_01;Pallet non Evacuato da Svincolo 1;1
+   E0195 : BOOL ;	//=RCA_1++ST001+PCV01-ARS01;SQU01 Arresto a Scomparsa non Alto Svincolo 1;1
+   E0196 : BOOL ;	//=RCA_1++ST001+PCV01-ARS01;SQD02 Arresto a Scomparsa non Basso Svincolo 1;1
+   E0197 : BOOL ;	//=RCA_1++ST001+PCV01-ARS01;SQU01-SQD02 Arresto a Scomparsa Svincolo 1 Parità;1
+   E0198 : BOOL ;	//=RCA_1++ST001+PCV01-SOL02;SQU03 Sollevatore Quota Rotaz. non Alto Svincolo 1;1
+   E0199 : BOOL ;	//=RCA_1++ST001+PCV01-SOL02;SQD04 Sollevatore Quota Rotaz. non Basso Svincolo 1;1
+   E0200 : BOOL ;	//=RCA_1++ST001+PCV01-SOL02;SQU03-SQD04 Sollevatore Quota Rotaz Svincolo 1;1
+   E0201 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_15;Pallet non arrivato su SVINCOLO 4;1	 	
+   E0202 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_15;Pallet non Evacuato da SVINCOLO 4;1	 	
+   E0203 : BOOL ;	//=RCA_1++ST001+PCV02-SQU13;Sollevatore SVINCOLO 4 non Alto;1 	
+   E0204 : BOOL ;	//=RCA_1++ST001+PCV02-SQD14;Sollevatore SVINCOLO 4 non Basso;1	 	
+   E0205 : BOOL ;	//=RCA_1++ST001+PCV02-SV_01;SQU13-SQD14 Sollevatore SVINCOLO 4 Parita';1	 	
+   E0206 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_25;Pallet non arrivato su Baia Estrazione Pallet;1
+   E0207 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_22;Pallet non arrivato su Svincolo 4 Uscito Da Baia;1
+   E0208 : BOOL ;	
+   E0209 : BOOL ;	//=RCA_1++ST001+PCV01-SQ_12;Pallet non arrivato su SVINCOLO 2;1	 	
+   E0210 : BOOL ;	//=RCA_1++ST001+PCV01-SQ_16;Pallet non Evacuato da SVINCOLO 2;1	 	
+   E0211 : BOOL ;	//=RCA_1++ST001+PCV01-SQU13;Sollevatore SVINCOLO 2 non Alto;1 	
+   E0212 : BOOL ;	//=RCA_1++ST001+PCV01-SQD14;Sollevatore SVINCOLO 2 non Basso;1	 	
+   E0213 : BOOL ;	//=RCA_1++ST001+PCV01-SV_02;SQU13-SQD14 Sollevatore SVINCOLO 2 Parita';1	 	
+   E0214 : BOOL ;	
+   E0215 : BOOL ;	
+   E0216 : BOOL ;	
+   E0217 : BOOL ;	//=RCA_1++ST001+PCV02-SQA19;Otturatore Sing Dopo Svincolo 4 non a Lavoro;1
+   E0218 : BOOL ;	//=RCA_1++ST001+PCV02-SQB20;Otturatore Sing Dopo Svincolo 4 non a Riposo;1
+   E0219 : BOOL ;	//=RCA_1++ST001+PCV02-SV_04;SQA19-SQB20 Otturatore Sing Dopo Svincolo 4 Parità;1
+   E0220 : BOOL ;	//=RCA_1++ST001+PCV02-SQA23;Otturatore Sing Prima di Svincolo 4 non a Lavoro;1
+   E0221 : BOOL ;	//=RCA_1++ST001+PCV02-SQB24;Otturatore Sing Prima di Svincolo 4 non a Riposo;1
+   E0222 : BOOL ;	//=RCA_1++ST001+PCV02-SV_04;SQA23-SQB24 Otturatore Sing Prima di Svinc 4 Parità;1
+   E0223 : BOOL ;	
+   E0224 : BOOL ;	
+   E0225 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_07;Pallet non arrivato su SVINCOLO 3;1	 	
+   E0226 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_07;Pallet non Evacuato da SVINCOLO 3;1	 	
+   E0227 : BOOL ;	//=RCA_1++ST001+PCV02-SQU05;Sollevatore SVINCOLO 3 non Alto;1 	
+   E0228 : BOOL ;	//=RCA_1++ST001+PCV02-SQD06;Sollevatore SVINCOLO 3 non Basso;1	 	
+   E0229 : BOOL ;	//=RCA_1++ST001+PCV02-SV_04;SQU05-SQD06ollevatore SVINCOLO 3 Parita';1 	
+   E0230 : BOOL ;	
+   E0231 : BOOL ;	
+   E0232 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_36;Pallet non arrivato su Tavola 9;1 	
+   E0233 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_36;Pallet non Evacuato da Tavola 9;1	 	
+   E0234 : BOOL ;	//=RCA_1++ST001+PCV03-SQU37;Sollevatore non Alta Tavola 9;1 	
+   E0235 : BOOL ;	//=RCA_1++ST001+PCV03-SQD38;Sollevatore non Basso Tavola 9;1	 	
+   E0236 : BOOL ;	//=RCA_1++ST001+PCV03-TAV09;SQU37-SQD38 Sollevatore Parita' Alto/Basso Tavola 9;1
+   E0237 : BOOL ;	//=RCA_1++ST001+PCV03-SQB42;Rotazione non a Riposo Tavola 9;1
+   E0238 : BOOL ;	//=RCA_1++ST001+PCV03-SQA41;Rotazione non a Lavoro Tavola 9;1	 	
+   E0239 : BOOL ;	//=RCA_1++ST001+PCV03-TAV01;SQA42-SQB41 Parita' Rotazione Tavola 9;1	 	
+   E0240 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_45;Anom.Sensore Verifica Pallet Da Ruotare Tavola 9;1	 	
+   E0241 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_46;Anom.Sensore Verifica Pallet Ruotato Tavola 9;1	 	
+   E0242 : BOOL ;	
+   E0243 : BOOL ;	
+   E0244 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_51;Pallet non arrivato su Tavola 10;1	 	
+   E0245 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_51;Pallet non Evacuato da Tavola 10;1	 	
+   E0246 : BOOL ;	//=RCA_1++ST001+PCV02-SQU53;Sollevatore non Alta Tavola 10;1	 	
+   E0247 : BOOL ;	//=RCA_1++ST001+PCV02-SQD54;Sollevatore non Basso Tavola 10;1	 	
+   E0248 : BOOL ;	//=RCA_1++ST001+PCV02-TAV10;SQU53-SQD54 Sollevat Parita' Alto/Basso Tavola 10;1
+   E0249 : BOOL ;	//=RCA_1++ST001+PCV02-SQB58;Rotazione non a Riposo Tavola 10;1
+   E0250 : BOOL ;	//=RCA_1++ST001+PCV02-SQA57;Rotazione non a Lavoro Tavola 10;1	 	
+   E0251 : BOOL ;	//=RCA_1++ST001+PCV02-TAV10;SQA58-SQB57 Parita' Rotazione Tavola 10;1	 	
+   E0252 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_59;Anom.Sensore Verifica Pallet Da Ruotare Tavola 10;1	 
+   E0253 : BOOL ;	//=RCA_1++ST001+PCV02-SQ_60;Anom.Sensore Verifica Pallet Ruotato Tavola 10;1
+   E0254 : BOOL ;	
+   E0255 : BOOL ;	
+   E0256 : BOOL ;	
+   E0257 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_04;Pallet non arrivato su Tavola 1;1	 	
+   E0258 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_04;Pallet non Evacuato da Tavola 1;1	 	
+   E0259 : BOOL ;	//=RCA_1++ST001+PCV03-SQU05;Sollevatore non Alta Tavola 1;1	 	
+   E0260 : BOOL ;	//=RCA_1++ST001+PCV03-SQD06;Sollevatore non Basso Tavola 1;1	 	
+   E0261 : BOOL ;	//=RCA_1++ST001+PCV03-TAV01;SQU05-SQD06 Sollevatore Parita' Alto/Basso Tavola 1;1
+   E0262 : BOOL ;	//=RCA_1++ST001+PCV03-SQB10;Rotazione non a Riposo Tavola 1;1
+   E0263 : BOOL ;	//=RCA_1++ST001+PCV03-SQA09;Rotazione non a Lavoro Tavola 1;1	 	
+   E0264 : BOOL ;	//=RCA_1++ST001+PCV03-TAV01;SQA09-SQB10 Parita' Rotazione Tavola 1;1	 	
+   E0265 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_11;Anom.Sensore Verifica Pallet Da Ruotare Tavola 1;1	 	
+   E0266 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_12;Anom.Sensore Verifica Pallet Ruotato Tavola 1;1	 	
+   E0267 : BOOL ;	
+   E0268 : BOOL ;	
+   E0269 : BOOL ;	
+   E0270 : BOOL ;	
+   E0271 : BOOL ;	
+   E0272 : BOOL ;	
+   E0273 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_19;Pallet non arrivato su Tavola 2;1	 	
+   E0274 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_19;Pallet non Evacuato da Tavola 2;1	 	
+   E0275 : BOOL ;	//=RCA_1++ST001+PCV03-SQU21;Sollevatore non Alta Tavola 2;1	 	
+   E0276 : BOOL ;	//=RCA_1++ST001+PCV03-SQD22;Sollevatore non Basso Tavola 2;1	 	
+   E0277 : BOOL ;	//=RCA_1++ST001+PCV03-TAV02;SQU21-SQD22 Sollevatore Parita' Alto/Basso Tavola 2;1
+   E0278 : BOOL ;	//=RCA_1++ST001+PCV03-TAV02;SQB26-SQ_27 Rotazione non a Riposo Tavola 2;1
+   E0279 : BOOL ;	//=RCA_1++ST001+PCV03-TAV02;SQA25-SQ_27 Rotazione non a Lavoro Tavola 2;1   
+   E0280 : BOOL ;	//=RCA_1++ST001+PCV03-TAV02;SQA25-SQB26 Parita' Rotazione Tavola 2;1	 	
+   E0281 : BOOL ;	//=RCA_1++ST001+PCV03;SQ_29-31 Anom.Sensore Verifica Pallet Da Ruotare Tavola 2;1
+   E0282 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_30;Anom.Sensore Verifica Pallet Ruotato Tavola 2;1	 	
+   E0283 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_28;Otturatore Tavola non Disinserito;1  
+   E0284 : BOOL ;	//=RCA_1++ST001+PCV03-SQ_28;Otturatore Tavola non Inserito;1 
+   E0285 : BOOL ;	
+   E0286 : BOOL ;	
+   E0287 : BOOL ;	
+   E0288 : BOOL ;	
+   E0289 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_04;Pallet non arrivato su Tavola 3;1	 	
+   E0290 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_04;Pallet non Evacuato da Tavola 3;1	 	
+   E0291 : BOOL ;	//=RCA_1++ST001+PCV04-SQU05;Sollevatore non Alta Tavola 3;1	 	
+   E0292 : BOOL ;	//=RCA_1++ST001+PCV04-SQD06;Sollevatore non Basso Tavola 3;1	 	
+   E0293 : BOOL ;	//=RCA_1++ST001+PCV04-TAV03;SQU05-SQD06 Sollevatore Parita' Alto/Basso Tavola 3;1
+   E0294 : BOOL ;	//=RCA_1++ST001+PCV04-SQB10;Rotazione non a Riposo Tavola 3;1
+   E0295 : BOOL ;	//=RCA_1++ST001+PCV04-SQA09;Rotazione non a Lavoro Tavola 3;1	 	
+   E0296 : BOOL ;	//=RCA_1++ST001+PCV04-TAV03;SQA09-SQB10 Parita' Rotazione Tavola 3;1	 	
+   E0297 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_13;Anom.Sensore Verifica Pallet Da Ruotare Tavola 3;1	 	
+   E0298 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_14;Anom.Sensore Verifica Pallet Ruotato Tavola 3;1	 	
+   E0299 : BOOL ;	
+   E0300 : BOOL ;	
+   E0301 : BOOL ;	
+   E0302 : BOOL ;	
+   E0303 : BOOL ;	
+   E0304 : BOOL ;	
+   E0305 : BOOL ;	//=RCA_1++ST001+PCV01-DME01;Allarme Comunicazione Profinet FESTO (70);1	 	
+   E0306 : BOOL ;	//=RCA_1++ST001+PCV02-DME01;Allarme Comunicazione Profinet FESTO (71);1	 	
+   E0307 : BOOL ;	//=RCA_1++ST001+PCV03-DME01;Allarme Comunicazione Profinet FESTO (72);1	 	
+   E0308 : BOOL ;	//=RCA_1++ST001+PCV04-DME01;Allarme Comunicazione Profinet FESTO (73);1	 	
+   E0309 : BOOL ;	//=RCA_1++ST001+PCV05-DME01;Allarme Comunicazione Profinet FESTO (74);1	 	
+   E0310 : BOOL ;	//=RCA_1++ST001+PCV06-DME01;Allarme Comunicazione Profinet FESTO (75);1	 	
+   E0311 : BOOL ;	
+   E0312 : BOOL ;	
+   E0313 : BOOL ;	//=RCA_1++ST001+PCV01-SOL01;SQU05 Sollevatore Quota Ingr non Alto Svincolo 1;1
+   E0314 : BOOL ;	//=RCA_1++ST001+PCV01-SOL01;SQD06 Sollevatore Quota Ingr non Basso Svincolo 1;1
+   E0315 : BOOL ;	//=RCA_1++ST001+PCV01-SOL01;SQU05-SQD06 Sollevatore Quota Ingr. Svincolo 1;1
+   E0316 : BOOL ;	//=RCA_1++ST001+PCV01-ROT01;SQ_10 Tavola Girevole non a 90° Svincolo 1;1
+   E0317 : BOOL ;	//=RCA_1++ST001+PCV01-ROT01;SQ_11 Tavola Girevole non a 0° Svincolo 1;1
+   E0318 : BOOL ;	//=RCA_1++ST001+PCV01-ROT01;SQ_10-SQ_11 Tavola Girevole Svincolo 1 Parità;1
+   E0319 : BOOL ;	//=RCA_1++ST001+PCV01-ROT01;SQ_09 Tavola Girevole non Fasata Svincolo 1;1
+   E0320 : BOOL ;	//=RCA_1++ST001+PCV01-SNG01;SQU12 Sing Svincolo 1 non alto;1
+   E0321 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_20;Pallet non arrivato su Tavola 4;1	 	
+   E0322 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_20;Pallet non Evacuato da Tavola 4;1	 	
+   E0323 : BOOL ;	//=RCA_1++ST001+PCV04-SQU21;Sollevatore non Alta Tavola 4;1	 	
+   E0324 : BOOL ;	//=RCA_1++ST001+PCV04-SQD22;Sollevatore non Basso Tavola 4;1	 	
+   E0325 : BOOL ;	//=RCA_1++ST001+PCV04-TAV04;SQU21-SQD22 Sollevatore Parita' Alto/Basso Tavola 4;1
+   E0326 : BOOL ;	//=RCA_1++ST001+PCV04-SQB26;Rotazione non a Riposo Tavola 4;1
+   E0327 : BOOL ;	//=RCA_1++ST001+PCV04-SQA25;Rotazione non a Lavoro Tavola 4;1	 	
+   E0328 : BOOL ;	//=RCA_1++ST001+PCV04-TAV04;SQA25-SQB26 Parita' Rotazione Tavola 4;1	 	
+   E0329 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_27;Anom.Sensore Verifica Pallet Da Ruotare Tavola 4;1	 	
+   E0330 : BOOL ;	//=RCA_1++ST001+PCV04-SQ_28;Anom.Sensore Verifica Pallet Ruotato Tavola 4;1	 	
+   E0331 : BOOL ;	
+   E0332 : BOOL ;	
+   E0333 : BOOL ;	
+   E0334 : BOOL ;	
+   E0335 : BOOL ;	
+   E0336 : BOOL ;	
+   E0337 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_04;Pallet non arrivato su Tavola 5;1	 	
+   E0338 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_04;Pallet non Evacuato da Tavola 5;1	 	
+   E0339 : BOOL ;	//=RCA_1++ST001+PCV05-SQU05;Sollevatore non Alta Tavola 5;1	 	
+   E0340 : BOOL ;	//=RCA_1++ST001+PCV05-SQD05;Sollevatore non Basso Tavola 5;1	 	
+   E0341 : BOOL ;	//=RCA_1++ST001+PCV05-TAV05;SQU05-SQD06 Sollevatore Parita' Alto/Basso Tavola 5;1
+   E0342 : BOOL ;	//=RCA_1++ST001+PCV05-SQB10;Rotazione non a Riposo Tavola 5;1
+   E0343 : BOOL ;	//=RCA_1++ST001+PCV05-SQA09;Rotazione non a Lavoro Tavola 5;1	 	
+   E0344 : BOOL ;	//=RCA_1++ST001+PCV05-TAV05;SQA09-SQB10 Parita' Rotazione Tavola 5;1	 	
+   E0345 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_13;Anom.Sensore Verifica Pallet Da Ruotare Tavola 5;1	 	
+   E0346 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_14;Anom.Sensore Verifica Pallet Ruotato Tavola 5;1	 	
+   E0347 : BOOL ;	
+   E0348 : BOOL ;	
+   E0349 : BOOL ;	
+   E0350 : BOOL ;	
+   E0351 : BOOL ;	
+   E0352 : BOOL ;	
+   E0353 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_20;Pallet non arrivato su Tavola 6;1	 	
+   E0354 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_20;Pallet non Evacuato da Tavola 6;1	 	
+   E0355 : BOOL ;	//=RCA_1++ST001+PCV05-SQU21;Sollevatore non Alta Tavola 6;1	 	
+   E0356 : BOOL ;	//=RCA_1++ST001+PCV05-SQD22;Sollevatore non Basso Tavola 6;1	 	
+   E0357 : BOOL ;	//=RCA_1++ST001+PCV05-TAV06;SQU21-SQD22 Sollevatore Parita' Alto/Basso Tavola 6;1
+   E0358 : BOOL ;	//=RCA_1++ST001+PCV05-SQB26;Rotazione non a Riposo Tavola 6;1
+   E0359 : BOOL ;	//=RCA_1++ST001+PCV05-SQA25;Rotazione non a Lavoro Tavola 6;1	 	
+   E0360 : BOOL ;	//=RCA_1++ST001+PCV05-TAV06;SQA25-SQB26 Parita' Rotazione Tavola 6;1	 	
+   E0361 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_27;Anom.Sensore Verifica Pallet Da Ruotare Tavola 6;1	 	
+   E0362 : BOOL ;	//=RCA_1++ST001+PCV05-SQ_28;Anom.Sensore Verifica Pallet Ruotato Tavola 6;1	 	
+   E0363 : BOOL ;	
+   E0364 : BOOL ;	
+   E0365 : BOOL ;	
+   E0366 : BOOL ;	
+   E0367 : BOOL ;	
+   E0368 : BOOL ;	
+   E0369 : BOOL ;	//=RCA_1++ST001+PCV01-SV_02;SQ_07 Pallet non arrivato su Svincolo 2;1
+   E0370 : BOOL ;	//=RCA_1++ST001+PCV01-SV_02;Pallet non Evacuato da Svincolo 2;1
+   E0371 : BOOL ;	//=RCA_1++ST001+PCV01-SOL04;SQU03 Sollevatore Quota Rotaz. non Alto Svincolo 2;1
+   E0372 : BOOL ;	//=RCA_1++ST001+PCV01-SOL04;SQD04 Sollevatore Quota Rotaz. non Basso Svincolo 2;1
+   E0373 : BOOL ;	//=RCA_1++ST001+PCV01-SOL04;SQU03-SQD04 Sollevatore Quota Rotaz Svincolo 2;1
+   E0374 : BOOL ;	//=RCA_1++ST001+PCV01-SOL03;SQU05 Sollevatore Quota Uscita non Alto Svincolo 2;1
+   E0375 : BOOL ;	//=RCA_1++ST001+PCV01-SOL03;SQD06 Sollevatore Quota Uscita non Basso Svincolo 2;1
+   E0376 : BOOL ;	//=RCA_1++ST001+PCV01-SOL03;SQU05-SQD06 Sollevatore Quota Usc Svincolo 2 Parità;1
+   E0377 : BOOL ;	//=RCA_1++ST001+PCV01-ROT02;SQ_10 Tavola Girevole non a 90° Svincolo 2;1
+   E0378 : BOOL ;	//=RCA_1++ST001+PCV01-ROT02;SQ_11 Tavola Girevole non a 0° Svincolo 2;1
+   E0379 : BOOL ;	//=RCA_1++ST001+PCV01-ROT02;SQ_10-SQ_11 Tavola Girevole Svincolo 2 Parità;1
+   E0380 : BOOL ;	//=RCA_1++ST001+PCV01-ROT02;SQ_09 Tavola Girevole non Fasata Svincolo 2;1
+   E0381 : BOOL ;	//=RCA_1++ST001+PCV01-SNG02;SQU12 Sing Svincolo 2 non alto;1
+   E0382 : BOOL ;	//=RCA_1++ST001+PCV01-SNG02;SQU12 Sing Svincolo non presenza;1
+   E0383 : BOOL ;	
+   E0384 : BOOL ;	
+   E0385 : BOOL ;	//=RCA_1++ST001+PCV06-SQ_07;Pallet non arrivato su SVINCOLO 5;1	 	
+   E0386 : BOOL ;	//=RCA_1++ST001+PCV06-SQ_07;Pallet non Evacuato da SVINCOLO 5;1	 	
+   E0387 : BOOL ;	//=RCA_1++ST001+PCV06-SQU05;Sollevatore SVINCOLO 5 non Alto;1	 	
+   E0388 : BOOL ;	//=RCA_1++ST001+PCV06-SQD06;Sollevatore SVINCOLO 5 non Basso;1	 	
+   E0389 : BOOL ;	//=RCA_1++ST001+PCV06-SV_05;SQU05-SQD06 Sollevatore SVINCOLO 5 Parita';1	 	
+   E0390 : BOOL ;	//=RCA_1++ST001;ST210+PTZ01-DI_04:5 - Esclusao do transporte habilitado;58
+   E0391 : BOOL ;	//=RCA_1++ST001;ST230+PTZ01-DI_04:6 - Esclusao do transporte habilitado;58
+   E0392 : BOOL ;	
+   E0393 : BOOL ;	
+   E0394 : BOOL ;	
+   E0395 : BOOL ;	
+   E0396 : BOOL ;	
+   E0397 : BOOL ;	
+   E0398 : BOOL ;	
+   E0399 : BOOL ;	
+   E0400 : BOOL ;	
+   E0401 : BOOL ;	//=RCA_1++ST001+PCV06-SQ_15;Pallet non arrivato su SVINCOLO 6;1	 	
+   E0402 : BOOL ;	//=RCA_1++ST001+PCV06-SQ_15;Pallet non Evacuato da SVINCOLO 6;1	 	
+   E0403 : BOOL ;	//=RCA_1++ST001+PCV06-SQU13;Sollevatore SVINCOLO 6 non Alto;1	 	
+   E0404 : BOOL ;	//=RCA_1++ST001+PCV06-SQD14;Sollevatore SVINCOLO 6 non Basso;1	 	
+   E0405 : BOOL ;	//=RCA_1++ST001+PCV06-SV_05;SQU13-SQD14 Sollevatore SVINCOLO 6 Parita';1	 	
+   E0406 : BOOL ;	
+   E0407 : BOOL ;	
+   E0408 : BOOL ;	
+   E0409 : BOOL ;	//=RCA_1++ST001+PCV01-SQ_36;Pallet non arrivato su Tavola 8;1	 	
+   E0410 : BOOL ;	//=RCA_1++ST001+PCV01-SQ_36;Pallet non Evacuato da Tavola 8;1	 	
+   E0411 : BOOL ;	//=RCA_1++ST001+PCV01-SQU37;Sollevatore non Alta Tavola 8;1	 	
+   E0412 : BOOL ;	//=RCA_1++ST001+PCV01-SQD38;Sollevatore non Basso Tavola 8;1	 	
+   E0413 : BOOL ;	//=RCA_1++ST001+PCV01-TAV08;SQU37-SQD38 Sollevatore Parita' Alto/Basso Tavola 8;1
+   E0414 : BOOL ;	//=RCA_1++ST001+PCV01-SQB39;Rotazione non a Riposo Tavola 8;1
+   E0415 : BOOL ;	//=RCA_1++ST001+PCV01-SQA40;Rotazione non a Lavoro Tavola 8;1	 	
+   E0416 : BOOL ;	//=RCA_1++ST001+PCV01-TAV08;SQA39-SQB40 Parita' Rotazione Tavola 8;1	 	
+   E0417 : BOOL ;	//=RCA_1++ST001+PCV01-SQ_41;Anom.Sensore Verifica Pallet Da Ruotare Tavola 8;1	 	
+   E0418 : BOOL ;	//=RCA_1++ST001+PCV01-SQ_42;Anom.Sensore Verifica Pallet Ruotato Tavola 8;1	 	
+   E0419 : BOOL ;	
+   E0420 : BOOL ;	
+   E0421 : BOOL ;	
+   E0422 : BOOL ;	
+   E0423 : BOOL ;	
+   E0424 : BOOL ;	
+   E0425 : BOOL ;	
+   E0426 : BOOL ;	
+   E0427 : BOOL ;	
+   E0428 : BOOL ;	
+   E0429 : BOOL ;	
+   E0430 : BOOL ;	
+   E0431 : BOOL ;	
+   E0432 : BOOL ;	
+   E0433 : BOOL ;	
+   E0434 : BOOL ;	
+   E0435 : BOOL ;	
+   E0436 : BOOL ;	
+   E0437 : BOOL ;	
+   E0438 : BOOL ;	
+   E0439 : BOOL ;	
+   E0440 : BOOL ;	
+   E0441 : BOOL ;	
+   E0442 : BOOL ;	
+   E0443 : BOOL ;	
+   E0444 : BOOL ;	
+   E0445 : BOOL ;	
+   E0446 : BOOL ;	
+   E0447 : BOOL ;	
+   E0448 : BOOL ;	
+   E0449 : BOOL ;	
+   E0450 : BOOL ;	
+   E0451 : BOOL ;	
+   E0452 : BOOL ;	
+   E0453 : BOOL ;	
+   E0454 : BOOL ;	
+   E0455 : BOOL ;	
+   E0456 : BOOL ;	
+   E0457 : BOOL ;	
+   E0458 : BOOL ;	
+   E0459 : BOOL ;	
+   E0460 : BOOL ;	
+   E0461 : BOOL ;	
+   E0462 : BOOL ;	
+   E0463 : BOOL ;	
+   E0464 : BOOL ;	
+   E0465 : BOOL ;	
+   E0466 : BOOL ;	
+   E0467 : BOOL ;	
+   E0468 : BOOL ;	
+   E0469 : BOOL ;	
+   E0470 : BOOL ;	
+   E0471 : BOOL ;	
+   E0472 : BOOL ;	
+   E0473 : BOOL ;	
+   E0474 : BOOL ;	
+   E0475 : BOOL ;	
+   E0476 : BOOL ;	
+   E0477 : BOOL ;	
+   E0478 : BOOL ;	
+   E0479 : BOOL ;	
+   E0480 : BOOL ;	
+   E0481 : BOOL ;	
+   E0482 : BOOL ;	
+   E0483 : BOOL ;	
+   E0484 : BOOL ;	
+   E0485 : BOOL ;	
+   E0486 : BOOL ;	
+   E0487 : BOOL ;	
+   E0488 : BOOL ;	
+   E0489 : BOOL ;	
+   E0490 : BOOL ;	
+   E0491 : BOOL ;	
+   E0492 : BOOL ;	
+   E0493 : BOOL ;	
+   E0494 : BOOL ;	
+   E0495 : BOOL ;	
+   E0496 : BOOL ;	
+   E0497 : BOOL ;	
+   E0498 : BOOL ;	
+   E0499 : BOOL ;	
+   E0500 : BOOL ;	
+   E0501 : BOOL ;	
+   E0502 : BOOL ;	
+   E0503 : BOOL ;	
+   E0504 : BOOL ;	
+   E0505 : BOOL ;	
+   E0506 : BOOL ;	
+   E0507 : BOOL ;	
+   E0508 : BOOL ;	
+   E0509 : BOOL ;	
+   E0510 : BOOL ;	
+   E0511 : BOOL ;	
+   E0512 : BOOL ;	
+  END_STRUCT ;	
+BEGIN
+   CM_ID := '=RCA'; 
+   STATION_ID := '++ST001'; 
+   ELEMENT_ID := ''; 
+   DB_ID := 2; 
+   PART_STYLE := ''; 
+   ACT_CYCLE_TIME := 0; 
+   COUNT_GOOD := 0; 
+   COUNT_SCRAP := 0; 
+   SPARE_00[0] := 0; 
+   SPARE_00[1] := 0; 
+   SPARE_00[2] := 0; 
+   SPARE_00[3] := 0; 
+   SPARE_00[4] := 0; 
+   SPARE_00[5] := 0; 
+   SPARE_00[6] := 0; 
+   SPARE_00[7] := 0; 
+   SPARE_00[8] := 0; 
+   SPARE_00[9] := 0; 
+   SPARE_00[10] := 0; 
+   SPARE_00[11] := 0; 
+   SPARE_00[12] := 0; 
+   SPARE_00[13] := 0; 
+   SPARE_00[14] := 0; 
+   SPARE_00[15] := 0; 
+   SPARE_01[0] := 0; 
+   SPARE_01[1] := 0; 
+   SPARE_01[2] := 0; 
+   SPARE_01[3] := 0; 
+   SPARE_01[4] := 0; 
+   SPARE_01[5] := 0; 
+   SPARE_01[6] := 0; 
+   SPARE_01[7] := 0; 
+   SPARE_01[8] := 0; 
+   SPARE_01[9] := 0; 
+   SPARE_01[10] := 0; 
+   SPARE_01[11] := 0; 
+   SPARE_01[12] := 0; 
+   SPARE_01[13] := 0; 
+   SPARE_01[14] := 0; 
+   SPARE_01[15] := 0; 
+   SPARE_01[16] := 0; 
+   SPARE_01[17] := 0; 
+   CODE_EVENT[0] := 0; 
+   CODE_EVENT[1] := 0; 
+   CODE_EVENT[2] := 0; 
+   CODE_EVENT[3] := 0; 
+   CODE_EVENT[4] := 0; 
+   CODE_EVENT[5] := 0; 
+   CODE_EVENT[6] := 0; 
+   CODE_EVENT[7] := 0; 
+   E0001 := FALSE; 
+   E0002 := FALSE; 
+   E0003 := FALSE; 
+   E0004 := FALSE; 
+   E0005 := FALSE; 
+   E0006 := FALSE; 
+   E0007 := FALSE; 
+   E0008 := FALSE; 
+   E0009 := FALSE; 
+   E0010 := FALSE; 
+   E0011 := FALSE; 
+   E0012 := FALSE; 
+   E0013 := FALSE; 
+   E0014 := FALSE; 
+   E0015 := FALSE; 
+   E0016 := FALSE; 
+   E0017 := FALSE; 
+   E0018 := FALSE; 
+   E0019 := FALSE; 
+   E0020 := FALSE; 
+   E0021 := FALSE; 
+   E0022 := FALSE; 
+   E0023 := FALSE; 
+   E0024 := FALSE; 
+   E0025 := FALSE; 
+   E0026 := FALSE; 
+   E0027 := FALSE; 
+   E0028 := FALSE; 
+   E0029 := FALSE; 
+   E0030 := FALSE; 
+   E0031 := FALSE; 
+   E0032 := FALSE; 
+   E0033 := FALSE; 
+   E0034 := FALSE; 
+   E0035 := FALSE; 
+   E0036 := FALSE; 
+   E0037 := FALSE; 
+   E0038 := FALSE; 
+   E0039 := FALSE; 
+   E0040 := FALSE; 
+   E0041 := FALSE; 
+   E0042 := FALSE; 
+   E0043 := FALSE; 
+   E0044 := FALSE; 
+   E0045 := FALSE; 
+   E0046 := FALSE; 
+   E0047 := FALSE; 
+   E0048 := FALSE; 
+   E0049 := FALSE; 
+   E0050 := FALSE; 
+   E0051 := FALSE; 
+   E0052 := FALSE; 
+   E0053 := FALSE; 
+   E0054 := FALSE; 
+   E0055 := FALSE; 
+   E0056 := FALSE; 
+   E0057 := FALSE; 
+   E0058 := FALSE; 
+   E0059 := FALSE; 
+   E0060 := FALSE; 
+   E0061 := FALSE; 
+   E0062 := FALSE; 
+   E0063 := FALSE; 
+   E0064 := FALSE; 
+   E0065 := FALSE; 
+   E0066 := FALSE; 
+   E0067 := FALSE; 
+   E0068 := FALSE; 
+   E0069 := FALSE; 
+   E0070 := FALSE; 
+   E0071 := FALSE; 
+   E0072 := FALSE; 
+   E0073 := FALSE; 
+   E0074 := FALSE; 
+   E0075 := FALSE; 
+   E0076 := FALSE; 
+   E0077 := FALSE; 
+   E0078 := FALSE; 
+   E0079 := FALSE; 
+   E0080 := FALSE; 
+   E0081 := FALSE; 
+   E0082 := FALSE; 
+   E0083 := FALSE; 
+   E0084 := FALSE; 
+   E0085 := FALSE; 
+   E0086 := FALSE; 
+   E0087 := FALSE; 
+   E0088 := FALSE; 
+   E0089 := FALSE; 
+   E0090 := FALSE; 
+   E0091 := FALSE; 
+   E0092 := FALSE; 
+   E0093 := FALSE; 
+   E0094 := FALSE; 
+   E0095 := FALSE; 
+   E0096 := FALSE; 
+   E0097 := FALSE; 
+   E0098 := FALSE; 
+   E0099 := FALSE; 
+   E0100 := FALSE; 
+   E0101 := FALSE; 
+   E0102 := FALSE; 
+   E0103 := FALSE; 
+   E0104 := FALSE; 
+   E0105 := FALSE; 
+   E0106 := FALSE; 
+   E0107 := FALSE; 
+   E0108 := FALSE; 
+   E0109 := FALSE; 
+   E0110 := FALSE; 
+   E0111 := FALSE; 
+   E0112 := FALSE; 
+   E0113 := FALSE; 
+   E0114 := FALSE; 
+   E0115 := FALSE; 
+   E0116 := FALSE; 
+   E0117 := FALSE; 
+   E0118 := FALSE; 
+   E0119 := FALSE; 
+   E0120 := FALSE; 
+   E0121 := FALSE; 
+   E0122 := FALSE; 
+   E0123 := FALSE; 
+   E0124 := FALSE; 
+   E0125 := FALSE; 
+   E0126 := FALSE; 
+   E0127 := FALSE; 
+   E0128 := FALSE; 
+   E0129 := FALSE; 
+   E0130 := FALSE; 
+   E0131 := FALSE; 
+   E0132 := FALSE; 
+   E0133 := FALSE; 
+   E0134 := FALSE; 
+   E0135 := FALSE; 
+   E0136 := FALSE; 
+   E0137 := FALSE; 
+   E0138 := FALSE; 
+   E0139 := FALSE; 
+   E0140 := FALSE; 
+   E0141 := FALSE; 
+   E0142 := FALSE; 
+   E0143 := FALSE; 
+   E0144 := FALSE; 
+   E0145 := FALSE; 
+   E0146 := FALSE; 
+   E0147 := FALSE; 
+   E0148 := FALSE; 
+   E0149 := FALSE; 
+   E0150 := FALSE; 
+   E0151 := FALSE; 
+   E0152 := FALSE; 
+   E0153 := FALSE; 
+   E0154 := FALSE; 
+   E0155 := FALSE; 
+   E0156 := FALSE; 
+   E0157 := FALSE; 
+   E0158 := FALSE; 
+   E0159 := FALSE; 
+   E0160 := FALSE; 
+   E0161 := FALSE; 
+   E0162 := FALSE; 
+   E0163 := FALSE; 
+   E0164 := FALSE; 
+   E0165 := FALSE; 
+   E0166 := FALSE; 
+   E0167 := FALSE; 
+   E0168 := FALSE; 
+   E0169 := FALSE; 
+   E0170 := FALSE; 
+   E0171 := FALSE; 
+   E0172 := FALSE; 
+   E0173 := FALSE; 
+   E0174 := FALSE; 
+   E0175 := FALSE; 
+   E0176 := FALSE; 
+   E0177 := FALSE; 
+   E0178 := FALSE; 
+   E0179 := FALSE; 
+   E0180 := FALSE; 
+   E0181 := FALSE; 
+   E0182 := FALSE; 
+   E0183 := FALSE; 
+   E0184 := FALSE; 
+   E0185 := FALSE; 
+   E0186 := FALSE; 
+   E0187 := FALSE; 
+   E0188 := FALSE; 
+   E0189 := FALSE; 
+   E0190 := FALSE; 
+   E0191 := FALSE; 
+   E0192 := FALSE; 
+   E0193 := FALSE; 
+   E0194 := FALSE; 
+   E0195 := FALSE; 
+   E0196 := FALSE; 
+   E0197 := FALSE; 
+   E0198 := FALSE; 
+   E0199 := FALSE; 
+   E0200 := FALSE; 
+   E0201 := FALSE; 
+   E0202 := FALSE; 
+   E0203 := FALSE; 
+   E0204 := FALSE; 
+   E0205 := FALSE; 
+   E0206 := FALSE; 
+   E0207 := FALSE; 
+   E0208 := FALSE; 
+   E0209 := FALSE; 
+   E0210 := FALSE; 
+   E0211 := FALSE; 
+   E0212 := FALSE; 
+   E0213 := FALSE; 
+   E0214 := FALSE; 
+   E0215 := FALSE; 
+   E0216 := FALSE; 
+   E0217 := FALSE; 
+   E0218 := FALSE; 
+   E0219 := FALSE; 
+   E0220 := FALSE; 
+   E0221 := FALSE; 
+   E0222 := FALSE; 
+   E0223 := FALSE; 
+   E0224 := FALSE; 
+   E0225 := FALSE; 
+   E0226 := FALSE; 
+   E0227 := FALSE; 
+   E0228 := FALSE; 
+   E0229 := FALSE; 
+   E0230 := FALSE; 
+   E0231 := FALSE; 
+   E0232 := FALSE; 
+   E0233 := FALSE; 
+   E0234 := FALSE; 
+   E0235 := FALSE; 
+   E0236 := FALSE; 
+   E0237 := FALSE; 
+   E0238 := FALSE; 
+   E0239 := FALSE; 
+   E0240 := FALSE; 
+   E0241 := FALSE; 
+   E0242 := FALSE; 
+   E0243 := FALSE; 
+   E0244 := FALSE; 
+   E0245 := FALSE; 
+   E0246 := FALSE; 
+   E0247 := FALSE; 
+   E0248 := FALSE; 
+   E0249 := FALSE; 
+   E0250 := FALSE; 
+   E0251 := FALSE; 
+   E0252 := FALSE; 
+   E0253 := FALSE; 
+   E0254 := FALSE; 
+   E0255 := FALSE; 
+   E0256 := FALSE; 
+   E0257 := FALSE; 
+   E0258 := FALSE; 
+   E0259 := FALSE; 
+   E0260 := FALSE; 
+   E0261 := FALSE; 
+   E0262 := FALSE; 
+   E0263 := FALSE; 
+   E0264 := FALSE; 
+   E0265 := FALSE; 
+   E0266 := FALSE; 
+   E0267 := FALSE; 
+   E0268 := FALSE; 
+   E0269 := FALSE; 
+   E0270 := FALSE; 
+   E0271 := FALSE; 
+   E0272 := FALSE; 
+   E0273 := FALSE; 
+   E0274 := FALSE; 
+   E0275 := FALSE; 
+   E0276 := FALSE; 
+   E0277 := FALSE; 
+   E0278 := FALSE; 
+   E0279 := FALSE; 
+   E0280 := FALSE; 
+   E0281 := FALSE; 
+   E0282 := FALSE; 
+   E0283 := FALSE; 
+   E0284 := FALSE; 
+   E0285 := FALSE; 
+   E0286 := FALSE; 
+   E0287 := FALSE; 
+   E0288 := FALSE; 
+   E0289 := FALSE; 
+   E0290 := FALSE; 
+   E0291 := FALSE; 
+   E0292 := FALSE; 
+   E0293 := FALSE; 
+   E0294 := FALSE; 
+   E0295 := FALSE; 
+   E0296 := FALSE; 
+   E0297 := FALSE; 
+   E0298 := FALSE; 
+   E0299 := FALSE; 
+   E0300 := FALSE; 
+   E0301 := FALSE; 
+   E0302 := FALSE; 
+   E0303 := FALSE; 
+   E0304 := FALSE; 
+   E0305 := FALSE; 
+   E0306 := FALSE; 
+   E0307 := FALSE; 
+   E0308 := FALSE; 
+   E0309 := FALSE; 
+   E0310 := FALSE; 
+   E0311 := FALSE; 
+   E0312 := FALSE; 
+   E0313 := FALSE; 
+   E0314 := FALSE; 
+   E0315 := FALSE; 
+   E0316 := FALSE; 
+   E0317 := FALSE; 
+   E0318 := FALSE; 
+   E0319 := FALSE; 
+   E0320 := FALSE; 
+   E0321 := FALSE; 
+   E0322 := FALSE; 
+   E0323 := FALSE; 
+   E0324 := FALSE; 
+   E0325 := FALSE; 
+   E0326 := FALSE; 
+   E0327 := FALSE; 
+   E0328 := FALSE; 
+   E0329 := FALSE; 
+   E0330 := FALSE; 
+   E0331 := FALSE; 
+   E0332 := FALSE; 
+   E0333 := FALSE; 
+   E0334 := FALSE; 
+   E0335 := FALSE; 
+   E0336 := FALSE; 
+   E0337 := FALSE; 
+   E0338 := FALSE; 
+   E0339 := FALSE; 
+   E0340 := FALSE; 
+   E0341 := FALSE; 
+   E0342 := FALSE; 
+   E0343 := FALSE; 
+   E0344 := FALSE; 
+   E0345 := FALSE; 
+   E0346 := FALSE; 
+   E0347 := FALSE; 
+   E0348 := FALSE; 
+   E0349 := FALSE; 
+   E0350 := FALSE; 
+   E0351 := FALSE; 
+   E0352 := FALSE; 
+   E0353 := FALSE; 
+   E0354 := FALSE; 
+   E0355 := FALSE; 
+   E0356 := FALSE; 
+   E0357 := FALSE; 
+   E0358 := FALSE; 
+   E0359 := FALSE; 
+   E0360 := FALSE; 
+   E0361 := FALSE; 
+   E0362 := FALSE; 
+   E0363 := FALSE; 
+   E0364 := FALSE; 
+   E0365 := FALSE; 
+   E0366 := FALSE; 
+   E0367 := FALSE; 
+   E0368 := FALSE; 
+   E0369 := FALSE; 
+   E0370 := FALSE; 
+   E0371 := FALSE; 
+   E0372 := FALSE; 
+   E0373 := FALSE; 
+   E0374 := FALSE; 
+   E0375 := FALSE; 
+   E0376 := FALSE; 
+   E0377 := FALSE; 
+   E0378 := FALSE; 
+   E0379 := FALSE; 
+   E0380 := FALSE; 
+   E0381 := FALSE; 
+   E0382 := FALSE; 
+   E0383 := FALSE; 
+   E0384 := FALSE; 
+   E0385 := FALSE; 
+   E0386 := FALSE; 
+   E0387 := FALSE; 
+   E0388 := FALSE; 
+   E0389 := FALSE; 
+   E0390 := FALSE; 
+   E0391 := FALSE; 
+   E0392 := FALSE; 
+   E0393 := FALSE; 
+   E0394 := FALSE; 
+   E0395 := FALSE; 
+   E0396 := FALSE; 
+   E0397 := FALSE; 
+   E0398 := FALSE; 
+   E0399 := FALSE; 
+   E0400 := FALSE; 
+   E0401 := FALSE; 
+   E0402 := FALSE; 
+   E0403 := FALSE; 
+   E0404 := FALSE; 
+   E0405 := FALSE; 
+   E0406 := FALSE; 
+   E0407 := FALSE; 
+   E0408 := FALSE; 
+   E0409 := FALSE; 
+   E0410 := FALSE; 
+   E0411 := FALSE; 
+   E0412 := FALSE; 
+   E0413 := FALSE; 
+   E0414 := FALSE; 
+   E0415 := FALSE; 
+   E0416 := FALSE; 
+   E0417 := FALSE; 
+   E0418 := FALSE; 
+   E0419 := FALSE; 
+   E0420 := FALSE; 
+   E0421 := FALSE; 
+   E0422 := FALSE; 
+   E0423 := FALSE; 
+   E0424 := FALSE; 
+   E0425 := FALSE; 
+   E0426 := FALSE; 
+   E0427 := FALSE; 
+   E0428 := FALSE; 
+   E0429 := FALSE; 
+   E0430 := FALSE; 
+   E0431 := FALSE; 
+   E0432 := FALSE; 
+   E0433 := FALSE; 
+   E0434 := FALSE; 
+   E0435 := FALSE; 
+   E0436 := FALSE; 
+   E0437 := FALSE; 
+   E0438 := FALSE; 
+   E0439 := FALSE; 
+   E0440 := FALSE; 
+   E0441 := FALSE; 
+   E0442 := FALSE; 
+   E0443 := FALSE; 
+   E0444 := FALSE; 
+   E0445 := FALSE; 
+   E0446 := FALSE; 
+   E0447 := FALSE; 
+   E0448 := FALSE; 
+   E0449 := FALSE; 
+   E0450 := FALSE; 
+   E0451 := FALSE; 
+   E0452 := FALSE; 
+   E0453 := FALSE; 
+   E0454 := FALSE; 
+   E0455 := FALSE; 
+   E0456 := FALSE; 
+   E0457 := FALSE; 
+   E0458 := FALSE; 
+   E0459 := FALSE; 
+   E0460 := FALSE; 
+   E0461 := FALSE; 
+   E0462 := FALSE; 
+   E0463 := FALSE; 
+   E0464 := FALSE; 
+   E0465 := FALSE; 
+   E0466 := FALSE; 
+   E0467 := FALSE; 
+   E0468 := FALSE; 
+   E0469 := FALSE; 
+   E0470 := FALSE; 
+   E0471 := FALSE; 
+   E0472 := FALSE; 
+   E0473 := FALSE; 
+   E0474 := FALSE; 
+   E0475 := FALSE; 
+   E0476 := FALSE; 
+   E0477 := FALSE; 
+   E0478 := FALSE; 
+   E0479 := FALSE; 
+   E0480 := FALSE; 
+   E0481 := FALSE; 
+   E0482 := FALSE; 
+   E0483 := FALSE; 
+   E0484 := FALSE; 
+   E0485 := FALSE; 
+   E0486 := FALSE; 
+   E0487 := FALSE; 
+   E0488 := FALSE; 
+   E0489 := FALSE; 
+   E0490 := FALSE; 
+   E0491 := FALSE; 
+   E0492 := FALSE; 
+   E0493 := FALSE; 
+   E0494 := FALSE; 
+   E0495 := FALSE; 
+   E0496 := FALSE; 
+   E0497 := FALSE; 
+   E0498 := FALSE; 
+   E0499 := FALSE; 
+   E0500 := FALSE; 
+   E0501 := FALSE; 
+   E0502 := FALSE; 
+   E0503 := FALSE; 
+   E0504 := FALSE; 
+   E0505 := FALSE; 
+   E0506 := FALSE; 
+   E0507 := FALSE; 
+   E0508 := FALSE; 
+   E0509 := FALSE; 
+   E0510 := FALSE; 
+   E0511 := FALSE; 
+   E0512 := FALSE; 
+END_DATA_BLOCK
+

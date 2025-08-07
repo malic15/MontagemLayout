@@ -1,0 +1,1098 @@
+DATA_BLOCK "ST060_NPL_DB_STRUCTUR"
+TITLE =
+VERSION : 0.1
+
+
+  STRUCT 	
+   CM_ID : STRING  [8 ] := '=FCA_1';	//Nome Linea
+   STATION_ID : STRING  [8 ] := '++ST060';	//Nome Stazione
+   ELEMENT_ID : STRING  [8 ];	//Nome Macchinario
+   DB_ID : INT  := 2;	//Dimensione DB 1=256 2=512 3=1024
+   PART_STYLE : STRING  [12 ];	//IDENTIFICATIVO PEZZO IN LAVORAZIONE
+   ACT_CYCLE_TIME : INT ;	//Tempo ciclo attuale
+   COUNT_GOOD : INT ;	//Pezzi OK
+   COUNT_SCRAP : INT ;	//Pezzi KO
+   SPARE_00 : ARRAY  [0 .. 15 ] OF //Accumulo
+   INT  := 0;	
+   SPARE_01 : ARRAY  [0 .. 17 ] OF //Riserve Array
+   INT ;	
+   CODE_EVENT : ARRAY  [0 .. 7 ] OF //Codice diagnostica
+   INT ;	
+   States_b136_0 : BOOL ;	//=FCA_1++ST060;Guasto  / Faulted;1
+   States_b136_1 : BOOL ;	//=FCA_1++ST060;Emergenza / Emergenzy;2
+   States_b136_2 : BOOL ;	//=FCA_1++ST060;Cambio Elettrodi / Tip Change;3
+   States_b136_3 : BOOL ;	//=FCA_1++ST060;Attrezzamento / Tool Change;4
+   States_b136_4 : BOOL ;	//=FCA_1++ST060;Congruenza e Controllo / Check And Consistency;5
+   States_b136_5 : BOOL ;	//=FCA_1++ST060;Mancato Scarico / Starved;9
+   States_b136_6 : BOOL ;	//=FCA_1++ST060;Mancato Carico LAT.AUTO / No Material;7
+   States_b136_7 : BOOL ;	//=FCA_1++ST060;Mancato Carico LAT.MANO / OverCycle;8
+   States_b137_0 : BOOL ;	//=FCA_1++ST060;Mancato Carico / Blocked;6
+   States_b137_1 : BOOL ;	//=FCA_1++ST060;Mancanza Consensi Esterni / End Of Travel;10
+   States_b137_2 : BOOL ;	//=FCA_1++ST060;Anomalia di Qualità / Quality Alert;11
+   States_b137_3 : BOOL ;	//=FCA_1++ST060;Controllo Di Qualità Pianificato / Quality Check;12
+   States_b137_4 : BOOL ;	//=FCA_1++ST060;Manutenzione Pianificata / PM Event;13
+   States_b137_5 : BOOL ;	//=FCA_1++ST060;Manutenzione Non Programmata / AM Event;14
+   States_b137_6 : BOOL ;	//=FCA_1++ST060;No Ciclo Avviato / No Cycle Started;15
+   States_b137_7 : BOOL ;	//=FCA_1++ST060;Manuale / Out Of Auto;16
+   States_b138_0 : BOOL ;	//=FCA_1++ST060;Arresto Lato Linea / Production Stop;17
+   States_b138_1 : BOOL ;	//=FCA_1++ST060;Vuoto Tecnico / Tecnical Gaps;18
+   States_b138_2 : BOOL ;	//=FCA_1++ST060;Produzione / Production;19
+   States_b138_3 : BOOL ;	
+   States_b138_4 : BOOL ;	
+   States_b138_5 : BOOL ;	
+   States_b138_6 : BOOL ;	
+   States_b138_7 : BOOL ;	
+   States_b139_0 : BOOL ;	
+   States_b139_1 : BOOL ;	
+   States_b139_2 : BOOL ;	
+   States_b139_3 : BOOL ;	
+   States_b139_4 : BOOL ;	
+   States_b139_5 : BOOL ;	
+   States_b139_6 : BOOL ;	
+   States_b139_7 : BOOL ;	
+   States_b140_0 : BOOL ;	//DB3327.DBX140.0=FCA_1++ST060+PTZ01-DME01;Falha Modulo ProfSafe FDI;2
+   States_b140_1 : BOOL ;	
+   States_b140_2 : BOOL ;	
+   States_b140_3 : BOOL ;	
+   States_b140_4 : BOOL ;	
+   States_b140_5 : BOOL ;	
+   States_b140_6 : BOOL ;	
+   States_b140_7 : BOOL ;	
+   States_b141_0 : BOOL ;	
+   States_b141_1 : BOOL ;	
+   States_b141_2 : BOOL ;	
+   States_b141_3 : BOOL ;	
+   States_b141_4 : BOOL ;	
+   States_b141_5 : BOOL ;	
+   States_b141_6 : BOOL ;	
+   States_b141_7 : BOOL ;	
+   States_b142_0 : BOOL ;	
+   States_b142_1 : BOOL ;	
+   States_b142_2 : BOOL ;	//=FCA_1++ST060;Attesa Manutenzione / Maintenance Assistance;51
+   States_b142_3 : BOOL ;	//=FCA_1++ST060;Materiale Sotto Soglia / Low Material;52
+   States_b142_4 : BOOL ;	//=FCA_1++ST060;Chiamata Team Leader / team leader Alert;53
+   States_b142_5 : BOOL ;	//=FCA_1++ST060;ByPass / ByPass;54
+   States_b142_6 : BOOL ;	//=FCA_1++ST060;Degradato / Degraded;55
+   States_b142_7 : BOOL ;	//=FCA_1++ST060;Time-Out / Time-Out;56
+   States_b143_0 : BOOL ;	//=FCA_1++ST060;Line PC Scollegato / System Down;57
+   States_b143_1 : BOOL ;	//=FCA_1++ST060;messaggio Guida / Alarm;58
+   States_b143_2 : BOOL ;	
+   States_b143_3 : BOOL ;	
+   States_b143_4 : BOOL ;	
+   States_b143_5 : BOOL ;	
+   States_b143_6 : BOOL ;	
+   States_b143_7 : BOOL ;	
+   Alm_Liv_1_b144_0 : BOOL ;	// 
+   Alm_Liv_1_b144_1 : BOOL ;	// 
+   Alm_Liv_1_b144_2 : BOOL ;	// 
+   Alm_Liv_1_b144_3 : BOOL ;	// 
+   Alm_Liv_1_b144_4 : BOOL ;	// 
+   Alm_Liv_1_b144_5 : BOOL ;	// 
+   Alm_Liv_1_b144_6 : BOOL ;	// 
+   Alm_Liv_1_b144_7 : BOOL ;	// 
+   Alm_Liv_1_b145_0 : BOOL ;	// 
+   Alm_Liv_1_b145_1 : BOOL ;	// 
+   Alm_Liv_1_b145_2 : BOOL ;	// 
+   Alm_Liv_1_b145_3 : BOOL ;	// 
+   Alm_Liv_1_b145_4 : BOOL ;	// 
+   Alm_Liv_1_b145_5 : BOOL ;	// 
+   Alm_Liv_1_b145_6 : BOOL ;	// 
+   Alm_Liv_1_b145_7 : BOOL ;	// 
+   Alm_Liv_1_b146_0 : BOOL ;	// 
+   Alm_Liv_1_b146_1 : BOOL ;	// 
+   Alm_Liv_1_b146_2 : BOOL ;	// 
+   Alm_Liv_1_b146_3 : BOOL ;	// 
+   Alm_Liv_1_b146_4 : BOOL ;	// 
+   Alm_Liv_1_b146_5 : BOOL ;	// 
+   Alm_Liv_1_b146_6 : BOOL ;	// 
+   Alm_Liv_1_b146_7 : BOOL ;	// 
+   Alm_Liv_1_b147_0 : BOOL ;	// 
+   Alm_Liv_1_b147_1 : BOOL ;	// 
+   Alm_Liv_1_b147_2 : BOOL ;	// 
+   Alm_Liv_1_b147_3 : BOOL ;	// 
+   Alm_Liv_1_b147_4 : BOOL ;	// 
+   Alm_Liv_1_b147_5 : BOOL ;	// 
+   Alm_Liv_1_b147_6 : BOOL ;	// 
+   Alm_Liv_1_b147_7 : BOOL ;	// 
+   Alm_Liv_1_b148_0 : BOOL ;	// 
+   Alm_Liv_1_b148_1 : BOOL ;	// 
+   Alm_Liv_1_b148_2 : BOOL ;	// 
+   Alm_Liv_1_b148_3 : BOOL ;	// 
+   Alm_Liv_1_b148_4 : BOOL ;	// 
+   Alm_Liv_1_b148_5 : BOOL ;	// 
+   Alm_Liv_1_b148_6 : BOOL ;	// 
+   Alm_Liv_1_b148_7 : BOOL ;	// 
+   Alm_Liv_1_b149_0 : BOOL ;	// 
+   Alm_Liv_1_b149_1 : BOOL ;	// 
+   Alm_Liv_1_b149_2 : BOOL ;	// 
+   Alm_Liv_1_b149_3 : BOOL ;	// 
+   Alm_Liv_1_b149_4 : BOOL ;	// 
+   Alm_Liv_1_b149_5 : BOOL ;	// 
+   Alm_Liv_1_b149_6 : BOOL ;	// 
+   Alm_Liv_1_b149_7 : BOOL ;	// 
+   Alm_Liv_1_b150_0 : BOOL ;	// 
+   Alm_Liv_1_b150_1 : BOOL ;	// 
+   Alm_Liv_1_b150_2 : BOOL ;	// 
+   Alm_Liv_1_b150_3 : BOOL ;	// 
+   Alm_Liv_1_b150_4 : BOOL ;	// 
+   Alm_Liv_1_b150_5 : BOOL ;	// 
+   Alm_Liv_1_b150_6 : BOOL ;	// 
+   Alm_Liv_1_b150_7 : BOOL ;	// 
+   Alm_Liv_1_b151_0 : BOOL ;	// 
+   Alm_Liv_1_b151_1 : BOOL ;	// 
+   Alm_Liv_1_b151_2 : BOOL ;	// 
+   Alm_Liv_1_b151_3 : BOOL ;	// 
+   Alm_Liv_1_b151_4 : BOOL ;	// 
+   Alm_Liv_1_b151_5 : BOOL ;	// 
+   Alm_Liv_1_b151_6 : BOOL ;	// 
+   Alm_Liv_1_b151_7 : BOOL ;	// 
+   Alm_Liv_2_b152_0 : BOOL ;	//=FCA_1++ST060+PTZ01-DME01;Allarme Comunicazione Profinet ET200S (35);1
+   Alm_Liv_2_b152_1 : BOOL ;	// 
+   Alm_Liv_2_b152_2 : BOOL ;	// 
+   Alm_Liv_2_b152_3 : BOOL ;	// 
+   Alm_Liv_2_b152_4 : BOOL ;	// 
+   Alm_Liv_2_b152_5 : BOOL ;	// 
+   Alm_Liv_2_b152_6 : BOOL ;	// 
+   Alm_Liv_2_b152_7 : BOOL ;	// 
+   Alm_Liv_2_b153_0 : BOOL ;	// 
+   Alm_Liv_2_b153_1 : BOOL ;	// 
+   Alm_Liv_2_b153_2 : BOOL ;	// 
+   Alm_Liv_2_b153_3 : BOOL ;	// 
+   Alm_Liv_2_b153_4 : BOOL ;	// 
+   Alm_Liv_2_b153_5 : BOOL ;	// 
+   Alm_Liv_2_b153_6 : BOOL ;	// 
+   Alm_Liv_2_b153_7 : BOOL ;	// 
+   Alm_Liv_3_b154_0 : BOOL ;	// 
+   Alm_Liv_3_b154_1 : BOOL ;	// 
+   Alm_Liv_3_b154_2 : BOOL ;	// 
+   Alm_Liv_3_b154_3 : BOOL ;	// 
+   Alm_Liv_3_b154_4 : BOOL ;	// 
+   Alm_Liv_3_b154_5 : BOOL ;	//=FCA_1++ST060+PTZ01-SB_01;ST060 Arresto Emergenza su PTZ01;2
+   Alm_Liv_3_b154_6 : BOOL ;	//=FCA_1++ST060+PME01-SB_01;ST060 Arresto Emergenza su PME01;2
+   Alm_Liv_3_b154_7 : BOOL ;	// 
+   Alm_Liv_3_b155_0 : BOOL ;	// 
+   Alm_Liv_3_b155_1 : BOOL ;	// 
+   Alm_Liv_3_b155_2 : BOOL ;	// 
+   Alm_Liv_3_b155_3 : BOOL ;	// 
+   Alm_Liv_3_b155_4 : BOOL ;	// 
+   Alm_Liv_3_b155_5 : BOOL ;	// 
+   Alm_Liv_3_b155_6 : BOOL ;	// 
+   Alm_Liv_3_b155_7 : BOOL ;	// 
+   Alm_Liv_4_b156_0 : BOOL ;	// 
+   Alm_Liv_4_b156_1 : BOOL ;	// 
+   Alm_Liv_4_b156_2 : BOOL ;	// 
+   Alm_Liv_4_b156_3 : BOOL ;	// 
+   Alm_Liv_4_b156_4 : BOOL ;	// 
+   Alm_Liv_4_b156_5 : BOOL ;	// 
+   Alm_Liv_4_b156_6 : BOOL ;	// 
+   Alm_Liv_4_b156_7 : BOOL ;	// 
+   Alm_Liv_4_b157_0 : BOOL ;	// 
+   Alm_Liv_4_b157_1 : BOOL ;	// 
+   Alm_Liv_4_b157_2 : BOOL ;	// 
+   Alm_Liv_4_b157_3 : BOOL ;	// 
+   Alm_Liv_4_b157_4 : BOOL ;	// 
+   Alm_Liv_4_b157_5 : BOOL ;	// 
+   Alm_Liv_4_b157_6 : BOOL ;	// 
+   Alm_Liv_4_b157_7 : BOOL ;	// 
+   Alm_Liv_5_b158_0 : BOOL ;	// 
+   Alm_Liv_5_b158_1 : BOOL ;	// 
+   Alm_Liv_5_b158_2 : BOOL ;	// 
+   Alm_Liv_5_b158_3 : BOOL ;	// 
+   Alm_Liv_5_b158_4 : BOOL ;	// 
+   Alm_Liv_5_b158_5 : BOOL ;	// 
+   Alm_Liv_5_b158_6 : BOOL ;	// 
+   Alm_Liv_5_b158_7 : BOOL ;	// 
+   Alm_Liv_5_b159_0 : BOOL ;	// 
+   Alm_Liv_5_b159_1 : BOOL ;	// 
+   Alm_Liv_5_b159_2 : BOOL ;	// 
+   Alm_Liv_5_b159_3 : BOOL ;	// 
+   Alm_Liv_5_b159_4 : BOOL ;	// 
+   Alm_Liv_5_b159_5 : BOOL ;	// 
+   Alm_Liv_5_b159_6 : BOOL ;	// 
+   Alm_Liv_5_b159_7 : BOOL ;	// 
+   Alm_Liv_6_b160_0 : BOOL ;	//=FCA_1++ST060;SCARTO CONTINUATO;5
+   Alm_Liv_6_b160_1 : BOOL ;	//=FCA_1++ST060;++MAIN+SID03-ASI02 - Errore Moby;1
+   Alm_Liv_6_b160_2 : BOOL ;	//=FCA_1++ST060;++MAIN+SID03-ASI02 - Anomalia Lettura Pallet;1
+   Alm_Liv_6_b160_3 : BOOL ;	//=FCA_1++ST060;++MAIN+SID03-ASI02 - Anomalia Scrittura Pallet;1
+   Alm_Liv_6_b160_4 : BOOL ;	//=FCA_1++ST060+PCV01-PRS01;SQ_04 ST060 - Assenza Pallet su arresto;1
+   Alm_Liv_6_b160_5 : BOOL ;	//=FCA_1++ST060+PCV01-SNG01;SQ_04 ST060 - Pallet non evacuato da arresto;1
+   Alm_Liv_6_b160_6 : BOOL ;	//=FCA_1++ST060+PCV01-IDX01;SQU05 ST060 - Index non Alto;1
+   Alm_Liv_6_b160_7 : BOOL ;	//=FCA_1++ST060+PCV01-IDX01;SQD06 ST060 - Index non Basso;1
+   Alm_Liv_6_b161_0 : BOOL ;	//=FCA_1++ST060;ST060 - Numero Pallet Errato;5
+   Alm_Liv_6_b161_1 : BOOL ;	//=FCA_1++ST060+PCV01-IDX01;ST060 - SQU05-SQD06 Parità Index;1
+   Alm_Liv_6_b161_2 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Etichetta Già processata;5
+   Alm_Liv_6_b161_3 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Diffusione non riconosciuta da PC;5
+   Alm_Liv_6_b161_4 : BOOL ;	// 
+   Alm_Liv_6_b161_5 : BOOL ;	// 
+   Alm_Liv_6_b161_6 : BOOL ;	// 
+   Alm_Liv_6_b161_7 : BOOL ;	// 
+   Alm_Liv_6_b162_0 : BOOL ;	// 
+   Alm_Liv_6_b162_1 : BOOL ;	// 
+   Alm_Liv_6_b162_2 : BOOL ;	// 
+   Alm_Liv_6_b162_3 : BOOL ;	// 
+   Alm_Liv_6_b162_4 : BOOL ;	// 
+   Alm_Liv_6_b162_5 : BOOL ;	// 
+   Alm_Liv_6_b162_6 : BOOL ;	// 
+   Alm_Liv_6_b162_7 : BOOL ;	// 
+   Alm_Liv_6_b163_0 : BOOL ;	// 
+   Alm_Liv_6_b163_1 : BOOL ;	// 
+   Alm_Liv_6_b163_2 : BOOL ;	// 
+   Alm_Liv_6_b163_3 : BOOL ;	// 
+   Alm_Liv_6_b163_4 : BOOL ;	// 
+   Alm_Liv_6_b163_5 : BOOL ;	// 
+   Alm_Liv_6_b163_6 : BOOL ;	// 
+   Alm_Liv_6_b163_7 : BOOL ;	// 
+   Alm_Liv_6_b164_0 : BOOL ;	// 
+   Alm_Liv_6_b164_1 : BOOL ;	// 
+   Alm_Liv_6_b164_2 : BOOL ;	// 
+   Alm_Liv_6_b164_3 : BOOL ;	// 
+   Alm_Liv_6_b164_4 : BOOL ;	// 
+   Alm_Liv_6_b164_5 : BOOL ;	// 
+   Alm_Liv_6_b164_6 : BOOL ;	// 
+   Alm_Liv_6_b164_7 : BOOL ;	// 
+   Alm_Liv_6_b165_0 : BOOL ;	// 
+   Alm_Liv_6_b165_1 : BOOL ;	// 
+   Alm_Liv_6_b165_2 : BOOL ;	// 
+   Alm_Liv_6_b165_3 : BOOL ;	// 
+   Alm_Liv_6_b165_4 : BOOL ;	// 
+   Alm_Liv_6_b165_5 : BOOL ;	// 
+   Alm_Liv_6_b165_6 : BOOL ;	// 
+   Alm_Liv_6_b165_7 : BOOL ;	// 
+   Alm_Liv_6_b166_0 : BOOL ;	// 
+   Alm_Liv_6_b166_1 : BOOL ;	// 
+   Alm_Liv_6_b166_2 : BOOL ;	// 
+   Alm_Liv_6_b166_3 : BOOL ;	// 
+   Alm_Liv_6_b166_4 : BOOL ;	// 
+   Alm_Liv_6_b166_5 : BOOL ;	// 
+   Alm_Liv_6_b166_6 : BOOL ;	// 
+   Alm_Liv_6_b166_7 : BOOL ;	// 
+   Alm_Liv_6_b167_0 : BOOL ;	// 
+   Alm_Liv_6_b167_1 : BOOL ;	// 
+   Alm_Liv_6_b167_2 : BOOL ;	// 
+   Alm_Liv_6_b167_3 : BOOL ;	// 
+   Alm_Liv_6_b167_4 : BOOL ;	// 
+   Alm_Liv_6_b167_5 : BOOL ;	// 
+   Alm_Liv_6_b167_6 : BOOL ;	// 
+   Alm_Liv_6_b167_7 : BOOL ;	// 
+   Alm_Liv_6_b168_0 : BOOL ;	// 
+   Alm_Liv_6_b168_1 : BOOL ;	// 
+   Alm_Liv_6_b168_2 : BOOL ;	// 
+   Alm_Liv_6_b168_3 : BOOL ;	// 
+   Alm_Liv_6_b168_4 : BOOL ;	// 
+   Alm_Liv_6_b168_5 : BOOL ;	// 
+   Alm_Liv_6_b168_6 : BOOL ;	// 
+   Alm_Liv_6_b168_7 : BOOL ;	// 
+   Alm_Liv_6_b169_0 : BOOL ;	// 
+   Alm_Liv_6_b169_1 : BOOL ;	// 
+   Alm_Liv_6_b169_2 : BOOL ;	// 
+   Alm_Liv_6_b169_3 : BOOL ;	// 
+   Alm_Liv_6_b169_4 : BOOL ;	// 
+   Alm_Liv_6_b169_5 : BOOL ;	// 
+   Alm_Liv_6_b169_6 : BOOL ;	// 
+   Alm_Liv_6_b169_7 : BOOL ;	// 
+   Alm_Liv_6_b170_0 : BOOL ;	// 
+   Alm_Liv_6_b170_1 : BOOL ;	// 
+   Alm_Liv_6_b170_2 : BOOL ;	// 
+   Alm_Liv_6_b170_3 : BOOL ;	// 
+   Alm_Liv_6_b170_4 : BOOL ;	// 
+   Alm_Liv_6_b170_5 : BOOL ;	// 
+   Alm_Liv_6_b170_6 : BOOL ;	// 
+   Alm_Liv_6_b170_7 : BOOL ;	// 
+   Alm_Liv_6_b171_0 : BOOL ;	// 
+   Alm_Liv_6_b171_1 : BOOL ;	// 
+   Alm_Liv_6_b171_2 : BOOL ;	// 
+   Alm_Liv_6_b171_3 : BOOL ;	// 
+   Alm_Liv_6_b171_4 : BOOL ;	// 
+   Alm_Liv_6_b171_5 : BOOL ;	// 
+   Alm_Liv_6_b171_6 : BOOL ;	// 
+   Alm_Liv_6_b171_7 : BOOL ;	// 
+   Alm_Liv_6_b172_0 : BOOL ;	// 
+   Alm_Liv_6_b172_1 : BOOL ;	// 
+   Alm_Liv_6_b172_2 : BOOL ;	// 
+   Alm_Liv_6_b172_3 : BOOL ;	// 
+   Alm_Liv_6_b172_4 : BOOL ;	// 
+   Alm_Liv_6_b172_5 : BOOL ;	// 
+   Alm_Liv_6_b172_6 : BOOL ;	// 
+   Alm_Liv_6_b172_7 : BOOL ;	// 
+   Alm_Liv_6_b173_0 : BOOL ;	// 
+   Alm_Liv_6_b173_1 : BOOL ;	// 
+   Alm_Liv_6_b173_2 : BOOL ;	// 
+   Alm_Liv_6_b173_3 : BOOL ;	// 
+   Alm_Liv_6_b173_4 : BOOL ;	// 
+   Alm_Liv_6_b173_5 : BOOL ;	// 
+   Alm_Liv_6_b173_6 : BOOL ;	// 
+   Alm_Liv_6_b173_7 : BOOL ;	// 
+   Alm_Liv_6_b174_0 : BOOL ;	//=FCA_1++ST060+PCV01-DME01;Allarme Comunicazione Profinet FESTO (55);1
+   Alm_Liv_6_b174_1 : BOOL ;	// 
+   Alm_Liv_6_b174_2 : BOOL ;	// 
+   Alm_Liv_6_b174_3 : BOOL ;	// 
+   Alm_Liv_6_b174_4 : BOOL ;	// 
+   Alm_Liv_6_b174_5 : BOOL ;	// 
+   Alm_Liv_6_b174_6 : BOOL ;	// 
+   Alm_Liv_6_b174_7 : BOOL ;	// 
+   Alm_Liv_6_b175_0 : BOOL ;	// 
+   Alm_Liv_6_b175_1 : BOOL ;	// 
+   Alm_Liv_6_b175_2 : BOOL ;	// 
+   Alm_Liv_6_b175_3 : BOOL ;	// 
+   Alm_Liv_6_b175_4 : BOOL ;	// 
+   Alm_Liv_6_b175_5 : BOOL ;	// 
+   Alm_Liv_6_b175_6 : BOOL ;	// 
+   Alm_Liv_6_b175_7 : BOOL ;	// 
+   Alm_Liv_6_b176_0 : BOOL ;	// 
+   Alm_Liv_6_b176_1 : BOOL ;	// 
+   Alm_Liv_6_b176_2 : BOOL ;	// 
+   Alm_Liv_6_b176_3 : BOOL ;	// 
+   Alm_Liv_6_b176_4 : BOOL ;	// 
+   Alm_Liv_6_b176_5 : BOOL ;	// 
+   Alm_Liv_6_b176_6 : BOOL ;	// 
+   Alm_Liv_6_b176_7 : BOOL ;	// 
+   Alm_Liv_6_b177_0 : BOOL ;	// 
+   Alm_Liv_6_b177_1 : BOOL ;	// 
+   Alm_Liv_6_b177_2 : BOOL ;	// 
+   Alm_Liv_6_b177_3 : BOOL ;	// 
+   Alm_Liv_6_b177_4 : BOOL ;	// 
+   Alm_Liv_6_b177_5 : BOOL ;	// 
+   Alm_Liv_6_b177_6 : BOOL ;	// 
+   Alm_Liv_6_b177_7 : BOOL ;	// 
+   Alm_Liv_6_b178_0 : BOOL ;	// 
+   Alm_Liv_6_b178_1 : BOOL ;	// 
+   Alm_Liv_6_b178_2 : BOOL ;	// 
+   Alm_Liv_6_b178_3 : BOOL ;	// 
+   Alm_Liv_6_b178_4 : BOOL ;	// 
+   Alm_Liv_6_b178_5 : BOOL ;	// 
+   Alm_Liv_6_b178_6 : BOOL ;	// 
+   Alm_Liv_6_b178_7 : BOOL ;	// 
+   Alm_Liv_6_b179_0 : BOOL ;	// 
+   Alm_Liv_6_b179_1 : BOOL ;	// 
+   Alm_Liv_6_b179_2 : BOOL ;	// 
+   Alm_Liv_6_b179_3 : BOOL ;	// 
+   Alm_Liv_6_b179_4 : BOOL ;	// 
+   Alm_Liv_6_b179_5 : BOOL ;	// 
+   Alm_Liv_6_b179_6 : BOOL ;	// 
+   Alm_Liv_6_b179_7 : BOOL ;	// 
+   Alm_Liv_6_b180_0 : BOOL ;	// 
+   Alm_Liv_6_b180_1 : BOOL ;	// 
+   Alm_Liv_6_b180_2 : BOOL ;	// 
+   Alm_Liv_6_b180_3 : BOOL ;	// 
+   Alm_Liv_6_b180_4 : BOOL ;	// 
+   Alm_Liv_6_b180_5 : BOOL ;	// 
+   Alm_Liv_6_b180_6 : BOOL ;	// 
+   Alm_Liv_6_b180_7 : BOOL ;	// 
+   Alm_Liv_6_b181_0 : BOOL ;	// 
+   Alm_Liv_6_b181_1 : BOOL ;	// 
+   Alm_Liv_6_b181_2 : BOOL ;	// 
+   Alm_Liv_6_b181_3 : BOOL ;	// 
+   Alm_Liv_6_b181_4 : BOOL ;	// 
+   Alm_Liv_6_b181_5 : BOOL ;	// 
+   Alm_Liv_6_b181_6 : BOOL ;	// 
+   Alm_Liv_6_b181_7 : BOOL ;	// 
+   Alm_Liv_6_b182_0 : BOOL ;	// 
+   Alm_Liv_6_b182_1 : BOOL ;	// 
+   Alm_Liv_6_b182_2 : BOOL ;	// 
+   Alm_Liv_6_b182_3 : BOOL ;	// 
+   Alm_Liv_6_b182_4 : BOOL ;	// 
+   Alm_Liv_6_b182_5 : BOOL ;	// 
+   Alm_Liv_6_b182_6 : BOOL ;	// 
+   Alm_Liv_6_b182_7 : BOOL ;	// 
+   Alm_Liv_6_b183_0 : BOOL ;	// 
+   Alm_Liv_6_b183_1 : BOOL ;	// 
+   Alm_Liv_6_b183_2 : BOOL ;	// 
+   Alm_Liv_6_b183_3 : BOOL ;	// 
+   Alm_Liv_6_b183_4 : BOOL ;	// 
+   Alm_Liv_6_b183_5 : BOOL ;	// 
+   Alm_Liv_6_b183_6 : BOOL ;	// 
+   Alm_Liv_6_b183_7 : BOOL ;	// 
+   Alm_Liv_6_b184_0 : BOOL ;	// 
+   Alm_Liv_6_b184_1 : BOOL ;	// 
+   Alm_Liv_6_b184_2 : BOOL ;	// 
+   Alm_Liv_6_b184_3 : BOOL ;	// 
+   Alm_Liv_6_b184_4 : BOOL ;	// 
+   Alm_Liv_6_b184_5 : BOOL ;	// 
+   Alm_Liv_6_b184_6 : BOOL ;	// 
+   Alm_Liv_6_b184_7 : BOOL ;	// 
+   Alm_Liv_6_b185_0 : BOOL ;	// 
+   Alm_Liv_6_b185_1 : BOOL ;	// 
+   Alm_Liv_6_b185_2 : BOOL ;	// 
+   Alm_Liv_6_b185_3 : BOOL ;	// 
+   Alm_Liv_6_b185_4 : BOOL ;	// 
+   Alm_Liv_6_b185_5 : BOOL ;	// 
+   Alm_Liv_6_b185_6 : BOOL ;	// 
+   Alm_Liv_6_b185_7 : BOOL ;	// 
+   Alm_Liv_6_b186_0 : BOOL ;	// 
+   Alm_Liv_6_b186_1 : BOOL ;	// 
+   Alm_Liv_6_b186_2 : BOOL ;	// 
+   Alm_Liv_6_b186_3 : BOOL ;	// 
+   Alm_Liv_6_b186_4 : BOOL ;	// 
+   Alm_Liv_6_b186_5 : BOOL ;	// 
+   Alm_Liv_6_b186_6 : BOOL ;	// 
+   Alm_Liv_6_b186_7 : BOOL ;	// 
+   Alm_Liv_6_b187_0 : BOOL ;	// 
+   Alm_Liv_6_b187_1 : BOOL ;	// 
+   Alm_Liv_6_b187_2 : BOOL ;	// 
+   Alm_Liv_6_b187_3 : BOOL ;	// 
+   Alm_Liv_6_b187_4 : BOOL ;	// 
+   Alm_Liv_6_b187_5 : BOOL ;	// 
+   Alm_Liv_6_b187_6 : BOOL ;	// 
+   Alm_Liv_6_b187_7 : BOOL ;	// 
+   Alm_Liv_6_b188_0 : BOOL ;	//=FCA_1++ST060;CICLO MANUAL HABILITADO;16
+   Alm_Liv_6_b188_1 : BOOL ;	// 
+   Alm_Liv_6_b188_2 : BOOL ;	// 
+   Alm_Liv_6_b188_3 : BOOL ;	// 
+   Alm_Liv_6_b188_4 : BOOL ;	// 
+   Alm_Liv_6_b188_5 : BOOL ;	// 
+   Alm_Liv_6_b188_6 : BOOL ;	// 
+   Alm_Liv_6_b188_7 : BOOL ;	// 
+   Alm_Liv_6_b189_0 : BOOL ;	//=FCA_1++ST060+PCV01-PRS01;SQU01 Prearresto non alto;1      
+   Alm_Liv_6_b189_1 : BOOL ;	//=FCA_1++ST060+PCV01-PRS01;SQU03 Arresto non alto;1      
+   Alm_Liv_6_b189_2 : BOOL ;	// 
+   Alm_Liv_6_b189_3 : BOOL ;	// 
+   Alm_Liv_6_b189_4 : BOOL ;	// 
+   Alm_Liv_6_b189_5 : BOOL ;	// 
+   Alm_Liv_6_b189_6 : BOOL ;	// 
+   Alm_Liv_6_b189_7 : BOOL ;	// 
+   Msg_Liv_1_b190_0 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (1) Barra Stabilizzatrice;55
+   Msg_Liv_1_b190_1 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (2) Scatola Sterzo;55
+   Msg_Liv_1_b190_2 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (3) Traversa Anteriore;55
+   Msg_Liv_1_b190_3 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (4) Braccio Oscillante Dx;55
+   Msg_Liv_1_b190_4 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (5) Braccio Oscillante Sx;55
+   Msg_Liv_1_b190_5 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (6) Bielletta Dx;55
+   Msg_Liv_1_b190_6 : BOOL ;	//=FCA_1++ST060+SID01-D__01;ST060 - Escl. Lettura (7) Bielletta Sx;55
+   Msg_Liv_1_b190_7 : BOOL ;	
+   Msg_Liv_1_b191_0 : BOOL ;	// 
+   Msg_Liv_1_b191_1 : BOOL ;	// 
+   Msg_Liv_1_b191_2 : BOOL ;	// 
+   Msg_Liv_1_b191_3 : BOOL ;	// 
+   Msg_Liv_1_b191_4 : BOOL ;	// 
+   Msg_Liv_1_b191_5 : BOOL ;	// 
+   Msg_Liv_1_b191_6 : BOOL ;	// 
+   Msg_Liv_1_b191_7 : BOOL ;	// 
+   Msg_Liv_1_b192_0 : BOOL ;	// 
+   Msg_Liv_1_b192_1 : BOOL ;	// 
+   Msg_Liv_1_b192_2 : BOOL ;	// 
+   Msg_Liv_1_b192_3 : BOOL ;	// 
+   Msg_Liv_1_b192_4 : BOOL ;	// 
+   Msg_Liv_1_b192_5 : BOOL ;	// 
+   Msg_Liv_1_b192_6 : BOOL ;	// 
+   Msg_Liv_1_b192_7 : BOOL ;	// 
+   Msg_Liv_1_b193_0 : BOOL ;	// 
+   Msg_Liv_1_b193_1 : BOOL ;	// 
+   Msg_Liv_1_b193_2 : BOOL ;	// 
+   Msg_Liv_1_b193_3 : BOOL ;	// 
+   Msg_Liv_1_b193_4 : BOOL ;	// 
+   Msg_Liv_1_b193_5 : BOOL ;	// 
+   Msg_Liv_1_b193_6 : BOOL ;	// 
+   Msg_Liv_1_b193_7 : BOOL ;	// 
+   Msg_Liv_1_b194_0 : BOOL ;	// 
+   Msg_Liv_1_b194_1 : BOOL ;	// 
+   Msg_Liv_1_b194_2 : BOOL ;	// 
+   Msg_Liv_1_b194_3 : BOOL ;	// 
+   Msg_Liv_1_b194_4 : BOOL ;	// 
+   Msg_Liv_1_b194_5 : BOOL ;	// 
+   Msg_Liv_1_b194_6 : BOOL ;	// 
+   Msg_Liv_1_b194_7 : BOOL ;	// 
+   Msg_Liv_1_b195_0 : BOOL ;	// 
+   Msg_Liv_1_b195_1 : BOOL ;	// 
+   Msg_Liv_1_b195_2 : BOOL ;	// 
+   Msg_Liv_1_b195_3 : BOOL ;	// 
+   Msg_Liv_1_b195_4 : BOOL ;	// 
+   Msg_Liv_1_b195_5 : BOOL ;	// 
+   Msg_Liv_1_b195_6 : BOOL ;	// 
+   Msg_Liv_1_b195_7 : BOOL ;	// 
+   Msg_Liv_1_b196_0 : BOOL ;	// 
+   Msg_Liv_1_b196_1 : BOOL ;	// 
+   Msg_Liv_1_b196_2 : BOOL ;	// 
+   Msg_Liv_1_b196_3 : BOOL ;	// 
+   Msg_Liv_1_b196_4 : BOOL ;	// 
+   Msg_Liv_1_b196_5 : BOOL ;	// 
+   Msg_Liv_1_b196_6 : BOOL ;	// 
+   Msg_Liv_1_b196_7 : BOOL ;	// 
+   Msg_Liv_1_b197_0 : BOOL ;	// 
+   Msg_Liv_1_b197_1 : BOOL ;	// 
+   Msg_Liv_1_b197_2 : BOOL ;	// 
+   Msg_Liv_1_b197_3 : BOOL ;	// 
+   Msg_Liv_1_b197_4 : BOOL ;	// 
+   Msg_Liv_1_b197_5 : BOOL ;	// 
+   Msg_Liv_1_b197_6 : BOOL ;	// 
+   Msg_Liv_1_b197_7 : BOOL ;	// 
+   Msg_Liv_1_b198_0 : BOOL ;	// 
+   Msg_Liv_1_b198_1 : BOOL ;	// 
+   Msg_Liv_1_b198_2 : BOOL ;	// 
+   Msg_Liv_1_b198_3 : BOOL ;	// 
+   Msg_Liv_1_b198_4 : BOOL ;	// 
+   Msg_Liv_1_b198_5 : BOOL ;	// 
+   Msg_Liv_1_b198_6 : BOOL ;	// 
+   Msg_Liv_1_b198_7 : BOOL ;	// 
+   Msg_Liv_1_b199_0 : BOOL ;	// 
+   Msg_Liv_1_b199_1 : BOOL ;	// 
+   Msg_Liv_1_b199_2 : BOOL ;	// 
+   Msg_Liv_1_b199_3 : BOOL ;	// 
+   Msg_Liv_1_b199_4 : BOOL ;	// 
+   Msg_Liv_1_b199_5 : BOOL ;	// 
+   Msg_Liv_1_b199_6 : BOOL ;	// 
+   Msg_Liv_1_b199_7 : BOOL ;	//=FCA_1++ST060;STAZIONE NON ABILITATA MANCANZA OPERATORE;15
+  END_STRUCT ;	
+BEGIN
+   CM_ID := '=FCA_1'; 
+   STATION_ID := '++ST060'; 
+   ELEMENT_ID := ''; 
+   DB_ID := 2; 
+   PART_STYLE := ''; 
+   ACT_CYCLE_TIME := 0; 
+   COUNT_GOOD := 0; 
+   COUNT_SCRAP := 0; 
+   SPARE_00[0] := 0; 
+   SPARE_00[1] := 0; 
+   SPARE_00[2] := 0; 
+   SPARE_00[3] := 0; 
+   SPARE_00[4] := 0; 
+   SPARE_00[5] := 0; 
+   SPARE_00[6] := 0; 
+   SPARE_00[7] := 0; 
+   SPARE_00[8] := 0; 
+   SPARE_00[9] := 0; 
+   SPARE_00[10] := 0; 
+   SPARE_00[11] := 0; 
+   SPARE_00[12] := 0; 
+   SPARE_00[13] := 0; 
+   SPARE_00[14] := 0; 
+   SPARE_00[15] := 0; 
+   SPARE_01[0] := 0; 
+   SPARE_01[1] := 0; 
+   SPARE_01[2] := 0; 
+   SPARE_01[3] := 0; 
+   SPARE_01[4] := 0; 
+   SPARE_01[5] := 0; 
+   SPARE_01[6] := 0; 
+   SPARE_01[7] := 0; 
+   SPARE_01[8] := 0; 
+   SPARE_01[9] := 0; 
+   SPARE_01[10] := 0; 
+   SPARE_01[11] := 0; 
+   SPARE_01[12] := 0; 
+   SPARE_01[13] := 0; 
+   SPARE_01[14] := 0; 
+   SPARE_01[15] := 0; 
+   SPARE_01[16] := 0; 
+   SPARE_01[17] := 0; 
+   CODE_EVENT[0] := 0; 
+   CODE_EVENT[1] := 0; 
+   CODE_EVENT[2] := 0; 
+   CODE_EVENT[3] := 0; 
+   CODE_EVENT[4] := 0; 
+   CODE_EVENT[5] := 0; 
+   CODE_EVENT[6] := 0; 
+   CODE_EVENT[7] := 0; 
+   States_b136_0 := FALSE; 
+   States_b136_1 := FALSE; 
+   States_b136_2 := FALSE; 
+   States_b136_3 := FALSE; 
+   States_b136_4 := FALSE; 
+   States_b136_5 := FALSE; 
+   States_b136_6 := FALSE; 
+   States_b136_7 := FALSE; 
+   States_b137_0 := FALSE; 
+   States_b137_1 := FALSE; 
+   States_b137_2 := FALSE; 
+   States_b137_3 := FALSE; 
+   States_b137_4 := FALSE; 
+   States_b137_5 := FALSE; 
+   States_b137_6 := FALSE; 
+   States_b137_7 := FALSE; 
+   States_b138_0 := FALSE; 
+   States_b138_1 := FALSE; 
+   States_b138_2 := FALSE; 
+   States_b138_3 := FALSE; 
+   States_b138_4 := FALSE; 
+   States_b138_5 := FALSE; 
+   States_b138_6 := FALSE; 
+   States_b138_7 := FALSE; 
+   States_b139_0 := FALSE; 
+   States_b139_1 := FALSE; 
+   States_b139_2 := FALSE; 
+   States_b139_3 := FALSE; 
+   States_b139_4 := FALSE; 
+   States_b139_5 := FALSE; 
+   States_b139_6 := FALSE; 
+   States_b139_7 := FALSE; 
+   States_b140_0 := FALSE; 
+   States_b140_1 := FALSE; 
+   States_b140_2 := FALSE; 
+   States_b140_3 := FALSE; 
+   States_b140_4 := FALSE; 
+   States_b140_5 := FALSE; 
+   States_b140_6 := FALSE; 
+   States_b140_7 := FALSE; 
+   States_b141_0 := FALSE; 
+   States_b141_1 := FALSE; 
+   States_b141_2 := FALSE; 
+   States_b141_3 := FALSE; 
+   States_b141_4 := FALSE; 
+   States_b141_5 := FALSE; 
+   States_b141_6 := FALSE; 
+   States_b141_7 := FALSE; 
+   States_b142_0 := FALSE; 
+   States_b142_1 := FALSE; 
+   States_b142_2 := FALSE; 
+   States_b142_3 := FALSE; 
+   States_b142_4 := FALSE; 
+   States_b142_5 := FALSE; 
+   States_b142_6 := FALSE; 
+   States_b142_7 := FALSE; 
+   States_b143_0 := FALSE; 
+   States_b143_1 := FALSE; 
+   States_b143_2 := FALSE; 
+   States_b143_3 := FALSE; 
+   States_b143_4 := FALSE; 
+   States_b143_5 := FALSE; 
+   States_b143_6 := FALSE; 
+   States_b143_7 := FALSE; 
+   Alm_Liv_1_b144_0 := FALSE; 
+   Alm_Liv_1_b144_1 := FALSE; 
+   Alm_Liv_1_b144_2 := FALSE; 
+   Alm_Liv_1_b144_3 := FALSE; 
+   Alm_Liv_1_b144_4 := FALSE; 
+   Alm_Liv_1_b144_5 := FALSE; 
+   Alm_Liv_1_b144_6 := FALSE; 
+   Alm_Liv_1_b144_7 := FALSE; 
+   Alm_Liv_1_b145_0 := FALSE; 
+   Alm_Liv_1_b145_1 := FALSE; 
+   Alm_Liv_1_b145_2 := FALSE; 
+   Alm_Liv_1_b145_3 := FALSE; 
+   Alm_Liv_1_b145_4 := FALSE; 
+   Alm_Liv_1_b145_5 := FALSE; 
+   Alm_Liv_1_b145_6 := FALSE; 
+   Alm_Liv_1_b145_7 := FALSE; 
+   Alm_Liv_1_b146_0 := FALSE; 
+   Alm_Liv_1_b146_1 := FALSE; 
+   Alm_Liv_1_b146_2 := FALSE; 
+   Alm_Liv_1_b146_3 := FALSE; 
+   Alm_Liv_1_b146_4 := FALSE; 
+   Alm_Liv_1_b146_5 := FALSE; 
+   Alm_Liv_1_b146_6 := FALSE; 
+   Alm_Liv_1_b146_7 := FALSE; 
+   Alm_Liv_1_b147_0 := FALSE; 
+   Alm_Liv_1_b147_1 := FALSE; 
+   Alm_Liv_1_b147_2 := FALSE; 
+   Alm_Liv_1_b147_3 := FALSE; 
+   Alm_Liv_1_b147_4 := FALSE; 
+   Alm_Liv_1_b147_5 := FALSE; 
+   Alm_Liv_1_b147_6 := FALSE; 
+   Alm_Liv_1_b147_7 := FALSE; 
+   Alm_Liv_1_b148_0 := FALSE; 
+   Alm_Liv_1_b148_1 := FALSE; 
+   Alm_Liv_1_b148_2 := FALSE; 
+   Alm_Liv_1_b148_3 := FALSE; 
+   Alm_Liv_1_b148_4 := FALSE; 
+   Alm_Liv_1_b148_5 := FALSE; 
+   Alm_Liv_1_b148_6 := FALSE; 
+   Alm_Liv_1_b148_7 := FALSE; 
+   Alm_Liv_1_b149_0 := FALSE; 
+   Alm_Liv_1_b149_1 := FALSE; 
+   Alm_Liv_1_b149_2 := FALSE; 
+   Alm_Liv_1_b149_3 := FALSE; 
+   Alm_Liv_1_b149_4 := FALSE; 
+   Alm_Liv_1_b149_5 := FALSE; 
+   Alm_Liv_1_b149_6 := FALSE; 
+   Alm_Liv_1_b149_7 := FALSE; 
+   Alm_Liv_1_b150_0 := FALSE; 
+   Alm_Liv_1_b150_1 := FALSE; 
+   Alm_Liv_1_b150_2 := FALSE; 
+   Alm_Liv_1_b150_3 := FALSE; 
+   Alm_Liv_1_b150_4 := FALSE; 
+   Alm_Liv_1_b150_5 := FALSE; 
+   Alm_Liv_1_b150_6 := FALSE; 
+   Alm_Liv_1_b150_7 := FALSE; 
+   Alm_Liv_1_b151_0 := FALSE; 
+   Alm_Liv_1_b151_1 := FALSE; 
+   Alm_Liv_1_b151_2 := FALSE; 
+   Alm_Liv_1_b151_3 := FALSE; 
+   Alm_Liv_1_b151_4 := FALSE; 
+   Alm_Liv_1_b151_5 := FALSE; 
+   Alm_Liv_1_b151_6 := FALSE; 
+   Alm_Liv_1_b151_7 := FALSE; 
+   Alm_Liv_2_b152_0 := FALSE; 
+   Alm_Liv_2_b152_1 := FALSE; 
+   Alm_Liv_2_b152_2 := FALSE; 
+   Alm_Liv_2_b152_3 := FALSE; 
+   Alm_Liv_2_b152_4 := FALSE; 
+   Alm_Liv_2_b152_5 := FALSE; 
+   Alm_Liv_2_b152_6 := FALSE; 
+   Alm_Liv_2_b152_7 := FALSE; 
+   Alm_Liv_2_b153_0 := FALSE; 
+   Alm_Liv_2_b153_1 := FALSE; 
+   Alm_Liv_2_b153_2 := FALSE; 
+   Alm_Liv_2_b153_3 := FALSE; 
+   Alm_Liv_2_b153_4 := FALSE; 
+   Alm_Liv_2_b153_5 := FALSE; 
+   Alm_Liv_2_b153_6 := FALSE; 
+   Alm_Liv_2_b153_7 := FALSE; 
+   Alm_Liv_3_b154_0 := FALSE; 
+   Alm_Liv_3_b154_1 := FALSE; 
+   Alm_Liv_3_b154_2 := FALSE; 
+   Alm_Liv_3_b154_3 := FALSE; 
+   Alm_Liv_3_b154_4 := FALSE; 
+   Alm_Liv_3_b154_5 := FALSE; 
+   Alm_Liv_3_b154_6 := FALSE; 
+   Alm_Liv_3_b154_7 := FALSE; 
+   Alm_Liv_3_b155_0 := FALSE; 
+   Alm_Liv_3_b155_1 := FALSE; 
+   Alm_Liv_3_b155_2 := FALSE; 
+   Alm_Liv_3_b155_3 := FALSE; 
+   Alm_Liv_3_b155_4 := FALSE; 
+   Alm_Liv_3_b155_5 := FALSE; 
+   Alm_Liv_3_b155_6 := FALSE; 
+   Alm_Liv_3_b155_7 := FALSE; 
+   Alm_Liv_4_b156_0 := FALSE; 
+   Alm_Liv_4_b156_1 := FALSE; 
+   Alm_Liv_4_b156_2 := FALSE; 
+   Alm_Liv_4_b156_3 := FALSE; 
+   Alm_Liv_4_b156_4 := FALSE; 
+   Alm_Liv_4_b156_5 := FALSE; 
+   Alm_Liv_4_b156_6 := FALSE; 
+   Alm_Liv_4_b156_7 := FALSE; 
+   Alm_Liv_4_b157_0 := FALSE; 
+   Alm_Liv_4_b157_1 := FALSE; 
+   Alm_Liv_4_b157_2 := FALSE; 
+   Alm_Liv_4_b157_3 := FALSE; 
+   Alm_Liv_4_b157_4 := FALSE; 
+   Alm_Liv_4_b157_5 := FALSE; 
+   Alm_Liv_4_b157_6 := FALSE; 
+   Alm_Liv_4_b157_7 := FALSE; 
+   Alm_Liv_5_b158_0 := FALSE; 
+   Alm_Liv_5_b158_1 := FALSE; 
+   Alm_Liv_5_b158_2 := FALSE; 
+   Alm_Liv_5_b158_3 := FALSE; 
+   Alm_Liv_5_b158_4 := FALSE; 
+   Alm_Liv_5_b158_5 := FALSE; 
+   Alm_Liv_5_b158_6 := FALSE; 
+   Alm_Liv_5_b158_7 := FALSE; 
+   Alm_Liv_5_b159_0 := FALSE; 
+   Alm_Liv_5_b159_1 := FALSE; 
+   Alm_Liv_5_b159_2 := FALSE; 
+   Alm_Liv_5_b159_3 := FALSE; 
+   Alm_Liv_5_b159_4 := FALSE; 
+   Alm_Liv_5_b159_5 := FALSE; 
+   Alm_Liv_5_b159_6 := FALSE; 
+   Alm_Liv_5_b159_7 := FALSE; 
+   Alm_Liv_6_b160_0 := FALSE; 
+   Alm_Liv_6_b160_1 := FALSE; 
+   Alm_Liv_6_b160_2 := FALSE; 
+   Alm_Liv_6_b160_3 := FALSE; 
+   Alm_Liv_6_b160_4 := FALSE; 
+   Alm_Liv_6_b160_5 := FALSE; 
+   Alm_Liv_6_b160_6 := FALSE; 
+   Alm_Liv_6_b160_7 := FALSE; 
+   Alm_Liv_6_b161_0 := FALSE; 
+   Alm_Liv_6_b161_1 := FALSE; 
+   Alm_Liv_6_b161_2 := FALSE; 
+   Alm_Liv_6_b161_3 := FALSE; 
+   Alm_Liv_6_b161_4 := FALSE; 
+   Alm_Liv_6_b161_5 := FALSE; 
+   Alm_Liv_6_b161_6 := FALSE; 
+   Alm_Liv_6_b161_7 := FALSE; 
+   Alm_Liv_6_b162_0 := FALSE; 
+   Alm_Liv_6_b162_1 := FALSE; 
+   Alm_Liv_6_b162_2 := FALSE; 
+   Alm_Liv_6_b162_3 := FALSE; 
+   Alm_Liv_6_b162_4 := FALSE; 
+   Alm_Liv_6_b162_5 := FALSE; 
+   Alm_Liv_6_b162_6 := FALSE; 
+   Alm_Liv_6_b162_7 := FALSE; 
+   Alm_Liv_6_b163_0 := FALSE; 
+   Alm_Liv_6_b163_1 := FALSE; 
+   Alm_Liv_6_b163_2 := FALSE; 
+   Alm_Liv_6_b163_3 := FALSE; 
+   Alm_Liv_6_b163_4 := FALSE; 
+   Alm_Liv_6_b163_5 := FALSE; 
+   Alm_Liv_6_b163_6 := FALSE; 
+   Alm_Liv_6_b163_7 := FALSE; 
+   Alm_Liv_6_b164_0 := FALSE; 
+   Alm_Liv_6_b164_1 := FALSE; 
+   Alm_Liv_6_b164_2 := FALSE; 
+   Alm_Liv_6_b164_3 := FALSE; 
+   Alm_Liv_6_b164_4 := FALSE; 
+   Alm_Liv_6_b164_5 := FALSE; 
+   Alm_Liv_6_b164_6 := FALSE; 
+   Alm_Liv_6_b164_7 := FALSE; 
+   Alm_Liv_6_b165_0 := FALSE; 
+   Alm_Liv_6_b165_1 := FALSE; 
+   Alm_Liv_6_b165_2 := FALSE; 
+   Alm_Liv_6_b165_3 := FALSE; 
+   Alm_Liv_6_b165_4 := FALSE; 
+   Alm_Liv_6_b165_5 := FALSE; 
+   Alm_Liv_6_b165_6 := FALSE; 
+   Alm_Liv_6_b165_7 := FALSE; 
+   Alm_Liv_6_b166_0 := FALSE; 
+   Alm_Liv_6_b166_1 := FALSE; 
+   Alm_Liv_6_b166_2 := FALSE; 
+   Alm_Liv_6_b166_3 := FALSE; 
+   Alm_Liv_6_b166_4 := FALSE; 
+   Alm_Liv_6_b166_5 := FALSE; 
+   Alm_Liv_6_b166_6 := FALSE; 
+   Alm_Liv_6_b166_7 := FALSE; 
+   Alm_Liv_6_b167_0 := FALSE; 
+   Alm_Liv_6_b167_1 := FALSE; 
+   Alm_Liv_6_b167_2 := FALSE; 
+   Alm_Liv_6_b167_3 := FALSE; 
+   Alm_Liv_6_b167_4 := FALSE; 
+   Alm_Liv_6_b167_5 := FALSE; 
+   Alm_Liv_6_b167_6 := FALSE; 
+   Alm_Liv_6_b167_7 := FALSE; 
+   Alm_Liv_6_b168_0 := FALSE; 
+   Alm_Liv_6_b168_1 := FALSE; 
+   Alm_Liv_6_b168_2 := FALSE; 
+   Alm_Liv_6_b168_3 := FALSE; 
+   Alm_Liv_6_b168_4 := FALSE; 
+   Alm_Liv_6_b168_5 := FALSE; 
+   Alm_Liv_6_b168_6 := FALSE; 
+   Alm_Liv_6_b168_7 := FALSE; 
+   Alm_Liv_6_b169_0 := FALSE; 
+   Alm_Liv_6_b169_1 := FALSE; 
+   Alm_Liv_6_b169_2 := FALSE; 
+   Alm_Liv_6_b169_3 := FALSE; 
+   Alm_Liv_6_b169_4 := FALSE; 
+   Alm_Liv_6_b169_5 := FALSE; 
+   Alm_Liv_6_b169_6 := FALSE; 
+   Alm_Liv_6_b169_7 := FALSE; 
+   Alm_Liv_6_b170_0 := FALSE; 
+   Alm_Liv_6_b170_1 := FALSE; 
+   Alm_Liv_6_b170_2 := FALSE; 
+   Alm_Liv_6_b170_3 := FALSE; 
+   Alm_Liv_6_b170_4 := FALSE; 
+   Alm_Liv_6_b170_5 := FALSE; 
+   Alm_Liv_6_b170_6 := FALSE; 
+   Alm_Liv_6_b170_7 := FALSE; 
+   Alm_Liv_6_b171_0 := FALSE; 
+   Alm_Liv_6_b171_1 := FALSE; 
+   Alm_Liv_6_b171_2 := FALSE; 
+   Alm_Liv_6_b171_3 := FALSE; 
+   Alm_Liv_6_b171_4 := FALSE; 
+   Alm_Liv_6_b171_5 := FALSE; 
+   Alm_Liv_6_b171_6 := FALSE; 
+   Alm_Liv_6_b171_7 := FALSE; 
+   Alm_Liv_6_b172_0 := FALSE; 
+   Alm_Liv_6_b172_1 := FALSE; 
+   Alm_Liv_6_b172_2 := FALSE; 
+   Alm_Liv_6_b172_3 := FALSE; 
+   Alm_Liv_6_b172_4 := FALSE; 
+   Alm_Liv_6_b172_5 := FALSE; 
+   Alm_Liv_6_b172_6 := FALSE; 
+   Alm_Liv_6_b172_7 := FALSE; 
+   Alm_Liv_6_b173_0 := FALSE; 
+   Alm_Liv_6_b173_1 := FALSE; 
+   Alm_Liv_6_b173_2 := FALSE; 
+   Alm_Liv_6_b173_3 := FALSE; 
+   Alm_Liv_6_b173_4 := FALSE; 
+   Alm_Liv_6_b173_5 := FALSE; 
+   Alm_Liv_6_b173_6 := FALSE; 
+   Alm_Liv_6_b173_7 := FALSE; 
+   Alm_Liv_6_b174_0 := FALSE; 
+   Alm_Liv_6_b174_1 := FALSE; 
+   Alm_Liv_6_b174_2 := FALSE; 
+   Alm_Liv_6_b174_3 := FALSE; 
+   Alm_Liv_6_b174_4 := FALSE; 
+   Alm_Liv_6_b174_5 := FALSE; 
+   Alm_Liv_6_b174_6 := FALSE; 
+   Alm_Liv_6_b174_7 := FALSE; 
+   Alm_Liv_6_b175_0 := FALSE; 
+   Alm_Liv_6_b175_1 := FALSE; 
+   Alm_Liv_6_b175_2 := FALSE; 
+   Alm_Liv_6_b175_3 := FALSE; 
+   Alm_Liv_6_b175_4 := FALSE; 
+   Alm_Liv_6_b175_5 := FALSE; 
+   Alm_Liv_6_b175_6 := FALSE; 
+   Alm_Liv_6_b175_7 := FALSE; 
+   Alm_Liv_6_b176_0 := FALSE; 
+   Alm_Liv_6_b176_1 := FALSE; 
+   Alm_Liv_6_b176_2 := FALSE; 
+   Alm_Liv_6_b176_3 := FALSE; 
+   Alm_Liv_6_b176_4 := FALSE; 
+   Alm_Liv_6_b176_5 := FALSE; 
+   Alm_Liv_6_b176_6 := FALSE; 
+   Alm_Liv_6_b176_7 := FALSE; 
+   Alm_Liv_6_b177_0 := FALSE; 
+   Alm_Liv_6_b177_1 := FALSE; 
+   Alm_Liv_6_b177_2 := FALSE; 
+   Alm_Liv_6_b177_3 := FALSE; 
+   Alm_Liv_6_b177_4 := FALSE; 
+   Alm_Liv_6_b177_5 := FALSE; 
+   Alm_Liv_6_b177_6 := FALSE; 
+   Alm_Liv_6_b177_7 := FALSE; 
+   Alm_Liv_6_b178_0 := FALSE; 
+   Alm_Liv_6_b178_1 := FALSE; 
+   Alm_Liv_6_b178_2 := FALSE; 
+   Alm_Liv_6_b178_3 := FALSE; 
+   Alm_Liv_6_b178_4 := FALSE; 
+   Alm_Liv_6_b178_5 := FALSE; 
+   Alm_Liv_6_b178_6 := FALSE; 
+   Alm_Liv_6_b178_7 := FALSE; 
+   Alm_Liv_6_b179_0 := FALSE; 
+   Alm_Liv_6_b179_1 := FALSE; 
+   Alm_Liv_6_b179_2 := FALSE; 
+   Alm_Liv_6_b179_3 := FALSE; 
+   Alm_Liv_6_b179_4 := FALSE; 
+   Alm_Liv_6_b179_5 := FALSE; 
+   Alm_Liv_6_b179_6 := FALSE; 
+   Alm_Liv_6_b179_7 := FALSE; 
+   Alm_Liv_6_b180_0 := FALSE; 
+   Alm_Liv_6_b180_1 := FALSE; 
+   Alm_Liv_6_b180_2 := FALSE; 
+   Alm_Liv_6_b180_3 := FALSE; 
+   Alm_Liv_6_b180_4 := FALSE; 
+   Alm_Liv_6_b180_5 := FALSE; 
+   Alm_Liv_6_b180_6 := FALSE; 
+   Alm_Liv_6_b180_7 := FALSE; 
+   Alm_Liv_6_b181_0 := FALSE; 
+   Alm_Liv_6_b181_1 := FALSE; 
+   Alm_Liv_6_b181_2 := FALSE; 
+   Alm_Liv_6_b181_3 := FALSE; 
+   Alm_Liv_6_b181_4 := FALSE; 
+   Alm_Liv_6_b181_5 := FALSE; 
+   Alm_Liv_6_b181_6 := FALSE; 
+   Alm_Liv_6_b181_7 := FALSE; 
+   Alm_Liv_6_b182_0 := FALSE; 
+   Alm_Liv_6_b182_1 := FALSE; 
+   Alm_Liv_6_b182_2 := FALSE; 
+   Alm_Liv_6_b182_3 := FALSE; 
+   Alm_Liv_6_b182_4 := FALSE; 
+   Alm_Liv_6_b182_5 := FALSE; 
+   Alm_Liv_6_b182_6 := FALSE; 
+   Alm_Liv_6_b182_7 := FALSE; 
+   Alm_Liv_6_b183_0 := FALSE; 
+   Alm_Liv_6_b183_1 := FALSE; 
+   Alm_Liv_6_b183_2 := FALSE; 
+   Alm_Liv_6_b183_3 := FALSE; 
+   Alm_Liv_6_b183_4 := FALSE; 
+   Alm_Liv_6_b183_5 := FALSE; 
+   Alm_Liv_6_b183_6 := FALSE; 
+   Alm_Liv_6_b183_7 := FALSE; 
+   Alm_Liv_6_b184_0 := FALSE; 
+   Alm_Liv_6_b184_1 := FALSE; 
+   Alm_Liv_6_b184_2 := FALSE; 
+   Alm_Liv_6_b184_3 := FALSE; 
+   Alm_Liv_6_b184_4 := FALSE; 
+   Alm_Liv_6_b184_5 := FALSE; 
+   Alm_Liv_6_b184_6 := FALSE; 
+   Alm_Liv_6_b184_7 := FALSE; 
+   Alm_Liv_6_b185_0 := FALSE; 
+   Alm_Liv_6_b185_1 := FALSE; 
+   Alm_Liv_6_b185_2 := FALSE; 
+   Alm_Liv_6_b185_3 := FALSE; 
+   Alm_Liv_6_b185_4 := FALSE; 
+   Alm_Liv_6_b185_5 := FALSE; 
+   Alm_Liv_6_b185_6 := FALSE; 
+   Alm_Liv_6_b185_7 := FALSE; 
+   Alm_Liv_6_b186_0 := FALSE; 
+   Alm_Liv_6_b186_1 := FALSE; 
+   Alm_Liv_6_b186_2 := FALSE; 
+   Alm_Liv_6_b186_3 := FALSE; 
+   Alm_Liv_6_b186_4 := FALSE; 
+   Alm_Liv_6_b186_5 := FALSE; 
+   Alm_Liv_6_b186_6 := FALSE; 
+   Alm_Liv_6_b186_7 := FALSE; 
+   Alm_Liv_6_b187_0 := FALSE; 
+   Alm_Liv_6_b187_1 := FALSE; 
+   Alm_Liv_6_b187_2 := FALSE; 
+   Alm_Liv_6_b187_3 := FALSE; 
+   Alm_Liv_6_b187_4 := FALSE; 
+   Alm_Liv_6_b187_5 := FALSE; 
+   Alm_Liv_6_b187_6 := FALSE; 
+   Alm_Liv_6_b187_7 := FALSE; 
+   Alm_Liv_6_b188_0 := FALSE; 
+   Alm_Liv_6_b188_1 := FALSE; 
+   Alm_Liv_6_b188_2 := FALSE; 
+   Alm_Liv_6_b188_3 := FALSE; 
+   Alm_Liv_6_b188_4 := FALSE; 
+   Alm_Liv_6_b188_5 := FALSE; 
+   Alm_Liv_6_b188_6 := FALSE; 
+   Alm_Liv_6_b188_7 := FALSE; 
+   Alm_Liv_6_b189_0 := FALSE; 
+   Alm_Liv_6_b189_1 := FALSE; 
+   Alm_Liv_6_b189_2 := FALSE; 
+   Alm_Liv_6_b189_3 := FALSE; 
+   Alm_Liv_6_b189_4 := FALSE; 
+   Alm_Liv_6_b189_5 := FALSE; 
+   Alm_Liv_6_b189_6 := FALSE; 
+   Alm_Liv_6_b189_7 := FALSE; 
+   Msg_Liv_1_b190_0 := FALSE; 
+   Msg_Liv_1_b190_1 := FALSE; 
+   Msg_Liv_1_b190_2 := FALSE; 
+   Msg_Liv_1_b190_3 := FALSE; 
+   Msg_Liv_1_b190_4 := FALSE; 
+   Msg_Liv_1_b190_5 := FALSE; 
+   Msg_Liv_1_b190_6 := FALSE; 
+   Msg_Liv_1_b190_7 := FALSE; 
+   Msg_Liv_1_b191_0 := FALSE; 
+   Msg_Liv_1_b191_1 := FALSE; 
+   Msg_Liv_1_b191_2 := FALSE; 
+   Msg_Liv_1_b191_3 := FALSE; 
+   Msg_Liv_1_b191_4 := FALSE; 
+   Msg_Liv_1_b191_5 := FALSE; 
+   Msg_Liv_1_b191_6 := FALSE; 
+   Msg_Liv_1_b191_7 := FALSE; 
+   Msg_Liv_1_b192_0 := FALSE; 
+   Msg_Liv_1_b192_1 := FALSE; 
+   Msg_Liv_1_b192_2 := FALSE; 
+   Msg_Liv_1_b192_3 := FALSE; 
+   Msg_Liv_1_b192_4 := FALSE; 
+   Msg_Liv_1_b192_5 := FALSE; 
+   Msg_Liv_1_b192_6 := FALSE; 
+   Msg_Liv_1_b192_7 := FALSE; 
+   Msg_Liv_1_b193_0 := FALSE; 
+   Msg_Liv_1_b193_1 := FALSE; 
+   Msg_Liv_1_b193_2 := FALSE; 
+   Msg_Liv_1_b193_3 := FALSE; 
+   Msg_Liv_1_b193_4 := FALSE; 
+   Msg_Liv_1_b193_5 := FALSE; 
+   Msg_Liv_1_b193_6 := FALSE; 
+   Msg_Liv_1_b193_7 := FALSE; 
+   Msg_Liv_1_b194_0 := FALSE; 
+   Msg_Liv_1_b194_1 := FALSE; 
+   Msg_Liv_1_b194_2 := FALSE; 
+   Msg_Liv_1_b194_3 := FALSE; 
+   Msg_Liv_1_b194_4 := FALSE; 
+   Msg_Liv_1_b194_5 := FALSE; 
+   Msg_Liv_1_b194_6 := FALSE; 
+   Msg_Liv_1_b194_7 := FALSE; 
+   Msg_Liv_1_b195_0 := FALSE; 
+   Msg_Liv_1_b195_1 := FALSE; 
+   Msg_Liv_1_b195_2 := FALSE; 
+   Msg_Liv_1_b195_3 := FALSE; 
+   Msg_Liv_1_b195_4 := FALSE; 
+   Msg_Liv_1_b195_5 := FALSE; 
+   Msg_Liv_1_b195_6 := FALSE; 
+   Msg_Liv_1_b195_7 := FALSE; 
+   Msg_Liv_1_b196_0 := FALSE; 
+   Msg_Liv_1_b196_1 := FALSE; 
+   Msg_Liv_1_b196_2 := FALSE; 
+   Msg_Liv_1_b196_3 := FALSE; 
+   Msg_Liv_1_b196_4 := FALSE; 
+   Msg_Liv_1_b196_5 := FALSE; 
+   Msg_Liv_1_b196_6 := FALSE; 
+   Msg_Liv_1_b196_7 := FALSE; 
+   Msg_Liv_1_b197_0 := FALSE; 
+   Msg_Liv_1_b197_1 := FALSE; 
+   Msg_Liv_1_b197_2 := FALSE; 
+   Msg_Liv_1_b197_3 := FALSE; 
+   Msg_Liv_1_b197_4 := FALSE; 
+   Msg_Liv_1_b197_5 := FALSE; 
+   Msg_Liv_1_b197_6 := FALSE; 
+   Msg_Liv_1_b197_7 := FALSE; 
+   Msg_Liv_1_b198_0 := FALSE; 
+   Msg_Liv_1_b198_1 := FALSE; 
+   Msg_Liv_1_b198_2 := FALSE; 
+   Msg_Liv_1_b198_3 := FALSE; 
+   Msg_Liv_1_b198_4 := FALSE; 
+   Msg_Liv_1_b198_5 := FALSE; 
+   Msg_Liv_1_b198_6 := FALSE; 
+   Msg_Liv_1_b198_7 := FALSE; 
+   Msg_Liv_1_b199_0 := FALSE; 
+   Msg_Liv_1_b199_1 := FALSE; 
+   Msg_Liv_1_b199_2 := FALSE; 
+   Msg_Liv_1_b199_3 := FALSE; 
+   Msg_Liv_1_b199_4 := FALSE; 
+   Msg_Liv_1_b199_5 := FALSE; 
+   Msg_Liv_1_b199_6 := FALSE; 
+   Msg_Liv_1_b199_7 := FALSE; 
+END_DATA_BLOCK
+

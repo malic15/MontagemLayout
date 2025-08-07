@@ -22,6 +22,12 @@
     --btn-scale-trim0: 140px;
     --btn-scale-glazing: 260px;
     --btn-scale-umc: 200px;
+    --btn-scale-gomp: 150px;
+    --btn-scale-goma: 100px;
+    --btn-scale-trp: 150px;
+    --btn-scale-tra: 80px;
+    --btn-scale-pb1: 260px;
+    --btn-scale-pb2: 260px;
     --btn-scale-height: calc(15px * var(--scale-factor-width));
 }
 /*factorHeight: 1.0526315946022256 factorWidth:1.1629630194769964*/
@@ -675,7 +681,7 @@ body {
     text-align: center;
     height: calc(25px* var(--scale-factor-height));
     /*    width: calc(25px* var(--scale-factor-width));*/
-    width: 200px;
+    width: calc(135px*var(--scale-factor-width));
     /*    border-radius: calc(3px* var(--scale-factor-width));*/
     background-color: transparent;
     border-top: calc(1px* var(--scale-factor-width)) solid #2d2d2d80;
@@ -954,19 +960,19 @@ body {
 .btn-pb1 {
     /*padding: var(--btn-scale-height) var(--btn-scale-glz);
     transform: rotate(-90deg);*/
-    width: calc(230px*var(--scale-factor-width));
+    width: calc(var(--btn-scale-pb1)*var(--scale-factor-width));
     height: calc(var(--btn-height)* var(--scale-factor-height));
     top: calc((650px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((480px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((490px + var(--horizontal-offset))* var(--scale-factor-width));
 }
 
 .btn-pb2 {
     /*padding: var(--btn-scale-height) var(--btn-scale-glz);
     transform: rotate(-90deg);*/
-    width: calc(230px*var(--scale-factor-width));
+    width: calc(var(--btn-scale-pb2)*var(--scale-factor-width));
     height: calc(var(--btn-height)* var(--scale-factor-height));
     top: calc((650px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((50px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((10px + var(--horizontal-offset))* var(--scale-factor-width));
 }
 
 .btn-umc {
@@ -974,22 +980,22 @@ body {
     transform: rotate(-90deg);*/
     width: calc(var(--btn-height)*var(--scale-factor-width));
     height: calc(200px* var(--scale-factor-height));
-    top: calc((0px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-190px + var(--horizontal-offset))* var(--scale-factor-width));
+    top: calc((-50px + var(--vertical-offset))* var(--scale-factor-height));
+    left: calc((-220px + var(--horizontal-offset))* var(--scale-factor-width));
 }
 
 .btn-tra {
     /*padding: var(--btn-scale-height) var(--btn-scale-glz);
     transform: rotate(-90deg);*/
     width: calc(var(--btn-height)*var(--scale-factor-width));
-    height: calc(80px* var(--scale-factor-height));
+    height: calc(var(--btn-scale-tra)* var(--scale-factor-height));
     top: calc((-50px + var(--vertical-offset))* var(--scale-factor-height));
     left: calc((-100px + var(--horizontal-offset))* var(--scale-factor-width));
 }
 
 .btn-goma {
     width: calc(var(--btn-height)*var(--scale-factor-width));
-    height: calc(100px* var(--scale-factor-height));
+    height: calc(var(--btn-scale-goma)* var(--scale-factor-height));
     top: calc((50px + var(--vertical-offset))* var(--scale-factor-height));
     left: calc((-100px + var(--horizontal-offset))* var(--scale-factor-width));
     border-radius: calc(3px* var(--scale-factor-width)) calc(3px* var(--scale-factor-width)) 0 0;
@@ -999,7 +1005,7 @@ body {
     width: calc(var(--btn-height)*var(--scale-factor-width));
     height: calc(40px* var(--scale-factor-height));
     top: calc((19px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-274px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((-314px + var(--horizontal-offset))* var(--scale-factor-width));
     border-radius: 0 0 0 0;
     border-width: 0 calc(1px* var(--scale-factor-width)) 0 calc(1px* var(--scale-factor-width));
     line-height: 200%;
@@ -1009,17 +1015,17 @@ body {
     width: calc(var(--btn-height)*var(--scale-factor-width));
     height: calc(40px* var(--scale-factor-height));
     top: calc((58px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-274px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((-314px + var(--horizontal-offset))* var(--scale-factor-width));
     border-radius: 0 0 0 calc(3px* var(--scale-factor-width));
     border-width: 0 0 calc(1px* var(--scale-factor-width)) calc(1px* var(--scale-factor-width));
     line-height: 200%;
 }
 
-.btn-gomao180to190 {
+.btn-goma180to190 {
     width: calc(10px*var(--scale-factor-width));
     height: calc(var(--btn-height)* var(--scale-factor-height));
     top: calc((58px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-234px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((-274px + var(--horizontal-offset))* var(--scale-factor-width));
     border-radius: 0 0 0 0;
     border-width: calc(1px* var(--scale-factor-width)) 0 calc(1px* var(--scale-factor-width)) 0;
 }
@@ -1027,7 +1033,7 @@ body {
     width: calc(var(--btn-height)*var(--scale-factor-width));
     height: calc(40px* var(--scale-factor-height));
     top: calc((58px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-224px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((-264px + var(--horizontal-offset))* var(--scale-factor-width));
     border-radius: 0 0 calc(3px* var(--scale-factor-width)) 0;
     border-width: 0 calc(1px* var(--scale-factor-width)) calc(1px* var(--scale-factor-width)) 0;
     line-height: 200%;
@@ -1036,7 +1042,7 @@ body {
     width: calc(var(--btn-height)*var(--scale-factor-width));
     height: calc(40px* var(--scale-factor-height));
     top: calc((19px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-224px + var(--horizontal-offset))* var(--scale-factor-width));
+    left: calc((-264px + var(--horizontal-offset))* var(--scale-factor-width));
     border-radius: calc(3px* var(--scale-factor-width)) calc(3px* var(--scale-factor-width)) 0 0;
     border-width: calc(1px* var(--scale-factor-width)) calc(1px* var(--scale-factor-width)) 0 calc(1px* var(--scale-factor-width));
     line-height: 200%;
@@ -1046,18 +1052,18 @@ body {
     /*padding: var(--btn-scale-height) var(--btn-scale-glz);
     transform: rotate(-90deg);*/
     width: calc(var(--btn-height)*var(--scale-factor-width));
-    height: calc(100px* var(--scale-factor-height));
-    top: calc((220px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-250px + var(--horizontal-offset))* var(--scale-factor-width));
+    height: calc(var(--btn-scale-trp)* var(--scale-factor-height));
+    top: calc((170px + var(--vertical-offset))* var(--scale-factor-height));
+    left: calc((-220px + var(--horizontal-offset))* var(--scale-factor-width));
 }
 
 .btn-gomp {
     /*padding: var(--btn-scale-height) var(--btn-scale-glz);
     transform: rotate(-90deg);*/
     width: calc(var(--btn-height)*var(--scale-factor-width));
-    height: calc(100px* var(--scale-factor-height));
-    top: calc((220px + var(--vertical-offset))* var(--scale-factor-height));
-    left: calc((-190px + var(--horizontal-offset))* var(--scale-factor-width));
+    height: calc(var(--btn-scale-gomp)* var(--scale-factor-height));
+    top: calc((170px + var(--vertical-offset))* var(--scale-factor-height));
+    left: calc((-160px + var(--horizontal-offset))* var(--scale-factor-width));
 }
 .j-button {
     position: absolute;

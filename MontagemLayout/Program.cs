@@ -195,7 +195,7 @@ internal class Program
 
         app.Lifetime.ApplicationStopping.Register(() =>
         {
-            Console.Write("ApplicationStopping");
+            //Console.Write("ApplicationStopping");
             mqttService.StopAsync().GetAwaiter().GetResult();
         });
 
@@ -376,7 +376,7 @@ internal class Program
                 }
                 if (mqttData.All(value => value == 0))
                 {
-                    Console.WriteLine("Todos os bits são 0 da "+db.GetString()+" linha " +line.ToString()+". Definindo a prioridade como 19.");
+                    //Console.WriteLine("Todos os bits são 0 da "+db.GetString()+" linha " +line.ToString()+". Definindo a prioridade como 19.");
                     priority = 19;
                 }
                 statusLineService.UpdateStatusDbsActive(line.ToString(), db.ToString(), priority, faultStatus, DateTime.Now);
@@ -453,7 +453,7 @@ internal class Program
                 pdtService.ResetCountPdtData();
             }
             prodService.ResetProdData();
-            Console.WriteLine("Dicionário pdtData zerado devido a mudança de turno.");
+            //Console.WriteLine("Dicionário pdtData zerado devido a mudança de turno.");
 
             globalShift.ActualShift = actualShift;
             globalShift.Shift = newShift;
@@ -468,14 +468,14 @@ internal class Program
     }
     private static async void CheckMinuteProcess(object sender, ElapsedEventArgs e, PdtService pdtService, DataService dataService, BufferService bufferService, StatusLineService statusLineService, SQLService sqlService, ProdService prodService, GlobalShift globalShift, MySqlService mySqlService)
     {
-        Console.WriteLine("Check Minute");
+        //Console.WriteLine("Check Minute");
         //await bufferService.UpdateLineBitCount();
             //pdtService.PrintPdtStatusForLine("deckingup");
             //pdtService.LogDictionaryPDTSize();
             //bufferService.LogDictionaryBufferSize();
         //bufferService.PrintBufferData();
         //statusLineService.LogDictionaryStatusSize();
-        statusLineService.LogLastMessages();
+        //statusLineService.LogLastMessages();
         //bufferService.PrintQueueStatus();
         await prodService.TheoreticalProdUpdateAsync();
         //prodService.PrintProdData();

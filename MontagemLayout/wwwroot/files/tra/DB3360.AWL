@@ -1,0 +1,1099 @@
+DATA_BLOCK "MAIN_NPL_DB_STRUCTUR"
+TITLE =
+{ S7_language := '16(1) Italiano (Italia)  11.09.2014  14:30:07' }
+VERSION : 0.1
+
+
+  STRUCT 	
+   CM_ID : STRING  [8 ] := '=FCA_0';	//Nome Linea
+   STATION_ID : STRING  [8 ] := '++MAIN';	//Nome Stazione
+   ELEMENT_ID : STRING  [8 ];	//Nome Macchinario
+   DB_ID : INT  := 2;	//Dimensione DB 1=256 2=512 3=1024
+   PART_STYLE : STRING  [12 ];	//IDENTIFICATIVO PEZZO IN LAVORAZIONE
+   ACT_CYCLE_TIME : INT ;	//Tempo ciclo attuale
+   COUNT_GOOD : INT ;	//Pezzi OK
+   COUNT_SCRAP : INT ;	//Pezzi KO
+   SPARE_00 : ARRAY  [0 .. 15 ] OF //Accumulo
+   INT  := 0;	
+   SPARE_01 : ARRAY  [0 .. 17 ] OF //Riserve Array
+   INT ;	
+   CODE_EVENT : ARRAY  [0 .. 7 ] OF //Codice diagnostica
+   INT ;	
+   States_b136_0 : BOOL ;	//=FCA_0++MAIN;Guasto  / Faulted;1
+   States_b136_1 : BOOL ;	//=FCA_0++MAIN;Emergenza / Emergenzy;2
+   States_b136_2 : BOOL ;	//=FCA_0++MAIN;Cambio Elettrodi / Tip Change;3
+   States_b136_3 : BOOL ;	//=FCA_0++MAIN;Attrezzamento / Tool Change;4
+   States_b136_4 : BOOL ;	//=FCA_0++MAIN;Congruenza e Controllo / Check And Consistency;5
+   States_b136_5 : BOOL ;	//=FCA_0++MAIN;Mancato Scarico / Starved;9
+   States_b136_6 : BOOL ;	//=FCA_0++MAIN;Mancato Carico LAT.AUTO / No Material;7
+   States_b136_7 : BOOL ;	//=FCA_0++MAIN;Mancato Carico LAT.MANO / OverCycle;8
+   States_b137_0 : BOOL ;	//=FCA_0++MAIN;Mancato Carico / Blocked;6
+   States_b137_1 : BOOL ;	//=FCA_0++MAIN;Mancanza Consensi Esterni / End Of Travel;10
+   States_b137_2 : BOOL ;	//=FCA_0++MAIN;Anomalia di Qualità / Quality Alert;11
+   States_b137_3 : BOOL ;	//=FCA_0++MAIN;Controllo Di Qualità Pianificato / Quality Check;12
+   States_b137_4 : BOOL ;	//=FCA_0++MAIN;Manutenzione Pianificata / PM Event;13
+   States_b137_5 : BOOL ;	//=FCA_0++MAIN;Manutenzione Non Programmata / AM Event;14
+   States_b137_6 : BOOL ;	//=FCA_0++MAIN;No Ciclo Avviato / No Cycle Started;15
+   States_b137_7 : BOOL ;	//=FCA_0++MAIN;Manuale / Out Of Auto;16
+   States_b138_0 : BOOL ;	//=FCA_0++MAIN;Arresto Lato Linea / Production Stop;17
+   States_b138_1 : BOOL ;	//=FCA_0++MAIN;Vuoto Tecnico / Tecnical Gaps ;18
+   States_b138_2 : BOOL ;	//=FCA_0++MAIN;Produzione / Production;19
+   States_b138_3 : BOOL ;	
+   States_b138_4 : BOOL ;	
+   States_b138_5 : BOOL ;	
+   States_b138_6 : BOOL ;	
+   States_b138_7 : BOOL ;	
+   States_b139_0 : BOOL ;	
+   States_b139_1 : BOOL ;	
+   States_b139_2 : BOOL ;	
+   States_b139_3 : BOOL ;	
+   States_b139_4 : BOOL ;	
+   States_b139_5 : BOOL ;	
+   States_b139_6 : BOOL ;	
+   States_b139_7 : BOOL ;	
+   States_b140_0 : BOOL ;	//DB3360.DBX140.0=FCA_0++MAIN+HGD01-DME01;Falha Modulo ProfSafe FDI01;2
+   States_b140_1 : BOOL ;	//DB3360.DBX140.1=FCA_0++MAIN+HGD01-DME01;Falha Modulo ProfSafe FDI02;2
+   States_b140_2 : BOOL ;	//DB3360.DBX140.2=FCA_0++MAIN+HGD01-DME01;Falha Modulo ProfSafe FDO01;2
+   States_b140_3 : BOOL ;	//DB3360.DBX140.3=FCA_0++MAIN+HGD01-DME01;Falha Modulo ProfSafe FDO02;2
+   States_b140_4 : BOOL ;	//DB3360.DBX140.4=FCA_0++MAIN+HGD01-DME01;Falha Modulo ProfSafe FDO03;2
+   States_b140_5 : BOOL ;	
+   States_b140_6 : BOOL ;	
+   States_b140_7 : BOOL ;	
+   States_b141_0 : BOOL ;	
+   States_b141_1 : BOOL ;	
+   States_b141_2 : BOOL ;	
+   States_b141_3 : BOOL ;	
+   States_b141_4 : BOOL ;	
+   States_b141_5 : BOOL ;	
+   States_b141_6 : BOOL ;	
+   States_b141_7 : BOOL ;	
+   States_b142_0 : BOOL ;	
+   States_b142_1 : BOOL ;	
+   States_b142_2 : BOOL ;	//=FCA_0++MAIN;Attesa Manutenzione / Maintenance Assistance;51
+   States_b142_3 : BOOL ;	//=FCA_0++MAIN;Materiale Sotto Soglia / Low Material;52
+   States_b142_4 : BOOL ;	//=FCA_0++MAIN;Chiamata Team Leader / team leader Alert;53
+   States_b142_5 : BOOL ;	//=FCA_0++MAIN;ByPass / ByPass;54
+   States_b142_6 : BOOL ;	//=FCA_0++MAIN;Degradato / Degraded;55
+   States_b142_7 : BOOL ;	//=FCA_0++MAIN;Time-Out / Time-Out;56
+   States_b143_0 : BOOL ;	//=FCA_0++MAIN;Line PC Scollegato / System Down;57
+   States_b143_1 : BOOL ;	//=FCA_0++MAIN;messaggio Guida / Alarm;58
+   States_b143_2 : BOOL ;	
+   States_b143_3 : BOOL ;	
+   States_b143_4 : BOOL ;	
+   States_b143_5 : BOOL ;	
+   States_b143_6 : BOOL ;	
+   States_b143_7 : BOOL ;	
+   Alm_Liv_1_b144_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_41;Alimentazione Scalance Linea;1
+   Alm_Liv_1_b144_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_44;Alimentazione Ausiliari 24Vdc;1
+   Alm_Liv_1_b144_2 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_45;Alimentazione 24Vdc Input e Servizi ST010;1
+   Alm_Liv_1_b144_3 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_47;Alimentazione 24Vdc Input e Servizi ST030;1
+   Alm_Liv_1_b144_4 : BOOL ;	
+   Alm_Liv_1_b144_5 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_49;Alimentazione 24Vdc Input e Servizi ST050;1
+   Alm_Liv_1_b144_6 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_50;Alimentazione 24Vdc Input e Servizi ST060;1
+   Alm_Liv_1_b144_7 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_51;Alimentazione 24Vdc Input e Servizi ST070;1
+   Alm_Liv_1_b145_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_52;Alimentazione 24Vdc Input e Servizi ST080;1
+   Alm_Liv_1_b145_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_53;Alimentazione 24Vdc Input e Servizi ST090;1
+   Alm_Liv_1_b145_2 : BOOL ;	
+   Alm_Liv_1_b145_3 : BOOL ;	
+   Alm_Liv_1_b145_4 : BOOL ;	
+   Alm_Liv_1_b145_5 : BOOL ;	
+   Alm_Liv_1_b145_6 : BOOL ;	// 
+   Alm_Liv_1_b145_7 : BOOL ;	// 
+   Alm_Liv_1_b146_0 : BOOL ;	// 
+   Alm_Liv_1_b146_1 : BOOL ;	// 
+   Alm_Liv_1_b146_2 : BOOL ;	// 
+   Alm_Liv_1_b146_3 : BOOL ;	// 
+   Alm_Liv_1_b146_4 : BOOL ;	// 
+   Alm_Liv_1_b146_5 : BOOL ;	// 
+   Alm_Liv_1_b146_6 : BOOL ;	// 
+   Alm_Liv_1_b146_7 : BOOL ;	// 
+   Alm_Liv_1_b147_0 : BOOL ;	// 
+   Alm_Liv_1_b147_1 : BOOL ;	// 
+   Alm_Liv_1_b147_2 : BOOL ;	// 
+   Alm_Liv_1_b147_3 : BOOL ;	// 
+   Alm_Liv_1_b147_4 : BOOL ;	// 
+   Alm_Liv_1_b147_5 : BOOL ;	// 
+   Alm_Liv_1_b147_6 : BOOL ;	// 
+   Alm_Liv_1_b147_7 : BOOL ;	// 
+   Alm_Liv_1_b148_0 : BOOL ;	// 
+   Alm_Liv_1_b148_1 : BOOL ;	// 
+   Alm_Liv_1_b148_2 : BOOL ;	// 
+   Alm_Liv_1_b148_3 : BOOL ;	// 
+   Alm_Liv_1_b148_4 : BOOL ;	// 
+   Alm_Liv_1_b148_5 : BOOL ;	// 
+   Alm_Liv_1_b148_6 : BOOL ;	// 
+   Alm_Liv_1_b148_7 : BOOL ;	// 
+   Alm_Liv_1_b149_0 : BOOL ;	// 
+   Alm_Liv_1_b149_1 : BOOL ;	// 
+   Alm_Liv_1_b149_2 : BOOL ;	// 
+   Alm_Liv_1_b149_3 : BOOL ;	// 
+   Alm_Liv_1_b149_4 : BOOL ;	// 
+   Alm_Liv_1_b149_5 : BOOL ;	// 
+   Alm_Liv_1_b149_6 : BOOL ;	// 
+   Alm_Liv_1_b149_7 : BOOL ;	// 
+   Alm_Liv_1_b150_0 : BOOL ;	// 
+   Alm_Liv_1_b150_1 : BOOL ;	// 
+   Alm_Liv_1_b150_2 : BOOL ;	// 
+   Alm_Liv_1_b150_3 : BOOL ;	// 
+   Alm_Liv_1_b150_4 : BOOL ;	// 
+   Alm_Liv_1_b150_5 : BOOL ;	// 
+   Alm_Liv_1_b150_6 : BOOL ;	// 
+   Alm_Liv_1_b150_7 : BOOL ;	// 
+   Alm_Liv_1_b151_0 : BOOL ;	// 
+   Alm_Liv_1_b151_1 : BOOL ;	// 
+   Alm_Liv_1_b151_2 : BOOL ;	// 
+   Alm_Liv_1_b151_3 : BOOL ;	// 
+   Alm_Liv_1_b151_4 : BOOL ;	// 
+   Alm_Liv_1_b151_5 : BOOL ;	// 
+   Alm_Liv_1_b151_6 : BOOL ;	// 
+   Alm_Liv_1_b151_7 : BOOL ;	// 
+   Alm_Liv_2_b152_0 : BOOL ;	//=FCA_0++MAIN+HGD01-DME01;Allarme Comunicazione Profinet ET200S (15);1
+   Alm_Liv_2_b152_1 : BOOL ;	// 
+   Alm_Liv_2_b152_2 : BOOL ;	// 
+   Alm_Liv_2_b152_3 : BOOL ;	// 
+   Alm_Liv_2_b152_4 : BOOL ;	// 
+   Alm_Liv_2_b152_5 : BOOL ;	// 
+   Alm_Liv_2_b152_6 : BOOL ;	// 
+   Alm_Liv_2_b152_7 : BOOL ;	// 
+   Alm_Liv_2_b153_0 : BOOL ;	// 
+   Alm_Liv_2_b153_1 : BOOL ;	// 
+   Alm_Liv_2_b153_2 : BOOL ;	// 
+   Alm_Liv_2_b153_3 : BOOL ;	// 
+   Alm_Liv_2_b153_4 : BOOL ;	// 
+   Alm_Liv_2_b153_5 : BOOL ;	// 
+   Alm_Liv_2_b153_6 : BOOL ;	// 
+   Alm_Liv_2_b153_7 : BOOL ;	// 
+   Alm_Liv_3_b154_0 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_01;FeedBack - Relè Out Emergenza;1
+   Alm_Liv_3_b154_1 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_10;FeedBack - Relè ST001 PCV01 (SV_01/TAV01/SV_02);1
+   Alm_Liv_3_b154_2 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_12;Relè Out ST070;1
+   Alm_Liv_3_b154_3 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_14;Relè ST001 PCV03 ( TAV02  );1
+   Alm_Liv_3_b154_4 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_16;-KM_17 Relè Out ST090;1
+   Alm_Liv_3_b154_5 : BOOL ;	//=FCA_0++MAIN+HGD01-SB_01;Arresto Emergenza su Porta Armadio;2
+   Alm_Liv_3_b154_6 : BOOL ;	//=FCA_0++MAIN+PGA01-SB_01;Arresto Emergenza su Pulsatiera Cancello 1;2
+   Alm_Liv_3_b154_7 : BOOL ;	//=FCA_0++MAIN+PGA02-SB_01;Arresto Emergenza su Pulsatiera Cancello 2;2
+   Alm_Liv_3_b155_0 : BOOL ;	//=FCA_0++MAIN+PGA03-SB_01;Arresto Emergenza su Pulsatiera Cancello 3;2
+   Alm_Liv_3_b155_1 : BOOL ;	// 
+   Alm_Liv_3_b155_2 : BOOL ;	// 
+   Alm_Liv_3_b155_3 : BOOL ;	// 
+   Alm_Liv_3_b155_4 : BOOL ;	// 
+   Alm_Liv_3_b155_5 : BOOL ;	// 
+   Alm_Liv_3_b155_6 : BOOL ;	// 
+   Alm_Liv_3_b155_7 : BOOL ;	// 
+   Alm_Liv_4_b156_0 : BOOL ;	//=FCA_0++MAIN+HGD01;EMERGENZA NON RIPRISTINATA;2
+   Alm_Liv_4_b156_1 : BOOL ;	// 
+   Alm_Liv_4_b156_2 : BOOL ;	// 
+   Alm_Liv_4_b156_3 : BOOL ;	// 
+   Alm_Liv_4_b156_4 : BOOL ;	// 
+   Alm_Liv_4_b156_5 : BOOL ;	// 
+   Alm_Liv_4_b156_6 : BOOL ;	// 
+   Alm_Liv_4_b156_7 : BOOL ;	// 
+   Alm_Liv_4_b157_0 : BOOL ;	// 
+   Alm_Liv_4_b157_1 : BOOL ;	// 
+   Alm_Liv_4_b157_2 : BOOL ;	// 
+   Alm_Liv_4_b157_3 : BOOL ;	// 
+   Alm_Liv_4_b157_4 : BOOL ;	// 
+   Alm_Liv_4_b157_5 : BOOL ;	// 
+   Alm_Liv_4_b157_6 : BOOL ;	// 
+   Alm_Liv_4_b157_7 : BOOL ;	// 
+   Alm_Liv_5_b158_0 : BOOL ;	//=FCA_0++MAIN+HGD01-SP_01;Assenza Aria Generale;1
+   Alm_Liv_5_b158_1 : BOOL ;	//=FCA_0++MAIN+HGD01-ST_01;Temperatura Apparecchiatura NOK +HGD01;1
+   Alm_Liv_5_b158_2 : BOOL ;	// 
+   Alm_Liv_5_b158_3 : BOOL ;	// 
+   Alm_Liv_5_b158_4 : BOOL ;	// 
+   Alm_Liv_5_b158_5 : BOOL ;	// 
+   Alm_Liv_5_b158_6 : BOOL ;	// 
+   Alm_Liv_5_b158_7 : BOOL ;	// 
+   Alm_Liv_5_b159_0 : BOOL ;	// 
+   Alm_Liv_5_b159_1 : BOOL ;	// 
+   Alm_Liv_5_b159_2 : BOOL ;	// 
+   Alm_Liv_5_b159_3 : BOOL ;	// 
+   Alm_Liv_5_b159_4 : BOOL ;	// 
+   Alm_Liv_5_b159_5 : BOOL ;	// 
+   Alm_Liv_5_b159_6 : BOOL ;	// 
+   Alm_Liv_5_b159_7 : BOOL ;	// 
+   Alm_Liv_6_b160_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_10;Alimentazione Centralina Avvitatore SWK01 ST070;1
+   Alm_Liv_6_b160_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_11;Alimentazione Centralina Avvitatore SWK01 ST080;1
+   Alm_Liv_6_b160_2 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_38;Alimentazione Centralina Avvitatore SWK02 ST080;1
+   Alm_Liv_6_b160_3 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_42;Alimentazione Rfid Linea;1
+   Alm_Liv_6_b160_4 : BOOL ;	// 
+   Alm_Liv_6_b160_5 : BOOL ;	// 
+   Alm_Liv_6_b160_6 : BOOL ;	// 
+   Alm_Liv_6_b160_7 : BOOL ;	// 
+   Alm_Liv_6_b161_0 : BOOL ;	// 
+   Alm_Liv_6_b161_1 : BOOL ;	// 
+   Alm_Liv_6_b161_2 : BOOL ;	// 
+   Alm_Liv_6_b161_3 : BOOL ;	// 
+   Alm_Liv_6_b161_4 : BOOL ;	// 
+   Alm_Liv_6_b161_5 : BOOL ;	// 
+   Alm_Liv_6_b161_6 : BOOL ;	// 
+   Alm_Liv_6_b161_7 : BOOL ;	// 
+   Alm_Liv_6_b162_0 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_31;FeedBack - Controllo Comando Motore Trasporto M__01;1
+   Alm_Liv_6_b162_1 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_32;FeedBack - Controllo Comando Motore Trasporto M__02;1
+   Alm_Liv_6_b162_2 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_33;FeedBack - Controllo Comando Motore Trasporto M__03;1
+   Alm_Liv_6_b162_3 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_34;FeedBack - Controllo Comando Motore Trasporto M__04;1
+   Alm_Liv_6_b162_4 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_35;FeedBack - Controllo Comando Motore Trasporto M__05;1
+   Alm_Liv_6_b162_5 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_36;FeedBack - Controllo Comando Motore Trasporto M__06;1
+   Alm_Liv_6_b162_6 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_37;FeedBack - Controllo Comando Motore Trasporto M__07;1
+   Alm_Liv_6_b162_7 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_38;FeedBack - Controllo Comando Motore Trasporto M__08;1
+   Alm_Liv_6_b163_0 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_39;FeedBack - Controllo Comando Motore Trasporto M__09;1
+   Alm_Liv_6_b163_1 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_40;FeedBack - Controllo Comando Motore Trasporto M__10;1
+   Alm_Liv_6_b163_2 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_41;FeedBack - Controllo Comando Motore Baia Avanti;1
+   Alm_Liv_6_b163_3 : BOOL ;	//=FCA_0++MAIN+HGD01-KM_42;FeedBack - Controllo Comando Motore Baia Indietro;1
+   Alm_Liv_6_b163_4 : BOOL ;	// 
+   Alm_Liv_6_b163_5 : BOOL ;	// 
+   Alm_Liv_6_b163_6 : BOOL ;	// 
+   Alm_Liv_6_b163_7 : BOOL ;	// 
+   Alm_Liv_6_b164_0 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW01;Allarme Comunicazione Profinet Scalance (2);1
+   Alm_Liv_6_b164_1 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW02;Allarme Comunicazione Profinet Scalance (3);1
+   Alm_Liv_6_b164_2 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW03;Allarme Comunicazione Profinet Scalance (4);1
+   Alm_Liv_6_b164_3 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW04;Allarme Comunicazione Profinet Scalance (5);1
+   Alm_Liv_6_b164_4 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW05;Allarme Comunicazione Profinet Scalance (6);1
+   Alm_Liv_6_b164_5 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW06;Allarme Comunicazione Profinet Scalance (7);1
+   Alm_Liv_6_b164_6 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW07;Allarme Comunicazione Profinet Scalance (8);1
+   Alm_Liv_6_b164_7 : BOOL ;	//=FCA_0++MAIN+HLC01-DSW08;Allarme Comunicazione Profinet Scalance (9);1
+   Alm_Liv_6_b165_0 : BOOL ;	// 
+   Alm_Liv_6_b165_1 : BOOL ;	// 
+   Alm_Liv_6_b165_2 : BOOL ;	// 
+   Alm_Liv_6_b165_3 : BOOL ;	// 
+   Alm_Liv_6_b165_4 : BOOL ;	// 
+   Alm_Liv_6_b165_5 : BOOL ;	//=FCA_0++MAIN+HGD01-B__01;Allarme Comunicazione Profinet PAC3200 (19);1
+   Alm_Liv_6_b165_6 : BOOL ;	// 
+   Alm_Liv_6_b165_7 : BOOL ;	// 
+   Alm_Liv_6_b166_0 : BOOL ;	//=FCA_0++MAIN+SID01-CSI01;Allarme Comunicazione Profinet Rfid (20);1
+   Alm_Liv_6_b166_1 : BOOL ;	//=FCA_0++MAIN+SID02-CSI01;Allarme Comunicazione Profinet Rfid (21);1
+   Alm_Liv_6_b166_2 : BOOL ;	//=FCA_0++MAIN+SID03-CSI01;Allarme Comunicazione Profinet Rfid (22);1
+   Alm_Liv_6_b166_3 : BOOL ;	//=FCA_0++MAIN+SID04-CSI01;Allarme Comunicazione Profinet Rfid (23);1
+   Alm_Liv_6_b166_4 : BOOL ;	//=FCA_0++MAIN+SID05-CSI01;Allarme Comunicazione Profinet Rfid (24);1
+   Alm_Liv_6_b166_5 : BOOL ;	// 
+   Alm_Liv_6_b166_6 : BOOL ;	// 
+   Alm_Liv_6_b166_7 : BOOL ;	// 
+   Alm_Liv_6_b167_0 : BOOL ;	// 
+   Alm_Liv_6_b167_1 : BOOL ;	// 
+   Alm_Liv_6_b167_2 : BOOL ;	// 
+   Alm_Liv_6_b167_3 : BOOL ;	// 
+   Alm_Liv_6_b167_4 : BOOL ;	// 
+   Alm_Liv_6_b167_5 : BOOL ;	// 
+   Alm_Liv_6_b167_6 : BOOL ;	// 
+   Alm_Liv_6_b167_7 : BOOL ;	// 
+   Alm_Liv_6_b168_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_01;Alimentazione 400VAC Motore trasporto M__01;1
+   Alm_Liv_6_b168_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_02;Alimentazione 400VAC Motore trasporto M__02;1
+   Alm_Liv_6_b168_2 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_03;Alimentazione 400VAC Motore trasporto M__03;1
+   Alm_Liv_6_b168_3 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_04;Alimentazione 400VAC Motore trasporto M__04;1
+   Alm_Liv_6_b168_4 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_05;Alimentazione 400VAC Motore trasporto M__05;1
+   Alm_Liv_6_b168_5 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_06;Alimentazione 400VAC Motore trasporto M__06;1
+   Alm_Liv_6_b168_6 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_07;Alimentazione 400VAC Motore trasporto M__07;1
+   Alm_Liv_6_b168_7 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_08;Alimentazione 400VAC Motore trasporto M__08;1
+   Alm_Liv_6_b169_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_20;Alimentazione Primario Trasformatore 400-220Vac;1
+   Alm_Liv_6_b169_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_30;Alimentazione Secondario Trasformatore 400-220Vac;1
+   Alm_Liv_6_b169_2 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_34;Alimentazione Condizionatore HGD01 220Vac;1
+   Alm_Liv_6_b169_3 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_60;Alimentazione 24Vdc Output ST010;1
+   Alm_Liv_6_b169_4 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_62;Alimentazione 24Vdc Output ST030;1
+   Alm_Liv_6_b169_5 : BOOL ;	// 
+   Alm_Liv_6_b169_6 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_64;Alimentazione 24Vdc Output ST050;1
+   Alm_Liv_6_b169_7 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_65;Alimentazione 24Vdc Output ST060;1
+   Alm_Liv_6_b170_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_66;Alimentazione 24Vdc Output ST070;1
+   Alm_Liv_6_b170_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_67;Alimentazione 24Vdc Output ST080;1
+   Alm_Liv_6_b170_2 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_68;Alimentazione 24Vdc Output ST090;1
+   Alm_Liv_6_b170_3 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_69;24Vdc Output ST001 PCV01 ( SV_01/TAV01/SV_02 );1
+   Alm_Liv_6_b170_4 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_70;24Vdc Output ST001 PCV03 (  TAV02 );1
+   Alm_Liv_6_b170_5 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_71;24Vdc Output ST001 PCV02 ( SV_03/SV_04 );1
+   Alm_Liv_6_b170_6 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_54;24Vdc Input ST001 PCV01 ( SV_01/TAV01/SV_02 );1
+   Alm_Liv_6_b170_7 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_55;24Vdc Input ST001 PCV03 (  TAV02 );1
+   Alm_Liv_6_b171_0 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_56;24Vdc Input ST001 PCV02 ( SV_03/SV_04 );1
+   Alm_Liv_6_b171_1 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_36;Alimentazione 220Vac HPC01;1
+   Alm_Liv_6_b171_2 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_37;Alimentazione 220Vac HPC02;1
+   Alm_Liv_6_b171_3 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_09;Alimentazione 400VAC Motore trasporto M__09;1
+   Alm_Liv_6_b171_4 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_10;Alimentazione 400VAC Motore trasporto M__10;1
+   Alm_Liv_6_b171_5 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_22;Alimentazione Primario Trasformatore 400-220Vac;1
+   Alm_Liv_6_b171_6 : BOOL ;	//=FCA_0++MAIN+HGD01-QF_23;Alimentazione Secondario Trasformatore 400-220Vac;1
+   Alm_Liv_6_b171_7 : BOOL ;	//=FCA_0++MAIN+HGD01-QM_11;Alimentazione 400VAC Motore trasporto Baia M__11;1
+   Alm_Liv_6_b172_0 : BOOL ;	// 
+   Alm_Liv_6_b172_1 : BOOL ;	// 
+   Alm_Liv_6_b172_2 : BOOL ;	// 
+   Alm_Liv_6_b172_3 : BOOL ;	// 
+   Alm_Liv_6_b172_4 : BOOL ;	// 
+   Alm_Liv_6_b172_5 : BOOL ;	// 
+   Alm_Liv_6_b172_6 : BOOL ;	// 
+   Alm_Liv_6_b172_7 : BOOL ;	// 
+   Alm_Liv_6_b173_0 : BOOL ;	//=FCA_0++MAIN+WIP01;RISOLUTIVO arresto linea da MES per chiamata operatore;11
+   Alm_Liv_6_b173_1 : BOOL ;	//=FCA_0++MAIN+WIP01;Anomalia lettura Barcode/Tag;1
+   Alm_Liv_6_b173_2 : BOOL ;	//=FCA_0++MAIN+WIP01;Time out lettura Barcode/Tag;1
+   Alm_Liv_6_b173_3 : BOOL ;	//=FCA_0++MAIN+WIP01;Incongruenza fisico-logica;5
+   Alm_Liv_6_b173_4 : BOOL ;	//=FCA_0++MAIN+WIP01;Check digit errato CIS;5
+   Alm_Liv_6_b173_5 : BOOL ;	//=FCA_0++MAIN+WIP01;Time out ricezione dati da tratta precedente;1
+   Alm_Liv_6_b173_6 : BOOL ;	//=FCA_0++MAIN+WIP01;Incongruenza dati CIS/VIS Set Point con CIS/VIS Next;5
+   Alm_Liv_6_b173_7 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES Tratta Wip non attivo (stop Linea);10
+   Alm_Liv_6_b174_0 : BOOL ;	//=FCA_0++MAIN+WIP01;NOK a Proseguire da MES Stazione Automatica (SAService);10
+   Alm_Liv_6_b174_1 : BOOL ;	//=FCA_0++MAIN+WIP01;Stazione esclusa;17
+   Alm_Liv_6_b174_2 : BOOL ;	//=FCA_0++MAIN+WIP01;Tratta wip in modifica;17
+   Alm_Liv_6_b174_3 : BOOL ;	//=FCA_0++MAIN+WIP01;Lista stazione di impostazione vuota;10
+   Alm_Liv_6_b174_4 : BOOL ;	// 
+   Alm_Liv_6_b174_5 : BOOL ;	// 
+   Alm_Liv_6_b174_6 : BOOL ;	// 
+   Alm_Liv_6_b174_7 : BOOL ;	// 
+   Alm_Liv_6_b175_0 : BOOL ;	// 
+   Alm_Liv_6_b175_1 : BOOL ;	// 
+   Alm_Liv_6_b175_2 : BOOL ;	// 
+   Alm_Liv_6_b175_3 : BOOL ;	// 
+   Alm_Liv_6_b175_4 : BOOL ;	// 
+   Alm_Liv_6_b175_5 : BOOL ;	// 
+   Alm_Liv_6_b175_6 : BOOL ;	// 
+   Alm_Liv_6_b175_7 : BOOL ;	// 
+   Alm_Liv_6_b176_0 : BOOL ;	//=FCA_0++MAIN;ST010 Allarme Comun.Profinet Pann.Operatore (150);1
+   Alm_Liv_6_b176_1 : BOOL ;	// 
+   Alm_Liv_6_b176_2 : BOOL ;	//=FCA_0++MAIN;ST030 Allarme Comun.Profinet Pann.Operatore (152);1
+   Alm_Liv_6_b176_3 : BOOL ;	// 
+   Alm_Liv_6_b176_4 : BOOL ;	//=FCA_0++MAIN;ST050 Allarme Comun.Profinet Pann.Operatore (154);1
+   Alm_Liv_6_b176_5 : BOOL ;	//=FCA_0++MAIN;ST060 Allarme Comun.Profinet Pann.Operatore (155);1
+   Alm_Liv_6_b176_6 : BOOL ;	//=FCA_0++MAIN;ST070 Allarme Comun.Profinet Pann.Operatore (156);1
+   Alm_Liv_6_b176_7 : BOOL ;	//=FCA_0++MAIN;ST080 Allarme Comun.Profinet Pann.Operatore (157);1
+   Alm_Liv_6_b177_0 : BOOL ;	//=FCA_0++MAIN;ST090 Allarme Comun.Profinet Pann.Operatore (158);1
+   Alm_Liv_6_b177_1 : BOOL ;	// 
+   Alm_Liv_6_b177_2 : BOOL ;	// 
+   Alm_Liv_6_b177_3 : BOOL ;	// 
+   Alm_Liv_6_b177_4 : BOOL ;	// 
+   Alm_Liv_6_b177_5 : BOOL ;	// 
+   Alm_Liv_6_b177_6 : BOOL ;	// 
+   Alm_Liv_6_b177_7 : BOOL ;	// 
+   Alm_Liv_6_b178_0 : BOOL ;	// 
+   Alm_Liv_6_b178_1 : BOOL ;	// 
+   Alm_Liv_6_b178_2 : BOOL ;	// 
+   Alm_Liv_6_b178_3 : BOOL ;	// 
+   Alm_Liv_6_b178_4 : BOOL ;	// 
+   Alm_Liv_6_b178_5 : BOOL ;	// 
+   Alm_Liv_6_b178_6 : BOOL ;	// 
+   Alm_Liv_6_b178_7 : BOOL ;	// 
+   Alm_Liv_6_b179_0 : BOOL ;	// 
+   Alm_Liv_6_b179_1 : BOOL ;	// 
+   Alm_Liv_6_b179_2 : BOOL ;	// 
+   Alm_Liv_6_b179_3 : BOOL ;	// 
+   Alm_Liv_6_b179_4 : BOOL ;	// 
+   Alm_Liv_6_b179_5 : BOOL ;	// 
+   Alm_Liv_6_b179_6 : BOOL ;	// 
+   Alm_Liv_6_b179_7 : BOOL ;	// 
+   Alm_Liv_6_b180_0 : BOOL ;	// 
+   Alm_Liv_6_b180_1 : BOOL ;	// 
+   Alm_Liv_6_b180_2 : BOOL ;	// 
+   Alm_Liv_6_b180_3 : BOOL ;	// 
+   Alm_Liv_6_b180_4 : BOOL ;	// 
+   Alm_Liv_6_b180_5 : BOOL ;	// 
+   Alm_Liv_6_b180_6 : BOOL ;	// 
+   Alm_Liv_6_b180_7 : BOOL ;	// 
+   Alm_Liv_6_b181_0 : BOOL ;	// 
+   Alm_Liv_6_b181_1 : BOOL ;	// 
+   Alm_Liv_6_b181_2 : BOOL ;	// 
+   Alm_Liv_6_b181_3 : BOOL ;	// 
+   Alm_Liv_6_b181_4 : BOOL ;	// 
+   Alm_Liv_6_b181_5 : BOOL ;	// 
+   Alm_Liv_6_b181_6 : BOOL ;	// 
+   Alm_Liv_6_b181_7 : BOOL ;	// 
+   Alm_Liv_6_b182_0 : BOOL ;	// 
+   Alm_Liv_6_b182_1 : BOOL ;	// 
+   Alm_Liv_6_b182_2 : BOOL ;	// 
+   Alm_Liv_6_b182_3 : BOOL ;	// 
+   Alm_Liv_6_b182_4 : BOOL ;	// 
+   Alm_Liv_6_b182_5 : BOOL ;	// 
+   Alm_Liv_6_b182_6 : BOOL ;	// 
+   Alm_Liv_6_b182_7 : BOOL ;	// 
+   Alm_Liv_6_b183_0 : BOOL ;	// 
+   Alm_Liv_6_b183_1 : BOOL ;	// 
+   Alm_Liv_6_b183_2 : BOOL ;	// 
+   Alm_Liv_6_b183_3 : BOOL ;	// 
+   Alm_Liv_6_b183_4 : BOOL ;	// 
+   Alm_Liv_6_b183_5 : BOOL ;	// 
+   Alm_Liv_6_b183_6 : BOOL ;	// 
+   Alm_Liv_6_b183_7 : BOOL ;	// 
+   Alm_Liv_6_b184_0 : BOOL ;	// 
+   Alm_Liv_6_b184_1 : BOOL ;	// 
+   Alm_Liv_6_b184_2 : BOOL ;	// 
+   Alm_Liv_6_b184_3 : BOOL ;	// 
+   Alm_Liv_6_b184_4 : BOOL ;	// 
+   Alm_Liv_6_b184_5 : BOOL ;	// 
+   Alm_Liv_6_b184_6 : BOOL ;	// 
+   Alm_Liv_6_b184_7 : BOOL ;	// 
+   Alm_Liv_6_b185_0 : BOOL ;	// 
+   Alm_Liv_6_b185_1 : BOOL ;	// 
+   Alm_Liv_6_b185_2 : BOOL ;	// 
+   Alm_Liv_6_b185_3 : BOOL ;	// 
+   Alm_Liv_6_b185_4 : BOOL ;	// 
+   Alm_Liv_6_b185_5 : BOOL ;	// 
+   Alm_Liv_6_b185_6 : BOOL ;	// 
+   Alm_Liv_6_b185_7 : BOOL ;	// 
+   Alm_Liv_6_b186_0 : BOOL ;	// 
+   Alm_Liv_6_b186_1 : BOOL ;	// 
+   Alm_Liv_6_b186_2 : BOOL ;	// 
+   Alm_Liv_6_b186_3 : BOOL ;	// 
+   Alm_Liv_6_b186_4 : BOOL ;	// 
+   Alm_Liv_6_b186_5 : BOOL ;	// 
+   Alm_Liv_6_b186_6 : BOOL ;	// 
+   Alm_Liv_6_b186_7 : BOOL ;	// 
+   Alm_Liv_6_b187_0 : BOOL ;	// 
+   Alm_Liv_6_b187_1 : BOOL ;	// 
+   Alm_Liv_6_b187_2 : BOOL ;	// 
+   Alm_Liv_6_b187_3 : BOOL ;	// 
+   Alm_Liv_6_b187_4 : BOOL ;	// 
+   Alm_Liv_6_b187_5 : BOOL ;	// 
+   Alm_Liv_6_b187_6 : BOOL ;	// 
+   Alm_Liv_6_b187_7 : BOOL ;	// 
+   Alm_Liv_6_b188_0 : BOOL ;	// 
+   Alm_Liv_6_b188_1 : BOOL ;	// 
+   Alm_Liv_6_b188_2 : BOOL ;	// 
+   Alm_Liv_6_b188_3 : BOOL ;	// 
+   Alm_Liv_6_b188_4 : BOOL ;	// 
+   Alm_Liv_6_b188_5 : BOOL ;	// 
+   Alm_Liv_6_b188_6 : BOOL ;	// 
+   Alm_Liv_6_b188_7 : BOOL ;	// 
+   Alm_Liv_6_b189_0 : BOOL ;	// 
+   Alm_Liv_6_b189_1 : BOOL ;	// 
+   Alm_Liv_6_b189_2 : BOOL ;	// 
+   Alm_Liv_6_b189_3 : BOOL ;	// 
+   Alm_Liv_6_b189_4 : BOOL ;	// 
+   Alm_Liv_6_b189_5 : BOOL ;	// 
+   Alm_Liv_6_b189_6 : BOOL ;	// 
+   Alm_Liv_6_b189_7 : BOOL ;	// 
+   Msg_Liv_1_b190_0 : BOOL ;	//=FCA_0++MAIN+HPC02-PC_01;Memoria Buffer Dati ( MMC )Su PLC Piena;1
+   Msg_Liv_1_b190_1 : BOOL ;	//=FCA_0++MAIN+HPC02-PC_01;PC Offline;57
+   Msg_Liv_1_b190_2 : BOOL ;	//=FCA_0++MAIN+HPC02-PC_01;PC OnLINE;19
+   Msg_Liv_1_b190_3 : BOOL ;	
+   Msg_Liv_1_b190_4 : BOOL ;	
+   Msg_Liv_1_b190_5 : BOOL ;	
+   Msg_Liv_1_b190_6 : BOOL ;	
+   Msg_Liv_1_b190_7 : BOOL ;	
+   Msg_Liv_1_b191_0 : BOOL ;	//=FCA_0++MAIN+XGA01-SC_01;Cancello 1 Aperto in PM;2
+   Msg_Liv_1_b191_1 : BOOL ;	//=FCA_0++MAIN+XGA01-SC_01;Cancello 1 Aperto in AM;2
+   Msg_Liv_1_b191_2 : BOOL ;	//=FCA_0++MAIN+XGA01-SC_01;Cancello 1 Aperto per Riparazione Guasto;2
+   Msg_Liv_1_b191_3 : BOOL ;	//=FCA_0++MAIN+XGA02-SC_01;Cancello 2 Aperto in PM;2
+   Msg_Liv_1_b191_4 : BOOL ;	//=FCA_0++MAIN+XGA02-SC_01;Cancello 2 Aperto in AM;2
+   Msg_Liv_1_b191_5 : BOOL ;	//=FCA_0++MAIN+XGA02-SC_01;Cancello 2 Aperto per Riparazione Guasto;2
+   Msg_Liv_1_b191_6 : BOOL ;	//=FCA_0++MAIN+XGA03-SC_01;Cancello 3 Aperto in PM;2
+   Msg_Liv_1_b191_7 : BOOL ;	//=FCA_0++MAIN+XGA03-SC_01;Cancello 3 Aperto in AM;2
+   Msg_Liv_1_b192_0 : BOOL ;	//=FCA_0++MAIN+XGA03-SC_01;Cancello 3 Aperto per Riparazione Guasto;2
+   Msg_Liv_1_b192_1 : BOOL ;	
+   Msg_Liv_1_b192_2 : BOOL ;	
+   Msg_Liv_1_b192_3 : BOOL ;	
+   Msg_Liv_1_b192_4 : BOOL ;	
+   Msg_Liv_1_b192_5 : BOOL ;	
+   Msg_Liv_1_b192_6 : BOOL ;	
+   Msg_Liv_1_b192_7 : BOOL ;	
+   Msg_Liv_1_b193_0 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES Set Point non attivo;58
+   Msg_Liv_1_b193_1 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES Tratta Wip non attivo;58
+   Msg_Liv_1_b193_2 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES Stazione Impostazione non attivo;58
+   Msg_Liv_1_b193_3 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES Chiamata Operatore;58
+   Msg_Liv_1_b193_4 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES SAService data send station non attivo;58
+   Msg_Liv_1_b193_5 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES SRService data request station non attivo;58
+   Msg_Liv_1_b193_6 : BOOL ;	//=FCA_0++MAIN+WIP01;Servizio MES SMService station model non attivo;58
+   Msg_Liv_1_b193_7 : BOOL ;	//=FCA_0++MAIN+WIP01;Stazione non in automatico;16
+   Msg_Liv_1_b194_0 : BOOL ;	//=FCA_0++MAIN+WIP01;Lettore in by-pass CIS NEXT da MES;55
+   Msg_Liv_1_b194_1 : BOOL ;	//=FCA_0++MAIN+WIP01;Risolutivo Chiamata Operatore da MES/PLC (Fungo Giallo);53
+   Msg_Liv_1_b194_2 : BOOL ;	
+   Msg_Liv_1_b194_3 : BOOL ;	
+   Msg_Liv_1_b194_4 : BOOL ;	
+   Msg_Liv_1_b194_5 : BOOL ;	
+   Msg_Liv_1_b194_6 : BOOL ;	
+   Msg_Liv_1_b194_7 : BOOL ;	
+   Msg_Liv_1_b195_0 : BOOL ;	
+   Msg_Liv_1_b195_1 : BOOL ;	
+   Msg_Liv_1_b195_2 : BOOL ;	
+   Msg_Liv_1_b195_3 : BOOL ;	
+   Msg_Liv_1_b195_4 : BOOL ;	
+   Msg_Liv_1_b195_5 : BOOL ;	
+   Msg_Liv_1_b195_6 : BOOL ;	
+   Msg_Liv_1_b195_7 : BOOL ;	
+   Msg_Liv_1_b196_0 : BOOL ;	
+   Msg_Liv_1_b196_1 : BOOL ;	
+   Msg_Liv_1_b196_2 : BOOL ;	
+   Msg_Liv_1_b196_3 : BOOL ;	
+   Msg_Liv_1_b196_4 : BOOL ;	
+   Msg_Liv_1_b196_5 : BOOL ;	
+   Msg_Liv_1_b196_6 : BOOL ;	
+   Msg_Liv_1_b196_7 : BOOL ;	
+   Msg_Liv_1_b197_0 : BOOL ;	
+   Msg_Liv_1_b197_1 : BOOL ;	
+   Msg_Liv_1_b197_2 : BOOL ;	
+   Msg_Liv_1_b197_3 : BOOL ;	
+   Msg_Liv_1_b197_4 : BOOL ;	
+   Msg_Liv_1_b197_5 : BOOL ;	
+   Msg_Liv_1_b197_6 : BOOL ;	
+   Msg_Liv_1_b197_7 : BOOL ;	
+   Msg_Liv_1_b198_0 : BOOL ;	
+   Msg_Liv_1_b198_1 : BOOL ;	
+   Msg_Liv_1_b198_2 : BOOL ;	
+   Msg_Liv_1_b198_3 : BOOL ;	
+   Msg_Liv_1_b198_4 : BOOL ;	
+   Msg_Liv_1_b198_5 : BOOL ;	
+   Msg_Liv_1_b198_6 : BOOL ;	
+   Msg_Liv_1_b198_7 : BOOL ;	
+   Msg_Liv_1_b199_0 : BOOL ;	
+   Msg_Liv_1_b199_1 : BOOL ;	
+   Msg_Liv_1_b199_2 : BOOL ;	
+   Msg_Liv_1_b199_3 : BOOL ;	
+   Msg_Liv_1_b199_4 : BOOL ;	
+   Msg_Liv_1_b199_5 : BOOL ;	
+   Msg_Liv_1_b199_6 : BOOL ;	
+   Msg_Liv_1_b199_7 : BOOL ;	
+  END_STRUCT ;	
+BEGIN
+   CM_ID := ''; 
+   STATION_ID := ''; 
+   ELEMENT_ID := ''; 
+   DB_ID := 0; 
+   PART_STYLE := ''; 
+   ACT_CYCLE_TIME := 0; 
+   COUNT_GOOD := 0; 
+   COUNT_SCRAP := 0; 
+   SPARE_00[0] := 0; 
+   SPARE_00[1] := 0; 
+   SPARE_00[2] := 0; 
+   SPARE_00[3] := 0; 
+   SPARE_00[4] := 0; 
+   SPARE_00[5] := 0; 
+   SPARE_00[6] := 0; 
+   SPARE_00[7] := 0; 
+   SPARE_00[8] := 0; 
+   SPARE_00[9] := 0; 
+   SPARE_00[10] := 0; 
+   SPARE_00[11] := 0; 
+   SPARE_00[12] := 0; 
+   SPARE_00[13] := 0; 
+   SPARE_00[14] := 0; 
+   SPARE_00[15] := 0; 
+   SPARE_01[0] := 0; 
+   SPARE_01[1] := 0; 
+   SPARE_01[2] := 0; 
+   SPARE_01[3] := 0; 
+   SPARE_01[4] := 0; 
+   SPARE_01[5] := 0; 
+   SPARE_01[6] := 0; 
+   SPARE_01[7] := 0; 
+   SPARE_01[8] := 0; 
+   SPARE_01[9] := 0; 
+   SPARE_01[10] := 0; 
+   SPARE_01[11] := 0; 
+   SPARE_01[12] := 0; 
+   SPARE_01[13] := 0; 
+   SPARE_01[14] := 0; 
+   SPARE_01[15] := 0; 
+   SPARE_01[16] := 0; 
+   SPARE_01[17] := 0; 
+   CODE_EVENT[0] := 0; 
+   CODE_EVENT[1] := 0; 
+   CODE_EVENT[2] := 0; 
+   CODE_EVENT[3] := 0; 
+   CODE_EVENT[4] := 0; 
+   CODE_EVENT[5] := 0; 
+   CODE_EVENT[6] := 0; 
+   CODE_EVENT[7] := 0; 
+   States_b136_0 := FALSE; 
+   States_b136_1 := FALSE; 
+   States_b136_2 := FALSE; 
+   States_b136_3 := FALSE; 
+   States_b136_4 := FALSE; 
+   States_b136_5 := FALSE; 
+   States_b136_6 := FALSE; 
+   States_b136_7 := FALSE; 
+   States_b137_0 := FALSE; 
+   States_b137_1 := FALSE; 
+   States_b137_2 := FALSE; 
+   States_b137_3 := FALSE; 
+   States_b137_4 := FALSE; 
+   States_b137_5 := FALSE; 
+   States_b137_6 := FALSE; 
+   States_b137_7 := FALSE; 
+   States_b138_0 := FALSE; 
+   States_b138_1 := FALSE; 
+   States_b138_2 := FALSE; 
+   States_b138_3 := FALSE; 
+   States_b138_4 := FALSE; 
+   States_b138_5 := FALSE; 
+   States_b138_6 := FALSE; 
+   States_b138_7 := FALSE; 
+   States_b139_0 := FALSE; 
+   States_b139_1 := FALSE; 
+   States_b139_2 := FALSE; 
+   States_b139_3 := FALSE; 
+   States_b139_4 := FALSE; 
+   States_b139_5 := FALSE; 
+   States_b139_6 := FALSE; 
+   States_b139_7 := FALSE; 
+   States_b140_0 := FALSE; 
+   States_b140_1 := FALSE; 
+   States_b140_2 := FALSE; 
+   States_b140_3 := FALSE; 
+   States_b140_4 := FALSE; 
+   States_b140_5 := FALSE; 
+   States_b140_6 := FALSE; 
+   States_b140_7 := FALSE; 
+   States_b141_0 := FALSE; 
+   States_b141_1 := FALSE; 
+   States_b141_2 := FALSE; 
+   States_b141_3 := FALSE; 
+   States_b141_4 := FALSE; 
+   States_b141_5 := FALSE; 
+   States_b141_6 := FALSE; 
+   States_b141_7 := FALSE; 
+   States_b142_0 := FALSE; 
+   States_b142_1 := FALSE; 
+   States_b142_2 := FALSE; 
+   States_b142_3 := FALSE; 
+   States_b142_4 := FALSE; 
+   States_b142_5 := FALSE; 
+   States_b142_6 := FALSE; 
+   States_b142_7 := FALSE; 
+   States_b143_0 := FALSE; 
+   States_b143_1 := FALSE; 
+   States_b143_2 := FALSE; 
+   States_b143_3 := FALSE; 
+   States_b143_4 := FALSE; 
+   States_b143_5 := FALSE; 
+   States_b143_6 := FALSE; 
+   States_b143_7 := FALSE; 
+   Alm_Liv_1_b144_0 := FALSE; 
+   Alm_Liv_1_b144_1 := FALSE; 
+   Alm_Liv_1_b144_2 := FALSE; 
+   Alm_Liv_1_b144_3 := FALSE; 
+   Alm_Liv_1_b144_4 := FALSE; 
+   Alm_Liv_1_b144_5 := FALSE; 
+   Alm_Liv_1_b144_6 := FALSE; 
+   Alm_Liv_1_b144_7 := FALSE; 
+   Alm_Liv_1_b145_0 := FALSE; 
+   Alm_Liv_1_b145_1 := FALSE; 
+   Alm_Liv_1_b145_2 := FALSE; 
+   Alm_Liv_1_b145_3 := FALSE; 
+   Alm_Liv_1_b145_4 := FALSE; 
+   Alm_Liv_1_b145_5 := FALSE; 
+   Alm_Liv_1_b145_6 := FALSE; 
+   Alm_Liv_1_b145_7 := FALSE; 
+   Alm_Liv_1_b146_0 := FALSE; 
+   Alm_Liv_1_b146_1 := FALSE; 
+   Alm_Liv_1_b146_2 := FALSE; 
+   Alm_Liv_1_b146_3 := FALSE; 
+   Alm_Liv_1_b146_4 := FALSE; 
+   Alm_Liv_1_b146_5 := FALSE; 
+   Alm_Liv_1_b146_6 := FALSE; 
+   Alm_Liv_1_b146_7 := FALSE; 
+   Alm_Liv_1_b147_0 := FALSE; 
+   Alm_Liv_1_b147_1 := FALSE; 
+   Alm_Liv_1_b147_2 := FALSE; 
+   Alm_Liv_1_b147_3 := FALSE; 
+   Alm_Liv_1_b147_4 := FALSE; 
+   Alm_Liv_1_b147_5 := FALSE; 
+   Alm_Liv_1_b147_6 := FALSE; 
+   Alm_Liv_1_b147_7 := FALSE; 
+   Alm_Liv_1_b148_0 := FALSE; 
+   Alm_Liv_1_b148_1 := FALSE; 
+   Alm_Liv_1_b148_2 := FALSE; 
+   Alm_Liv_1_b148_3 := FALSE; 
+   Alm_Liv_1_b148_4 := FALSE; 
+   Alm_Liv_1_b148_5 := FALSE; 
+   Alm_Liv_1_b148_6 := FALSE; 
+   Alm_Liv_1_b148_7 := FALSE; 
+   Alm_Liv_1_b149_0 := FALSE; 
+   Alm_Liv_1_b149_1 := FALSE; 
+   Alm_Liv_1_b149_2 := FALSE; 
+   Alm_Liv_1_b149_3 := FALSE; 
+   Alm_Liv_1_b149_4 := FALSE; 
+   Alm_Liv_1_b149_5 := FALSE; 
+   Alm_Liv_1_b149_6 := FALSE; 
+   Alm_Liv_1_b149_7 := FALSE; 
+   Alm_Liv_1_b150_0 := FALSE; 
+   Alm_Liv_1_b150_1 := FALSE; 
+   Alm_Liv_1_b150_2 := FALSE; 
+   Alm_Liv_1_b150_3 := FALSE; 
+   Alm_Liv_1_b150_4 := FALSE; 
+   Alm_Liv_1_b150_5 := FALSE; 
+   Alm_Liv_1_b150_6 := FALSE; 
+   Alm_Liv_1_b150_7 := FALSE; 
+   Alm_Liv_1_b151_0 := FALSE; 
+   Alm_Liv_1_b151_1 := FALSE; 
+   Alm_Liv_1_b151_2 := FALSE; 
+   Alm_Liv_1_b151_3 := FALSE; 
+   Alm_Liv_1_b151_4 := FALSE; 
+   Alm_Liv_1_b151_5 := FALSE; 
+   Alm_Liv_1_b151_6 := FALSE; 
+   Alm_Liv_1_b151_7 := FALSE; 
+   Alm_Liv_2_b152_0 := FALSE; 
+   Alm_Liv_2_b152_1 := FALSE; 
+   Alm_Liv_2_b152_2 := FALSE; 
+   Alm_Liv_2_b152_3 := FALSE; 
+   Alm_Liv_2_b152_4 := FALSE; 
+   Alm_Liv_2_b152_5 := FALSE; 
+   Alm_Liv_2_b152_6 := FALSE; 
+   Alm_Liv_2_b152_7 := FALSE; 
+   Alm_Liv_2_b153_0 := FALSE; 
+   Alm_Liv_2_b153_1 := FALSE; 
+   Alm_Liv_2_b153_2 := FALSE; 
+   Alm_Liv_2_b153_3 := FALSE; 
+   Alm_Liv_2_b153_4 := FALSE; 
+   Alm_Liv_2_b153_5 := FALSE; 
+   Alm_Liv_2_b153_6 := FALSE; 
+   Alm_Liv_2_b153_7 := FALSE; 
+   Alm_Liv_3_b154_0 := FALSE; 
+   Alm_Liv_3_b154_1 := FALSE; 
+   Alm_Liv_3_b154_2 := FALSE; 
+   Alm_Liv_3_b154_3 := FALSE; 
+   Alm_Liv_3_b154_4 := FALSE; 
+   Alm_Liv_3_b154_5 := FALSE; 
+   Alm_Liv_3_b154_6 := FALSE; 
+   Alm_Liv_3_b154_7 := FALSE; 
+   Alm_Liv_3_b155_0 := FALSE; 
+   Alm_Liv_3_b155_1 := FALSE; 
+   Alm_Liv_3_b155_2 := FALSE; 
+   Alm_Liv_3_b155_3 := FALSE; 
+   Alm_Liv_3_b155_4 := FALSE; 
+   Alm_Liv_3_b155_5 := FALSE; 
+   Alm_Liv_3_b155_6 := FALSE; 
+   Alm_Liv_3_b155_7 := FALSE; 
+   Alm_Liv_4_b156_0 := FALSE; 
+   Alm_Liv_4_b156_1 := FALSE; 
+   Alm_Liv_4_b156_2 := FALSE; 
+   Alm_Liv_4_b156_3 := FALSE; 
+   Alm_Liv_4_b156_4 := FALSE; 
+   Alm_Liv_4_b156_5 := FALSE; 
+   Alm_Liv_4_b156_6 := FALSE; 
+   Alm_Liv_4_b156_7 := FALSE; 
+   Alm_Liv_4_b157_0 := FALSE; 
+   Alm_Liv_4_b157_1 := FALSE; 
+   Alm_Liv_4_b157_2 := FALSE; 
+   Alm_Liv_4_b157_3 := FALSE; 
+   Alm_Liv_4_b157_4 := FALSE; 
+   Alm_Liv_4_b157_5 := FALSE; 
+   Alm_Liv_4_b157_6 := FALSE; 
+   Alm_Liv_4_b157_7 := FALSE; 
+   Alm_Liv_5_b158_0 := FALSE; 
+   Alm_Liv_5_b158_1 := FALSE; 
+   Alm_Liv_5_b158_2 := FALSE; 
+   Alm_Liv_5_b158_3 := FALSE; 
+   Alm_Liv_5_b158_4 := FALSE; 
+   Alm_Liv_5_b158_5 := FALSE; 
+   Alm_Liv_5_b158_6 := FALSE; 
+   Alm_Liv_5_b158_7 := FALSE; 
+   Alm_Liv_5_b159_0 := FALSE; 
+   Alm_Liv_5_b159_1 := FALSE; 
+   Alm_Liv_5_b159_2 := FALSE; 
+   Alm_Liv_5_b159_3 := FALSE; 
+   Alm_Liv_5_b159_4 := FALSE; 
+   Alm_Liv_5_b159_5 := FALSE; 
+   Alm_Liv_5_b159_6 := FALSE; 
+   Alm_Liv_5_b159_7 := FALSE; 
+   Alm_Liv_6_b160_0 := FALSE; 
+   Alm_Liv_6_b160_1 := FALSE; 
+   Alm_Liv_6_b160_2 := FALSE; 
+   Alm_Liv_6_b160_3 := FALSE; 
+   Alm_Liv_6_b160_4 := FALSE; 
+   Alm_Liv_6_b160_5 := FALSE; 
+   Alm_Liv_6_b160_6 := FALSE; 
+   Alm_Liv_6_b160_7 := FALSE; 
+   Alm_Liv_6_b161_0 := FALSE; 
+   Alm_Liv_6_b161_1 := FALSE; 
+   Alm_Liv_6_b161_2 := FALSE; 
+   Alm_Liv_6_b161_3 := FALSE; 
+   Alm_Liv_6_b161_4 := FALSE; 
+   Alm_Liv_6_b161_5 := FALSE; 
+   Alm_Liv_6_b161_6 := FALSE; 
+   Alm_Liv_6_b161_7 := FALSE; 
+   Alm_Liv_6_b162_0 := FALSE; 
+   Alm_Liv_6_b162_1 := FALSE; 
+   Alm_Liv_6_b162_2 := FALSE; 
+   Alm_Liv_6_b162_3 := FALSE; 
+   Alm_Liv_6_b162_4 := FALSE; 
+   Alm_Liv_6_b162_5 := FALSE; 
+   Alm_Liv_6_b162_6 := FALSE; 
+   Alm_Liv_6_b162_7 := FALSE; 
+   Alm_Liv_6_b163_0 := FALSE; 
+   Alm_Liv_6_b163_1 := FALSE; 
+   Alm_Liv_6_b163_2 := FALSE; 
+   Alm_Liv_6_b163_3 := FALSE; 
+   Alm_Liv_6_b163_4 := FALSE; 
+   Alm_Liv_6_b163_5 := FALSE; 
+   Alm_Liv_6_b163_6 := FALSE; 
+   Alm_Liv_6_b163_7 := FALSE; 
+   Alm_Liv_6_b164_0 := FALSE; 
+   Alm_Liv_6_b164_1 := FALSE; 
+   Alm_Liv_6_b164_2 := FALSE; 
+   Alm_Liv_6_b164_3 := FALSE; 
+   Alm_Liv_6_b164_4 := FALSE; 
+   Alm_Liv_6_b164_5 := FALSE; 
+   Alm_Liv_6_b164_6 := FALSE; 
+   Alm_Liv_6_b164_7 := FALSE; 
+   Alm_Liv_6_b165_0 := FALSE; 
+   Alm_Liv_6_b165_1 := FALSE; 
+   Alm_Liv_6_b165_2 := FALSE; 
+   Alm_Liv_6_b165_3 := FALSE; 
+   Alm_Liv_6_b165_4 := FALSE; 
+   Alm_Liv_6_b165_5 := FALSE; 
+   Alm_Liv_6_b165_6 := FALSE; 
+   Alm_Liv_6_b165_7 := FALSE; 
+   Alm_Liv_6_b166_0 := FALSE; 
+   Alm_Liv_6_b166_1 := FALSE; 
+   Alm_Liv_6_b166_2 := FALSE; 
+   Alm_Liv_6_b166_3 := FALSE; 
+   Alm_Liv_6_b166_4 := FALSE; 
+   Alm_Liv_6_b166_5 := FALSE; 
+   Alm_Liv_6_b166_6 := FALSE; 
+   Alm_Liv_6_b166_7 := FALSE; 
+   Alm_Liv_6_b167_0 := FALSE; 
+   Alm_Liv_6_b167_1 := FALSE; 
+   Alm_Liv_6_b167_2 := FALSE; 
+   Alm_Liv_6_b167_3 := FALSE; 
+   Alm_Liv_6_b167_4 := FALSE; 
+   Alm_Liv_6_b167_5 := FALSE; 
+   Alm_Liv_6_b167_6 := FALSE; 
+   Alm_Liv_6_b167_7 := FALSE; 
+   Alm_Liv_6_b168_0 := FALSE; 
+   Alm_Liv_6_b168_1 := FALSE; 
+   Alm_Liv_6_b168_2 := FALSE; 
+   Alm_Liv_6_b168_3 := FALSE; 
+   Alm_Liv_6_b168_4 := FALSE; 
+   Alm_Liv_6_b168_5 := FALSE; 
+   Alm_Liv_6_b168_6 := FALSE; 
+   Alm_Liv_6_b168_7 := FALSE; 
+   Alm_Liv_6_b169_0 := FALSE; 
+   Alm_Liv_6_b169_1 := FALSE; 
+   Alm_Liv_6_b169_2 := FALSE; 
+   Alm_Liv_6_b169_3 := FALSE; 
+   Alm_Liv_6_b169_4 := FALSE; 
+   Alm_Liv_6_b169_5 := FALSE; 
+   Alm_Liv_6_b169_6 := FALSE; 
+   Alm_Liv_6_b169_7 := FALSE; 
+   Alm_Liv_6_b170_0 := FALSE; 
+   Alm_Liv_6_b170_1 := FALSE; 
+   Alm_Liv_6_b170_2 := FALSE; 
+   Alm_Liv_6_b170_3 := FALSE; 
+   Alm_Liv_6_b170_4 := FALSE; 
+   Alm_Liv_6_b170_5 := FALSE; 
+   Alm_Liv_6_b170_6 := FALSE; 
+   Alm_Liv_6_b170_7 := FALSE; 
+   Alm_Liv_6_b171_0 := FALSE; 
+   Alm_Liv_6_b171_1 := FALSE; 
+   Alm_Liv_6_b171_2 := FALSE; 
+   Alm_Liv_6_b171_3 := FALSE; 
+   Alm_Liv_6_b171_4 := FALSE; 
+   Alm_Liv_6_b171_5 := FALSE; 
+   Alm_Liv_6_b171_6 := FALSE; 
+   Alm_Liv_6_b171_7 := FALSE; 
+   Alm_Liv_6_b172_0 := FALSE; 
+   Alm_Liv_6_b172_1 := FALSE; 
+   Alm_Liv_6_b172_2 := FALSE; 
+   Alm_Liv_6_b172_3 := FALSE; 
+   Alm_Liv_6_b172_4 := FALSE; 
+   Alm_Liv_6_b172_5 := FALSE; 
+   Alm_Liv_6_b172_6 := FALSE; 
+   Alm_Liv_6_b172_7 := FALSE; 
+   Alm_Liv_6_b173_0 := FALSE; 
+   Alm_Liv_6_b173_1 := FALSE; 
+   Alm_Liv_6_b173_2 := FALSE; 
+   Alm_Liv_6_b173_3 := FALSE; 
+   Alm_Liv_6_b173_4 := FALSE; 
+   Alm_Liv_6_b173_5 := FALSE; 
+   Alm_Liv_6_b173_6 := FALSE; 
+   Alm_Liv_6_b173_7 := FALSE; 
+   Alm_Liv_6_b174_0 := FALSE; 
+   Alm_Liv_6_b174_1 := FALSE; 
+   Alm_Liv_6_b174_2 := FALSE; 
+   Alm_Liv_6_b174_3 := FALSE; 
+   Alm_Liv_6_b174_4 := FALSE; 
+   Alm_Liv_6_b174_5 := FALSE; 
+   Alm_Liv_6_b174_6 := FALSE; 
+   Alm_Liv_6_b174_7 := FALSE; 
+   Alm_Liv_6_b175_0 := FALSE; 
+   Alm_Liv_6_b175_1 := FALSE; 
+   Alm_Liv_6_b175_2 := FALSE; 
+   Alm_Liv_6_b175_3 := FALSE; 
+   Alm_Liv_6_b175_4 := FALSE; 
+   Alm_Liv_6_b175_5 := FALSE; 
+   Alm_Liv_6_b175_6 := FALSE; 
+   Alm_Liv_6_b175_7 := FALSE; 
+   Alm_Liv_6_b176_0 := FALSE; 
+   Alm_Liv_6_b176_1 := FALSE; 
+   Alm_Liv_6_b176_2 := FALSE; 
+   Alm_Liv_6_b176_3 := FALSE; 
+   Alm_Liv_6_b176_4 := FALSE; 
+   Alm_Liv_6_b176_5 := FALSE; 
+   Alm_Liv_6_b176_6 := FALSE; 
+   Alm_Liv_6_b176_7 := FALSE; 
+   Alm_Liv_6_b177_0 := FALSE; 
+   Alm_Liv_6_b177_1 := FALSE; 
+   Alm_Liv_6_b177_2 := FALSE; 
+   Alm_Liv_6_b177_3 := FALSE; 
+   Alm_Liv_6_b177_4 := FALSE; 
+   Alm_Liv_6_b177_5 := FALSE; 
+   Alm_Liv_6_b177_6 := FALSE; 
+   Alm_Liv_6_b177_7 := FALSE; 
+   Alm_Liv_6_b178_0 := FALSE; 
+   Alm_Liv_6_b178_1 := FALSE; 
+   Alm_Liv_6_b178_2 := FALSE; 
+   Alm_Liv_6_b178_3 := FALSE; 
+   Alm_Liv_6_b178_4 := FALSE; 
+   Alm_Liv_6_b178_5 := FALSE; 
+   Alm_Liv_6_b178_6 := FALSE; 
+   Alm_Liv_6_b178_7 := FALSE; 
+   Alm_Liv_6_b179_0 := FALSE; 
+   Alm_Liv_6_b179_1 := FALSE; 
+   Alm_Liv_6_b179_2 := FALSE; 
+   Alm_Liv_6_b179_3 := FALSE; 
+   Alm_Liv_6_b179_4 := FALSE; 
+   Alm_Liv_6_b179_5 := FALSE; 
+   Alm_Liv_6_b179_6 := FALSE; 
+   Alm_Liv_6_b179_7 := FALSE; 
+   Alm_Liv_6_b180_0 := FALSE; 
+   Alm_Liv_6_b180_1 := FALSE; 
+   Alm_Liv_6_b180_2 := FALSE; 
+   Alm_Liv_6_b180_3 := FALSE; 
+   Alm_Liv_6_b180_4 := FALSE; 
+   Alm_Liv_6_b180_5 := FALSE; 
+   Alm_Liv_6_b180_6 := FALSE; 
+   Alm_Liv_6_b180_7 := FALSE; 
+   Alm_Liv_6_b181_0 := FALSE; 
+   Alm_Liv_6_b181_1 := FALSE; 
+   Alm_Liv_6_b181_2 := FALSE; 
+   Alm_Liv_6_b181_3 := FALSE; 
+   Alm_Liv_6_b181_4 := FALSE; 
+   Alm_Liv_6_b181_5 := FALSE; 
+   Alm_Liv_6_b181_6 := FALSE; 
+   Alm_Liv_6_b181_7 := FALSE; 
+   Alm_Liv_6_b182_0 := FALSE; 
+   Alm_Liv_6_b182_1 := FALSE; 
+   Alm_Liv_6_b182_2 := FALSE; 
+   Alm_Liv_6_b182_3 := FALSE; 
+   Alm_Liv_6_b182_4 := FALSE; 
+   Alm_Liv_6_b182_5 := FALSE; 
+   Alm_Liv_6_b182_6 := FALSE; 
+   Alm_Liv_6_b182_7 := FALSE; 
+   Alm_Liv_6_b183_0 := FALSE; 
+   Alm_Liv_6_b183_1 := FALSE; 
+   Alm_Liv_6_b183_2 := FALSE; 
+   Alm_Liv_6_b183_3 := FALSE; 
+   Alm_Liv_6_b183_4 := FALSE; 
+   Alm_Liv_6_b183_5 := FALSE; 
+   Alm_Liv_6_b183_6 := FALSE; 
+   Alm_Liv_6_b183_7 := FALSE; 
+   Alm_Liv_6_b184_0 := FALSE; 
+   Alm_Liv_6_b184_1 := FALSE; 
+   Alm_Liv_6_b184_2 := FALSE; 
+   Alm_Liv_6_b184_3 := FALSE; 
+   Alm_Liv_6_b184_4 := FALSE; 
+   Alm_Liv_6_b184_5 := FALSE; 
+   Alm_Liv_6_b184_6 := FALSE; 
+   Alm_Liv_6_b184_7 := FALSE; 
+   Alm_Liv_6_b185_0 := FALSE; 
+   Alm_Liv_6_b185_1 := FALSE; 
+   Alm_Liv_6_b185_2 := FALSE; 
+   Alm_Liv_6_b185_3 := FALSE; 
+   Alm_Liv_6_b185_4 := FALSE; 
+   Alm_Liv_6_b185_5 := FALSE; 
+   Alm_Liv_6_b185_6 := FALSE; 
+   Alm_Liv_6_b185_7 := FALSE; 
+   Alm_Liv_6_b186_0 := FALSE; 
+   Alm_Liv_6_b186_1 := FALSE; 
+   Alm_Liv_6_b186_2 := FALSE; 
+   Alm_Liv_6_b186_3 := FALSE; 
+   Alm_Liv_6_b186_4 := FALSE; 
+   Alm_Liv_6_b186_5 := FALSE; 
+   Alm_Liv_6_b186_6 := FALSE; 
+   Alm_Liv_6_b186_7 := FALSE; 
+   Alm_Liv_6_b187_0 := FALSE; 
+   Alm_Liv_6_b187_1 := FALSE; 
+   Alm_Liv_6_b187_2 := FALSE; 
+   Alm_Liv_6_b187_3 := FALSE; 
+   Alm_Liv_6_b187_4 := FALSE; 
+   Alm_Liv_6_b187_5 := FALSE; 
+   Alm_Liv_6_b187_6 := FALSE; 
+   Alm_Liv_6_b187_7 := FALSE; 
+   Alm_Liv_6_b188_0 := FALSE; 
+   Alm_Liv_6_b188_1 := FALSE; 
+   Alm_Liv_6_b188_2 := FALSE; 
+   Alm_Liv_6_b188_3 := FALSE; 
+   Alm_Liv_6_b188_4 := FALSE; 
+   Alm_Liv_6_b188_5 := FALSE; 
+   Alm_Liv_6_b188_6 := FALSE; 
+   Alm_Liv_6_b188_7 := FALSE; 
+   Alm_Liv_6_b189_0 := FALSE; 
+   Alm_Liv_6_b189_1 := FALSE; 
+   Alm_Liv_6_b189_2 := FALSE; 
+   Alm_Liv_6_b189_3 := FALSE; 
+   Alm_Liv_6_b189_4 := FALSE; 
+   Alm_Liv_6_b189_5 := FALSE; 
+   Alm_Liv_6_b189_6 := FALSE; 
+   Alm_Liv_6_b189_7 := FALSE; 
+   Msg_Liv_1_b190_0 := FALSE; 
+   Msg_Liv_1_b190_1 := FALSE; 
+   Msg_Liv_1_b190_2 := FALSE; 
+   Msg_Liv_1_b190_3 := FALSE; 
+   Msg_Liv_1_b190_4 := FALSE; 
+   Msg_Liv_1_b190_5 := FALSE; 
+   Msg_Liv_1_b190_6 := FALSE; 
+   Msg_Liv_1_b190_7 := FALSE; 
+   Msg_Liv_1_b191_0 := FALSE; 
+   Msg_Liv_1_b191_1 := FALSE; 
+   Msg_Liv_1_b191_2 := FALSE; 
+   Msg_Liv_1_b191_3 := FALSE; 
+   Msg_Liv_1_b191_4 := FALSE; 
+   Msg_Liv_1_b191_5 := FALSE; 
+   Msg_Liv_1_b191_6 := FALSE; 
+   Msg_Liv_1_b191_7 := FALSE; 
+   Msg_Liv_1_b192_0 := FALSE; 
+   Msg_Liv_1_b192_1 := FALSE; 
+   Msg_Liv_1_b192_2 := FALSE; 
+   Msg_Liv_1_b192_3 := FALSE; 
+   Msg_Liv_1_b192_4 := FALSE; 
+   Msg_Liv_1_b192_5 := FALSE; 
+   Msg_Liv_1_b192_6 := FALSE; 
+   Msg_Liv_1_b192_7 := FALSE; 
+   Msg_Liv_1_b193_0 := FALSE; 
+   Msg_Liv_1_b193_1 := FALSE; 
+   Msg_Liv_1_b193_2 := FALSE; 
+   Msg_Liv_1_b193_3 := FALSE; 
+   Msg_Liv_1_b193_4 := FALSE; 
+   Msg_Liv_1_b193_5 := FALSE; 
+   Msg_Liv_1_b193_6 := FALSE; 
+   Msg_Liv_1_b193_7 := FALSE; 
+   Msg_Liv_1_b194_0 := FALSE; 
+   Msg_Liv_1_b194_1 := FALSE; 
+   Msg_Liv_1_b194_2 := FALSE; 
+   Msg_Liv_1_b194_3 := FALSE; 
+   Msg_Liv_1_b194_4 := FALSE; 
+   Msg_Liv_1_b194_5 := FALSE; 
+   Msg_Liv_1_b194_6 := FALSE; 
+   Msg_Liv_1_b194_7 := FALSE; 
+   Msg_Liv_1_b195_0 := FALSE; 
+   Msg_Liv_1_b195_1 := FALSE; 
+   Msg_Liv_1_b195_2 := FALSE; 
+   Msg_Liv_1_b195_3 := FALSE; 
+   Msg_Liv_1_b195_4 := FALSE; 
+   Msg_Liv_1_b195_5 := FALSE; 
+   Msg_Liv_1_b195_6 := FALSE; 
+   Msg_Liv_1_b195_7 := FALSE; 
+   Msg_Liv_1_b196_0 := FALSE; 
+   Msg_Liv_1_b196_1 := FALSE; 
+   Msg_Liv_1_b196_2 := FALSE; 
+   Msg_Liv_1_b196_3 := FALSE; 
+   Msg_Liv_1_b196_4 := FALSE; 
+   Msg_Liv_1_b196_5 := FALSE; 
+   Msg_Liv_1_b196_6 := FALSE; 
+   Msg_Liv_1_b196_7 := FALSE; 
+   Msg_Liv_1_b197_0 := FALSE; 
+   Msg_Liv_1_b197_1 := FALSE; 
+   Msg_Liv_1_b197_2 := FALSE; 
+   Msg_Liv_1_b197_3 := FALSE; 
+   Msg_Liv_1_b197_4 := FALSE; 
+   Msg_Liv_1_b197_5 := FALSE; 
+   Msg_Liv_1_b197_6 := FALSE; 
+   Msg_Liv_1_b197_7 := FALSE; 
+   Msg_Liv_1_b198_0 := FALSE; 
+   Msg_Liv_1_b198_1 := FALSE; 
+   Msg_Liv_1_b198_2 := FALSE; 
+   Msg_Liv_1_b198_3 := FALSE; 
+   Msg_Liv_1_b198_4 := FALSE; 
+   Msg_Liv_1_b198_5 := FALSE; 
+   Msg_Liv_1_b198_6 := FALSE; 
+   Msg_Liv_1_b198_7 := FALSE; 
+   Msg_Liv_1_b199_0 := FALSE; 
+   Msg_Liv_1_b199_1 := FALSE; 
+   Msg_Liv_1_b199_2 := FALSE; 
+   Msg_Liv_1_b199_3 := FALSE; 
+   Msg_Liv_1_b199_4 := FALSE; 
+   Msg_Liv_1_b199_5 := FALSE; 
+   Msg_Liv_1_b199_6 := FALSE; 
+   Msg_Liv_1_b199_7 := FALSE; 
+END_DATA_BLOCK
+

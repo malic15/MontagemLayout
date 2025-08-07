@@ -239,6 +239,22 @@
                 <div class="stateChartContainer">
                     <canvas class="stateChart"></canvas>
                 </div>
+                <div class="vertical-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE horizontal">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE horizontal">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE horizontal">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="horizontal-space">
                 <div class="space"><div class="tooltip">PDT 109</div></div>
@@ -295,6 +311,22 @@
                 </div>
                 <div class="stateChartContainer">
                     <canvas class="stateChart"></canvas>
+                </div>
+                <div class="vertical-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE horizontal">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE horizontal">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE horizontal">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="horizontal-space">
@@ -369,6 +401,22 @@
                 </div>
                 <div class="stateChartContainer">
                     <canvas class="stateChart"></canvas>
+                </div>
+                <div class="vertical-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE horizontal">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE horizontal">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE horizontal">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="horizontal-space">
@@ -1290,14 +1338,41 @@
         <div class="ball ch4_zne2_tts14"><span class="tooltip">TTS14 ZNE02</span></div>
 
         <button id="trp" class="botton btn-trp">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
             <div class="vertical-space">
-            <div class="btn-text-vertical">Trp</div>
-            <div class="fault_text"></div>
+                <div class="btn-text-vertical">Trp</div>
+                <div class="fault_text"></div>
                 <div class="horizontal-space">
                     <div class="showTableBtn">
                         <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
                     </div>
                     <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="horizontal-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
                 </div>
             </div>
             <div class="vertical-space" style="flex-direction: column-reverse;">
@@ -1309,9 +1384,26 @@
                 <div class="space"><div class="tooltip"></div></div>
                 <div class="space"><div class="tooltip"></div></div>
             </div>
+            <div class="vertical-space">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
         </button>
 
         <button id="gomp" class="botton btn-gomp ">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
             <div class="vertical-space">
                 <div class="btn-text-vertical">Gomp</div>
                 <div class="fault_text"></div>
@@ -1320,6 +1412,25 @@
                         <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
                     </div>
                     <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="horizontal-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
                 </div>
             </div>
             <div class="vertical-space" style="flex-direction: column-reverse;">
@@ -1330,6 +1441,20 @@
                 <div class="space"><div class="tooltip">PDT 50</div></div>
                 <div class="space"><div class="tooltip">PDT 60</div></div>
                 <div class="space"><div class="tooltip">PDT 70</div></div>
+            </div>
+            <div class="vertical-space">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
             </div>
         </button>
 
@@ -1368,7 +1493,7 @@
                 <div class="space"><div class="tooltip">PDT 110</div></div>
                 <div class="space"><div class="tooltip">PDT 100</div></div>
                 <div class="space"><div class="tooltip">PDT 90</div></div>
-                @*                 <div class="space"><div class="tooltip">PDT 85</div></div>
+                @*<div class="space"><div class="tooltip">PDT 85</div></div>
                 <div class="space"><div class="tooltip">PDT 80</div></div>
                 <div class="space"><div class="tooltip">PDT 70</div></div>
                 <div class="space"><div class="tooltip">PDT 60</div></div>
@@ -1395,6 +1520,14 @@
         </button>
 
         <button id="tra" class="botton btn-tra">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
             <div class="vertical-space">
                 <div class="btn-text-vertical">Tra</div>
                 <div class="fault_text"></div>
@@ -1404,6 +1537,25 @@
                     </div>
                     <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
                 </div>
+                <div class="horizontal-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
             </div>
             <div class="vertical-space" style="flex-direction: column-reverse;">
                 <div class="space"><div class="tooltip">PDT 10</div></div>
@@ -1411,9 +1563,23 @@
                 <div class="space"><div class="tooltip">PDT 50</div></div>
                 <div class="space"><div class="tooltip">PDT 60</div></div>
             </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
         </button>
 
         <button id="goma" class="botton btn-goma">
+            <div class="progress-bar bar-v">
+                <div class="progress-actual atual-v"></div>
+                <div class="progress-target target-v"></div>
+                <div class="progress-info info-v">
+                    <div class="progress-text text-v"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-v"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
             <div class="vertical-space">
                 <div class="btn-text-vertical">Goma</div>
                 <div class="fault_text"></div>
@@ -1422,6 +1588,25 @@
                         <img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon">
                     </div>
                     <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="horizontal-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
                 </div>
             </div>
             <div class="vertical-space" style="flex-direction: column-reverse;">
@@ -1453,7 +1638,7 @@
                 <div id="gomaope180" class="botton btn-gomaope180">
                     <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 180</div></div>
                 </div>
-                <div id="gomaTo" class="botton btn-gomao180to190"></div>
+                <div id="gomaTo" class="botton btn-goma180to190"></div>
                 <div id="gomaope190" class="botton btn-gomaope190">
                     <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 190</div></div>
                 </div>
@@ -1461,15 +1646,163 @@
                     <div class="space" style="width:100%;height:100%;top:0;left:0;"><div class="tooltip">OPE 200</div></div>
                 </div>
             </div>
+            <div class="vertical-space" style="flex-direction: column-reverse;">
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+                <div class="space_timev"></div>
+            </div>
         </button>
         
 
-        <button id="pb1" class="botton btn-pb1">
-            <div class="btn-text-horizontal">Pb1</div>    
+        <button id="pb1" class="botton btn-pb1 horinzontal">
+            <div class="progress-bar bar-h">
+                <div class="progress-actual atual-h"></div>
+                <div class="progress-target target-h"></div>
+                <div class="progress-info info-h">
+                    <div class="progress-text text-h"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-h"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="btn-text-horizontal">Pb1</div>
+            </div>
+            <div class="horizontal-space">
+                <div class="fault_text"></div>
+                <div class="vertical-space">
+                    <div id="TableBtn" class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+                <div class="vertical-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE horizontal">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE horizontal">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE horizontal">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+            </div>
         </button>
 
-        <button id="pb2" class="botton btn-pb2">
-            <div class="btn-text-horizontal">Pb2</div>
+        <button id="pb2" class="botton btn-pb2 horinzontal">
+            <div class="progress-bar bar-h">
+                <div class="progress-actual atual-h"></div>
+                <div class="progress-target target-h"></div>
+                <div class="progress-info info-h">
+                    <div class="progress-text text-h"><div class="tooltip">Delta Atual</div></div>
+                    <div class="progress-text text-h"><div class="tooltip">Produção Atual</div></div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="btn-text-horizontal">Pb2</div>
+            </div>
+            <div class="horizontal-space">
+                <div class="fault_text"></div>
+                <div class="vertical-space">
+                    <div id="TableBtn" class="showTableBtn"><img src="~/icons/list_icon.svg" alt="Table Icon" class="btn-line-icon"></div>
+                    <div class="showTop10Btn"><img src="~/icons/chart_icon.svg" alt="Refresh Icon" class="btn-line-icon"></div>
+                </div>
+                <div class="stateChartContainer">
+                    <canvas class="stateChart"></canvas>
+                </div>
+                <div class="vertical-space">
+                    <div class="vertical-space">
+                        <div class="loss-anomalia showOPE horizontal">
+                            <span class="label">Perda por Anomalia</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-producao showOPE horizontal">
+                            <span class="label">Perda por Produção</span>
+                            <span class="value"></span>
+                        </div>
+                        <div class="loss-outros showOPE horizontal">
+                            <span class="label">Perda por Outros</span>
+                            <span class="value"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+                <div class="space"><div class="tooltip"></div></div>
+            </div>
+            <div class="horizontal-space">
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+                <div class="space_timeh"></div>
+            </div>
         </button>
 
          <div id="chartContainerPbsToDif">

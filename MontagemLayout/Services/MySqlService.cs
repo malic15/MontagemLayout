@@ -123,7 +123,7 @@ namespace MontagemLayout.Services
         {
             try
             {
-                Console.WriteLine("Carregando...!");
+                //Console.WriteLine("Carregando...!");
                 var query = new StringBuilder("SELECT Line, Events, State, Zone, Element, Duration, Data, Shift FROM lisinc.events WHERE 1=1");
                 var commandParameters = new List<MySqlParameter>();
 
@@ -194,7 +194,7 @@ namespace MontagemLayout.Services
                 foreach (var param in commandParameters)
                     command.Parameters.Add(param);
 
-                Console.WriteLine("Carregou!!!");
+                //Console.WriteLine("Carregou!!!");
                 using var reader = await command.ExecuteReaderAsync();
                 var results = new List<object>();
                 
@@ -212,7 +212,7 @@ namespace MontagemLayout.Services
                         Shift = reader["shift"]
                     });
                 }
-                Console.WriteLine("Carregou!");
+                //Console.WriteLine("Carregou!");
                 return results;
             }
             catch (Exception ex)
@@ -403,7 +403,7 @@ namespace MontagemLayout.Services
         {
             
             var snapshots = new List<BufferSnapshot>();
-            Console.WriteLine($"DEBUG Start: {start:yyyy-MM-dd HH:mm:ss}, End: {end:yyyy-MM-dd HH:mm:ss}");
+            //Console.WriteLine($"DEBUG Start: {start:yyyy-MM-dd HH:mm:ss}, End: {end:yyyy-MM-dd HH:mm:ss}");
 
             using var connection = new MySqlConnection(connectionString);
             await connection.OpenAsync();
@@ -552,7 +552,7 @@ namespace MontagemLayout.Services
 
                 if (results.Count == 0)
                 {
-                    Console.WriteLine("Nenhum dado encontrado!");
+                    //Console.WriteLine("Nenhum dado encontrado!");
                 }
                 return new List<object> {
                     new {

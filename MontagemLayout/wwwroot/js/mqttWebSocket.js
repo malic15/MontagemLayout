@@ -600,8 +600,8 @@ window.toUp = function() {
     });
     const buttonpb1 = document.getElementById('pb1');
     const buttonpb2 = document.getElementById('pb2');
-    buttonpb1.style.setProperty('left', 'calc((510px + var(--horizontal-offset)) * var(--scale-factor-width))');
-    buttonpb2.style.setProperty('left', 'calc((95px + var(--horizontal-offset)) * var(--scale-factor-width))');
+    buttonpb1.style.setProperty('left', 'calc((490px + var(--horizontal-offset)) * var(--scale-factor-width))');
+    buttonpb2.style.setProperty('left', 'calc((10px + var(--horizontal-offset)) * var(--scale-factor-width))');
 }
 async function showAlert(message) {
     const alerta = document.getElementById('alert');

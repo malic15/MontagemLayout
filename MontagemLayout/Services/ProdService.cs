@@ -246,10 +246,10 @@ namespace MontagemLayout.Services
             int lossAnomalia = Math.Max(0, (int)Math.Floor(realLossAnomalia));
             int lossProducao = Math.Max(0, (int)Math.Floor(realLossProducao));
             int lossOutros = Math.Max(0, (int)Math.Floor(realLossOutros));
-            Console.WriteLine(line + " loss.SumAnomalia: " + loss.SumAnomalia + " loss.SumProducao: " + loss.SumProducao + " loss.SumOutros: " + loss.SumOutros + " loss.SumTotal: " + loss.SumTotal);
+            //Console.WriteLine(line + " loss.SumAnomalia: " + loss.SumAnomalia + " loss.SumProducao: " + loss.SumProducao + " loss.SumOutros: " + loss.SumOutros + " loss.SumTotal: " + loss.SumTotal);
             int somaLoss = lossAnomalia + lossProducao + lossOutros;
             int diff = ngapProd - somaLoss;
-            Console.WriteLine(line + " diff: " + diff + " ngapProd: " + ngapProd + " somaLoss: " + somaLoss);
+            //Console.WriteLine(line + " diff: " + diff + " ngapProd: " + ngapProd + " somaLoss: " + somaLoss);
             // Distribua o resto de maneira proporcional (maior decimal ganha)
             var decimais = new List<(string key, double value)> {
         ("anomalia", realLossAnomalia - Math.Floor(realLossAnomalia)),
@@ -264,7 +264,7 @@ namespace MontagemLayout.Services
                 else if (decimais[i % 3].key == "producao") lossProducao++;
                 else if (decimais[i % 3].key == "outros") lossOutros++;
             }
-            Console.WriteLine(line+ " lossAnomalia: "+ lossAnomalia+ " lossProducao: "+ lossProducao+ " lossOutros: " + lossOutros);
+            //Console.WriteLine(line+ " lossAnomalia: "+ lossAnomalia+ " lossProducao: "+ lossProducao+ " lossOutros: " + lossOutros);
             return (lossAnomalia, lossProducao, lossOutros);
         }
 

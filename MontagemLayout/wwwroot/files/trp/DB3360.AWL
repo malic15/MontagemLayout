@@ -1,0 +1,1099 @@
+DATA_BLOCK DB 3360
+TITLE =:		
+{ S7_language := '16(1) Italiano (Itália)  21.05.2018  17:32:37' }
+VERSION : 0.1
+
+
+  STRUCT 	
+   CM_ID : STRING  [8 ] := '=RCA_0';	//Nome Linea	
+   STATION_ID : STRING  [8 ] := '++MAIN';	//Nome Stazione	
+   ELEMENT_ID : STRING  [8 ];	//Nome Macchinario		
+   DB_ID : INT  := 2;	//Dimensione DB 1=256 2=512 3=1024	
+   PART_STYLE : STRING  [12 ];	//IDENTIFICATIVO PEZZO IN LAVORAZIONE		
+   ACT_CYCLE_TIME : INT ;	//Tempo ciclo attuale		
+   COUNT_GOOD : INT ;	//Pezzi OK		
+   COUNT_SCRAP : INT ;	//Pezzi KO		
+   SPARE_00 : ARRAY  [0 .. 15 ] OF //Accumulo		
+   INT  := 0;	
+   SPARE_01 : ARRAY  [0 .. 17 ] OF //Riserve Array		
+   INT ;	
+   CODE_EVENT : ARRAY  [0 .. 7 ] OF //Codice diagnostica		
+   INT ;	
+   E0001 : BOOL ;	//=RCA_0++MAIN;Guasto  / Faulted;1	
+   E0002 : BOOL ;	//=RCA_0++MAIN;Emergenza / Emergenzy;2	
+   E0003 : BOOL ;	//=RCA_0++MAIN;Cambio Elettrodi / Tip Change;3	
+   E0004 : BOOL ;	//=RCA_0++MAIN;Attrezzamento / Tool Change;4	
+   E0005 : BOOL ;	//=RCA_0++MAIN;Congruenza e Controllo / Check And Consistency;5	
+   E0006 : BOOL ;	//=RCA_0++MAIN;Mancato Scarico / Starved;9	
+   E0007 : BOOL ;	//=RCA_0++MAIN;Mancato Carico LAT.AUTO / No Material;7	
+   E0008 : BOOL ;	//=RCA_0++MAIN;Mancato Carico LAT.MANO / OverCycle;8	
+   E0009 : BOOL ;	//=RCA_0++MAIN;Mancato Carico / Blocked;6	
+   E0010 : BOOL ;	//=RCA_0++MAIN;Mancanza Consensi Esterni / End Of Travel;10	
+   E0011 : BOOL ;	//=RCA_0++MAIN;Anomalia di Qualita' / Quality Alert;11	
+   E0012 : BOOL ;	//=RCA_0++MAIN;Controllo Di Qualita' Pianificato / Quality Check;12	
+   E0013 : BOOL ;	//=RCA_0++MAIN;Manutenzione Pianificata / PM Event;13	
+   E0014 : BOOL ;	//=RCA_0++MAIN;Manutenzione Non Programmata / AM Event;14	
+   E0015 : BOOL ;	//=RCA_0++MAIN;No Ciclo Avviato / No Cycle Started;15	
+   E0016 : BOOL ;	//=RCA_0++MAIN;Manuale / Out Of Auto;16	
+   E0017 : BOOL ;	//=RCA_0++MAIN;Arresto Lato Linea / Production Stop;17	
+   E0018 : BOOL ;	//=RCA_0++MAIN;Vuoto Tecnico / Tecnical Gaps;18	
+   E0019 : BOOL ;	//=RCA_0++MAIN;Produzione / Production;19	
+   E0020 : BOOL ;	
+   E0021 : BOOL ;	
+   E0022 : BOOL ;	
+   E0023 : BOOL ;	
+   E0024 : BOOL ;	
+   E0025 : BOOL ;	
+   E0026 : BOOL ;	
+   E0027 : BOOL ;	
+   E0028 : BOOL ;	
+   E0029 : BOOL ;	
+   E0030 : BOOL ;	
+   E0031 : BOOL ;	
+   E0032 : BOOL ;	
+   E0033 : BOOL ;	
+   E0034 : BOOL ;	
+   E0035 : BOOL ;	
+   E0036 : BOOL ;	
+   E0037 : BOOL ;	
+   E0038 : BOOL ;	
+   E0039 : BOOL ;	
+   E0040 : BOOL ;	
+   E0041 : BOOL ;	
+   E0042 : BOOL ;	
+   E0043 : BOOL ;	
+   E0044 : BOOL ;	
+   E0045 : BOOL ;	
+   E0046 : BOOL ;	
+   E0047 : BOOL ;	
+   E0048 : BOOL ;	
+   E0049 : BOOL ;	
+   E0050 : BOOL ;	
+   E0051 : BOOL ;	//=RCA_0++MAIN;Attesa Manutenzione / Maintenance Assistance;51	
+   E0052 : BOOL ;	//=RCA_0++MAIN;Materiale Sotto Soglia / Low Material;52	
+   E0053 : BOOL ;	//=RCA_0++MAIN;Chiamata Team Leader / team leader Alert;53	
+   E0054 : BOOL ;	//=RCA_0++MAIN;ByPass / ByPass;54	
+   E0055 : BOOL ;	//=RCA_0++MAIN;Degradato / Degraded;55	
+   E0056 : BOOL ;	//=RCA_0++MAIN;Time-Out / Time-Out;56	
+   E0057 : BOOL ;	//=RCA_0++MAIN;Line PC Scollegato / System Down;57	
+   E0058 : BOOL ;	//=RCA_0++MAIN;messaggio Guida / Alarm;58	
+   E0059 : BOOL ;	
+   E0060 : BOOL ;	
+   E0061 : BOOL ;	
+   E0062 : BOOL ;	
+   E0063 : BOOL ;	
+   E0064 : BOOL ;	
+   E0065 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_41;Alimentazione Scalance Linea;1	
+   E0066 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_44;Alimentazione Ausiliari 24Vdc;1	
+   E0067 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_45;Alimentazione 24Vdc Input e Servizi ST010;1	
+   E0068 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_47;Alimentazione 24Vdc Input e Servizi ST030;1	
+   E0069 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_48;Alimentazione 24Vdc Input e Servizi ST080;1 
+   E0070 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_49;Alimentazione 24Vdc Input e Servizi ST050;1	
+   E0071 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_50;Alimentazione 24Vdc Input e Servizi ST060;1	
+   E0072 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_51;Alimentazione 24Vdc Input e Servizi ST070;1	
+   E0073 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_52;Alimentazione 24Vdc Input e Servizi ST180;1	
+   E0074 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_53;Alimentazione 24Vdc Input e Servizi ST190;1	
+   E0075 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_46;Alimentazione 24Vdc Input e Servizi ST020;1	
+   E0076 : BOOL ;	//=RCA_0++MAIN+HGD01-QF100;Alimentazione 24Vdc Input e Servizi ST100;1	
+   E0077 : BOOL ;	//=RCA_0++MAIN+HGD01-QF101;Alimentazione 24Vdc Input e Servizi ST110;1	
+   E0078 : BOOL ;	//=RCA_0++MAIN+HGD01-QF102;Alimentazione 24Vdc Input e Servizi ST120;1	
+   E0079 : BOOL ;	//=RCA_0++MAIN+HGD01-QF103;Alimentazione 24Vdc Input e Servizi ST130;1	
+   E0080 : BOOL ;	//=RCA_0++MAIN+HGD01-QF104;Alimentazione 24Vdc Input e Servizi ST140;1	
+   E0081 : BOOL ;	//=RCA_0++MAIN+HGD01-QF105;Alimentazione 24Vdc Input e Servizi ST150;1	
+   E0082 : BOOL ;	//=RCA_0++MAIN+HGD01-QF106;Alimentazione 24Vdc Input e Servizi ST160;1	
+   E0083 : BOOL ;	//=RCA_0++MAIN+HGD01-QF107;Alimentazione 24Vdc Input e Servizi ST170;1	
+   E0084 : BOOL ;	//=RCA_0++MAIN+HGD01-QF108;Alimentazione 24Vdc Input e Servizi ST200;1	
+   E0085 : BOOL ;	//=RCA_0++MAIN+HGD01-QF109;Alimentazione 24Vdc Input e Servizi ST210;1	
+   E0086 : BOOL ;	//=RCA_0++MAIN+HGD01-QF110;Alimentazione 24Vdc Input e Servizi ST200;1	
+   E0087 : BOOL ;	//=RCA_0++MAIN+HGD01-QF111;Alimentazione 24Vdc Input e Servizi ST095;1 
+   E0088 : BOOL ;	//=RCA_0++MAIN+HGD01-QF112;Alimentazione 24Vdc Input e Servizi ST230;1 
+   E0089 : BOOL ;	//=RCA_0++MAIN+HGD01-QF200;Alimentazione 24Vdc Input e Servizi ST115;1 
+   E0090 : BOOL ;	// 	
+   E0091 : BOOL ;	// 	
+   E0092 : BOOL ;	// 	
+   E0093 : BOOL ;	// 	
+   E0094 : BOOL ;	// 	
+   E0095 : BOOL ;	// 	
+   E0096 : BOOL ;	// 	
+   E0097 : BOOL ;	//=RCA_0++MAIN+HGD01-DME01;Falha Modulo ProSafe ET200s FDI-FDO;2
+   E0098 : BOOL ;	//=RCA_0++MAIN+HGD01-DME03;Falha Modulo ProSafe ET200s FDI;2
+   E0099 : BOOL ;	//=RCA_0++MAIN+HGD01-DME04;Falha Modulo ProSafe ET200s FDO;2
+   E0100 : BOOL ;	// 	
+   E0101 : BOOL ;	// 	
+   E0102 : BOOL ;	// 	
+   E0103 : BOOL ;	// 	
+   E0104 : BOOL ;	// 	
+   E0105 : BOOL ;	// 	
+   E0106 : BOOL ;	// 	
+   E0107 : BOOL ;	// 	
+   E0108 : BOOL ;	// 	
+   E0109 : BOOL ;	// 	
+   E0110 : BOOL ;	// 	
+   E0111 : BOOL ;	// 	
+   E0112 : BOOL ;	// 	
+   E0113 : BOOL ;	// 	
+   E0114 : BOOL ;	// 	
+   E0115 : BOOL ;	// 	
+   E0116 : BOOL ;	// 	
+   E0117 : BOOL ;	// 	
+   E0118 : BOOL ;	// 	
+   E0119 : BOOL ;	// 	
+   E0120 : BOOL ;	// 	
+   E0121 : BOOL ;	// 	
+   E0122 : BOOL ;	// 	
+   E0123 : BOOL ;	// 	
+   E0124 : BOOL ;	// 	
+   E0125 : BOOL ;	// 	
+   E0126 : BOOL ;	// 	
+   E0127 : BOOL ;	// 	
+   E0128 : BOOL ;	// 	
+   E0129 : BOOL ;	//=RCA_0++MAIN+HGD01-DME01;Allarme Comunicazione Profinet ET200S (15);1	
+   E0130 : BOOL ;	//=RCA_0++MAIN+HGD01-DME02;Allarme Comunicazione Profinet ET200S (16);1	
+   E0131 : BOOL ;	//=RCA_0++MAIN+HGD01-DME03;Allarme Comunicazione Profinet ET200S (17);1	
+   E0132 : BOOL ;	//=RCA_0++MAIN+HGD01-DME04;Allarme Comunicazione Profinet ET200S (18);1 
+   E0133 : BOOL ;	// 	
+   E0134 : BOOL ;	// 	
+   E0135 : BOOL ;	// 	
+   E0136 : BOOL ;	// 	
+   E0137 : BOOL ;	//=RCA_0++MAIN+PGA03-SB_01;Arresto Emergenza su Pulsatiera Cancello 3;2	
+   E0138 : BOOL ;	//=RCA_0++MAIN+PGA04-SB_01;Arresto Emergenza su Pulsatiera Cancello 4;2	
+   E0139 : BOOL ;	//=RCA_0++MAIN+PGA05-SB_01;Arresto Emergenza su Pulsatiera Cancello 5;2	
+   E0140 : BOOL ;	//=RCA_0++MAIN+PGA06-SB_01;Arresto Emergenza su Pulsatiera Cancello 6;2	
+   E0141 : BOOL ;	//=RCA_0++MAIN+PGA07-SB_01;Arresto Emergenza su Pulsatiera Cancello 7;2	
+   E0142 : BOOL ;	//=RCA_0++MAIN+PGA08-SB_01;Arresto Emergenza su Pulsatiera Cancello 8;2	
+   E0143 : BOOL ;	//=RCA_0++MAIN+PGA09-SB_01;Arresto Emergenza su Pulsatiera Cancello 9;2 
+   E0144 : BOOL ;	
+   E0145 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_01;KM_01/02FeedBack - Rele' Output Emergenza;1	
+   E0146 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_05;KM_05/06FeedBack - Rele' Output ++ST050;1	
+   E0147 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_07;KM_07/08FeedBack - Rele' Output ++ST070;1	
+   E0148 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_09;KM_09/10FeedBack - Rele' Output ++ST180;1	
+   E0149 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_11;KM_11/12FeedBack - Rele' Output ++ST190;1	
+   E0150 : BOOL ;	//=RCA_0++MAIN+HGD01-SB_01;Arresto Emergenza su Porta Armadio;2	
+   E0151 : BOOL ;	//=RCA_0++MAIN+PGA01-SB_01;Arresto Emergenza su Pulsatiera Cancello 1;2	
+   E0152 : BOOL ;	//=RCA_0++MAIN+PGA02-SB_01;Arresto Emergenza su Pulsatiera Cancello 2;2	
+   E0153 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_03;KM_03/04FeedBack - Rele' Output SV_01-SV02;1	
+   E0154 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_13;KM_13/14FeedBack - Rele' Output ++ST100;1	
+   E0155 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_15;KM_15/16FeedBack - Rele' Output ++ST110;1	
+   E0156 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_17;KM_17/18FeedBack - Rele' Output ++ST120/ST130;1	
+   E0157 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_19;KM_19/20FeedBack - Rele' OutpuT ++ST140/ST170;1	
+   E0158 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_21;KM_21/22FeedBack - Rele' Output ++ST200;1	
+   E0159 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_23;KM_23/24FeedBack - Rele' Output ++ST210;1	
+   E0160 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_25;KM_25/26FeedBack - Rele' Output ++ST200;1	
+   E0161 : BOOL ;	//=RCA_0++MAIN+HGD01;EMERGENZA NON RIPRISTINATA;2	
+   E0162 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_29;KM_29/30FeedBack - Rele' Output ++ST220;1	
+   E0163 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_90;KM_90 FeedBack - Rele' Output ++ST080/ST090;1	
+   E0164 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_92;KM_92 Rele' Abilitazione Avvitatori ++ST080/ST090;1	
+   E0165 : BOOL ;	// 	
+   E0166 : BOOL ;	// 	
+   E0167 : BOOL ;	// 	
+   E0168 : BOOL ;	// 	
+   E0169 : BOOL ;	// 	
+   E0170 : BOOL ;	// 	
+   E0171 : BOOL ;	// 	
+   E0172 : BOOL ;	// 	
+   E0173 : BOOL ;	// 	
+   E0174 : BOOL ;	// 	
+   E0175 : BOOL ;	// 	
+   E0176 : BOOL ;	// 	
+   E0177 : BOOL ;	//=RCA_0++MAIN+HGD01-SP_01;Assenza Aria Generale;1	
+   E0178 : BOOL ;	//=RCA_0++MAIN+HGD01-ST_01;Temperatura Apparecchiatura NOK +HGD01;1	
+   E0179 : BOOL ;	// 	
+   E0180 : BOOL ;	// 	
+   E0181 : BOOL ;	// 	
+   E0182 : BOOL ;	// 	
+   E0183 : BOOL ;	// 	
+   E0184 : BOOL ;	// 	
+   E0185 : BOOL ;	// 	
+   E0186 : BOOL ;	// 	
+   E0187 : BOOL ;	// 	
+   E0188 : BOOL ;	// 	
+   E0189 : BOOL ;	// 	
+   E0190 : BOOL ;	// 	
+   E0191 : BOOL ;	// 	
+   E0192 : BOOL ;	// 	
+   E0193 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_81;KM_81-KM_82FeedBack - Abilitazi.Avv.ST080/90;1	
+   E0194 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_83;KM_83-KM_84FeedBack - Abilitazi.Avv.ST090/180;1	
+   E0195 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_85;KM_85-KM_86FeedBack - Abilitazi.Avv.ST190;1	
+   E0196 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_42;Alimentazione Rfid Linea;1	
+   E0197 : BOOL ;	
+   E0198 : BOOL ;	
+   E0199 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_39;Alimentazione SWK03 ST180;1	
+   E0200 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_87;KM_87-KM_88FeedBack - Abilitazi.Avv.ST140/ST170;1	
+   E0201 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_02;Alimentazione Centralina Avvitatore SWK01 ST180;1	
+   E0202 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_03;Alimentazione Centralina Avvitatore SWK02 ST180;1	
+   E0203 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_04;Alimentazione Centralina Avvitatore SWK01 ST190;1	
+   E0204 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_05;Alimentazione Centralina Avvitatore SWK02 ST120;1	
+   E0205 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_06;Alimentazione Centralina Avvitatore SWK01 ST130;1	
+   E0206 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_14;Alimentazione Centralina Avvitatore SWK03 ST180;1	
+   E0207 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_38;Alimentazione Centralina Avvitatore SWK03 ST190;1	
+   E0208 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_07;Alimentazione Centralina Avvitatore SWK01 ST140/150;1	
+   E0209 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_31;FeedBack - Controllo Comando Motore Trasporto M__01;1	
+   E0210 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_32;FeedBack - Controllo Comando Motore Trasporto M__02;1	
+   E0211 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_33;FeedBack - Controllo Comando Motore Trasporto M__03;1	
+   E0212 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_34;FeedBack - Controllo Comando Motore Trasporto M__04;1	
+   E0213 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_35;FeedBack - Controllo Comando Motore Trasporto M__05;1	
+   E0214 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_36;FeedBack - Controllo Comando Motore Trasporto M__06;1	
+   E0215 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_37;FeedBack - Controllo Comando Motore Trasporto M__07;1	
+   E0216 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_38;FeedBack - Controllo Comando Motore Trasporto M__08;1	
+   E0217 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_39;FeedBack - Controllo Comando Motore Trasporto M__09;1	
+   E0218 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_40;FeedBack - Controllo Comando Motore Trasporto M__10;1	
+   E0219 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_41;FeedBack - Controllo Comando Motore Trasporto M__11;1	
+   E0220 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_42;FeedBack - Controllo Comando Motore Trasporto M__12;1	
+   E0221 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_43;FeedBack - Controllo Comando Motore Trasporto M__13;1	
+   E0222 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_44;FeedBack - Controllo Comando Motore Trasporto M__14;1	
+   E0223 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_45;FeedBack - Controllo Comando Motore Trasporto M__15;1	
+   E0224 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_46;FeedBack - Controllo Comando Motore Trasporto M__16;1	
+   E0225 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW01;Allarme Comunicazione Profinet Scalance (2);1	
+   E0226 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW02;Allarme Comunicazione Profinet Scalance (3);1	
+   E0227 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW03;Allarme Comunicazione Profinet Scalance (4);1	
+   E0228 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW04;Allarme Comunicazione Profinet Scalance (5);1	
+   E0229 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW05;Allarme Comunicazione Profinet Scalance (6);1	
+   E0230 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW06;Allarme Comunicazione Profinet Scalance (7);1	
+   E0231 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW07;Allarme Comunicazione Profinet Scalance (8);1	
+   E0232 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW08;Allarme Comunicazione Profinet Scalance (9);1	
+   E0233 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW09;Allarme Comunicazione Profinet Scalance (10);1	
+   E0234 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW10;Allarme Comunicazione Profinet Scalance (11);1	
+   E0235 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW11;Allarme Comunicazione Profinet Scalance (12);1	
+   E0236 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW12;Allarme Comunicazione Profinet Scalance (13);1	
+   E0237 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW13;Allarme Comunicazione Profinet Scalance (14);1	
+   E0238 : BOOL ;	//=RCA_0++MAIN+HGD01-B__01;Allarme Comunicazione Profinet PAC3200 (19);1	
+   E0239 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_47;FeedBack - Controllo Comando Motore Trasporto M__17;1	
+   E0240 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_48;FeedBack - Controllo Comando Motore Trasporto M__18;1	
+   E0241 : BOOL ;	//=RCA_0++MAIN+CSI01;Allarme Comunicazione Profinet Rfid (20);1	
+   E0242 : BOOL ;	//=RCA_0++MAIN+CSI02;Allarme Comunicazione Profinet Rfid (21);1	
+   E0243 : BOOL ;	//=RCA_0++MAIN+CSI03;Allarme Comunicazione Profinet Rfid (22);1	
+   E0244 : BOOL ;	//=RCA_0++MAIN+CSI04;Allarme Comunicazione Profinet Rfid (23);1	
+   E0245 : BOOL ;	//=RCA_0++MAIN+CSI05;Allarme Comunicazione Profinet Rfid (24);1	
+   E0246 : BOOL ;	//=RCA_0++MAIN+CSI06;Allarme Comunicazione Profinet Rfid (25);1	
+   E0247 : BOOL ;	//=RCA_0++MAIN+CSI07;Allarme Comunicazione Profinet Rfid (26);1	
+   E0248 : BOOL ;	//=RCA_0++MAIN+CSI08;Allarme Comunicazione Profinet Rfid (27);1	
+   E0249 : BOOL ;	//=RCA_0++MAIN+CSI09;Allarme Comunicazione Profinet Rfid (28);1	
+   E0250 : BOOL ;	//=RCA_0++MAIN+CSI10;Allarme Comunicazione Profinet Rfid (29);1	
+   E0251 : BOOL ;	//=RCA_0++MAIN+CSI11;Allarme Comunicazione Profinet Rfid (100);1	
+   E0252 : BOOL ;	//=RCA_0++MAIN+CSI12;Allarme Comunicazione Profinet Rfid (101);1 
+   E0253 : BOOL ;	//=RCA_0++MAIN+CSI15;Allarme Comunicazione Profinet Rfid (107);1 
+   E0254 : BOOL ;	//=RCA_0++MAIN+HLC01-DSW14;Allarme Comunicazione Profinet Scalance (112);1	
+   E0255 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_51;FeedBack - Controllo Comando Motore Trasporto M__19;1	
+   E0256 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_52;FeedBack - Controllo Comando Motore Trasporto M__20;1	
+   E0257 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_01;Alimentazione 400VAC Motore trasporto M__01;1	
+   E0258 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_02;Alimentazione 400VAC Motore trasporto M__02;1	
+   E0259 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_03;Alimentazione 400VAC Motore trasporto M__03;1	
+   E0260 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_04;Alimentazione 400VAC Motore trasporto M__04;1	
+   E0261 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_05;Alimentazione 400VAC Motore trasporto M__05;1	
+   E0262 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_06;Alimentazione 400VAC Motore trasporto M__06;1	
+   E0263 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_07;Alimentazione 400VAC Motore trasporto M__07;1	
+   E0264 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_08;Alimentazione 400VAC Motore trasporto M__08;1	
+   E0265 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_20;Alimentazione Primario Trasformatore 400-220Vac;1	
+   E0266 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_30;Alimentazione Secondario Trasformatore 400-220Vac;1	
+   E0267 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_34;Alimentazione Condizionatore HGD01 220Vac;1	
+   E0268 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_60;Alimentazione 24Vdc Output ST010;1	
+   E0269 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_62;Alimentazione 24Vdc Output ST030;1	
+   E0270 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_63;Alimentazione 24Vdc Output ST080;1 
+   E0271 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_64;Alimentazione 24Vdc Output ST050;1	
+   E0272 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_65;Alimentazione 24Vdc Output ST060;1	
+   E0273 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_66;Alimentazione 24Vdc Output ST070;1	
+   E0274 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_67;Alimentazione 24Vdc Output ST180;1 
+   E0275 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_68;Alimentazione 24Vdc Output ST190;1 
+   E0276 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_69;24Vdc Output ST001 PCV01 (SV_01/SV_02/TAV7);1	
+   E0277 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_70;24Vdc Output ST001 PCV03 (  TAV01-TAV02 );1	
+   E0278 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_71;24Vdc Output ST001 PCV02 ( SV_03/SV_04 );1	
+   E0279 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_54;24Vdc Input ST001 PCV01 (SV_01/SV_02/TAV7);1	
+   E0280 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_55;24Vdc Input ST001 PCV03 (  TAV01-TAV02 );1	
+   E0281 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_56;24Vdc Input ST001 PCV02 ( SV_03/SV_04 );1	
+   E0282 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_36;Alimentazione 220Vac HPC01;1	
+   E0283 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_37;Alimentazione 220Vac HPC02;1	
+   E0284 : BOOL ;	//=RCA_0++MAIN+HGD01-QF143;24Vdc Output ST001 PCV04 (TAV03/TAV04);1	
+   E0285 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_57;24Vdc input ST001 PCV04 (TAV03/TAV04);1	
+   E0286 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_22;Alim.Primario Trasfor. 400-220Vac Carica Batterie;1	
+   E0287 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_23;Alim.Secondario Trasfor.400-220Vac Carica Batterie;1	
+   E0288 : BOOL ;	// 	
+   E0289 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_09;Alimentazione 400VAC Motore trasporto M__09;1	
+   E0290 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_10;Alimentazione 400VAC Motore trasporto M__10;1	
+   E0291 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_11;Alimentazione 400VAC Motore trasporto M__11;1	
+   E0292 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_12;Alimentazione 400VAC Motore trasporto M__12;1	
+   E0293 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_13;Alimentazione 400VAC Motore trasporto M__13;1	
+   E0294 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_14;Alimentazione 400VAC Motore trasporto M__14;1	
+   E0295 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_15;Alimentazione 400VAC Motore trasporto M__15;1	
+   E0296 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_16;Alimentazione 400VAC Motore trasporto M__16;1	
+   E0297 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_17;Alimentazione 400VAC Motore trasporto M__17;1	
+   E0298 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_18;Alimentazione 400VAC Motore trasporto M__18;1	
+   E0299 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_19;Alimentazione 400VAC Motore trasporto M__19;1	
+   E0300 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_20;Alimentazione 400VAC Motore trasporto M__20;1	
+   E0301 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_58;24Vdc input ST001 PCV05 (TAV05/TAV06);1	
+   E0302 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_59;24Vdc input ST001 PCV06 (SV_05/SV_06);1	
+   E0303 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_32;Alimentazione 400VAC Motore trasporto Sv4 M__32;1 
+   E0304 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_33;Alimentazione 400VAC Motore trasporto Baia M__33;1 
+   E0305 : BOOL ;	//=RCA_0++MAIN+HGD01-QF130;Alimentazione 24Vdc Output ST100;1	
+   E0306 : BOOL ;	//=RCA_0++MAIN+HGD01-QF131;Alimentazione 24Vdc Output ST110;1	
+   E0307 : BOOL ;	//=RCA_0++MAIN+HGD01-QF132;Alimentazione 24Vdc Output ST120;1	
+   E0308 : BOOL ;	//=RCA_0++MAIN+HGD01-QF133;Alimentazione 24Vdc Output ST130;1	
+   E0309 : BOOL ;	//=RCA_0++MAIN+HGD01-QF134;Alimentazione 24Vdc Output ST140;1	
+   E0310 : BOOL ;	//=RCA_0++MAIN+HGD01-QF135;Alimentazione 24Vdc Output ST150;1	
+   E0311 : BOOL ;	//=RCA_0++MAIN+HGD01-QF136;Alimentazione 24Vdc Output ST160;1	
+   E0312 : BOOL ;	//=RCA_0++MAIN+HGD01-QF137;Alimentazione 24Vdc Output ST170;1	
+   E0313 : BOOL ;	//=RCA_0++MAIN+HGD01-QF138;Alimentazione 24Vdc Output ST200;1 
+   E0314 : BOOL ;	//=RCA_0++MAIN+HGD01-QF139;Alimentazione 24Vdc Output ST210;1 
+   E0315 : BOOL ;	//=RCA_0++MAIN+HGD01-QF140;Alimentazione 24Vdc Output ST090;1 
+   E0316 : BOOL ;	//=RCA_0++MAIN+HGD01-QF141;Alimentazione 24Vdc Output ST230;1 
+   E0317 : BOOL ;	//=RCA_0++MAIN+HGD01-QF142;Alimentazione 24Vdc Output ST230;1 
+   E0318 : BOOL ;	//=RCA_0++MAIN+HGD01-QF201;Alimentazione 24Vdc Output ST115;1 
+   E0319 : BOOL ;	//=RCA_0++MAIN+HGD01-QM100;Alimentazione 400VAC Motore Tavola Svincolo 1 M__34;1
+   E0320 : BOOL ;	//=RCA_0++MAIN+HGD01-QM101;Alimentazione 400VAC Motore Tavola Svincolo 2 M__35;1
+   E0321 : BOOL ;	//=RCA_0++MAIN;++ST010+PTZ01-DSP01 Allarme Profinet Pannello Operatore (150);1	
+   E0322 : BOOL ;	
+   E0323 : BOOL ;	
+   E0324 : BOOL ;	
+   E0325 : BOOL ;	//=RCA_0++MAIN;++ST050+PTZ01-DSP01 Allarme Profinet Pannello Operatore (154);1	
+   E0326 : BOOL ;	//=RCA_0++MAIN;++ST060+PTZ01-DSP01 Allarme Profinet Pannello Operatore (155);1	
+   E0327 : BOOL ;	//=RCA_0++MAIN;++ST070+PTZ01-DSP01 Allarme Profinet Pannello Operatore (156);1	
+   E0328 : BOOL ;	//=RCA_0++MAIN;++ST080+PTZ01-DSP01 Allarme Profinet Pannello Operatore (157);1	
+   E0329 : BOOL ;	//=RCA_0++MAIN;++ST090+PTZ01-DSP01 Allarme Profinet Pannello Operatore (158);1	
+   E0330 : BOOL ;	
+   E0331 : BOOL ;	
+   E0332 : BOOL ;	
+   E0333 : BOOL ;	
+   E0334 : BOOL ;	//=RCA_0++MAIN;++ST140+PTZ01-DSP01 Allarme Profinet Pannello Operatore (163);1	
+   E0335 : BOOL ;	//=RCA_0++MAIN;++ST150+PTZ01-DSP01 Allarme Profinet Pannello Operatore (164);1	
+   E0336 : BOOL ;	//=RCA_0++MAIN;++ST160+PTZ01-DSP01 Allarme Profinet Pannello Operatore (165);1	
+   E0337 : BOOL ;	//=RCA_0++MAIN;++ST170+PTZ01-DSP01 Allarme Profinet Pannello Operatore (166);1	
+   E0338 : BOOL ;	//=RCA_0++MAIN;++ST180+PTZ01-DSP01 Allarme Profinet Pannello Operatore (167);1	
+   E0339 : BOOL ;	//=RCA_0++MAIN;++ST190+PTZ01-DSP01 Allarme Profinet Pannello Operatore (168);1	
+   E0340 : BOOL ;	
+   E0341 : BOOL ;	//=RCA_0++MAIN;++ST210+PTZ01-DSP01 Allarme Profinet Pannello Operatore (170);1	
+   E0342 : BOOL ;	
+   E0343 : BOOL ;	// 	
+   E0344 : BOOL ;	// 	
+   E0345 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_53;FeedBack - Controllo Comando Motore Trasporto M__21;1	
+   E0346 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_54;FeedBack - Controllo Comando Motore Trasporto M__22;1	
+   E0347 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_55;FeedBack - Controllo Comando Motore Trasporto M__23;1	
+   E0348 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_56;FeedBack - Controllo Comando Motore Trasporto M__24;1	
+   E0349 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_57;FeedBack - Controllo Comando Motore Trasporto M__25;1	
+   E0350 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_21;Alimentazione 400VAC Motore trasporto M__21;1	
+   E0351 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_22;Alimentazione 400VAC Motore trasporto M__22;1	
+   E0352 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_23;Alimentazione 400VAC Motore trasporto M__23;1	
+   E0353 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_26;Alimen. 400VAC ST160 Motore Orientamento M__26;1	
+   E0354 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_27;Alimen. 400VAC ST170 Motore Orientamento M__27;1	
+   E0355 : BOOL ;	//=RCA_0++MAIN+HGD01-QF144;24Vdc Output ST001 PCV05 (TAV05/TAV06);1	
+   E0356 : BOOL ;	//=RCA_0++MAIN+HGD01-QF145;24Vdc Output ST001 PCV06 (SV_05/SV_06);1	
+   E0357 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_58;FeedBack - Controllo Comando Motore Orientamen M__26;1
+   E0358 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_59;FeedBack - Controllo Comando Motore Orientamen M__27;1
+   E0359 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_08;Alimentazione Centralina Avvitatore SWK01 ST160;1	
+   E0360 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_09;Alimentazione Centralina Avvitatore SWK01 ST170;1	
+   E0361 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_10;Alimentazione Centralina Avvitatore SWK01 ST200;1	
+   E0362 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_11;Alimentazione Centralina Avvitatore SWK01 ST080;1	
+   E0363 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_13;Alimentazione Centralina Avvitatore SWK01 ST210;1	
+   E0364 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_14;Alimentazione Centralina Avvitatore SWK02 ST210;1	
+   E0365 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_15;Alimentazione Paranchi;1	
+   E0366 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_24;Alimentazione 400VAC Motore trasporto M__24;1	
+   E0367 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_25;Alimentazione 400VAC Motore trasporto M__25;1	
+   E0368 : BOOL ;	//=RCA_0++MAIN+HGD01-QF_12;Alimentazione Centralina Avvitatore SWK01 ST090;1	
+   E0369 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_28;Alimentazione 400VAC Motore Tavola ST190 M__28;1
+   E0370 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_29;Alimentazione 400VAC Motore Tavola ST200 M__29;1
+   E0371 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_30;Alimentazione 400VAC Motore Tavola ST210 M__30;1
+   E0372 : BOOL ;	//=RCA_0++MAIN+HGD01-QM_31;Alimentazione 400VAC Motore Tavola 2 M__31;1
+   E0373 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_60;FeedBack - Contr Comando Mot Orario Tavola ST190;1 
+   E0374 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_61;FeedBack - Contr Comando Mot Antior Tavola ST190;1 
+   E0375 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_62;FeedBack - Contr Comando Mot Orario Tavola ST200;1 
+   E0376 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_63;FeedBack - Contr Comando Mot Antior Tavola ST200;1 
+   E0377 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_64;FeedBack - Contr Comando Mot Orario Tavola ST210;1 
+   E0378 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_65;FeedBack - Contr Comando Mot Antior Tavola ST210;1 
+   E0379 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_66;FeedBack - Contr Comando Mot Orario Tavola 2;1 
+   E0380 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_67;FeedBack - Contr Comando Mot Antiorario Tavola 2;1 
+   E0381 : BOOL ;	//=RCA_0++MAIN+HGD01-QF152;Alimentazione 24Vdc Output ST095;1 
+   E0382 : BOOL ;	//=RCA_0++MAIN+CSI13;Allarme Comunicazione Profinet Rfid (104);1 
+   E0383 : BOOL ;	//=RCA_0++MAIN+CSI14;Allarme Comunicazione Profinet Rfid (105);1 
+   E0384 : BOOL ;	// 	
+   E0385 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_68;FeedBack - Contr Comando Mot Orario Trasporto SV4;1 
+   E0386 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_69;FeedBack - Contr Comando Mot Antior Trasporto SV4;1 
+   E0387 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_70;FeedBack - Contr Comando Mot Orario Trasporto Baia;1 
+   E0388 : BOOL ;	//=RCA_0++MAIN+HGD01-KM_71;FeedBack - Contr Comando Mot Antior Trasporto Baia;1 
+   E0389 : BOOL ;	// 	
+   E0390 : BOOL ;	// 	
+   E0391 : BOOL ;	// 	
+   E0392 : BOOL ;	// 	
+   E0393 : BOOL ;	//=RCA_0++MAIN+HGD01-QF100;Alimentazione Centralina Avvitatore SWK01 ++ST115;1
+   E0394 : BOOL ;	//=RCA_0++MAIN+HGD01-KM100;FeedBack - Comando Avanti Mot. Tavola Svincolo 1;1 
+   E0395 : BOOL ;	//=RCA_0++MAIN+HGD01-KM101;FeedBack - Comando Indietro Mot. Tavola Svincolo 1;1 
+   E0396 : BOOL ;	//=RCA_0++MAIN+HGD01-KM102;FeedBack - Comando Avanti Mot. Tavola Svincolo 2;1 
+   E0397 : BOOL ;	//=RCA_0++MAIN+HGD01-KM103;FeedBack - Comando Indietro Mot. Tavola Svincolo 2;1 
+   E0398 : BOOL ;	// 	
+   E0399 : BOOL ;	// 	
+   E0400 : BOOL ;	// 	
+   E0401 : BOOL ;	// 	
+   E0402 : BOOL ;	// 	
+   E0403 : BOOL ;	// 	
+   E0404 : BOOL ;	// 	
+   E0405 : BOOL ;	// 	
+   E0406 : BOOL ;	// 	
+   E0407 : BOOL ;	// 	
+   E0408 : BOOL ;	// 	
+   E0409 : BOOL ;	// 	
+   E0410 : BOOL ;	// 	
+   E0411 : BOOL ;	// 	
+   E0412 : BOOL ;	// 	
+   E0413 : BOOL ;	// 	
+   E0414 : BOOL ;	// 	
+   E0415 : BOOL ;	// 	
+   E0416 : BOOL ;	// 	
+   E0417 : BOOL ;	// 	
+   E0418 : BOOL ;	// 	
+   E0419 : BOOL ;	// 	
+   E0420 : BOOL ;	// 	
+   E0421 : BOOL ;	// 	
+   E0422 : BOOL ;	// 	
+   E0423 : BOOL ;	// 	
+   E0424 : BOOL ;	// 	
+   E0425 : BOOL ;	// 	
+   E0426 : BOOL ;	// 	
+   E0427 : BOOL ;	// 	
+   E0428 : BOOL ;	// 	
+   E0429 : BOOL ;	// 	
+   E0430 : BOOL ;	// 	
+   E0431 : BOOL ;	// 	
+   E0432 : BOOL ;	// 	
+   E0433 : BOOL ;	//=RCA_0++MAIN+HPC02-PC01;Memoria Buffer Dati ( MMC )Su PLC Piena;1	
+   E0434 : BOOL ;	//=RCA_0++MAIN+HPC02-PC01;PC Offline;57	
+   E0435 : BOOL ;	//=RCA_0++MAIN+HPC02-PC01;PC OnLINE;19	
+   E0436 : BOOL ;	// 	
+   E0437 : BOOL ;	// 	
+   E0438 : BOOL ;	// 	
+   E0439 : BOOL ;	// 	
+   E0440 : BOOL ;	// 	
+   E0441 : BOOL ;	//=RCA_0++MAIN+XGA01-SC_01;Cancello 1 Aperto in PM;2	
+   E0442 : BOOL ;	//=RCA_0++MAIN+XGA01-SC_01;Cancello 1 Aperto in AM;2	
+   E0443 : BOOL ;	//=RCA_0++MAIN+XGA01-SC_01;Cancello 1 Aperto per Riparazione Guasto;2	
+   E0444 : BOOL ;	//=RCA_0++MAIN+XGA02-SC_01;Cancello 2 Aperto in PM;2	
+   E0445 : BOOL ;	//=RCA_0++MAIN+XGA02-SC_01;Cancello 2 Aperto in AM;2	
+   E0446 : BOOL ;	//=RCA_0++MAIN+XGA02-SC_01;Cancello 2 Aperto per Riparazione Guasto;2	
+   E0447 : BOOL ;	//=RCA_0++MAIN+XGA03-SC_01;Cancello 3 Aperto in PM;2	
+   E0448 : BOOL ;	//=RCA_0++MAIN+XGA03-SC_01;Cancello 3 Aperto in AM;2	
+   E0449 : BOOL ;	//=RCA_0++MAIN+XGA03-SC_01;Cancello 3 Aperto per Riparazione Guasto;2	
+   E0450 : BOOL ;	//=RCA_0++MAIN+XGA04-SC_01;Cancello 4 Aperto in PM;2	
+   E0451 : BOOL ;	//=RCA_0++MAIN+XGA04-SC_01;Cancello 4 Aperto in AM;2	
+   E0452 : BOOL ;	//=RCA_0++MAIN+XGA04-SC_01;Cancello 4 Aperto per Riparazione Guasto;2	
+   E0453 : BOOL ;	//=RCA_0++MAIN+XGA05-SC_01;Cancello 5 Aperto in PM;2	
+   E0454 : BOOL ;	//=RCA_0++MAIN+XGA05-SC_01;Cancello 5 Aperto in AM;2	
+   E0455 : BOOL ;	//=RCA_0++MAIN+XGA05-SC_01;Cancello 5 Aperto per Riparazione Guasto;2	
+   E0456 : BOOL ;	//=RCA_0++MAIN+XGA06-SC_01;Cancello 6 Aperto in PM;2	
+   E0457 : BOOL ;	//=RCA_0++MAIN+XGA06-SC_01;Cancello 6 Aperto in AM;2	
+   E0458 : BOOL ;	//=RCA_0++MAIN+XGA06-SC_01;Cancello 6 Aperto per Riparazione Guasto;2	
+   E0459 : BOOL ;	//=RCA_0++MAIN+XGA07-SC_01;Cancello 7 Aperto in PM;2	
+   E0460 : BOOL ;	//=RCA_0++MAIN+XGA07-SC_01;Cancello 7 Aperto in AM;2	
+   E0461 : BOOL ;	//=RCA_0++MAIN+XGA07-SC_01;Cancello 7 Aperto per Riparazione Guasto;2	
+   E0462 : BOOL ;	//=RCA_0++MAIN+XGA08-SC_01;Cancello 8 Aperto in PM;2	
+   E0463 : BOOL ;	//=RCA_0++MAIN+XGA08-SC_01;Cancello 8 Aperto in AM;2	
+   E0464 : BOOL ;	//=RCA_0++MAIN+XGA08-SC_01;Cancello 8 Aperto per Riparazione Guasto;2	
+   E0465 : BOOL ;	//=RCA_0++MAIN+XGA09-SC_01;Cancello 9 Aperto in PM;2 
+   E0466 : BOOL ;	//=RCA_0++MAIN+XGA09-SC_01;Cancello 9 Aperto in AM;2 
+   E0467 : BOOL ;	//=RCA_0++MAIN+XGA09-SC_01;Cancello 9 Aperto per Riparazione Guasto;2 
+   E0468 : BOOL ;	// 	
+   E0469 : BOOL ;	// 	
+   E0470 : BOOL ;	// 	
+   E0471 : BOOL ;	// 	
+   E0472 : BOOL ;	// 	
+   E0473 : BOOL ;	// 	
+   E0474 : BOOL ;	// 	
+   E0475 : BOOL ;	// 	
+   E0476 : BOOL ;	// 	
+   E0477 : BOOL ;	// 	
+   E0478 : BOOL ;	// 	
+   E0479 : BOOL ;	// 	
+   E0480 : BOOL ;	// 	
+   E0481 : BOOL ;	// 	
+   E0482 : BOOL ;	// 	
+   E0483 : BOOL ;	// 	
+   E0484 : BOOL ;	// 	
+   E0485 : BOOL ;	// 	
+   E0486 : BOOL ;	// 	
+   E0487 : BOOL ;	// 	
+   E0488 : BOOL ;	// 	
+   E0489 : BOOL ;	// 	
+   E0490 : BOOL ;	// 	
+   E0491 : BOOL ;	// 	
+   E0492 : BOOL ;	// 	
+   E0493 : BOOL ;	// 	
+   E0494 : BOOL ;	// 	
+   E0495 : BOOL ;	// 	
+   E0496 : BOOL ;	// 	
+   E0497 : BOOL ;	// 	
+   E0498 : BOOL ;	// 	
+   E0499 : BOOL ;	// 	
+   E0500 : BOOL ;	// 	
+   E0501 : BOOL ;	// 	
+   E0502 : BOOL ;	// 	
+   E0503 : BOOL ;	// 	
+   E0504 : BOOL ;	// 	
+   E0505 : BOOL ;	// 	
+   E0506 : BOOL ;	// 	
+   E0507 : BOOL ;	// 	
+   E0508 : BOOL ;	// 	
+   E0509 : BOOL ;	// 	
+   E0510 : BOOL ;	// 	
+   E0511 : BOOL ;	// 	
+   E0512 : BOOL ;	// 	
+  END_STRUCT ;	
+BEGIN
+   CM_ID := '=RCA_0'; 
+   STATION_ID := '++MAIN'; 
+   ELEMENT_ID := ''; 
+   DB_ID := 2; 
+   PART_STYLE := ''; 
+   ACT_CYCLE_TIME := 0; 
+   COUNT_GOOD := 0; 
+   COUNT_SCRAP := 0; 
+   SPARE_00[0] := 0; 
+   SPARE_00[1] := 0; 
+   SPARE_00[2] := 0; 
+   SPARE_00[3] := 0; 
+   SPARE_00[4] := 0; 
+   SPARE_00[5] := 0; 
+   SPARE_00[6] := 0; 
+   SPARE_00[7] := 0; 
+   SPARE_00[8] := 0; 
+   SPARE_00[9] := 0; 
+   SPARE_00[10] := 0; 
+   SPARE_00[11] := 0; 
+   SPARE_00[12] := 0; 
+   SPARE_00[13] := 0; 
+   SPARE_00[14] := 0; 
+   SPARE_00[15] := 0; 
+   SPARE_01[0] := 0; 
+   SPARE_01[1] := 0; 
+   SPARE_01[2] := 0; 
+   SPARE_01[3] := 0; 
+   SPARE_01[4] := 0; 
+   SPARE_01[5] := 0; 
+   SPARE_01[6] := 0; 
+   SPARE_01[7] := 0; 
+   SPARE_01[8] := 0; 
+   SPARE_01[9] := 0; 
+   SPARE_01[10] := 0; 
+   SPARE_01[11] := 0; 
+   SPARE_01[12] := 0; 
+   SPARE_01[13] := 0; 
+   SPARE_01[14] := 0; 
+   SPARE_01[15] := 0; 
+   SPARE_01[16] := 0; 
+   SPARE_01[17] := 0; 
+   CODE_EVENT[0] := 0; 
+   CODE_EVENT[1] := 0; 
+   CODE_EVENT[2] := 0; 
+   CODE_EVENT[3] := 0; 
+   CODE_EVENT[4] := 0; 
+   CODE_EVENT[5] := 0; 
+   CODE_EVENT[6] := 0; 
+   CODE_EVENT[7] := 0; 
+   E0001 := FALSE; 
+   E0002 := FALSE; 
+   E0003 := FALSE; 
+   E0004 := FALSE; 
+   E0005 := FALSE; 
+   E0006 := FALSE; 
+   E0007 := FALSE; 
+   E0008 := FALSE; 
+   E0009 := FALSE; 
+   E0010 := FALSE; 
+   E0011 := FALSE; 
+   E0012 := FALSE; 
+   E0013 := FALSE; 
+   E0014 := FALSE; 
+   E0015 := FALSE; 
+   E0016 := FALSE; 
+   E0017 := FALSE; 
+   E0018 := FALSE; 
+   E0019 := FALSE; 
+   E0020 := FALSE; 
+   E0021 := FALSE; 
+   E0022 := FALSE; 
+   E0023 := FALSE; 
+   E0024 := FALSE; 
+   E0025 := FALSE; 
+   E0026 := FALSE; 
+   E0027 := FALSE; 
+   E0028 := FALSE; 
+   E0029 := FALSE; 
+   E0030 := FALSE; 
+   E0031 := FALSE; 
+   E0032 := FALSE; 
+   E0033 := FALSE; 
+   E0034 := FALSE; 
+   E0035 := FALSE; 
+   E0036 := FALSE; 
+   E0037 := FALSE; 
+   E0038 := FALSE; 
+   E0039 := FALSE; 
+   E0040 := FALSE; 
+   E0041 := FALSE; 
+   E0042 := FALSE; 
+   E0043 := FALSE; 
+   E0044 := FALSE; 
+   E0045 := FALSE; 
+   E0046 := FALSE; 
+   E0047 := FALSE; 
+   E0048 := FALSE; 
+   E0049 := FALSE; 
+   E0050 := FALSE; 
+   E0051 := FALSE; 
+   E0052 := FALSE; 
+   E0053 := FALSE; 
+   E0054 := FALSE; 
+   E0055 := FALSE; 
+   E0056 := FALSE; 
+   E0057 := FALSE; 
+   E0058 := FALSE; 
+   E0059 := FALSE; 
+   E0060 := FALSE; 
+   E0061 := FALSE; 
+   E0062 := FALSE; 
+   E0063 := FALSE; 
+   E0064 := FALSE; 
+   E0065 := FALSE; 
+   E0066 := FALSE; 
+   E0067 := FALSE; 
+   E0068 := FALSE; 
+   E0069 := FALSE; 
+   E0070 := FALSE; 
+   E0071 := FALSE; 
+   E0072 := FALSE; 
+   E0073 := FALSE; 
+   E0074 := FALSE; 
+   E0075 := FALSE; 
+   E0076 := FALSE; 
+   E0077 := FALSE; 
+   E0078 := FALSE; 
+   E0079 := FALSE; 
+   E0080 := FALSE; 
+   E0081 := FALSE; 
+   E0082 := FALSE; 
+   E0083 := FALSE; 
+   E0084 := FALSE; 
+   E0085 := FALSE; 
+   E0086 := FALSE; 
+   E0087 := FALSE; 
+   E0088 := FALSE; 
+   E0089 := FALSE; 
+   E0090 := FALSE; 
+   E0091 := FALSE; 
+   E0092 := FALSE; 
+   E0093 := FALSE; 
+   E0094 := FALSE; 
+   E0095 := FALSE; 
+   E0096 := FALSE; 
+   E0097 := FALSE; 
+   E0098 := FALSE; 
+   E0099 := FALSE; 
+   E0100 := FALSE; 
+   E0101 := FALSE; 
+   E0102 := FALSE; 
+   E0103 := FALSE; 
+   E0104 := FALSE; 
+   E0105 := FALSE; 
+   E0106 := FALSE; 
+   E0107 := FALSE; 
+   E0108 := FALSE; 
+   E0109 := FALSE; 
+   E0110 := FALSE; 
+   E0111 := FALSE; 
+   E0112 := FALSE; 
+   E0113 := FALSE; 
+   E0114 := FALSE; 
+   E0115 := FALSE; 
+   E0116 := FALSE; 
+   E0117 := FALSE; 
+   E0118 := FALSE; 
+   E0119 := FALSE; 
+   E0120 := FALSE; 
+   E0121 := FALSE; 
+   E0122 := FALSE; 
+   E0123 := FALSE; 
+   E0124 := FALSE; 
+   E0125 := FALSE; 
+   E0126 := FALSE; 
+   E0127 := FALSE; 
+   E0128 := FALSE; 
+   E0129 := FALSE; 
+   E0130 := FALSE; 
+   E0131 := FALSE; 
+   E0132 := FALSE; 
+   E0133 := FALSE; 
+   E0134 := FALSE; 
+   E0135 := FALSE; 
+   E0136 := FALSE; 
+   E0137 := FALSE; 
+   E0138 := FALSE; 
+   E0139 := FALSE; 
+   E0140 := FALSE; 
+   E0141 := FALSE; 
+   E0142 := FALSE; 
+   E0143 := FALSE; 
+   E0144 := FALSE; 
+   E0145 := FALSE; 
+   E0146 := FALSE; 
+   E0147 := FALSE; 
+   E0148 := FALSE; 
+   E0149 := FALSE; 
+   E0150 := FALSE; 
+   E0151 := FALSE; 
+   E0152 := FALSE; 
+   E0153 := FALSE; 
+   E0154 := FALSE; 
+   E0155 := FALSE; 
+   E0156 := FALSE; 
+   E0157 := FALSE; 
+   E0158 := FALSE; 
+   E0159 := FALSE; 
+   E0160 := FALSE; 
+   E0161 := FALSE; 
+   E0162 := FALSE; 
+   E0163 := FALSE; 
+   E0164 := FALSE; 
+   E0165 := FALSE; 
+   E0166 := FALSE; 
+   E0167 := FALSE; 
+   E0168 := FALSE; 
+   E0169 := FALSE; 
+   E0170 := FALSE; 
+   E0171 := FALSE; 
+   E0172 := FALSE; 
+   E0173 := FALSE; 
+   E0174 := FALSE; 
+   E0175 := FALSE; 
+   E0176 := FALSE; 
+   E0177 := FALSE; 
+   E0178 := FALSE; 
+   E0179 := FALSE; 
+   E0180 := FALSE; 
+   E0181 := FALSE; 
+   E0182 := FALSE; 
+   E0183 := FALSE; 
+   E0184 := FALSE; 
+   E0185 := FALSE; 
+   E0186 := FALSE; 
+   E0187 := FALSE; 
+   E0188 := FALSE; 
+   E0189 := FALSE; 
+   E0190 := FALSE; 
+   E0191 := FALSE; 
+   E0192 := FALSE; 
+   E0193 := FALSE; 
+   E0194 := FALSE; 
+   E0195 := FALSE; 
+   E0196 := FALSE; 
+   E0197 := FALSE; 
+   E0198 := FALSE; 
+   E0199 := FALSE; 
+   E0200 := FALSE; 
+   E0201 := FALSE; 
+   E0202 := FALSE; 
+   E0203 := FALSE; 
+   E0204 := FALSE; 
+   E0205 := FALSE; 
+   E0206 := FALSE; 
+   E0207 := FALSE; 
+   E0208 := FALSE; 
+   E0209 := FALSE; 
+   E0210 := FALSE; 
+   E0211 := FALSE; 
+   E0212 := FALSE; 
+   E0213 := FALSE; 
+   E0214 := FALSE; 
+   E0215 := FALSE; 
+   E0216 := FALSE; 
+   E0217 := FALSE; 
+   E0218 := FALSE; 
+   E0219 := FALSE; 
+   E0220 := FALSE; 
+   E0221 := FALSE; 
+   E0222 := FALSE; 
+   E0223 := FALSE; 
+   E0224 := FALSE; 
+   E0225 := FALSE; 
+   E0226 := FALSE; 
+   E0227 := FALSE; 
+   E0228 := FALSE; 
+   E0229 := FALSE; 
+   E0230 := FALSE; 
+   E0231 := FALSE; 
+   E0232 := FALSE; 
+   E0233 := FALSE; 
+   E0234 := FALSE; 
+   E0235 := FALSE; 
+   E0236 := FALSE; 
+   E0237 := FALSE; 
+   E0238 := FALSE; 
+   E0239 := FALSE; 
+   E0240 := FALSE; 
+   E0241 := FALSE; 
+   E0242 := FALSE; 
+   E0243 := FALSE; 
+   E0244 := FALSE; 
+   E0245 := FALSE; 
+   E0246 := FALSE; 
+   E0247 := FALSE; 
+   E0248 := FALSE; 
+   E0249 := FALSE; 
+   E0250 := FALSE; 
+   E0251 := FALSE; 
+   E0252 := FALSE; 
+   E0253 := FALSE; 
+   E0254 := FALSE; 
+   E0255 := FALSE; 
+   E0256 := FALSE; 
+   E0257 := FALSE; 
+   E0258 := FALSE; 
+   E0259 := FALSE; 
+   E0260 := FALSE; 
+   E0261 := FALSE; 
+   E0262 := FALSE; 
+   E0263 := FALSE; 
+   E0264 := FALSE; 
+   E0265 := FALSE; 
+   E0266 := FALSE; 
+   E0267 := FALSE; 
+   E0268 := FALSE; 
+   E0269 := FALSE; 
+   E0270 := FALSE; 
+   E0271 := FALSE; 
+   E0272 := FALSE; 
+   E0273 := FALSE; 
+   E0274 := FALSE; 
+   E0275 := FALSE; 
+   E0276 := FALSE; 
+   E0277 := FALSE; 
+   E0278 := FALSE; 
+   E0279 := FALSE; 
+   E0280 := FALSE; 
+   E0281 := FALSE; 
+   E0282 := FALSE; 
+   E0283 := FALSE; 
+   E0284 := FALSE; 
+   E0285 := FALSE; 
+   E0286 := FALSE; 
+   E0287 := FALSE; 
+   E0288 := FALSE; 
+   E0289 := FALSE; 
+   E0290 := FALSE; 
+   E0291 := FALSE; 
+   E0292 := FALSE; 
+   E0293 := FALSE; 
+   E0294 := FALSE; 
+   E0295 := FALSE; 
+   E0296 := FALSE; 
+   E0297 := FALSE; 
+   E0298 := FALSE; 
+   E0299 := FALSE; 
+   E0300 := FALSE; 
+   E0301 := FALSE; 
+   E0302 := FALSE; 
+   E0303 := FALSE; 
+   E0304 := FALSE; 
+   E0305 := FALSE; 
+   E0306 := FALSE; 
+   E0307 := FALSE; 
+   E0308 := FALSE; 
+   E0309 := FALSE; 
+   E0310 := FALSE; 
+   E0311 := FALSE; 
+   E0312 := FALSE; 
+   E0313 := FALSE; 
+   E0314 := FALSE; 
+   E0315 := FALSE; 
+   E0316 := FALSE; 
+   E0317 := FALSE; 
+   E0318 := FALSE; 
+   E0319 := FALSE; 
+   E0320 := FALSE; 
+   E0321 := FALSE; 
+   E0322 := FALSE; 
+   E0323 := FALSE; 
+   E0324 := FALSE; 
+   E0325 := FALSE; 
+   E0326 := FALSE; 
+   E0327 := FALSE; 
+   E0328 := FALSE; 
+   E0329 := FALSE; 
+   E0330 := FALSE; 
+   E0331 := FALSE; 
+   E0332 := FALSE; 
+   E0333 := FALSE; 
+   E0334 := FALSE; 
+   E0335 := FALSE; 
+   E0336 := FALSE; 
+   E0337 := FALSE; 
+   E0338 := FALSE; 
+   E0339 := FALSE; 
+   E0340 := FALSE; 
+   E0341 := FALSE; 
+   E0342 := FALSE; 
+   E0343 := FALSE; 
+   E0344 := FALSE; 
+   E0345 := FALSE; 
+   E0346 := FALSE; 
+   E0347 := FALSE; 
+   E0348 := FALSE; 
+   E0349 := FALSE; 
+   E0350 := FALSE; 
+   E0351 := FALSE; 
+   E0352 := FALSE; 
+   E0353 := FALSE; 
+   E0354 := FALSE; 
+   E0355 := FALSE; 
+   E0356 := FALSE; 
+   E0357 := FALSE; 
+   E0358 := FALSE; 
+   E0359 := FALSE; 
+   E0360 := FALSE; 
+   E0361 := FALSE; 
+   E0362 := FALSE; 
+   E0363 := FALSE; 
+   E0364 := FALSE; 
+   E0365 := FALSE; 
+   E0366 := FALSE; 
+   E0367 := FALSE; 
+   E0368 := FALSE; 
+   E0369 := FALSE; 
+   E0370 := FALSE; 
+   E0371 := FALSE; 
+   E0372 := FALSE; 
+   E0373 := FALSE; 
+   E0374 := FALSE; 
+   E0375 := FALSE; 
+   E0376 := FALSE; 
+   E0377 := FALSE; 
+   E0378 := FALSE; 
+   E0379 := FALSE; 
+   E0380 := FALSE; 
+   E0381 := FALSE; 
+   E0382 := FALSE; 
+   E0383 := FALSE; 
+   E0384 := FALSE; 
+   E0385 := FALSE; 
+   E0386 := FALSE; 
+   E0387 := FALSE; 
+   E0388 := FALSE; 
+   E0389 := FALSE; 
+   E0390 := FALSE; 
+   E0391 := FALSE; 
+   E0392 := FALSE; 
+   E0393 := FALSE; 
+   E0394 := FALSE; 
+   E0395 := FALSE; 
+   E0396 := FALSE; 
+   E0397 := FALSE; 
+   E0398 := FALSE; 
+   E0399 := FALSE; 
+   E0400 := FALSE; 
+   E0401 := FALSE; 
+   E0402 := FALSE; 
+   E0403 := FALSE; 
+   E0404 := FALSE; 
+   E0405 := FALSE; 
+   E0406 := FALSE; 
+   E0407 := FALSE; 
+   E0408 := FALSE; 
+   E0409 := FALSE; 
+   E0410 := FALSE; 
+   E0411 := FALSE; 
+   E0412 := FALSE; 
+   E0413 := FALSE; 
+   E0414 := FALSE; 
+   E0415 := FALSE; 
+   E0416 := FALSE; 
+   E0417 := FALSE; 
+   E0418 := FALSE; 
+   E0419 := FALSE; 
+   E0420 := FALSE; 
+   E0421 := FALSE; 
+   E0422 := FALSE; 
+   E0423 := FALSE; 
+   E0424 := FALSE; 
+   E0425 := FALSE; 
+   E0426 := FALSE; 
+   E0427 := FALSE; 
+   E0428 := FALSE; 
+   E0429 := FALSE; 
+   E0430 := FALSE; 
+   E0431 := FALSE; 
+   E0432 := FALSE; 
+   E0433 := FALSE; 
+   E0434 := FALSE; 
+   E0435 := FALSE; 
+   E0436 := FALSE; 
+   E0437 := FALSE; 
+   E0438 := FALSE; 
+   E0439 := FALSE; 
+   E0440 := FALSE; 
+   E0441 := FALSE; 
+   E0442 := FALSE; 
+   E0443 := FALSE; 
+   E0444 := FALSE; 
+   E0445 := FALSE; 
+   E0446 := FALSE; 
+   E0447 := FALSE; 
+   E0448 := FALSE; 
+   E0449 := FALSE; 
+   E0450 := FALSE; 
+   E0451 := FALSE; 
+   E0452 := FALSE; 
+   E0453 := FALSE; 
+   E0454 := FALSE; 
+   E0455 := FALSE; 
+   E0456 := FALSE; 
+   E0457 := FALSE; 
+   E0458 := FALSE; 
+   E0459 := FALSE; 
+   E0460 := FALSE; 
+   E0461 := FALSE; 
+   E0462 := FALSE; 
+   E0463 := FALSE; 
+   E0464 := FALSE; 
+   E0465 := FALSE; 
+   E0466 := FALSE; 
+   E0467 := FALSE; 
+   E0468 := FALSE; 
+   E0469 := FALSE; 
+   E0470 := FALSE; 
+   E0471 := FALSE; 
+   E0472 := FALSE; 
+   E0473 := FALSE; 
+   E0474 := FALSE; 
+   E0475 := FALSE; 
+   E0476 := FALSE; 
+   E0477 := FALSE; 
+   E0478 := FALSE; 
+   E0479 := FALSE; 
+   E0480 := FALSE; 
+   E0481 := FALSE; 
+   E0482 := FALSE; 
+   E0483 := FALSE; 
+   E0484 := FALSE; 
+   E0485 := FALSE; 
+   E0486 := FALSE; 
+   E0487 := FALSE; 
+   E0488 := FALSE; 
+   E0489 := FALSE; 
+   E0490 := FALSE; 
+   E0491 := FALSE; 
+   E0492 := FALSE; 
+   E0493 := FALSE; 
+   E0494 := FALSE; 
+   E0495 := FALSE; 
+   E0496 := FALSE; 
+   E0497 := FALSE; 
+   E0498 := FALSE; 
+   E0499 := FALSE; 
+   E0500 := FALSE; 
+   E0501 := FALSE; 
+   E0502 := FALSE; 
+   E0503 := FALSE; 
+   E0504 := FALSE; 
+   E0505 := FALSE; 
+   E0506 := FALSE; 
+   E0507 := FALSE; 
+   E0508 := FALSE; 
+   E0509 := FALSE; 
+   E0510 := FALSE; 
+   E0511 := FALSE; 
+   E0512 := FALSE; 
+END_DATA_BLOCK
+
