@@ -84,7 +84,7 @@ export var allLines = [];
 
 export function setReplayMode() {
     replayMode = replayMode ? false : true;
-    console.log("replayMode: " + replayMode);
+    //console.log("replayMode: " + replayMode);
 }
 export var buttonId = "";
 export function setButtonId(newId) {
@@ -616,14 +616,14 @@ async function adjustScale() {
     const container = document.getElementById('layoutContainer');
     const width = container.getBoundingClientRect().width;
     const height = container.getBoundingClientRect().height;
-    console.log(`height: ${height} width:${width}`)
+    //console.log(`height: ${height} width:${width}`)
     let factor = (width / height) / 2.1963309294400197;
     let factorWidth = width /1296;
     let factorHeight = height / 820.7999877929688;
     document.documentElement.style.setProperty('--scale-factor', factor);
     document.documentElement.style.setProperty('--scale-factor-height', factorHeight);
     document.documentElement.style.setProperty('--scale-factor-width', factorWidth);
-    console.log(`factorHeight: ${factorHeight} factorWidth:${factorWidth}`)
+    //console.log(`factorHeight: ${factorHeight} factorWidth:${factorWidth}`)
     //createLines();
 }
 window.addEventListener('resize', adjustScale);
@@ -826,7 +826,7 @@ export async function updateBuffer(bufferState) {
         let count = 0;
 
         if (bufferItems.length === 0 || !bufferState.hasOwnProperty(line)) {
-            console.log(`Nenhum item encontrado para a linha ${line}`);
+            //console.log(`Nenhum item encontrado para a linha ${line}`);
             continue;
         }
 
@@ -971,6 +971,7 @@ export async function updateStatus(statusState) {
     //console.log(`Tempo de execução: ${(endTime - startTime).toFixed(2)}ms`);
 }
 
+
 function updateFaultListUI() {
     const faultListContainer = document.getElementById("faultList");
     const currentKeys = new Set(Object.keys(activeFaults));
@@ -1017,6 +1018,19 @@ function updateFaultListUI() {
         `;
     });
 }
+setInterval(refreshFaultDurations, 1000);
+function refreshFaultDurations() {
+    document.querySelectorAll("#faultList .fault-entry").forEach(entry => {
+        const line = entry.dataset.line;
+        if (activeFaults[line]) {
+            const duration = calculateTimeDifference(activeFaults[line].startTime);
+            const timeSpan = entry.querySelector(".fault-time");
+            if (timeSpan) {
+                timeSpan.textContent = `Ativo há ${duration}`;
+            }
+        }
+    });
+}
 
 async function updateProd(prodData) {
     //const startTime = performance.now();
@@ -1025,7 +1039,7 @@ async function updateProd(prodData) {
 
     document.getElementById("targetProd").innerText = `Meta de Produção: ${prodData.targetProd}`;
     document.getElementById("theoreticalProd").innerText = `Produção Teórica: ${prodData.theoreticalProd}`;
-    console.log("prodData.prodData:\n" + JSON.stringify(prodData.prodData, null, 2));
+    //console.log("prodData.prodData:\n" + JSON.stringify(prodData.prodData, null, 2));
     for (const line in prodData.prodData) {
         const targetProd = prodData.targetProd || 1;
         const theoreticalProd = prodData.theoreticalProd || 1;
@@ -1051,7 +1065,7 @@ async function updateProd(prodData) {
             const objAnomalia = button.querySelector('.loss-anomalia .value');
             const objProd = button.querySelector('.loss-producao .value');
             const objOutros = button.querySelector('.loss-outros .value');
-            console.log(line + " lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao + " lossOutros: " + lossOutros)
+            //console.log(line + " lossAnomalia: " + lossAnomalia + " lossProducao: " + lossProducao + " lossOutros: " + lossOutros)
 
             if (actualProdInter) actualProdInter.textContent = actualProd;
             if (objAnomalia) objAnomalia.textContent = lossAnomalia;
@@ -1218,12 +1232,13 @@ connectionData.on("ReceiveApplicationStatePDT", (pdtState) => {
 });
 connectionData.off("ReceiveApplicationStateBuffer");
 connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
+    
     if (!replayMode) {
         updateBuffer(bufferState);
     }
 });
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
-    console.log("Chegodoasdjoajdoasjdoas")
+    //console.log("Chegodoasdjoajdoasjdoas")
     if (!replayMode) {
         updateStatus(statusState);
     }
@@ -1232,6 +1247,7 @@ connectionData.on("ReceiveApplicationBufferAc", (buffHist) => {
     updateChartsWithHistory(buffHist);
 });
 connectionData.on("ReceiveApplicationProdData", (prodData) => {
+    //console.log("Chegodoasdjoajdoasjdoas")  
     updateProd(prodData);
 });
 connectionData.start()
@@ -1360,7 +1376,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.querySelectorAll('.showTableBtn').forEach(elem => {
     elem.addEventListener('click', async (event) => {
         event.stopPropagation();
-        console.log("Cliquei!");
         const tableWrapper = document.getElementById('productsTableWrapper');
         const parentButton = event.target.closest('button');
         const loaderContainer = document.getElementById('loaderContainer');
@@ -1370,7 +1385,6 @@ document.querySelectorAll('.showTableBtn').forEach(elem => {
         }
         if (parentButton) {
             buttonId = parentButton.id;
-            console.log("ID do botão:", buttonId);
         } else {
             console.warn("Nenhum botão encontrado como ancestral do elemento clicado.");
         }
@@ -1379,14 +1393,12 @@ document.querySelectorAll('.showTableBtn').forEach(elem => {
             tableWrapper.style.display = 'block';
             loaderContainer.textContent = 'Carregando...';
             loaderContainer.style.display = 'block';
-            console.log("Inicio do fetch!");
             const response = await fetch(`/api/events/events?line=${encodeURIComponent(buttonId)}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log("Fim do fetch!")
             if (!response.ok) {
                 loaderContainer.textContent = `Erro ao buscar os dados: ${response.statusText}`;
                 throw new Error(`Erro ao buscar os dados: ${response.statusText}`);
@@ -1435,7 +1447,7 @@ document.getElementById('applyFilterBtn').addEventListener('click', async () => 
         }
 
         const data = await response.json();
-        console.log("Dados filtrados:", data);
+        //console.log("Dados filtrados:", data);
 
         dataTable.clear();
         dataTable.rows.add(data);

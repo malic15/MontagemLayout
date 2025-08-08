@@ -74,25 +74,9 @@ namespace MontagemLayout.Services
         }
         public async Task UpdateProd(string line, int actualProd)
         {
-            
+            bool changed = false;
+
             int prod = 0;
-            //if (!_prodData.ContainsKey(line))
-            //{
-            //    _prodData[line] = new ProdInfo { ActualShift = _globalShift.ActualShift, InitValue = actualProd };
-            //}
-
-            //if (_prodData[line].ActualShift != _globalShift.ActualShift)
-            //{
-            //    Console.WriteLine($"[Turno Mudou] Linha: {line}, Novo Turno: {_globalShift.ActualShift}");
-            //    await UpdateInitProd(line, actualProd);
-            //    _prodData[line].ActualShift = _globalShift.ActualShift;
-            //}
-
-            //if (_prodData.ContainsKey(line))
-            //{
-            //    prod = (actualProd - _prodData[line].InitValue);
-            //}
-
             
             _prodData.AddOrUpdate(line,
                 _ => new ProdInfo { ActualProd = 1 },
@@ -102,13 +86,18 @@ namespace MontagemLayout.Services
                     {
                         existingLineProdInfo.ActualProd += 1;
                         UpdateInitProd(line, actualProd);
+                        changed = true;
                     }
                     return existingLineProdInfo;
                 });
 
             var prodInfo = _prodData[line];
 
-            OnProdDataChanged?.Invoke(_prodData);
+            if (changed)
+            {
+                OnProdDataChanged?.Invoke(_prodData);
+            }
+            
             int gapProd = prodInfo.GapProd;
 
             var (lossAnomalia, lossProducao, lossOutros) = GetLossForLine(line, gapProd);
@@ -120,6 +109,7 @@ namespace MontagemLayout.Services
         }
         public async Task TheoreticalProdUpdateAsync()
         {
+            bool changed = false;
             if (TargetProd!=0)
             {
                 TimeSpan elapsedTime;
@@ -131,13 +121,22 @@ namespace MontagemLayout.Services
                     _ => new ProdInfo { GapProd = 0 },
                     (_, existingLineProdInfo) =>
                     {
-                        existingLineProdInfo.GapProd = existingLineProdInfo.ActualProd - TheoreticalProd;
+                        var newGapProd = existingLineProdInfo.ActualProd - TheoreticalProd;
+                        if(newGapProd != existingLineProdInfo.GapProd)
+                        {
+                            existingLineProdInfo.GapProd = newGapProd;
+                            changed = true;
+                        }
+                        
 
                         return existingLineProdInfo;
                     });
                 }
             }
-            OnProdDataChanged?.Invoke(_prodData);
+            if (changed)
+            {
+                OnProdDataChanged?.Invoke(_prodData);
+            }
         }
         public void ResetProdData()
         {

@@ -51,12 +51,23 @@ namespace MontagemLayout.Services
                 _pdtData[line] = new ConcurrentDictionary<int, PdtInfo>();
             }
 
+            PdtInfo previous = null;
+            _pdtData[line].TryGetValue(pdt, out previous);
+            previous = previous != null
+                ? new PdtInfo
+                {
+                    StopCount = previous.StopCount,
+                    IsActive = previous.IsActive,
+                    LastActivatedTime = previous.LastActivatedTime,
+                    TotalActiveTime = previous.TotalActiveTime
+                }
+                : null;
+
             if (!_pdtData[line].ContainsKey(pdt))
             {
                 if (isActive)
                 {
-                    _pdtData[line][pdt] = new PdtInfo { StopCount = 1, IsActive = isActive };
-                    _pdtData[line][pdt].LastActivatedTime = DateTime.Now;
+                    _pdtData[line][pdt] = new PdtInfo { StopCount = 1, IsActive = isActive, LastActivatedTime = DateTime.Now };
                 }
                 else
                 {
@@ -79,7 +90,17 @@ namespace MontagemLayout.Services
                 }
                 pdtInfo.IsActive = isActive;
             }
-            OnPdtDataChanged?.Invoke(_pdtData);
+            var current = _pdtData[line][pdt];
+            bool mudou =
+                previous == null ||
+                previous.IsActive != current.IsActive ||
+                previous.StopCount != current.StopCount ||
+                previous.TotalActiveTime != current.TotalActiveTime;
+
+            if (mudou)
+            {
+                OnPdtDataChanged?.Invoke(_pdtData);
+            }
         }
         public void PrintPdtStatusForLine(string line)
         {

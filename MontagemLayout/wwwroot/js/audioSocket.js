@@ -25,10 +25,10 @@ connectionAudio.on("ReceiveAudio", function (audioUrl) {
     currentAudio.load(); 
 
     currentAudio.oncanplaythrough = () => {
-        console.log("Audio can play through.");
+        //console.log("Audio can play through.");
         
         currentAudio.play().then(() => {
-            console.log("Audio play.");
+            //console.log("Audio play.");
         }).catch((err) => {
             console.error("Error playing audio:", err);
         });

@@ -17,7 +17,7 @@ const alertIntervals = {};
 function createChart(canvasId, borderColor, backgroundColor, yMin, yMax) {
     const ctx = document.getElementById(canvasId).getContext('2d');
     const chartTextId = 'chartText' + canvasId.replace('lineChart', '');
-    console.log('chartTextId: ' + chartTextId)
+    //console.log('chartTextId: ' + chartTextId)
 
     if (Chart.getChart(canvasId)) {
         Chart.getChart(canvasId).destroy();
@@ -139,7 +139,7 @@ export async function updateChartsWithHistory(historicalData) {
         const now = Date.now();
 
         const dataPoints = lineData.map((value, index) => ({
-            x: now - (lineData.length - index - 1) * 60000,
+            x: now - (lineData.length - index - 1) * 30000,
             y: value
         }));
 
