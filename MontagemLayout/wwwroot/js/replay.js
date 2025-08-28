@@ -234,6 +234,7 @@ document.getElementById("replaySpeed").addEventListener("change", () => {
 async function startReplayInterval(start) {
     //const start = new Date("2025-07-02T06:30:00");
     //const end = new Date("2025-07-02T07:30:00");
+    start = new Date(start.getTime() - start.getTimezoneOffset() * 60000);
 
     // Soma 1 hora (em milissegundos)
     const end = new Date(start.getTime() + 1 * 60 * 60 * 1000);
@@ -253,9 +254,8 @@ document.getElementById("startReplayBtn").addEventListener("click", async functi
         return;
     }
     const start = new Date(inputValue);
-
-    // Soma 1 hora (em milissegundos)
-    const end = new Date(start.getTime() + 1 * 60 * 60 * 1000);
+    console.log(inputValue)
+    console.log(start)
 
     const btn = this;
     const spinner = btn.querySelector('.loading-spinner');

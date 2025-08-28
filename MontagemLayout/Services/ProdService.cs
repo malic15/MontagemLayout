@@ -266,6 +266,5 @@ namespace MontagemLayout.Services
             //Console.WriteLine(line+ " lossAnomalia: "+ lossAnomalia+ " lossProducao: "+ lossProducao+ " lossOutros: " + lossOutros);
             return (lossAnomalia, lossProducao, lossOutros);
         }
-
     }
 }
