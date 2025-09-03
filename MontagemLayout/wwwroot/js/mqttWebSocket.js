@@ -81,7 +81,7 @@ let dataTable;
 const activeFaults = {};
 
 export var allLines = [];
-
+var globalDateTime;
 export function setReplayMode() {
     replayMode = replayMode ? false : true;
     //console.log("replayMode: " + replayMode);
@@ -120,7 +120,7 @@ function addTimes(time1, time2) {
 
 function calculateTimeDifference(lastTimeActive) {
     const lastTime = new Date(lastTimeActive);
-    const now = new Date();
+    const now = globalDateTime;
 
     const diffInMs = now - lastTime;
 
@@ -1221,9 +1221,11 @@ function safeLoss(sum, sumTotal, gapProd) {
 //    cleanUpDOM();
 //});
 connectionData.on("ReceiveCurrentDateTime", (dateTime) => {
+    console.log(dateTime)
+    globalDateTime = new Date(dateTime);
     const currentDateTimeElement = document.getElementById("currentDateTime");
     if (currentDateTimeElement) {
-        currentDateTimeElement.textContent = "Data e Hora: " + dateTime;
+        currentDateTimeElement.textContent = "Data e Hora: " + globalDateTime.toLocaleString("pt-BR");
     }
 });
 
@@ -1249,6 +1251,9 @@ connectionData.on("ReceiveApplicationBufferAc", (buffHist) => {
 connectionData.on("ReceiveApplicationProdData", (prodData) => {
     //console.log("Chegodoasdjoajdoasjdoas")  
     updateProd(prodData);
+});
+connectionData.on("ReceiveApplicationGlobalDateTime", (GlobalDateTime) => {
+    console.log(GlobalDateTime);
 });
 connectionData.start()
     .then(() => {
@@ -1289,14 +1294,14 @@ export async function initializeState() {
 
     if (!initialData) return;
 
-    if (cachedData && (Date.now() - cachedData.timestamp < CACHE_DURATION)) {
+    if (cachedData && (globalDateTime - cachedData.timestamp < CACHE_DURATION)) {
         // Usa cache válido
         applyInitialState(cachedData.data);
         console.log('Dados carregados do cache.');
     } else if (initialData) {
         // Usa dados embutidos no HTML
         applyInitialState(initialData);
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ data: initialData, timestamp: Date.now() }));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data: initialData, timestamp: globalDateTime }));
         console.log('Dados carregados do HTML.');
     } else {
         // Caso extremo, fallback para fetch

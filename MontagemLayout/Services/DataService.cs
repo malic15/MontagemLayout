@@ -14,6 +14,7 @@ namespace MontagemLayout.Services
         private readonly StatusLineService _statusService;
         private readonly ProdService _prodService;
         private readonly MySqlService _mysqlService;
+        private readonly GlobalDateTime _globalDateTime;
         public DataService(IHubContext<DataHub> hubContext, PdtService pdtService, BufferService bufferService, StatusLineService statusService, ProdService prodService, MySqlService mysqlService)
         {
             _hubContext = hubContext;
@@ -87,13 +88,21 @@ namespace MontagemLayout.Services
             var bufferAc = _bufferService.GetBufferAcData();
             await _hubContext.Clients.All.SendAsync("ReceiveApplicationBufferAc", bufferAc);
         }
+        public async Task GlobalDateTimeUp()
+        {
+            var globalDateTime = _globalDateTime.GetCurrentDateTime();
+            Console.WriteLine(globalDateTime);
+            await _hubContext.Clients.All.SendAsync("ReceiveApplicationGlobalDateTime", globalDateTime);
+        }
         private void StartSendingDateTime()
         {
             Task.Run(async () =>
             {
                 while (true)
                 {
-                    string currentDateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                    string currentDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                    //await _hubContext.Clients.All.SendAsync("ReceiveCurrentDateTime", DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
+
                     await _hubContext.Clients.All.SendAsync("ReceiveCurrentDateTime", currentDateTime);
                     await Task.Delay(1000);
                 }

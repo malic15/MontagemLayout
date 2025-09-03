@@ -82,6 +82,8 @@ internal class Program
 
         builder.Services.AddSingleton<GlobalShift>();
 
+        builder.Services.AddSingleton<GlobalDateTime>();
+
         builder.Services.AddSingleton<SQLService>();
 
         builder.Services.AddSingleton<ProdService>();
@@ -153,6 +155,8 @@ internal class Program
 
         var globalShift = app.Services.GetRequiredService<GlobalShift>();
 
+        var globalDateTime = app.Services.GetRequiredService<GlobalDateTime>();
+
         var pordservice = app.Services.GetRequiredService<ProdService>();
 
         var mqttService = app.Services.GetRequiredService<MqttService>();
@@ -166,7 +170,7 @@ internal class Program
         var statusData = statusLineService.GetStatusDbsData();
 
         _shiftTimer = new System.Timers.Timer(1000);
-        _shiftTimer.Elapsed += (sender, e) => CheckAndResetShift(sender, e, pdtService, dataService, bufferService, statusLineService, globalShift, sqlservice, pordservice);
+        _shiftTimer.Elapsed += (sender, e) => CheckAndResetShift(sender, e, pdtService, dataService, bufferService, statusLineService, globalShift, globalDateTime, sqlservice, pordservice);
         _shiftTimer.AutoReset = true;
         _shiftTimer.Start();
 
@@ -403,7 +407,7 @@ internal class Program
         int pdt = (int)Math.Round(3 + n+2*(Math.Cos(n*Math.PI/2)+Math.Sin(n*Math.PI/2) - 1));
         return pdt;
     }
-    private static async void CheckAndResetShift(object sender, ElapsedEventArgs e, PdtService pdtService, DataService dataService, BufferService bufferService, StatusLineService statusLineService, GlobalShift globalShift, SQLService sqlService, ProdService prodService)
+    private static async void CheckAndResetShift(object sender, ElapsedEventArgs e, PdtService pdtService, DataService dataService, BufferService bufferService, StatusLineService statusLineService, GlobalShift globalShift, GlobalDateTime globalDateTime, SQLService sqlService, ProdService prodService)
     {
 
         var now = DateTime.Now.TimeOfDay;
@@ -464,6 +468,8 @@ internal class Program
 
             prodService.TargetProd = await sqlService.GetProdLineDataAsync();
         }
+        globalDateTime.currentDateTime = DateTime.Now;
+        // await dataService.GlobalDateTimeUp();
         //await dataService.UpdateDataAsync();
     }
     private static async void CheckMinuteProcess(object sender, ElapsedEventArgs e, PdtService pdtService, DataService dataService, BufferService bufferService, StatusLineService statusLineService, SQLService sqlService, ProdService prodService, GlobalShift globalShift, MySqlService mySqlService)
