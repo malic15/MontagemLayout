@@ -35,6 +35,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\cache\audio\" />
     <Folder Include="wwwroot\logo\" />
+    <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\static\fonts\" />
     <Folder Include="wwwroot\static\boxicons\" />
   </ItemGroup>

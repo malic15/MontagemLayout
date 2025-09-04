@@ -686,7 +686,7 @@ body {
     background-color: transparent;
     border-top: calc(1px* var(--scale-factor-width)) solid #2d2d2d80;
     color: rgba(255,255,255,0.7);
-    font-size: calc(10px* var(--scale-factor-width));
+    font-size: calc(9px* var(--scale-factor-width));
     font-weight: 550 !important;
     opacity: 0;
     /*    text-overflow: ellipsis;

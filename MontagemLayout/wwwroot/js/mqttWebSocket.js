@@ -1252,9 +1252,6 @@ connectionData.on("ReceiveApplicationProdData", (prodData) => {
     //console.log("Chegodoasdjoajdoasjdoas")  
     updateProd(prodData);
 });
-connectionData.on("ReceiveApplicationGlobalDateTime", (GlobalDateTime) => {
-    console.log(GlobalDateTime);
-});
 connectionData.start()
     .then(() => {
         //initializeState();

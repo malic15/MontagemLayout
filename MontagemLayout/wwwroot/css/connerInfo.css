@@ -1,30 +1,32 @@
-﻿.corner-info {
+﻿@import url('mapaMontagem.css');
+
+.corner-info {
     position: fixed;
-    bottom: 12px; /* ou 0 para grudar no canto */
-    left: 18px; /* ou 0 */
+    bottom: calc(12px * var(--scale-factor-height)); /* ou 0 para grudar no canto */
+    left: calc(18px * var(--scale-factor-width)); /* ou 0 */
     z-index: 10; /* acima do svg */
     background: rgba(30,30,30, 0.0); /* opcional, visual legal */
-    border-radius: 8px;
-    padding: 10px 18px;
+    border-radius: calc(8px * var(--scale-factor-height));
+    padding: calc(10px * var(--scale-factor-height)) calc(18px * var(--scale-factor-width));
     pointer-events: none;
-/*    box-shadow: 0 2px 10px 0 #0004;*/
-    min-width: 180px;
+    /*    box-shadow: 0 2px 10px 0 #0004;*/
+    min-width: calc(180px * var(--scale-factor-width));
 }
 
     .corner-info h1,
     .corner-info h2,
     .corner-info h3,
     .corner-info p {
-        margin: 2px 0;
+        margin: calc(2px * var(--scale-factor-height)) 0;
         font-weight: 200;
         color: rgba(255,255,255,0.7);
         text-align: left;
-        font-size: 20px;
+        font-size: calc(13px * var(--scale-factor-width));
         /* O que for necessário de estilos individuais */
     }
 
     .corner-info h2,
     .corner-info h3,
     .corner-info p {
-        font-size: 16px;
+        font-size: calc(9px * var(--scale-factor-width));
     }
