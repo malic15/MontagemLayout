@@ -44,6 +44,9 @@ var bufferHide = false;
 function replayButton(itemReplay, itemActive) {
     var isReplayActive = itemReplay.classList.contains('active');
     var replayPanel = document.getElementById("replayPainel");
+    const faultListHeader = document.getElementById("faultListHeader");
+    const faultList = document.getElementById("faultList");
+
 
     if ((itemActive.textContent.trim().includes('Replay') && !isReplayActive) || (!itemActive.textContent.trim().includes('Replay') && isReplayActive)) {
         setReplayMode();
@@ -51,9 +54,13 @@ function replayButton(itemReplay, itemActive) {
     if (itemActive.textContent.trim().includes('Replay')) {
         replayPanel.style.setProperty('opacity', '1');
         replayPanel.style.setProperty('pointer-events', 'auto');
+        faultListHeader.style.setProperty('opacity', '0');
+        faultList.style.setProperty('opacity', '0');
     } else {
         replayPanel.style.setProperty('opacity', '0');
         replayPanel.style.setProperty('pointer-events', 'none');
+        faultListHeader.style.setProperty('opacity', '1');
+        faultList.style.setProperty('opacity', '1');
     }
 }
 function hideBuffer(itemAcumulo, itemActive) {

@@ -16,6 +16,7 @@
     color: #fff;
     font-family: Calibri, 'Segoe UI', sans-serif;
     transition: all 0.5s ease;
+    user-select: none;
 }
 
     .replay-panel button {

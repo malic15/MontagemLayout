@@ -51,7 +51,8 @@
     align-items: center;
     justify-content: space-between;
     transition: all 0.5s ease;
-/*    z-index: 9000*/
+    user-select: none;
+    /*    z-index: 9000*/
 }
 
 .logo,
