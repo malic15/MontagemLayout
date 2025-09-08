@@ -319,7 +319,7 @@ internal class Program
                 var AwlMessage = AwlFile.GetAwlMessagesFromPayload($"wwwroot/files/{line}/DB{db}.AWL", message) as ObjectResult;
                 if (AwlMessage != null)
                 {
-                    var notes = AwlMessage.Value as List<(string message, string priority, string zone, string element)>;
+                    var notes = AwlMessage.Value as List<(string message, string priority, string zone, string element, string component, string cabinet)>;
                     int? lowestPriority = null;
                     string lineString = line.ToString();
                     string dbString = db.ToString();
@@ -684,11 +684,9 @@ internal class Program
             Console.WriteLine("Erro ao salvar snapshot do buffer: " + ex.Message);
         }
     }
-    private static async Task ProcessStorageData(string LineString, string dbString, List<(string message, string priority, string zone, string element)> notes, ConcurrentDictionary<string, ConcurrentDictionary<string, DateTime>> _LineActivationTimes, MySqlService mysqlService, GlobalShift globalShift)
+    private static async Task ProcessStorageData(string LineString, string dbString, List<(string message, string priority, string zone, string element, string component, string cabinet)> notes, ConcurrentDictionary<string, ConcurrentDictionary<string, DateTime>> _LineActivationTimes, MySqlService mysqlService, GlobalShift globalShift)
     {
         string dbLine = LineString + "_" + dbString;
-        
-        
 
         if (!_LineActivationTimes.ContainsKey(dbLine))
         {
@@ -696,8 +694,9 @@ internal class Program
         }
         else
         {
-            var noteMessages = new HashSet<string>(notes.Select(note => $"{note.message};{note.zone};{note.element};{note.priority}"));
-
+            
+            var noteMessages = new HashSet<string>(notes.Select(note => $"{note.message};{note.zone};{note.element};{note.priority};{note.component};{note.cabinet}"));
+            //Console.WriteLine(noteMessages);
             foreach (var messageZone in _LineActivationTimes[dbLine].Keys)
             {
                 if (!noteMessages.Contains(messageZone))
@@ -734,6 +733,10 @@ internal class Program
                         payload.data = startTime.ToString("yyyy-MM-ddTHH:mm:ss");
                         payload.shift = globalShift.ActualShift;
                         string jsonPayload = JsonSerializer.Serialize(payload);
+                        //foreach (var part in partZone)
+                        //{
+                        //    Console.WriteLine(part);
+                        //}
                         //Console.WriteLine(jsonPayload);
                         //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
