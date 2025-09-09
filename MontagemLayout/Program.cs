@@ -20,6 +20,7 @@ using System.Net.Mail;
 using System.Numerics;
 using static Mysqlx.Datatypes.Scalar.Types;
 using Google.Protobuf.WellKnownTypes;
+using System.Xml.Linq;
 
 
 internal class Program
@@ -733,10 +734,15 @@ internal class Program
                         payload.data = startTime.ToString("yyyy-MM-ddTHH:mm:ss");
                         payload.shift = globalShift.ActualShift;
                         string jsonPayload = JsonSerializer.Serialize(payload);
-                        //foreach (var part in partZone)
+
+                        //if (partZone[4] != "NA")
                         //{
-                        //    Console.WriteLine(part);
+                        //    Console.WriteLine(partZone[4]);
                         //}
+                        foreach (var part in partZone)
+                        {
+                            Console.WriteLine(part);
+                        }
                         //Console.WriteLine(jsonPayload);
                         //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
@@ -747,7 +753,7 @@ internal class Program
             //if (!note.message.Contains("BOOL") && !note.zone.Contains("Zona desconhecida"))
             if (!note.message.Contains("BOOL"))
             {
-                string messageStruct = $"{note.message};{note.zone};{note.element};{note.priority}";
+                string messageStruct = $"{note.message};{note.zone};{note.element};{note.priority};{note.component};{note.cabinet}";
                 if (!_LineActivationTimes[dbLine].ContainsKey(messageStruct))
                 {
                     _LineActivationTimes[dbLine].TryAdd(messageStruct, DateTime.Now);

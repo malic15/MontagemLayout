@@ -61,12 +61,6 @@ namespace MontagemLayout.Services
             }
             var eventLines = lines.Skip(startIndex + 1).Take(endIndex - startIndex - 1).ToArray();
 
-            var rxZone = new Regex(@"ZNE(?<num>\d{2})");
-            var rxAfterZone = new Regex(@"ZNE\d{2}\+(?<tail>[^\s;]+)");              // pega o trecho após ZNE##+
-            var rxMsgElement = new Regex(@"\+(?<elt>[A-Z0-9]+(?:_[A-Z0-9]+)?)");      // ex.: +TQ_01
-            var rxCabinetHint = new Regex(@"^HCZ?\d{2}$", RegexOptions.IgnoreCase);   // ex.: HCZ01 (pode ajustar os prefixos)
-
-
             var awlMessage = eventLines
                 .Select(line =>
                  {
@@ -75,113 +69,92 @@ namespace MontagemLayout.Services
                      //if (parts.Length < 3) return (Message: string.Empty, Priority: string.Empty, Zone: "Zona desconhecida", Element: "Elemento desconhecido");
                      //var message = parts[1].Trim();
                      //var priority = parts[2].Trim();
-                     string header = parts[0];           // contém E#### e o " : BOOL "
-                     string codeAndMaybe = "";           // onde fica o //=... (parte antes da mensagem)
-                     string messageRaw = "";             // mensagem textual (entre os ';')
-
+                     //Console.WriteLine(parts[1]);
+                     string header = parts[0];
+                     string codeAndMaybe = "";
+                     string component = "NA";
+                     string cabinet = "NA";
                      var priority = parts.Last().Trim();
 
-                     var codePart = parts.FirstOrDefault(p => p.Contains("//="));
-                     if (codePart == null)
-                         codePart = parts[0];
+                     var codePart = parts.FirstOrDefault(p => p.Contains("//=")) ?? parts[0];
+                     string messageRaw = parts.Reverse().Skip(1).FirstOrDefault()?.Trim() ?? "";
 
+                     var message = parts.Reverse().Skip(1).FirstOrDefault()?.Trim();
+                     
+                     if (message != null)
+                     {
+                         
+                         message = System.Text.RegularExpressions.Regex.Replace(message, @"[^\w\d\s]", " ").Replace('_', ' ');
+                         
+                     }
 
-                     //var message = parts.Reverse().Skip(1).FirstOrDefault()?.Trim();
-                     //if (message != null)
-                     //{
-                     //    message = System.Text.RegularExpressions.Regex.Replace(message, @"[^\w\d\s]", " ").Replace('_', ' ');
-                     //}
-
-                     //var zonePart = parts.FirstOrDefault(p => p.Contains("ZNE"));
-                     //string zone = "Zona desconhecida";
-                     //string element = "Elemento desconhecido";
-                     //if (zonePart != null)
-                     //{
-                     //    var match = System.Text.RegularExpressions.Regex.Match(zonePart, @"ZNE(\d{2})");
-                     //    if (match.Success)
-                     //    {
-                     //        zone = $"Zona {int.Parse(match.Groups[1].Value)}";
-                     //    }
-                     //    var matchElement = System.Text.RegularExpressions.Regex.Match(zonePart, @"ZNE\d{2}\+([\w\-]+)");
-                     //    if (matchElement.Success)
-                     //    {
-                     //        element = matchElement.Groups[1].Value;
-                     //    }
-                     //}
-
-                     // mensagem é o penúltimo campo
-                     messageRaw = parts.Reverse().Skip(1).FirstOrDefault()?.Trim() ?? "";
-
-                     // -------- Zone --------
+                     var zonePart = parts.FirstOrDefault(p => p.Contains("ZNE"));
+                     //Console.WriteLine(zonePart);
                      string zone = "Zona desconhecida";
-                    var mz = rxZone.Match(codePart);
-                    if (mz.Success)
-                    {
-                        if (int.TryParse(mz.Groups["num"].Value, out int z))
-                            zone = $"Zona {z}";
-                    }
+                     string element = "Elemento desconhecido";
+                     if (zonePart != null)
+                     {
+                         var match = System.Text.RegularExpressions.Regex.Match(zonePart, @"ZNE(\d{2})");
+                         if (match.Success)
+                         {
+                             zone = $"Zona {int.Parse(match.Groups[1].Value)}";
+                         }
+                         //var matchElement = System.Text.RegularExpressions.Regex.Match(zonePart, @"ZNE\d{2}\+([\w\-]+)");
+                         //if (matchElement.Success)
+                         //{
+                         //    element = matchElement.Groups[1].Value;
+                         //}
+                         var mTail = System.Text.RegularExpressions.Regex.Match(zonePart, @"ZNE\d{2}\+(?<tail>[^\s;]+)");
+                         if (mTail.Success)
+                         {
+                             var tail = mTail.Groups["tail"].Value;
+                             int dashIx = tail.IndexOf('-');
+                             if (dashIx >= 0)
+                             {
+                                 element = tail.Substring(0, dashIx);
+                                 component = tail.Substring(dashIx + 1);
+                             }
+                             else
+                             {
+                                 element = tail;
+                             }
+                         }
 
-                    // -------- Element / Component / Cabinet --------
-                    string? element = null;
-                    string? component = null;
-                    string? cabinet = null;
+                         if (!string.IsNullOrEmpty(element) && element.StartsWith("H", StringComparison.OrdinalIgnoreCase))
+                         {
+                             var plusMatches = System.Text.RegularExpressions.Regex.Matches(messageRaw, @"\+([A-Z0-9_]+(?:/[A-Z0-9_]+)*)", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
-                    // 1) Tentar achar elemento na MENSAGEM (caso "+TQ_01")
-                    var me = rxMsgElement.Match(messageRaw);
-                    if (me.Success)
-                        element = me.Groups["elt"].Value;
+                             if (plusMatches.Count > 0)
+                             {
+                                 cabinet = element;
+                                 var tokens = plusMatches
+                                    .Cast<System.Text.RegularExpressions.Match>()
+                                    .Select(m => m.Groups[1].Value.Trim())
+                                    // 1) descarta tudo que comece com ZNE (pega ZNE, ZNE0, ZNE02...)
+                                    .Where(tok => !tok.StartsWith("ZNE", StringComparison.OrdinalIgnoreCase))
+                                    // 2) descarta tokens muito curtos
+                                    .Where(tok => tok.Length >= 3)
+                                    // 3) exige alguma “cara” de elemento (tem dígito ou '_' ou '/')
+                                    .Where(tok => tok.Any(char.IsDigit) || tok.Contains('_') || tok.Contains('/'))
+                                    // dedup mantendo ordem
+                                    .Aggregate(new System.Collections.Generic.List<string>(), (acc, tok) =>
+                                    {
+                                        if (!acc.Contains(tok)) acc.Add(tok);
+                                        return acc;
+                                    });
 
-                    // 2) Parsear o trecho após a ZNE no cabeçalho
-                    //    Ex.: "ZNE01+HCZ01-U__01"  → base=HCZ01, comp=U__01
-                    //         "ZNE01+TTS01-SQA01" → base=TTS01, comp=SQA01
-                    var tailMatch = rxAfterZone.Match(codePart);
-                    if (tailMatch.Success)
-                    {
-                        var tail = tailMatch.Groups["tail"].Value; // ex.: "HCZ01-U__01" ou "TTS01-SQA01" ou "TTS01"
-                        // se houver + adicionais, pegue só o primeiro segmento após a ZNE
-                        var firstSeg = tail.Split('+')[0];         // garante que só pegamos o primeiro bloco
-                        string baseToken = firstSeg;
-                        string? compToken = null;
-
-                        // Se tiver componente, vem após '-'
-                        var dashIx = firstSeg.IndexOf('-');
-                        if (dashIx >= 0)
-                        {
-                            baseToken = firstSeg.Substring(0, dashIx);
-                            compToken = firstSeg.Substring(dashIx + 1);
-                        }
-
-                        // Normaliza component (U__01 -> U_01)
-                        if (!string.IsNullOrWhiteSpace(compToken))
-                        {
-                            component = Regex.Replace(compToken, "_{2,}", "_"); // colapsa "__" em "_"
-                        }
-
-                        // Se o elemento NÃO veio da mensagem, usar o baseToken como fallback
-                        if (string.IsNullOrWhiteSpace(element))
-                        {
-                            element = baseToken;
-                        }
-                        else
-                        {
-                            // Se o elemento veio da mensagem e o baseToken parece armário (HCZ01), expor como Cabinet
-                            if (rxCabinetHint.IsMatch(baseToken))
-                                cabinet = baseToken;
-                        }
-
-                        // Caso não tenha vindo da mensagem e o baseToken seja claramente armário,
-                        // ainda faz sentido expor cabinet e tentar achar o elemento em outro lugar?
-                        // Pela sua regra, só quando o elemento vem no final (na mensagem) é que queremos o armário.
-                        // Portanto, só setamos cabinet quando o elemento foi da mensagem.
-                    }
-
-                    // Sanitiza mensagem para exibição (sem tirar o "+TQ_01" que já capturamos)
-                    string message = Regex.Replace(messageRaw, @"[^\w\d\s\+]", " ").Replace('_', ' ').Trim();
-
-                    // Defaults
-                    element ??= "Elemento desconhecido";
-
-
+                                 // Só aplica override se sobrou algo útil
+                                 if (tokens.Count > 0)
+                                 {
+                                     element = string.Join(" ", tokens);
+                                 }
+                             }
+                             //if (cabinet != "NA")
+                             //{
+                             //    Console.WriteLine(element);
+                             //}
+                         }
+                     }
                      return (Message: message, Priority: priority, Zone: zone, Element: element, Component: component, Cabinet: cabinet);
                  })
                 .Where(tuple => !string.IsNullOrEmpty(tuple.Message))
