@@ -25,6 +25,15 @@ namespace MontagemLayout.Services
             public DateTime Data { get; set; }
             public int Shift { get; set; }
         }
+        public sealed class ProdHourlyDto
+        {
+            public string LineSlug { get; init; } = default!;
+            public DateTime EventTs { get; init; }              // quando o evento aconteceu
+            public int QtyDelta { get; init; }                  // delta a somar na hora
+            public int ShiftCode { get; init; }       // 'A'/'B'/'C'
+            public DateTime ShiftDate { get; init; }    // data “do turno”
+        }
+
         private (string Start, string End) ShiftConsult()
         {
             DateTime now = DateTime.Now;
@@ -88,6 +97,50 @@ namespace MontagemLayout.Services
                 Console.WriteLine($"Erro ao armazenar dados: {ex.Message}");
             }
         }
+        public async Task UpsertProdHourlyAsync(string jsonPayload)
+        {
+            var dto = JsonSerializer.Deserialize<ProdHourlyDto>(jsonPayload, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+            if (dto is null) throw new ArgumentException("Payload inválido.");
+
+            // 2) Arredondar para a hora cheia (use o fuso que faz sentido pra fábrica)
+            // Se EventTs já vier arredondado, mantemos assim mesmo.
+            var tsHour = new DateTime(dto.EventTs.Year, dto.EventTs.Month, dto.EventTs.Day, dto.EventTs.Hour, 0, 0, DateTimeKind.Unspecified);
+
+            const string sql = @"
+                INSERT INTO prod_hourly
+                    (line, ts_hour, shift_code, shift_date, qty)
+                VALUES
+                    (@line, @ts_hour, @shift_code, @shift_date, @delta)
+                ON DUPLICATE KEY UPDATE
+                    qty = qty + VALUES(qty),
+                    shift_code = VALUES(shift_code),
+                    shift_date = VALUES(shift_date),
+                    updated_at = CURRENT_TIMESTAMP;";
+
+            try
+            {
+                using var conn = new MySqlConnection(connectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@line", dto.LineSlug);
+                cmd.Parameters.AddWithValue("@ts_hour", tsHour);                         // DATETIME
+                cmd.Parameters.AddWithValue("@shift_code", dto.ShiftCode);
+                cmd.Parameters.AddWithValue("@shift_date", dto.ShiftDate.Date);  // DATE
+                cmd.Parameters.AddWithValue("@delta", dto.QtyDelta);
+
+                await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao upsert prod_hourly: {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task StoreBufferSnapshotBatchAsync(List<BufferSnapshot> snapshots)
         {
             try

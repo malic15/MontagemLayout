@@ -21,6 +21,7 @@ using System.Numerics;
 using static Mysqlx.Datatypes.Scalar.Types;
 using Google.Protobuf.WellKnownTypes;
 using System.Xml.Linq;
+using static MontagemLayout.Services.MySqlService;
 
 
 internal class Program
@@ -148,13 +149,13 @@ internal class Program
 
         var statusLineService = app.Services.GetRequiredService<StatusLineService>();
 
-        var mysqlservice = app.Services.GetRequiredService<MySqlService>();
+        var mysqlService = app.Services.GetRequiredService<MySqlService>();
 
         var sqlservice = app.Services.GetRequiredService<SQLService>();
 
         var globalShift = app.Services.GetRequiredService<GlobalShift>();
 
-        var pordservice = app.Services.GetRequiredService<ProdService>();
+        var prodService = app.Services.GetRequiredService<ProdService>();
 
         var mqttService = app.Services.GetRequiredService<MqttService>();
 
@@ -167,13 +168,13 @@ internal class Program
         var statusData = statusLineService.GetStatusDbsData();
 
         _shiftTimer = new System.Timers.Timer(1000);
-        _shiftTimer.Elapsed += (sender, e) => CheckAndResetShift(sender, e, pdtService, dataService, bufferService, statusLineService, globalShift, sqlservice, pordservice);
+        _shiftTimer.Elapsed += (sender, e) => CheckAndResetShift(sender, e, pdtService, dataService, bufferService, statusLineService, globalShift, sqlservice, prodService);
         _shiftTimer.AutoReset = true;
         _shiftTimer.Start();
 
         _minuteProcess = new System.Timers.Timer(60000);
-        _minuteProcess.Elapsed += (sender, e) => CheckMinuteProcess(sender, e, pdtService, dataService, bufferService, statusLineService, sqlservice, pordservice, globalShift, mysqlservice);
-        CheckMinuteProcess(null, null, pdtService, dataService, bufferService, statusLineService, sqlservice, pordservice, globalShift, mysqlservice);
+        _minuteProcess.Elapsed += (sender, e) => CheckMinuteProcess(sender, e, pdtService, dataService, bufferService, statusLineService, sqlservice, prodService, globalShift, mysqlService);
+        CheckMinuteProcess(null, null, pdtService, dataService, bufferService, statusLineService, sqlservice, prodService, globalShift, mysqlService);
         _minuteProcess.AutoReset = true;
         _minuteProcess.Start();
 
@@ -240,8 +241,22 @@ internal class Program
                     Array.Reverse(dataProd);
                     int prod = BitConverter.ToInt16(dataProd, 0);
                     //Console.WriteLine("dataProd: " + prod);
-                    pordservice.UpdateProd(line.ToString(), prod);
-                    pordservice.TheoreticalProdUpdateAsync();
+                    prodService.UpdateProd(line.ToString(), prod);
+                    //pordservice.TheoreticalProdUpdateAsync();
+
+                    //var payloadProd = new ProdHourlyDto
+                    //{
+                    //    LineSlug = line.ToString(),
+                    //    EventTs = DateTime.Now,
+                    //    QtyDelta = 1,
+                    //    ShiftCode = globalShift.ActualShift,
+                    //    ShiftDate = DateTime.SpecifyKind(globalShift.currentShiftStart, DateTimeKind.Unspecified).Date
+                    //};
+                    ////Console.WriteLine(globalShift.currentShiftStart);
+                    //Console.WriteLine(DateTime.SpecifyKind(globalShift.currentShiftStart, DateTimeKind.Unspecified).Date);
+                    //string jsonProd = JsonSerializer.Serialize(payloadProd);
+                    //await mysqlService.UpsertProdHourlyAsync(jsonProd);
+
                     return;
                 }
                 if ((db.GetString() == "3325" && line.GetString() == "deckingup"))
@@ -329,7 +344,7 @@ internal class Program
                     int zone = 0;
                     if (notes != null)
                     {
-                        ProcessStorageData(lineString, dbString, notes, _LineActivationTimes, mysqlservice, globalShift);
+                        ProcessStorageData(lineString, dbString, notes, _LineActivationTimes, mysqlService, globalShift);
                         foreach (var note in notes)
                         {
                             messageNote = note.message;
@@ -704,6 +719,7 @@ internal class Program
                 {
                     if (_LineActivationTimes[dbLine].TryRemove(messageZone, out DateTime startTime))
                     {
+                        //Console.WriteLine(messageZone);
                         TimeSpan duration = DateTime.Now - startTime;
                         string formattedDuration = duration.ToString(@"hh\:mm\:ss");
                         //int shift;
@@ -730,20 +746,14 @@ internal class Program
                         payload.state = partZone[3];
                         payload.zone = partZone[1];
                         payload.element = partZone[2];
-                        payload.duration = formattedDuration;
+                        payload.component = partZone[4];
+                        payload.element = partZone[5];
+                        payload.cabinet = formattedDuration;
                         payload.data = startTime.ToString("yyyy-MM-ddTHH:mm:ss");
                         payload.shift = globalShift.ActualShift;
                         string jsonPayload = JsonSerializer.Serialize(payload);
 
-                        //if (partZone[4] != "NA")
-                        //{
-                        //    Console.WriteLine(partZone[4]);
-                        //}
-                        foreach (var part in partZone)
-                        {
-                            Console.WriteLine(part);
-                        }
-                        //Console.WriteLine(jsonPayload);
+                        //Console.WriteLine(partZone[5]);
                         //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
                 }

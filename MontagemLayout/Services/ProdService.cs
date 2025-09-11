@@ -1,11 +1,24 @@
-﻿using System.Collections.Concurrent;
+﻿using MontagemLayout.Services;
+using System.Collections.Concurrent;
+using System.Text.Json;
+
 using static MontagemLayout.Services.ProdService;
 using static MontagemLayout.Services.StatusLineService;
+
+
 
 namespace MontagemLayout.Services
 {
     public class ProdService
     {
+        private readonly MySqlService _mysqlService;
+        private readonly GlobalShift _globalShift;
+
+        public ProdService(GlobalShift globalShift, MySqlService mysqlService)
+        {
+            _globalShift = globalShift;
+            _mysqlService = mysqlService;
+        }
         public class ProdInfo
         {
             public int ActualProd { get; set; }
@@ -35,13 +48,6 @@ namespace MontagemLayout.Services
         public int TheoreticalProd { get; set; }
 
         //private int actualShift = 0;
-
-        private readonly GlobalShift _globalShift;
-
-        public ProdService(GlobalShift globalShift)
-        {
-            _globalShift = globalShift;
-        }
         public ConcurrentDictionary<string, ProdInfo> GetProdData()
         {
             return _prodData;
@@ -96,6 +102,17 @@ namespace MontagemLayout.Services
             if (changed)
             {
                 OnProdDataChanged?.Invoke(_prodData);
+
+                var payloadProd = new MySqlService.ProdHourlyDto
+                {
+                    LineSlug = line.ToString(),
+                    EventTs = DateTime.Now,
+                    QtyDelta = 1,
+                    ShiftCode = _globalShift.ActualShift,
+                    ShiftDate = DateTime.SpecifyKind(_globalShift.currentShiftStart, DateTimeKind.Unspecified).Date
+                };
+                string jsonProd = JsonSerializer.Serialize(payloadProd);
+                await _mysqlService.UpsertProdHourlyAsync(jsonProd);
             }
             
             int gapProd = prodInfo.GapProd;
