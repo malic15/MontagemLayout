@@ -300,7 +300,7 @@ namespace MontagemLayout.Services
                     query += $" WHERE State < 19";
                 }else if(filterBreak && !filterProd)
                 {
-                    query += $" WHERE State < 3";
+                    query += $" WHERE State < 2";
                 }
                 else if (filterProd && !filterBreak)
                 {

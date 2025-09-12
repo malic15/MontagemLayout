@@ -747,13 +747,13 @@ internal class Program
                         payload.zone = partZone[1];
                         payload.element = partZone[2];
                         payload.component = partZone[4];
-                        payload.element = partZone[5];
-                        payload.cabinet = formattedDuration;
+                        payload.cabinet = partZone[5];
+                        payload.duration = formattedDuration;
                         payload.data = startTime.ToString("yyyy-MM-ddTHH:mm:ss");
                         payload.shift = globalShift.ActualShift;
                         string jsonPayload = JsonSerializer.Serialize(payload);
 
-                        //Console.WriteLine(partZone[5]);
+                        Console.WriteLine(jsonPayload);
                         //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
                 }
