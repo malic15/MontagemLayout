@@ -105,8 +105,6 @@ namespace MontagemLayout.Services
             });
             if (dto is null) throw new ArgumentException("Payload inválido.");
 
-            // 2) Arredondar para a hora cheia (use o fuso que faz sentido pra fábrica)
-            // Se EventTs já vier arredondado, mantemos assim mesmo.
             var tsHour = new DateTime(dto.EventTs.Year, dto.EventTs.Month, dto.EventTs.Day, dto.EventTs.Hour, 0, 0, DateTimeKind.Unspecified);
 
             const string sql = @"
@@ -212,9 +210,7 @@ namespace MontagemLayout.Services
                 {
                     query.Append(" ORDER BY Data DESC LIMIT 100");
                 }
-                
-
-
+ 
                 //if (!string.IsNullOrEmpty(dataFilterInit))
                 //{
                 //    if (!string.IsNullOrEmpty(dataFilterFinal))
@@ -240,6 +236,7 @@ namespace MontagemLayout.Services
                 //{
                 //    query = "SELECT Line, Events, State, Zone, Element, Duration, Data, Shift FROM lisinc.events ORDER BY Data DESC LIMIT 100;";
                 //}
+
                 using var connection = new MySqlConnection(connectionString);
                 await connection.OpenAsync();
 
