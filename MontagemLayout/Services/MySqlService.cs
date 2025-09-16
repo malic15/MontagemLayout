@@ -97,6 +97,27 @@ namespace MontagemLayout.Services
                 Console.WriteLine($"Erro ao armazenar dados: {ex.Message}");
             }
         }
+        public async Task StoreStatusUpdateAsync(string line, int state, DateTime timestamp)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string query = "INSERT INTO lisinc.status_updates (line, state, data) VALUES (@line, @state, @timestamp);";
+
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@line", line);
+                command.Parameters.AddWithValue("@state", state);
+                command.Parameters.AddWithValue("@timestamp", timestamp);
+
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao armazenar status da linha: {ex.Message}");
+            }
+        }
         public async Task StoreProdHourlyAsync(string jsonPayload)
         {
             var dto = JsonSerializer.Deserialize<ProdHourlyDto>(jsonPayload, new JsonSerializerOptions
@@ -364,27 +385,6 @@ namespace MontagemLayout.Services
             {
                 Console.WriteLine($"Erro no método GetTopEvents: {ex.Message}");
                 throw;
-            }
-        }
-        public async Task StoreStatusUpdateAsync(string line, int state, DateTime timestamp)
-        {
-            try
-            {
-                using var connection = new MySqlConnection(connectionString);
-                await connection.OpenAsync();
-
-                string query = "INSERT INTO lisinc.status_updates (line, state, data) VALUES (@line, @state, @timestamp);";
-
-                using var command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@line", line);
-                command.Parameters.AddWithValue("@state", state);
-                command.Parameters.AddWithValue("@timestamp", timestamp);
-
-                await command.ExecuteNonQueryAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao armazenar status da linha: {ex.Message}");
             }
         }
         public async Task<ConcurrentDictionary<string, List<int>>> GetLineBitCountsLastHourAsync()
