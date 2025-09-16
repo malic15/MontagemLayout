@@ -97,7 +97,7 @@ namespace MontagemLayout.Services
                 Console.WriteLine($"Erro ao armazenar dados: {ex.Message}");
             }
         }
-        public async Task UpsertProdHourlyAsync(string jsonPayload)
+        public async Task StoreProdHourlyAsync(string jsonPayload)
         {
             var dto = JsonSerializer.Deserialize<ProdHourlyDto>(jsonPayload, new JsonSerializerOptions
             {

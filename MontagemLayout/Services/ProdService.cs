@@ -112,7 +112,7 @@ namespace MontagemLayout.Services
                     ShiftDate = DateTime.SpecifyKind(_globalShift.currentShiftStart, DateTimeKind.Unspecified).Date
                 };
                 string jsonProd = JsonSerializer.Serialize(payloadProd);
-                await _mysqlService.UpsertProdHourlyAsync(jsonProd);
+                await _mysqlService.StoreProdHourlyAsync(jsonProd);
             }
             
             int gapProd = prodInfo.GapProd;

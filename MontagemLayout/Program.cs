@@ -242,20 +242,6 @@ internal class Program
                     int prod = BitConverter.ToInt16(dataProd, 0);
                     //Console.WriteLine("dataProd: " + prod);
                     prodService.UpdateProd(line.ToString(), prod);
-                    //pordservice.TheoreticalProdUpdateAsync();
-
-                    //var payloadProd = new ProdHourlyDto
-                    //{
-                    //    LineSlug = line.ToString(),
-                    //    EventTs = DateTime.Now,
-                    //    QtyDelta = 1,
-                    //    ShiftCode = globalShift.ActualShift,
-                    //    ShiftDate = DateTime.SpecifyKind(globalShift.currentShiftStart, DateTimeKind.Unspecified).Date
-                    //};
-                    ////Console.WriteLine(globalShift.currentShiftStart);
-                    //Console.WriteLine(DateTime.SpecifyKind(globalShift.currentShiftStart, DateTimeKind.Unspecified).Date);
-                    //string jsonProd = JsonSerializer.Serialize(payloadProd);
-                    //await mysqlService.UpsertProdHourlyAsync(jsonProd);
 
                     return;
                 }
@@ -409,7 +395,7 @@ internal class Program
             var json = JsonDocument.Parse(lineStatus);
             string lineName = json.RootElement.GetProperty("Line").ToString();
             int statusLine = json.RootElement.GetProperty("Status").GetInt32();
-            //await mysqlservice.StoreStatusUpdateAsync(lineName, statusLine, DateTime.Now);
+            await mysqlService.StoreStatusUpdateAsync(lineName, statusLine, DateTime.Now);
         };
         
         await app.RunAsync();
@@ -507,7 +493,7 @@ internal class Program
             return;
         }
 
-        //mySqlService.StoreBufferSnapshotBatchAsync(await bufferService.SaveBufferSnapshotAsync());
+        mySqlService.StoreBufferSnapshotBatchAsync(await bufferService.SaveBufferSnapshotAsync());
         var historico = await mySqlService.GetLineBitCountsLastHourAsync();
         await bufferService.StoreBufferAcData(historico);
         dataService.UpdateBufferAcData();
@@ -670,36 +656,6 @@ internal class Program
             }
         }
     }
-    private static async Task SaveBufferSnapshotAsync( MySqlService mySqlService, BufferService bufferService)
-    {
-        try
-        {
-            var snapshotTime = DateTime.Now;
-            var snapshotList = new List<BufferSnapshot>();
-            var bufferData = bufferService.GetBufferData();
-
-            foreach (var (line, positions) in bufferData)
-            {
-                foreach (var (position, buffer) in positions)
-                {
-                    snapshotList.Add(new BufferSnapshot
-                    {
-                        Line = line,
-                        Position = position,
-                        IsActive = buffer.IsActive,
-                        IsFault = buffer.IsFault,
-                        Timestamp = snapshotTime
-                    });
-                }
-            }
-
-            //await mySqlService.StoreBufferSnapshotBatchAsync(snapshotList);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Erro ao salvar snapshot do buffer: " + ex.Message);
-        }
-    }
     private static async Task ProcessStorageData(string LineString, string dbString, List<(string message, string priority, string zone, string element, string component, string cabinet)> notes, ConcurrentDictionary<string, ConcurrentDictionary<string, DateTime>> _LineActivationTimes, MySqlService mysqlService, GlobalShift globalShift)
     {
         string dbLine = LineString + "_" + dbString;
@@ -754,7 +710,7 @@ internal class Program
                         string jsonPayload = JsonSerializer.Serialize(payload);
 
                         //Console.WriteLine(jsonPayload);
-                        //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
+                        await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
                 }
             }
