@@ -753,7 +753,7 @@ internal class Program
                         payload.shift = globalShift.ActualShift;
                         string jsonPayload = JsonSerializer.Serialize(payload);
 
-                        Console.WriteLine(jsonPayload);
+                        //Console.WriteLine(jsonPayload);
                         //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
                 }
