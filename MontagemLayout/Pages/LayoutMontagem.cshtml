@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Layout Montagem</title>
     
-
     <link rel="stylesheet" href="~/css/mapaMontagem.css" />
     <link rel="stylesheet" href="~/css/chassis5Buffer.css" />
     <link rel="stylesheet" href="~/css/chassis1Buffer.css" />
@@ -28,6 +27,7 @@
     <link rel="stylesheet" href="~/css/replayPainel.css" />
     <link rel="stylesheet" href="~/css/SideMenu.css" />
     <link rel="stylesheet" href="~/css/connerInfo.css" />
+    <link rel="stylesheet" href="~/css/difInfor.css" />
     @* <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" *@
     @*       rel="stylesheet" /> *@
     <link rel="stylesheet" href="~/static/css/boxicons/boxicons.min.css" />
@@ -56,6 +56,11 @@
             <p id="currentDateTime">Data e Hora: @DateTime.Now</p>
             <h2 id="targetProd">Meta de Produção: --</h2>
             <h3 id="theoreticalProd">Produção Teórica: --</h3>
+        </div>
+        <div id="difusaoInfo" class="difusao-info">
+            @* <h1>Difusão:</h1> *@
+            <p id="posDifusao">Pós-difusão: --</p>
+            <p id="preDifusao">Pré-difusão: --</p>
         </div>
         <p id="text-Pintura" class="floating-text">Pintura</p>
         <div id="alert" class="alert"></div>

@@ -16,7 +16,7 @@
     left: calc((540px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
     top: calc((890px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
     opacity: 0;
-    transition: all 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 #lineChartPbsToDif {
     height: 100%;

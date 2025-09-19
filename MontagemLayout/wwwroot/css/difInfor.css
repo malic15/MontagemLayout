@@ -1,0 +1,29 @@
+﻿@import url('mapaMontagem.css');
+
+.difusao-info {
+    position: fixed;
+    bottom: calc(60px * var(--scale-factor-height)); /* ou 0 para grudar no canto */
+    left: calc(620px * var(--scale-factor-width)); /* ou 0 */
+    z-index: 10; /* acima do svg */
+    background: rgba(30,30,30, 0.0); /* opcional, visual legal */
+    border-radius: calc(8px * var(--scale-factor-height));
+    padding: calc(10px * var(--scale-factor-height)) calc(18px * var(--scale-factor-width));
+    pointer-events: none;
+    /*    box-shadow: 0 2px 10px 0 #0004;*/
+    min-width: calc(180px * var(--scale-factor-width));
+    user-select: none;
+    transition: all 0.5s ease;
+}
+    .difusao-info h1,
+    .difusao-info p {
+        margin: calc(2px * var(--scale-factor-height)) 0;
+        font-weight: 200;
+        color: rgba(255,255,255,0.7);
+        text-align: left;
+        font-size: calc(13px * var(--scale-factor-width));
+        /* O que for necessário de estilos individuais */
+    }
+
+    .difusao-info p {
+        font-size: calc(9px * var(--scale-factor-width));
+    }

@@ -477,6 +477,8 @@ function removeAllLines() {
 window.toDown = function() {
     const buttonUp = document.getElementById('buttonUp');
     const buttonDown = document.getElementById('buttonDown');
+    const difusaoInfo = document.getElementById('difusaoInfo');
+
     if (buttonDown.disabled) return;
     buttonDown.disabled = true;
 
@@ -520,6 +522,7 @@ window.toDown = function() {
     buttonup.style.setProperty('pointer-events', 'auto');
     buttondown.style.setProperty('opacity', '0');
     buttondown.style.setProperty('pointer-events', 'none');
+    difusaoInfo.style.setProperty('opacity', '0');
 
     root.style.setProperty('--vertical-offset', `${newOffset}px`);
     //createLines()
@@ -588,6 +591,7 @@ window.toUp = function() {
     buttonUp.style.setProperty('pointer-events', 'none');
     buttonDown.style.setProperty('opacity', '1');
     buttonDown.style.setProperty('pointer-events', 'auto');
+    difusaoInfo.style.setProperty('opacity', '1');
 
     root.style.setProperty('--vertical-offset', `${newOffset}px`);
     
@@ -821,6 +825,8 @@ async function updatePdt(pdtState) {
 export async function updateBuffer(bufferState) {
     const updates = [];
     //console.log("BufferFrame (frameTime = ):", bufferState);
+    var countPreDif = 0;
+    var countPosDif = 0;
     for (const line in bufferState) {
         const bufferItems = document.querySelectorAll(`[class*="${line}_zne"]`);
         let count = 0;
@@ -876,7 +882,19 @@ export async function updateBuffer(bufferState) {
                 count++;
             });
         });
-
+        
+        if (line == "PbsToDif") {
+            updates.push(() => {
+                countPreDif = count;
+            });
+            
+        }
+        if (line == "PbsToTrim0" || line == "PbsToTrim1") {
+            updates.push(() => {
+                countPosDif = countPosDif + count;
+            });
+            
+        }
         const chartText = document.getElementById(`chartText${line}`);
         if (chartText) {
             updates.push(() => {
@@ -884,7 +902,11 @@ export async function updateBuffer(bufferState) {
             });
         }
     }
-
+    updates.push(() => {
+        document.getElementById("posDifusao").innerText = `Pós-difusão: ${countPosDif}`;
+        document.getElementById("preDifusao").innerText = `Pré-difusão: ${countPreDif}`;
+    });
+    
     requestAnimationFrame(() => {
         updates.forEach(update => update());
     });
@@ -1221,7 +1243,6 @@ function safeLoss(sum, sumTotal, gapProd) {
 //    cleanUpDOM();
 //});
 connectionData.on("ReceiveCurrentDateTime", (dateTime) => {
-    console.log(dateTime)
     globalDateTime = new Date(dateTime);
     const currentDateTimeElement = document.getElementById("currentDateTime");
     if (currentDateTimeElement) {

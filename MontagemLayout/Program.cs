@@ -395,7 +395,7 @@ internal class Program
             var json = JsonDocument.Parse(lineStatus);
             string lineName = json.RootElement.GetProperty("Line").ToString();
             int statusLine = json.RootElement.GetProperty("Status").GetInt32();
-            await mysqlService.StoreStatusUpdateAsync(lineName, statusLine, DateTime.Now);
+            //await mysqlService.StoreStatusUpdateAsync(lineName, statusLine, DateTime.Now);
         };
         
         await app.RunAsync();
@@ -493,7 +493,7 @@ internal class Program
             return;
         }
 
-        mySqlService.StoreBufferSnapshotBatchAsync(await bufferService.SaveBufferSnapshotAsync());
+        //mySqlService.StoreBufferSnapshotBatchAsync(await bufferService.SaveBufferSnapshotAsync());
         var historico = await mySqlService.GetLineBitCountsLastHourAsync();
         await bufferService.StoreBufferAcData(historico);
         dataService.UpdateBufferAcData();
@@ -710,7 +710,7 @@ internal class Program
                         string jsonPayload = JsonSerializer.Serialize(payload);
 
                         //Console.WriteLine(jsonPayload);
-                        await mysqlService.StorePayloadDataAsync("events", jsonPayload);
+                        //await mysqlService.StorePayloadDataAsync("events", jsonPayload);
                     }
                 }
             }
