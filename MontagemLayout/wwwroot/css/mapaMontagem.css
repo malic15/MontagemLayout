@@ -757,15 +757,7 @@ body {
     user-select: none;
     pointer-events: none;
 }
-/*#top10ChartContainer {
-    background-color: rgba(0, 0, 0, 0.8);*/ /* Preto com transparência */
-    /*display: none;
-    border-radius: 10px;*/ /* Bordas arredondadas */
-    /*padding: 20px;*/ /* Espaçamento interno */
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);*/ /* Sombra */
-    /*color: white;*/ /* Cor do texto */
-    /*z-index: 1000000;
-}*/
+
 #top10ChartContainer {
     position: absolute;
     display: none; /* Oculta o wrapper da tabela inicialmente */

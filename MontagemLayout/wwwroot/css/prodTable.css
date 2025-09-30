@@ -1,0 +1,182 @@
+﻿:root {
+    --bg: #fff;
+    --surface: #f7f8fb;
+    --text: #111827;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --pill: #e9eef7;
+    --total-bg: #eef2ff;
+    --shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0b0f18;
+        --surface: #0f1522;
+        --text: #e5e7eb;
+        --muted: #9aa3b2;
+        --line: #1f2a3a;
+        --pill: #1a2335;
+        --total-bg: #16233f;
+        --shadow: 0 10px 28px rgba(0,0,0,.4);
+    }
+}
+
+* {
+    box-sizing: border-box
+}
+
+/*body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 500 14px/1.4 ui-sans-serif,system-ui,Segoe UI,Roboto
+}*/
+
+.table-card {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* centraliza */
+    width: min(1200px, 95vw);
+    /*    max-width: 1200px;*/
+    margin: 24px auto;
+    padding: 24px;
+    z-index: 100000;
+}
+
+.table-title {
+    font-size: 28px;
+    margin: 0 0 6px;
+}
+
+.table-sub {
+    color: var(--muted);
+    margin: 0 0 18px;
+}
+
+.table-scroller {
+    overflow: auto;
+    border-radius: 18px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line)
+}
+
+.prod-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 900px;
+    width: 100%;
+}
+
+    .prod-table th, .prod-table td {
+        padding: 12px 14px;
+        text-align: center;
+        border-bottom: 1px solid var(--line);
+        white-space: nowrap;
+    }
+
+    .prod-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background: linear-gradient(#0000,#0000 60%), var(--surface)
+    }
+    /* zebra suave por coluna (a partir da 2ª, que é 06:00) */
+    .prod-table td:nth-child(2n+2), .prod-table th:nth-child(2n+2) {
+        background: color-mix(in srgb, var(--surface) 90%, #93c5fd 10%)
+    }
+
+    .prod-table td:nth-child(2n+3), .prod-table th:nth-child(2n+3) {
+        background: color-mix(in srgb, var(--surface) 95%, #a7f3d0 8%)
+    }
+
+    /* primeira coluna (linha) sticky à esquerda */
+    .prod-table th.row-label, .prod-table td.row-label {
+        position: sticky;
+        left: 0;
+        z-index: 4;
+        background: var(--surface);
+        text-align: left;
+    }
+    /* última coluna (Total) sticky à direita */
+    .prod-table th.total, .prod-table td.total {
+        position: sticky;
+        right: 0;
+        z-index: 4;
+        background: var(--total-bg);
+    }
+
+/* cabeçalho pill das horas */
+.pill {
+    display: inline-block;
+    padding: 8px 14px;
+    background: var(--pill);
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-weight: 700;
+}
+
+/* badge colorido com o nome da linha */
+.line-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.12), var(--shadow);
+}
+
+.badge-purple {
+    background: linear-gradient(135deg,#8b5cf6,#6d28d9)
+}
+
+.badge-blue {
+    background: linear-gradient(135deg,#38bdf8,#2563eb)
+}
+
+.badge-cyan {
+    background: linear-gradient(135deg,#22d3ee,#06b6d4)
+}
+
+.badge-teal {
+    background: linear-gradient(135deg,#34d399,#059669)
+}
+
+.badge-indigo {
+    background: linear-gradient(135deg,#818cf8,#4f46e5)
+}
+
+.cell-na {
+    color: var(--muted);
+    font-style: italic;
+    opacity: .85
+}
+
+/* “pill” do total */
+.total-pill {
+    display: inline-block;
+    min-width: 92px;
+    padding: 10px 14px;
+    text-align: right;
+    background: #fff;
+    color: #111;
+    border-radius: 12px;
+    font-weight: 800;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+}
+
+@media (prefers-color-scheme: dark) {
+    .total-pill {
+        background: #0b1324;
+        color: #e7e9ee
+    }
+}
+
+/* hover */
+.prod-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--surface) 85%, #60a5fa 15%)
+}

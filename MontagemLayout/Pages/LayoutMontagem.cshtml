@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="~/css/SideMenu.css" />
     <link rel="stylesheet" href="~/css/connerInfo.css" />
     <link rel="stylesheet" href="~/css/difInfor.css" />
+    <link rel="stylesheet" href="~/css/prodTable.css" />
     @* <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" *@
     @*       rel="stylesheet" /> *@
     <link rel="stylesheet" href="~/static/css/boxicons/boxicons.min.css" />
@@ -59,8 +60,8 @@
         </div>
         <div id="difusaoInfo" class="difusao-info">
             @* <h1>Difusão:</h1> *@
-            <p id="posDifusao">Pós-difusão: --</p>
-            <p id="preDifusao">Pré-difusão: --</p>
+            <p id="countToTrim1">Para Trim 1 - --</p>
+            <p id="countToTrim0">Para Trim 0 - --</p>
         </div>
         <p id="text-Pintura" class="floating-text">Pintura</p>
         <div id="alert" class="alert"></div>
@@ -2454,6 +2455,115 @@
                 <i class="bx bx-caret-left"></i>
             </div>
         </aside>
+
+        <div class="table-card">
+            @* <h2 class="table-title">Produção Hora a Hora</h2> *@
+            @* <p class="table-sub">Colunas = horas do dia • Linhas = linhas produtivas • Total destacado à direita</p> *@
+
+            <div class="table-scroller">
+                <table class="prod-table">
+                    <thead>
+                        <tr>
+                            <th class="row-label">Linha</th>
+                            <th><span class="pill">06:00</span></th>
+                            <th><span class="pill">07:00</span></th>
+                            <th><span class="pill">08:00</span></th>
+                            <th><span class="pill">09:00</span></th>
+                            <th><span class="pill">10:00</span></th>
+                            <th><span class="pill">11:00</span></th>
+                            <th><span class="pill">12:00</span></th>
+                            <th><span class="pill">13:00</span></th>
+                            <th><span class="pill">14:00</span></th>
+                            <th><span class="pill">15:00</span></th>
+                            <th class="total">Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- DeckingUp -->
+                        <tr>
+                            <td class="row-label"><span class="line-badge badge-purple">Decking Up</span></td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td>11</td>
+                            <td>13</td>
+                            <td>12</td>
+                            <td>8</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td>7</td>
+                            <td class="total"><span class="total-pill">101</span></td>
+                        </tr>
+
+                        <!-- Final 2 -->
+                        <tr>
+                            <td class="row-label"><span class="line-badge badge-blue">Final 2</span></td>
+                            <td>14</td>
+                            <td>13</td>
+                            <td>12</td>
+                            <td>12</td>
+                            <td>15</td>
+                            <td>14</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td class="total"><span class="total-pill">122</span></td>
+                        </tr>
+
+                        <!-- Chassis 5 -->
+                        <tr>
+                            <td class="row-label"><span class="line-badge badge-teal">Chassis 5</span></td>
+                            <td>9</td>
+                            <td class="cell-na">N/A</td>
+                            <td>8</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>8</td>
+                            <td class="total"><span class="total-pill">78</span></td>
+                        </tr>
+
+                        <!-- Glazing -->
+                        <tr>
+                            <td class="row-label"><span class="line-badge badge-cyan">Glazing</span></td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>9</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td class="total"><span class="total-pill">81</span></td>
+                        </tr>
+
+                        <!-- Trim -->
+                        <tr>
+                            <td class="row-label"><span class="line-badge badge-indigo">Trim</span></td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>11</td>
+                            <td>10</td>
+                            <td>12</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>9</td>
+                            <td>8</td>
+                            <td class="total"><span class="total-pill">100</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
     </div>
     <script src="~/js/jquery-3.6.0.min.js"></script>

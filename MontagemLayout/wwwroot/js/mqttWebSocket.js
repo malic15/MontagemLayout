@@ -825,8 +825,8 @@ async function updatePdt(pdtState) {
 export async function updateBuffer(bufferState) {
     const updates = [];
     //console.log("BufferFrame (frameTime = ):", bufferState);
-    var countPreDif = 0;
-    var countPosDif = 0;
+    var countToTrim1 = 0;
+    var countToTrim0 = 0;
     for (const line in bufferState) {
         const bufferItems = document.querySelectorAll(`[class*="${line}_zne"]`);
         let count = 0;
@@ -883,15 +883,15 @@ export async function updateBuffer(bufferState) {
             });
         });
         
-        if (line == "PbsToDif") {
+        if (line == "PbsToTrim1") {
             updates.push(() => {
-                countPreDif = count;
+                countToTrim1 = count;
             });
             
         }
-        if (line == "PbsToTrim0" || line == "PbsToTrim1") {
+        if (line == "PbsToTrim0") {
             updates.push(() => {
-                countPosDif = countPosDif + count;
+                countToTrim0 = count;
             });
             
         }
@@ -903,8 +903,8 @@ export async function updateBuffer(bufferState) {
         }
     }
     updates.push(() => {
-        document.getElementById("posDifusao").innerText = `Pós-difusão: ${countPosDif}`;
-        document.getElementById("preDifusao").innerText = `Pré-difusão: ${countPreDif}`;
+        document.getElementById("countToTrim1").innerText = `Para Trim 1 - ${countToTrim1}`;
+        document.getElementById("countToTrim0").innerText = `Para Trim 0 - ${countToTrim0}`;
     });
     
     requestAnimationFrame(() => {
