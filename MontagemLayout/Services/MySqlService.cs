@@ -33,6 +33,17 @@ namespace MontagemLayout.Services
             public int ShiftCode { get; init; }       // 'A'/'B'/'C'
             public DateTime ShiftDate { get; init; }    // data “do turno”
         }
+        public sealed class ProdHourMatrix
+        {
+            public List<string> Hours { get; init; } = default!; // ["00:00","01:00",...,"23:00"]
+            public List<ProdHourRow> Rows { get; init; } = default!;
+        }
+        public sealed class ProdHourRow
+        {
+            public string Line { get; init; } = default!;
+            public int[] Values { get; init; } = default!;       // 24 posições
+            public int Total => Values.Sum();
+        }
 
         private (string Start, string End) ShiftConsult()
         {
@@ -617,6 +628,70 @@ namespace MontagemLayout.Services
                 Console.WriteLine($"Erro ao obter duração dos estados: {ex.Message}");
                 throw;
             }
+        }
+        public async Task<ProdHourMatrix> GetProdHourMatrixByDayAsync(DateTime day, IEnumerable<string>? lines = null)
+        {
+            var hours = Enumerable.Range(0, 24).Select(h => $"{h:00}:00").ToList();
+
+            string inClause = "";
+            var parameters = new List<MySqlParameter>();
+
+            var start = new DateTime(day.Year, day.Month, day.Day, 0, 0, 0, DateTimeKind.Unspecified);
+            var end = start.AddDays(1);
+
+            var sb = new StringBuilder(@"
+                SELECT line, HOUR(ts_hour) AS h, SUM(qty) AS qty
+                FROM prod_hourly
+                WHERE ts_hour >= @start AND ts_hour < @end
+            ");
+            if (lines != null)
+            {
+                var list = lines.Distinct().ToList();
+                if (list.Count > 0)
+                {
+                    var ph = new List<string>();
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        var p = $"@line{i}";
+                        ph.Add(p);
+                        parameters.Add(new MySqlParameter(p, list[i]));
+                    }
+                    sb.Append($" AND line IN ({string.Join(",", ph)})");
+                }
+            }
+            sb.Append(" GROUP BY line, h ORDER BY line, h;");
+
+            // Execução
+            using var conn = new MySqlConnection(connectionString);
+            await conn.OpenAsync();
+
+            using var cmd = new MySqlCommand(sb.ToString(), conn);
+            cmd.Parameters.AddWithValue("@start", start);
+            cmd.Parameters.AddWithValue("@end", end);
+            foreach (var p in parameters) cmd.Parameters.Add(p);
+
+            var dict = new Dictionary<string, int[]>();
+            using var rdr = await cmd.ExecuteReaderAsync();
+            while (await rdr.ReadAsync())
+            {
+                var line = rdr.GetString("line");
+                var h = rdr.GetInt32("h");
+                var qty = rdr.GetInt32("qty");
+
+                if (!dict.TryGetValue(line, out var arr))
+                {
+                    arr = new int[24];
+                    dict[line] = arr;
+                }
+                arr[h] += qty;
+            }
+
+            var rows = dict
+                .OrderBy(kv => kv.Key)
+                .Select(kv => new ProdHourRow { Line = kv.Key, Values = kv.Value })
+                .ToList();
+
+            return new ProdHourMatrix { Hours = hours, Rows = rows };
         }
     }
 }

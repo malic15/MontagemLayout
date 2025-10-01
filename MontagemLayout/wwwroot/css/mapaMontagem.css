@@ -105,12 +105,13 @@
     z-index: 6;
 }
 .up {
-    transform: rotate(180deg);
+    transform: translateX(-50%) rotate(180deg);
     top: calc(30px*var(--scale-factor-height));
     opacity: 0;
     pointer-events: none;
 }
 .down {
+    transform: translateX(-50%);
     top: calc(750px*var(--scale-factor-height));
     opacity: 1;
     pointer-events: auto;

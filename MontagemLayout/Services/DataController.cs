@@ -79,19 +79,5 @@ namespace MontagemLayout.Services
                 status = statusUpdates
             });
         }
-        //public IActionResult Index()
-        //{
-        //    var initialData = new
-        //    {
-        //        PdtData = _pdtService.GetPdtData(),
-        //        BufferData = _bufferService.GetBufferData(),
-        //        StatusData = _statusService.GetStatusData(),
-        //        ProdData = _prodService.GetAllProdData(),
-        //        BufferAc = _bufferService.GetBufferAcData()
-        //    };
-
-        //    ViewData["InitialState"] = JsonSerializer.Serialize(initialData);
-        //    return View();
-        //}
     }
 }
