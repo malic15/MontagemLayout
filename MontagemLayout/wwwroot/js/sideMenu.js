@@ -105,7 +105,69 @@ function layoutMode(itemLayout, itemActive) {
         initializeState();
     }
 }
+const table = document.querySelector('.prod-table');
+const theadEl = table.querySelector('thead');
+const tbodyEl = table.querySelector('tbody');
 
+// paleta opcional pros badges por linha
+const badgeClasses = ['badge-purple', 'badge-blue', 'badge-cyan', 'badge-teal', 'badge-indigo'];
+
+function renderProdTable(matrix) {
+    // Cabeçalho
+    const headHtml =
+        `<tr>
+      <th class="row-label">Linha</th>
+      ${matrix.hours.map(h => `<th><span class="pill">${h}</span></th>`).join('')}
+      <th class="total">Total</th>
+    </tr>`;
+    // Linhas
+    const bodyHtml = matrix.rows.map((row, i) => {
+        const cls = badgeClasses[i % badgeClasses.length];
+        const cells = row.values
+            .map(v => `<td>${(v ?? 0)}</td>`)
+            .join('');
+        const total = (row.total ?? row.values.reduce((a, b) => a + (b || 0), 0));
+        return `
+      <tr>
+        <td class="row-label"><span class="line-badge ${cls}">${row.line}</span></td>
+        ${cells}
+        <td class="total"><span class="total-pill">${total}</span></td>
+      </tr>`;
+    }).join('');
+
+    // 1 única mutação do DOM por seção (rápido)
+    theadEl.innerHTML = headHtml;
+    tbodyEl.innerHTML = bodyHtml;
+}
+
+async function prodView(itemProd, itemActive) {
+    const formatDay = d =>
+        `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const input = document.getElementById('day').value;
+    const day = input || formatDay(new Date());
+
+    const qs = new URLSearchParams({ day });
+    const res = await fetch(`/data/prod-hour-day?${qs.toString()}`);
+    const matrix = await res.json();
+    console.log(matrix);
+    renderProdTable(matrix);
+    //document.getElementById('load').addEventListener('click', async () => {
+    //    const input = document.getElementById('day').value;
+    //    const day = input || formatDay(new Date());
+
+    //    const qs = new URLSearchParams({ day });
+
+    //    const res = await fetch(`/api/prod/hourly?${qs.toString()}`);
+    //    const matrix = await res.json();
+    //    console.log(matrix);
+    //});
+    var isProdActive = itemProd.classList.contains('active');
+    var isItemActive = itemActive.textContent.trim().includes('Replay')
+    if ((isItemActive && !isProdActive) || (!isItemActive && isProdActive)) {
+        //const resp = await fetch(`/data/prod-hour-day?start=${day.toISOString()}`);
+        //console.log(resp);
+    }
+}
 //sidemenu2
 const toggleButton = document.getElementById("toggle-button");
 const sidebar = document.getElementById("sidebar");
@@ -160,9 +222,12 @@ document.querySelectorAll('.menu-item').forEach(item => {
             if (el.textContent.trim().includes('Layout')) {
                 layoutMode(el, this);
             }
+            if (el.textContent.trim().includes('Notification')) {
+                prodView(el, this);
+            }
             el.classList.remove('nav-active');
         });
         // Adiciona ao clicado
         this.classList.add('nav-active');
     });
-});
+}); 

@@ -72,12 +72,17 @@ namespace MontagemLayout.Services
             var bufferSnapshots = await _mysqlService.GetBufferSnapshotsReplayAsync(start, end);
             var statusUpdates = await _mysqlService.GetStatusReplayAsync(start, end);
 
-            // Você pode adicionar outros dados aqui se quiser
             return Ok(new
             {
                 buffer = bufferSnapshots,
                 status = statusUpdates
             });
+        }
+        [HttpGet("prod-hour-day")]
+        public async Task<IActionResult> GetProdHourByDay([FromQuery] DateTime day)
+        {
+            var phbd = await _mysqlService.GetProdHourMatrixByDayAsync(day);
+            return Ok(phbd);
         }
     }
 }

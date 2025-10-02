@@ -46,15 +46,5 @@ namespace MontagemLayout.Services
             var result = await _repositoryMySql.GetStateDurationsAsync(line);
             return Ok(result);
         }
-        [HttpGet("status-durations")]
-        public async Task<IActionResult> GetProdHourMatrixByDayAsync([FromQuery] string line)
-        {
-            Console.WriteLine("status-durations");
-            if (string.IsNullOrEmpty(line))
-                return BadRequest("A linha deve ser informada.");
-
-            var result = await _repositoryMySql.GetStateDurationsAsync(line);
-            return Ok(result);
-        }
     }
 }

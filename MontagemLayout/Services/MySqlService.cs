@@ -629,61 +629,45 @@ namespace MontagemLayout.Services
                 throw;
             }
         }
-        public async Task<ProdHourMatrix> GetProdHourMatrixByDayAsync(DateTime day, IEnumerable<string>? lines = null)
+        public async Task<ProdHourMatrix> GetProdHourMatrixByDayAsync(DateTime day)
         {
+            // labels "00:00"..."23:00"
             var hours = Enumerable.Range(0, 24).Select(h => $"{h:00}:00").ToList();
 
-            string inClause = "";
-            var parameters = new List<MySqlParameter>();
-
+            // dia fechado [00:00, 24:00)
             var start = new DateTime(day.Year, day.Month, day.Day, 0, 0, 0, DateTimeKind.Unspecified);
             var end = start.AddDays(1);
 
-            var sb = new StringBuilder(@"
-                SELECT line, HOUR(ts_hour) AS h, SUM(qty) AS qty
-                FROM prod_hourly
-                WHERE ts_hour >= @start AND ts_hour < @end
-            ");
-            if (lines != null)
-            {
-                var list = lines.Distinct().ToList();
-                if (list.Count > 0)
-                {
-                    var ph = new List<string>();
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        var p = $"@line{i}";
-                        ph.Add(p);
-                        parameters.Add(new MySqlParameter(p, list[i]));
-                    }
-                    sb.Append($" AND line IN ({string.Join(",", ph)})");
-                }
-            }
-            sb.Append(" GROUP BY line, h ORDER BY line, h;");
+            const string sql = @"
+        SELECT line, HOUR(ts_hour) AS h, SUM(qty) AS qty
+        FROM prod_hourly
+        WHERE ts_hour >= @start AND ts_hour < @end
+        GROUP BY line, h
+        ORDER BY line, h;";
 
-            // Execução
+            var dict = new Dictionary<string, int[]>();
+
             using var conn = new MySqlConnection(connectionString);
             await conn.OpenAsync();
 
-            using var cmd = new MySqlCommand(sb.ToString(), conn);
+            using var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@start", start);
             cmd.Parameters.AddWithValue("@end", end);
-            foreach (var p in parameters) cmd.Parameters.Add(p);
 
-            var dict = new Dictionary<string, int[]>();
             using var rdr = await cmd.ExecuteReaderAsync();
             while (await rdr.ReadAsync())
             {
                 var line = rdr.GetString("line");
-                var h = rdr.GetInt32("h");
+                var h = rdr.GetInt32("h");   // 0..23
                 var qty = rdr.GetInt32("qty");
 
                 if (!dict.TryGetValue(line, out var arr))
                 {
-                    arr = new int[24];
+                    arr = new int[24];    // zera todas as 24 horas
                     dict[line] = arr;
                 }
-                arr[h] += qty;
+                if (h >= 0 && h <= 23)
+                    arr[h] += qty;        // soma da hora (já agregado por turno)
             }
 
             var rows = dict
@@ -693,5 +677,6 @@ namespace MontagemLayout.Services
 
             return new ProdHourMatrix { Hours = hours, Rows = rows };
         }
+
     }
 }

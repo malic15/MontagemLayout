@@ -1261,7 +1261,6 @@ connectionData.on("ReceiveApplicationStateBuffer", (bufferState) => {
     }
 });
 connectionData.on("ReceiveApplicationStateStatus", (statusState) => {
-    //console.log("Chegodoasdjoajdoasjdoas")
     if (!replayMode) {
         updateStatus(statusState);
     }
@@ -1270,7 +1269,6 @@ connectionData.on("ReceiveApplicationBufferAc", (buffHist) => {
     updateChartsWithHistory(buffHist);
 });
 connectionData.on("ReceiveApplicationProdData", (prodData) => {
-    //console.log("Chegodoasdjoajdoasjdoas")  
     updateProd(prodData);
 });
 connectionData.start()
