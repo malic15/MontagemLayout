@@ -81,7 +81,7 @@ let dataTable;
 const activeFaults = {};
 
 export var allLines = [];
-var globalDateTime;
+export var globalDateTime;
 export function setReplayMode() {
     replayMode = replayMode ? false : true;
     //console.log("replayMode: " + replayMode);

@@ -1,6 +1,9 @@
-﻿import { setReplayMode, initializeState } from '/js/mqttWebSocket.js';
+﻿import { setReplayMode, initializeState, globalDateTime } from '/js/mqttWebSocket.js';
+import { renderProdTable } from '/js/prodTable.js';
 
 var bufferHide = false;
+const formatDay = d =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 //document.getElementById("sideMenuOpenBtn").onclick = function () {
 //    document.getElementById("sideMenu").classList.add("open");
@@ -105,70 +108,32 @@ function layoutMode(itemLayout, itemActive) {
         initializeState();
     }
 }
-const table = document.querySelector('.prod-table');
-const theadEl = table.querySelector('thead');
-const tbodyEl = table.querySelector('tbody');
-
-// paleta opcional pros badges por linha
-const badgeClasses = ['badge-purple', 'badge-blue', 'badge-cyan', 'badge-teal', 'badge-indigo'];
-
-function renderProdTable(matrix) {
-    // Cabeçalho
-    const headHtml =
-        `<tr>
-      <th class="row-label">Linha</th>
-      ${matrix.hours.map(h => `<th><span class="pill">${h}</span></th>`).join('')}
-      <th class="total">Total</th>
-    </tr>`;
-    // Linhas
-    const bodyHtml = matrix.rows.map((row, i) => {
-        const cls = badgeClasses[i % badgeClasses.length];
-        const cells = row.values
-            .map(v => `<td>${(v ?? 0)}</td>`)
-            .join('');
-        const total = (row.total ?? row.values.reduce((a, b) => a + (b || 0), 0));
-        return `
-      <tr>
-        <td class="row-label"><span class="line-badge ${cls}">${row.line}</span></td>
-        ${cells}
-        <td class="total"><span class="total-pill">${total}</span></td>
-      </tr>`;
-    }).join('');
-
-    // 1 única mutação do DOM por seção (rápido)
-    theadEl.innerHTML = headHtml;
-    tbodyEl.innerHTML = bodyHtml;
-}
-
 async function prodView(itemProd, itemActive) {
-    const formatDay = d =>
-        `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    const input = document.getElementById('day').value;
-    const day = input || formatDay(new Date());
+    var isItemActive = itemActive.textContent.trim().includes('Tabela Produção')
+    var prodTable = document.getElementById("prodDiaryTable");
+    const isVisible = getComputedStyle(prodTable).opacity === '1';
+    if (isItemActive) {
+        if (!isVisible) {
+            const inputEl = document.getElementById('dayProd');
+            inputEl.value = '';
+            inputEl.valueAsDate = null;
 
-    const qs = new URLSearchParams({ day });
-    const res = await fetch(`/data/prod-hour-day?${qs.toString()}`);
-    const matrix = await res.json();
-    console.log(matrix);
-    renderProdTable(matrix);
-    //document.getElementById('load').addEventListener('click', async () => {
-    //    const input = document.getElementById('day').value;
-    //    const day = input || formatDay(new Date());
-
-    //    const qs = new URLSearchParams({ day });
-
-    //    const res = await fetch(`/api/prod/hourly?${qs.toString()}`);
-    //    const matrix = await res.json();
-    //    console.log(matrix);
-    //});
-    var isProdActive = itemProd.classList.contains('active');
-    var isItemActive = itemActive.textContent.trim().includes('Replay')
-    if ((isItemActive && !isProdActive) || (!isItemActive && isProdActive)) {
-        //const resp = await fetch(`/data/prod-hour-day?start=${day.toISOString()}`);
-        //console.log(resp);
+            const d = (globalDateTime instanceof Date) ? globalDateTime : new Date(globalDateTime);
+            if (Number.isNaN(d)) throw new Error('globalDateTime inválido');
+            const day = (typeof globalDateTime !== 'undefined')
+                ? formatDay(d)
+                : formatDay(new Date());
+            const qs = new URLSearchParams({ day });
+            renderProdTable(qs);
+            prodTable.style.setProperty('opacity', '1');
+            prodTable.style.setProperty('pointer-events', 'auto');
+        }
+    } else {
+        prodTable.style.setProperty('opacity', '0');
+        prodTable.style.setProperty('pointer-events', 'none');
     }
 }
-//sidemenu2
+
 const toggleButton = document.getElementById("toggle-button");
 const sidebar = document.getElementById("sidebar");
 
@@ -222,7 +187,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
             if (el.textContent.trim().includes('Layout')) {
                 layoutMode(el, this);
             }
-            if (el.textContent.trim().includes('Notification')) {
+            if (el.textContent.trim().includes('Tabela Produção')) {
                 prodView(el, this);
             }
             el.classList.remove('nav-active');

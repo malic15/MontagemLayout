@@ -2426,9 +2426,9 @@
                     <i class="bx bxs-eye-slash"></i>
                     <span>Esconder Acúmulo</span>
                 </div>
-                <div class="menu-item" data-tooltip="Notification">
-                    <i class="bx bx-bell"></i>
-                    <span>Notification</span>
+                <div class="menu-item" data-tooltip="Tabela Produção">
+                    <i class="bx bx-table"></i>
+                    <span>Tabela Produção</span>
                 </div>
                 <div class="menu-item" data-tooltip="Setting">
                     <i class="bx bx-cog"></i>
@@ -2456,10 +2456,24 @@
             </div>
         </aside>
 
-        <div class="table-card">
-            <label for="filterDateInit">Data Inicial:</label>
-            <input type="date" id="day">
-            <button id="load">Carregar</button>
+        <div id= "prodDiaryTable" class="table-card">
+            <div class="filters-bar">
+                <div class="field">
+                    <i class='bx bx-calendar'></i>
+                    <input type="date" id="dayProd" placeholder="Selecione o dia">
+                </div>
+
+                <button id="loadProd" class="btn btn-primary">
+                    <i class='bx bx-line-chart'></i>
+                    <span>Carregar</span>
+                </button>
+
+                <!-- opcionais: hoje / limpar -->
+                <!--
+                <button id="todayBtn" class="btn btn-ghost"><i class='bx bx-current-location'></i><span>Hoje</span></button>
+                <button id="clearBtn" class="btn btn-ghost"><i class='bx bx-eraser'></i><span>Limpar</span></button>
+                -->
+            </div>
             <div class="table-scroller">
                 <table class="prod-table">
                     <thead></thead>
@@ -2480,8 +2494,7 @@
     <script type="module" src="~/js/customChart_statusDuration.js"></script>
     <script type="module" src="~/js/replay.js"></script>
     <script type="module" src="~/js/sideMenu.js"></script>
-
-
+    <script type="module" src="~/js/prodTable.js"></script>
 
 </body>
 </html>
