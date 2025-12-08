@@ -14,6 +14,7 @@ const speakText = (text) => {
 
     window.speechSynthesis.speak(utterance);
 };
+
 connectionAudio.on("ReceiveAudio", function (audioUrl) {
     if (!audioUrl) return;
 
@@ -25,10 +26,12 @@ connectionAudio.on("ReceiveAudio", function (audioUrl) {
     currentAudio.load(); 
 
     currentAudio.oncanplaythrough = () => {
-        //console.log("Audio can play through.");
+        console.log("Audio can play through.");
         
         currentAudio.play().then(() => {
             //console.log("Audio play.");
+            //console.log(currentAudio);
+            //console.log("volume:", currentAudio.volume, "muted:", currentAudio.muted);
         }).catch((err) => {
             console.error("Error playing audio:", err);
         });
@@ -42,6 +45,7 @@ connectionAudio.on("ReceiveAudio", function (audioUrl) {
     };
     
 });
+
 connectionAudio.start()
     .then(() => {
         speakText("Montagem");
