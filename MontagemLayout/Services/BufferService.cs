@@ -41,7 +41,7 @@ namespace MontagemLayout.Services
 
         public BufferService()
         {
-            _throttleTimer = new System.Timers.Timer(500);
+            _throttleTimer = new System.Timers.Timer(50);
             _throttleTimer.Elapsed += ThrottleTimerElapsed;
             _throttleTimer.AutoReset = true; // importante: ele vai executar sempre
             _throttleTimer.Start();

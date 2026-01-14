@@ -117,6 +117,29 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
+.areas-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1; /* abaixo dos .upper/.ball (que você usa z-index:2) */
+    pointer-events: none; /* não atrapalha hover/click */
+}
+
+/* Caixa de área (o “fundo transparente”) */
+.area-pbs {
+    position: absolute;
+    border-radius: calc(10px * var(--scale-factor-width));
+    border: calc(1px * var(--scale-factor-width)) solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 calc(12px * var(--scale-factor-width)) rgba(0,0,0,0.25);
+    outline: calc(1px * var(--scale-factor-width)) dashed rgba(255,255,255,0.12);
+    outline-offset: calc(4px * var(--scale-factor-width));
+    top: calc((560px + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((100px + var(--horizontal-offset)) * var(--scale-factor-width));
+    width: calc(700px * var(--scale-factor-width));
+    height: calc(490px * var(--scale-factor-height));
+}
+
 /*Difusao a trim0*/
 .PbsToTrim0_zne3_tq01 {
     top: calc((327px + var(--vertical-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
