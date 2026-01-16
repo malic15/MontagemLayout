@@ -134,10 +134,19 @@
     box-shadow: 0 0 calc(12px * var(--scale-factor-width)) rgba(0,0,0,0.25);
     outline: calc(1px * var(--scale-factor-width)) dashed rgba(255,255,255,0.12);
     outline-offset: calc(4px * var(--scale-factor-width));
-    top: calc((560px + var(--vertical-offset)) * var(--scale-factor-height));
-    left: calc((100px + var(--horizontal-offset)) * var(--scale-factor-width));
-    width: calc(700px * var(--scale-factor-width));
-    height: calc(490px * var(--scale-factor-height));
+
+}
+.area-pbs-01 {
+    top: calc((600px + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((180px + var(--horizontal-offset)) * var(--scale-factor-width));
+    width: calc(600px * var(--scale-factor-width));
+    height: calc(300px * var(--scale-factor-height));
+}
+.area-pbs-02 {
+    top: calc((390px + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((450px + var(--horizontal-offset)) * var(--scale-factor-width));
+    width: calc(100px * var(--scale-factor-width));
+    height: calc(210px * var(--scale-factor-height));
 }
 
 /*Difusao a trim0*/
