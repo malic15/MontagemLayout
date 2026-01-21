@@ -938,9 +938,10 @@ export async function updateStatus(statusState) {
             const formattedDescription = descriptionText.charAt(0).toUpperCase() + descriptionText.slice(1).toLowerCase();
 
             if ((data.lowestStatusActive === 1 || data.lowestStatusActive === 2) && lastFaultTime) {
+                //console.log("lastFaultTime: " + lastFaultTime);
                 activeFaults[line] = {
                     message: data.lastMessage,
-                    startTime: lastFaultTime // vindo do back-end
+                    startTime: lastFaultTime
                 };
             } else {
                 delete activeFaults[line];
