@@ -180,5 +180,10 @@ namespace MontagemLayout.Services
                 }
             }
         }
+
+        internal void UpdateStatusDbsActive(string line, string v1, int v2, string v3, object value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

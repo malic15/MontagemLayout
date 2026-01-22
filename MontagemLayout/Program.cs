@@ -737,7 +737,7 @@ internal class Program
         {
             _connectionTimers[line] = new System.Threading.Timer(_ =>
             {
-                statusLineService.UpdateStatusDbsActive(line, "0", 0, "", DateTime.Now);
+                statusLineService.UpdateStatusDbsActive(line, "0", 0, "", null);
             }, null, 4000, Timeout.Infinite);
         }
 
