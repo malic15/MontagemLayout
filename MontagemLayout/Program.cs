@@ -381,6 +381,7 @@ internal class Program
                     //Console.WriteLine("Todos os bits são 0 da "+db.GetString()+" linha " +line.ToString()+". Definindo a prioridade como 19.");
                     priority = 19;
                 }
+                statusLineService.LogLastMessages();
                 statusLineService.UpdateStatusDbsActive(line.ToString(), db.ToString(), priority, faultStatus, DateTime.Now);
                 //pdtService.PrintPdtStatusForLine("trim1");
             }
@@ -737,7 +738,7 @@ internal class Program
         {
             _connectionTimers[line] = new System.Threading.Timer(_ =>
             {
-                statusLineService.UpdateStatusDbsActive(line, "0", 0, "", null);
+                statusLineService.UpdateStatusDbsActive(line, "0", 0, "", DateTime.Now);
             }, null, 4000, Timeout.Infinite);
         }
 

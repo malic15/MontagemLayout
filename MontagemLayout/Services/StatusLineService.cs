@@ -88,6 +88,7 @@ namespace MontagemLayout.Services
                             {
                                 if (existingLineInfo.lastMessage != update.Item4)
                                 {
+                                    Console.WriteLine("time update: " + update.Item5);
                                     existingLineInfo.lastMessage = update.Item4;
                                     existingLineInfo.lastFaultTime = update.Item5;
                                 }
@@ -154,7 +155,8 @@ namespace MontagemLayout.Services
             {
                 var lineName = line.Key;
                 var lastMessage = line.Value.lastMessage;
-                Console.WriteLine($"Linha: {lineName}, Última Mensagem: {lastMessage}");
+                var lastAlarm = line.Value.lastFaultTime;
+                Console.WriteLine($"Linha: {lineName}, Última Mensagem: {lastMessage}, Hora da Última Mensagem: {lastAlarm}");
             }
         }
 
