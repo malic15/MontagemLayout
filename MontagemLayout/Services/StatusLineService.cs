@@ -86,7 +86,7 @@ namespace MontagemLayout.Services
                             },
                             (_, existingLineInfo) =>
                             {
-                                if (existingLineInfo.lastMessage != update.Item4)
+                                if (existingLineInfo.lastMessage != update.Item4 || existingLineInfo.lastFaultTime != update.Item5)
                                 {
                                     Console.WriteLine("time update: " + update.Item5);
                                     existingLineInfo.lastMessage = update.Item4;
