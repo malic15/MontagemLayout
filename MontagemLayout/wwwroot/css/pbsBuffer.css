@@ -16,6 +16,7 @@
     left: calc((540px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
     top: calc((890px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
     opacity: 0;
+    z-index: 2;
     transition: opacity 0.5s ease;
 }
 #lineChartPbsToDif {
@@ -44,6 +45,7 @@
     left: calc((280px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
     top: calc((810px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
     opacity: 0;
+    z-index: 2;
     transition: all 0.5s ease;
 }
 #lineChartPbsToTrim0 {
@@ -71,6 +73,7 @@
     left: calc((380px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
     top: calc((480px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
     opacity: 0;
+    z-index: 2;
     transition: all 0.5s ease;
 }
 #lineChartPbsToTrim1 {
@@ -98,6 +101,7 @@
     left: calc((760px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
     top: calc((960px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
     opacity: 0;
+    z-index: 2;
     transition: all 0.5s ease;
 }
 #lineChartPbsToPint {
@@ -121,6 +125,7 @@
     position: absolute;
     inset: 0;
     z-index: 1;
+    opacity: 0;
     pointer-events: none;
 }
 
@@ -133,6 +138,7 @@
     box-shadow: 0 0 calc(12px * var(--scale-factor-width)) rgba(0,0,0,0.25);
     outline: calc(1px * var(--scale-factor-width)) dashed rgba(255,255,255,0.12);
     outline-offset: calc(4px * var(--scale-factor-width));
+    transition: all 0.5s ease;
 }
 
 .area-label {

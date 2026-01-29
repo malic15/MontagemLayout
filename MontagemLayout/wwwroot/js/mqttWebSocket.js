@@ -478,7 +478,8 @@ window.toDown = function() {
     const buttonUp = document.getElementById('buttonUp');
     const buttonDown = document.getElementById('buttonDown');
     const difusaoInfo = document.getElementById('difusaoInfo');
-
+    const areasLayer = document.getElementById('areasLayer');
+    
     if (buttonDown.disabled) return;
     buttonDown.disabled = true;
 
@@ -486,7 +487,7 @@ window.toDown = function() {
     removeAllLines()
     let root = document.documentElement;
     let currentOffset = parseInt(getComputedStyle(root).getPropertyValue('--vertical-offset'), 10);
-    let newOffset = currentOffset - 350;
+    let newOffset = currentOffset - 360;
     const buttonup = document.getElementById('buttonUp');
     const buttondown = document.getElementById('buttonDown');
     const bufferItemsMain = document.querySelectorAll(`[class*="ball"]`);
@@ -523,6 +524,7 @@ window.toDown = function() {
     buttondown.style.setProperty('opacity', '0');
     buttondown.style.setProperty('pointer-events', 'none');
     difusaoInfo.style.setProperty('opacity', '0');
+    areasLayer.style.setProperty('opacity', '1');
 
     root.style.setProperty('--vertical-offset', `${newOffset}px`);
     //createLines()
@@ -549,13 +551,15 @@ window.toDown = function() {
 window.toUp = function() {
     const buttonUp = document.getElementById('buttonUp');
     const buttonDown = document.getElementById('buttonDown');
+    const areasLayer = document.getElementById('areasLayer');
+
     if (buttonUp.disabled) return;
     buttonUp.disabled = true;
     setUp = true;
     removeAllLines()
     let root = document.documentElement;
     let currentOffset = parseInt(getComputedStyle(root).getPropertyValue('--vertical-offset'), 10);
-    let newOffset = currentOffset + 350;
+    let newOffset = currentOffset + 360;
     if (!bufferHide) {
         const bufferItemsMain = document.querySelectorAll(`[class*="ball"]`);
         if (bufferItemsMain.length > 0) {
@@ -592,6 +596,7 @@ window.toUp = function() {
     buttonDown.style.setProperty('opacity', '1');
     buttonDown.style.setProperty('pointer-events', 'auto');
     difusaoInfo.style.setProperty('opacity', '1');
+    areasLayer.style.setProperty('opacity', '0');
 
     root.style.setProperty('--vertical-offset', `${newOffset}px`);
     
