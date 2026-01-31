@@ -184,6 +184,9 @@ export async function updateChartsWithHistory(historicalData) {
         //console.log("thresholdCritical:" + thresholdCritical)
         //console.log("lastY:" + lastY)
         //console.log("yMin:" + lineData)
+        if (line.toLowerCase().includes("pbs")) {
+            return;
+        }
         // Estado Crítico
         if (isCritical) {
             //chartTextEl?.classList.remove('chartText-blink');

@@ -861,7 +861,7 @@ export async function updateBuffer(bufferState) {
                 //}
 
                 if (!bActive) {
-                    tts.style.backgroundColor = '#5c5c5c';
+                    tts.style.backgroundColor = '#707070';
                     return;
                 }
 

@@ -98,8 +98,8 @@
     align-items: center;
     height: calc(40px*var(--scale-factor-width));
     width: calc(75px*var(--scale-factor-width));
-    left: calc((760px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
-    top: calc((960px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
+    left: calc((660px + var(--horizontal-offset-acumulo-pbs) + var(--horizontal-offset)) * var(--scale-factor-width));
+    top: calc((560px + var(--horizontal-offset-acumulo-pbs) + var(--vertical-offset)) * var(--scale-factor-height));
     opacity: 0;
     z-index: 2;
     transition: all 0.5s ease;
@@ -134,7 +134,7 @@
     border-radius: calc(10px * var(--scale-factor-width));
     border: calc(1px * var(--scale-factor-width)) solid rgba(255,255,255,0.18);
     background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(12px);
     box-shadow: 0 0 calc(12px * var(--scale-factor-width)) rgba(0,0,0,0.25);
     outline: calc(1px * var(--scale-factor-width)) dashed rgba(255,255,255,0.12);
     outline-offset: calc(4px * var(--scale-factor-width));
